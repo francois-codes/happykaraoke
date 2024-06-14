@@ -1,0 +1,22 @@
+{
+  "extends": "@electron-toolkit/tsconfig/tsconfig.web.json",
+  "include": [
+    "src/client/**/*",
+    "src/shared/**/*",
+  ],
+  "outDir": "out/client",
+  "compilerOptions": {
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "composite": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": [
+        "src/shared/*"
+      ],
+      "@/*": [
+        "src/client/*"
+      ]
+    }
+  }
+}
