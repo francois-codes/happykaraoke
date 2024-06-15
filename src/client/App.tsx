@@ -3,11 +3,15 @@ import './assets/main.css'
 import { sendPingRequest, testEndpoint } from '@shared/endpoints/test'
 import { pingMessage, testMessage } from '@shared/messages/test'
 import { socket } from '@/utils/socket'
+import { useDispatch, useStore } from '@/store'
 
 export default function App() {
   const [apiResponse, setApiResponse] = useState('loading...')
   const [socketResponse, setSocketResponse] = useState('loading...')
   const [pingValue, setPingValue] = useState<number | null>(null)
+
+  const { currentSong } = useStore()
+  const dispatch = useDispatch()
 
   async function fetchRequest() {
     const response = await testEndpoint.call()
@@ -25,6 +29,10 @@ export default function App() {
 
   function sendPing() {
     sendPingRequest.call({ pingValue: 5 })
+  }
+
+  function setSong() {
+    dispatch({ currentSong: 'yo' })
   }
 
   pingMessage.client.useMessage(socket, (payload) => {
@@ -46,6 +54,8 @@ export default function App() {
             <p>socket: {socketResponse}</p>
             <button onClick={sendPing}>send ping</button>
             <p>Ping value received: {pingValue || 'waiting...'}</p>
+            <p>CurrentSong: {currentSong || 'not defined'}</p>
+            <button onClick={setSong}>set song</button>
           </div>
         </div>
         <div className="bottom-0 py-4 grid text-center w-full">
