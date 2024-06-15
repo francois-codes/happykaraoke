@@ -3,13 +3,10 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import express from 'express'
 import { startServer } from './server'
 import { join } from 'path'
-import { shared } from '@shared/utils'
 
 startServer((app) => {
   app.use(express.static(join(__dirname, '../client')))
 })
-
-shared()
 
 function createWindow(): void {
   // Create the browser window.

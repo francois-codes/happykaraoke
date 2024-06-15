@@ -1,30 +1,35 @@
 import { useEffect, useState } from 'react'
-import { io } from 'socket.io-client'
 import './assets/main.css'
-import { shared } from '@shared/utils'
-
-const socket = io()
-
-shared()
+import { sendPingRequest, testEndpoint } from '@shared/endpoints/test'
+import { pingMessage, testMessage } from '@shared/messages/test'
+import { socket } from '@/utils/socket'
 
 export default function App() {
   const [apiResponse, setApiResponse] = useState('loading...')
   const [socketResponse, setSocketResponse] = useState('loading...')
+  const [pingValue, setPingValue] = useState<number | null>(null)
 
   async function fetchRequest() {
-    const response = await fetch('/api')
-    const result = await response.json()
+    const response = await testEndpoint.call()
 
-    setApiResponse(result.message)
+    setApiResponse(response.message)
   }
 
   async function socketRequest() {
-    const response = await socket.emitWithAck('message', {
+    const response = await testMessage.client.emitWithAck(socket, {
       inbound: 'from client'
     })
 
     setSocketResponse(response.message)
   }
+
+  function sendPing() {
+    sendPingRequest.call({ pingValue: 5 })
+  }
+
+  pingMessage.client.useMessage(socket, (payload) => {
+    setPingValue(payload.pingValue)
+  })
 
   useEffect(() => {
     fetchRequest()
@@ -39,6 +44,8 @@ export default function App() {
             <h1>Hello</h1>
             <p>request: {apiResponse}</p>
             <p>socket: {socketResponse}</p>
+            <button onClick={sendPing}>send ping</button>
+            <p>Ping value received: {pingValue || 'waiting...'}</p>
           </div>
         </div>
         <div className="bottom-0 py-4 grid text-center w-full">
