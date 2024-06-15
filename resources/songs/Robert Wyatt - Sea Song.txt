@@ -1,0 +1,69 @@
+Sea Song
+Robert Wyatt
+F#m
+pop english prog 70s
+
+#Intro
+| Eb     | F      | Bb      | Eb      |
+
+| Cm Cm7 | Cm6    | %       | D       |
+
+| D      | %      | E7b5    | %       |
+
+
+#Verse
+                         F#m
+You look different every time
+    F             Am           Em
+You come from the foam-crested brine
+          F#m           F            Am  Em
+It's your skin shining softly in the moonlight
+       F#m          F                Am         Em
+Partly fish, partly porpoise, partly baby sperm whale
+     F#m            F       Am   Em
+Am I yours? Are you mine to play with?
+
+F#m      F
+Joking apart
+             Am             Em
+When you're drunk you're terrific
+            F#m              F
+When you're drunk I like you mostly
+        Am                   Em
+Late at night, you're quite alright
+
+      Ebmaj7      Cm7                 Bbmaj7
+But I can't understand the different you
+       Ebmaj7            Cm  Cm7 Cm6
+In the morning when it's time to play
+                     D
+At being human for a while
+       E7b5
+Please smile
+
+#instrumental
+E7b5
+
+#Verse
+                           F#m       F
+You'll be different in the spring, I know
+         Am       Em
+You're a seasonal beast
+         F#m            F                Am             Em
+Like the starfish that drift in with the tide, with the tide
+   F#m        F             Am                 Em
+So until your blood runs to meet the next full moon
+     F#m             F              Am           Em
+Your madness fits in nicely with my own, with my own
+     F#m         F              Am
+Your lunacy fits neatly with my own
+F        Am
+My very own
+
+#instrumental
+| F    | Am   | (x5)
+
+F          D
+We're not alone
+
+#instrumental 7/4

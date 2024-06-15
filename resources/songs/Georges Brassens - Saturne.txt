@@ -1,0 +1,88 @@
+Saturne
+Georges Brassens
+Am
+Chanson_Française 50s
+
+#Couplet 1
+        E7               Am
+ Il est morne, il est taciturne,
+       G                  C
+ Il préside aux choses du temps,
+        E7              F7
+ Il porte un joli nom, "Saturne",
+               Dm  G            C
+ Mais c'est un Dieu fort inquiétant.
+        E7               F7
+ Il porte un joli nom, "Saturne",
+     Am           E7       Am
+ Mais c'est un Dieu fort inquiétant.
+
+#Couplet 2
+      E7                Am
+ En allant son chemin, morose,
+         G             C
+ Pour se désennuyer un peu,
+    E7                  F7
+ Il joue à bousculer les roses,
+    Dm           G              C
+ Le temps tu' le temps comme il peut.
+    E7                  F7
+ Il joue à bousculer les roses,
+     Am         E7           Am
+ Le temps tu' le temps comme il peut.
+
+#Couplet 3
+          E7                Am
+ Cette saison, c'est toi, ma belle,
+        G                     C
+ Qui as fait les frais de son jeu,
+         E7         F7
+ Toi qui a payé la gabelle :
+             Dm    G             C
+ Un grain de sel     dans tes cheveux.
+         E7         F7
+ Toi qui a payé la gabelle :
+    Am          E7         Am
+ Un grain de sel dans tes cheveux.
+
+#Couplet 4
+           E7                    Am
+ C'est pas vilain, les fleurs d'automne,
+    G                     C
+ Et tous les poètes l'ont dit ;
+         E7            F7
+ Je te regarde et je te donne
+       Dm          G            C
+ Mon billet qu'ils n'ont pas menti.
+         E7            F7
+ Je te regarde et je te donne
+     Am           E7          Am
+ Mon billet qu'ils n'ont pas menti.
+
+#Couplet 5
+        E7                Am
+Viens encore, viens ma favorite,
+       G                   C
+ Descendons ensemble au jardin,
+        E7                 F7
+ Viens effeuiller la marguerite
+       Dm     G          C
+ De l'été de la Saint-Martin.
+        E7                F7
+ Viens effeuiller la marguerite
+     Am     E7          Am
+ De l'été de la Saint-Martin.
+
+#Couplet 6
+            E7             Am
+Je sais par cœur toutes tes grâces
+          G                  C
+ Et, pour me les faire oublier,
+        E7               F7
+ Il faudra que Saturne en fasse
+                Dm   G       C
+ Des tours d'horloge, de sablier !
+          E7               F7
+ Et la petite pisseuse d'en face
+      Am        E7      Am
+ Peut bien aller se rhabiller.

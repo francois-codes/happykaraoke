@@ -1,0 +1,75 @@
+Aline
+Christophe
+C
+chanson_française karaoke 60s
+
+#intro
+| C     | %      | E7     | %       |
+
+| F     | %      | G      | %       |
+
+
+#couplet 1
+             C         E7
+J'avais dessiné sur le sable
+            F               G7
+son doux visage qui me souriait
+          C             E7
+Puis il a plu sur cette plage
+           F                 G7    NC
+dans cet orage, elle a disparu
+
+#refrain
+          C      E7
+Et j'ai crié, crié
+ F                      G7
+Aline pour qu'elle revienne
+            C        E7
+Et j'ai pleuré, pleuré,
+   F                 G7   NC
+oh! j'avais trop de peine
+
+#couplet 2
+             C                 E7
+Je me suis assis auprès de son âme,
+              F                 G7
+mais la belle dame s'était enfuie
+             C                E7
+Je l'ai cherchée sans plus y croire,
+          F                 G7   NC
+Et sans un espoir, pour me guider
+
+#refrain
+          C      E7
+Et j'ai crié, crié
+ F                      G7
+Aline pour qu'elle revienne
+            C        E7
+Et j'ai pleuré, pleuré,
+   F                 G7   NC
+oh! j'avais trop de peine
+
+#Bridge
+            C         E7
+Je n'ai gardé que ce doux visage
+          F                   G7      NC
+comme une épave sur le sable mouillé
+
+#refrain
+          C      E7
+Et j'ai crié, crié
+ F                      G7
+Aline pour qu'elle revienne
+            C        E7
+Et j'ai pleuré, pleuré,
+   F                 G7   NC
+oh! j'avais trop de peine
+
+          C      E7
+Et j'ai crié, crié
+ F                      G7
+Aline pour qu'elle revienne
+            C        E7
+Et j'ai pleuré, pleuré,
+   F                 G7            C
+oh! j'avais trop de peine

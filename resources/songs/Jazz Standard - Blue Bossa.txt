@@ -1,0 +1,13 @@
+Blue Bossa
+Jazz Standard
+Cm
+Jazz 60s
+
+#tabs
+| Cm9      |  %       | Fm9       | %         |
+
+| Fm6/D    | G7/5+    | Cm7       | %         |
+
+| Ebm9     | Ab7      | Db7M      | %         |
+
+| Fm6/D    | G7/5+    | Cm7       |Cm9   G7/5+|

@@ -1,0 +1,44 @@
+Pauvre Martin
+Georges Brassens
+Am
+Chanson_Française 50s
+
+#couplet 1
+Am
+Avec une bêche à l'épaule, Avec, à la lèvre, un doux chant, Avec, à la lèvre, un doux chant,
+            Dm          G7          C                 Dm                         E7
+Avec, à l'âme, un grand courage, Il s'en allait trimer aux champs !
+Am            Dm  E7         Am                   Dm     E7         Am
+Pauvre Martin, pauvre misère,  Creuse la terre, creuse le temps !
+
+#couplet 2
+Am
+Pour gagner le pain de sa vie, De l'aurore jusqu'au couchant, De l'aurore jusqu'au couchant,
+              Dm          G7          C                 Dm                         E7
+Il s'en allait bêcher la terre, En tous les lieux, par tous les temps !
+Am            Dm  E7         Am                   Dm     E7         Am
+Pauvre Martin, pauvre misère, Creuse la terre, creuse le temps !
+
+#couplet 3
+Am
+Sans laisser voir, sur son visage, Ni l'air jaloux ni l'air méchant, Ni l'air jaloux ni l'air méchant,
+            Dm          G7          C                 Dm                         E7
+Il retournait le champ des autres, Toujours bêchant, toujours bêchant !
+Am            Dm  E7         Am                   Dm     E7         Am
+Pauvre Martin, pauvre misère, Creuse la terre, creuse le temps !
+
+#couplet 4
+Am
+Et quand la mort lui a fait signe, De labourer son dernier champ, De labourer son dernier champ,
+            Dm          G7          C                 Dm                         E7
+Il creusa lui-même sa tombe, En faisant vite, en se cachant ...
+Am            Dm  E7         Am                   Dm     E7         Am
+Pauvre Martin, pauvre misère, Creuse la terre, creuse le temps !
+
+#couplet 5
+Am
+Il creusa lui-même sa tombe, En faisant vite, en se cachant, En faisant vite, en se cachant,
+Dm          G7          C                 Dm                         E7
+Et s'y étendit sans rien dire, Pour ne pas déranger les gens ...
+Am            Dm  E7         Am                   Dm     E7         Am
+Pauvre Martin, pauvre misère,  Dors sous la terre, dors sous le temps !

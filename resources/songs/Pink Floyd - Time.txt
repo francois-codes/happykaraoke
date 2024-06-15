@@ -1,0 +1,87 @@
+Time
+Pink Floyd
+F#m
+pop English rock prog 70s
+
+#intro
+E       F#m       E       F#m
+
+E       F#m       F#m     A
+
+E       F#m
+
+
+#Verse
+F#m                                       A
+Ticking away the moments that make up a dull day
+    E                                          F#m
+You fritter and waste the hours in an off hand way
+F#m                                          A
+Kicking around on a piece of ground in your hometown
+E                                                F#m
+Waiting for someone or something to show you the way
+
+#chorus
+Dmaj7                          Amaj7
+Tired of lying in the sunshine staying home to watch the rain
+     Dmaj7                              Amaj7
+And, you are young and life is long and there is time to kill today
+Dmaj7                        C#m
+   And then one day you find ten years have got behind you
+Bm                           E
+No one told you when to run, you missed the starting gun
+
+#solo 1
+F#m     A       E       F#m (x4)
+
+Dmaj7   Amaj7   Dmaj7   Amaj7
+
+Dmaj7   C#m     Bm      E
+
+
+#Verse 2
+        F#m                                                A
+And you run and you run to catch up with the sun, but its sinking
+    E                                   F#m
+And racing around to come up behind you again
+    F#m                                             A
+The sun is the same in the relative way, but youre older
+E                                       F#m
+Shorter of breath and one day closer to death
+
+#chorus
+Dmaj7                          Amaj7
+Every year is getting shorter, never seem to find the time
+Dmaj7                               Amaj7
+Plans that either come to naught or half a page of scribbled lines
+Dmaj7                     C#m
+Hanging on in quiet desperation is the english way
+    Bm                              Bm7-5                F
+The time is gone, the song is over, thought Id something more to say
+
+
+#musical bridge 2
+Em   A7     Em     A7
+
+Em   A7     Em     A7
+
+
+#Verse 2
+Em           A
+  Home, home again
+Em                         A
+  I like to be here when I can
+Em(add9)                        A
+And when I come home cold and tired
+    Em                               A
+Its good to warm my bones beside the fire
+
+#chorus
+Cmaj7
+Far away across the field
+    Bm
+The tolling of the iron bell
+F
+Calls the faithful to their knees
+   G7              F     A5-/Eb     Bm
+To hear the softly spoken magic spells.

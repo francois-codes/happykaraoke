@@ -1,0 +1,92 @@
+En Passant
+Jean-Jacques Goldman
+C
+variété 90s
+
+#intro
+| C     |
+
+#Couplet 1
+| C               F/A   | G/B    C
+Toutes les ébènes     ont rendez-vous
+| Am        Am/G        |  F         Gsus4 G
+Lambeaux de nuit quand nos ombres s'étei---gnent
+| Am           F/A      | G/B        C
+Des routes m'emmènent, je ne sais où
+  |  Dm7           C/E        |    Am             Gsus4 G
+J'avais les yeux perçants avant,   je voyais tout
+
+| C                 F/A  |  G/B         C
+Doucement reviennent      à pas de loup
+| Am        Em/G      | F        Gsus4   G
+Reines endormies, nos déroutes anciennes
+| Am                 F/A  | G/B             C
+Coulent les fontaines     jusqu'où s'échouent
+  |  Dm7               C/E           | Am            Gsus4 G
+Les promesses éteintes     et tous nos voeux dissous
+
+#retrain
+| Am          Em/G       | F                C
+C'était des ailes et des rêves en partage
+| Am          Em/G    | F               Gsus4 G
+C'était des hivers et jamais le froid
+| Cm          Gm/Bb      |  Ab              Eb
+C'était des grands ciels épuisés d'orages
+| Fm            Cm/Eb         | Cm7b5      Gsus4 | (2/4) F/G G
+C'était des paix       que l'on ne signait pas
+
+| C              F/A    | G/B         C
+Des routes m'emmènent,  je ne sais où
+   | Dm7            C/E             | Am  G       F   | (2/4) F G |
+J'ai vu des oiseaux,    des printemps,   des cailloux
+
+#Solo Guitar:
+    | C   F/A | G/B   C  | F   C/G   |  Gsus4 G |
+En passant
+
+
+
+#couplet
+| C           F/A      | G/B     C
+Toutes nos défaites ont faim de nous
+| Am        Am/G      | F        Gsus4 G
+Serments résignés sous les maquillages
+| Am          F/A      | G/B      C
+Lendemains de fête, plus assez saouls
+   | Dm7      C/E         | Am          Gsus4 G
+Pour avancer, lâcher les regrets trop lourds
+
+#refrain
+| Am     Em/G          | F             C
+Déjà ces lents, ces tranquilles naufrages
+| Am     Em/G       | F           Gsus4 G
+Déjà ces cages qu'on n'attendait pas
+| Cm     Gm/Bb    | Ab          Eb
+Déjà ces discrets manques de courage
+| Fm          Cm/Eb    | Dm7b5     Gsus4 | (2/4) F G |
+Tout ce qu'on ne   sera jamais, déjà
+
+
+#couplet
+|  C           F/A     | G/B         C
+J'ai vu des bateaux, des fleurs, des rois
+  | Dm7        C/E             | Am  G       F   | F     | (2/4) F G |
+Des matins si beaux, j'en ai cueilli    parfois
+
+
+
+#solo
+    | C   F/A | G/B   C  | F/A   C/G    |  Gsus4 G       | G     |
+  En passant (guitar)
+    | C   F/A | G/B   C  | F/A    C/G   |  Am   Gsus4 G  |
+(piano)
+    | C   F/A | G/B   C  | F/A    C/G   |  Gsus4 G       |
+
+#solo guitar ad lib
+    | C   F/A | G/B   C  | F/A   C/G    |  Am   Gsus4 G  |
+
+    | C   F/A | G/B   C  | F/A   C/G    |  Gsus4 G       |
+
+    | C   F/A | G/B   C  | F/A   C/G    |  Am   Gsus4 G  |
+
+    | C   F/A | G/B   C  | F/A   C/G    |  Gsus4 G       |

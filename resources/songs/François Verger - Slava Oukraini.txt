@@ -1,0 +1,138 @@
+Slava Oukraini
+François Verger
+D
+20s
+
+#intro
+| D  Db  | D  Db  | Bm  F#m  | A  Db  |
+
+
+#verse  
+| D                Db
+Parfois je me souviens
+    |  D     Db
+Que malgré 2023
+| Bm        F#m
+ Des amis européens
+      |  A                 Db
+Meurent par milliers pour moi
+
+| D             Db
+ Oui je me souviens
+| D             Db
+ Que des Ukrainiens
+| Bm                F#m
+Perdent ceux qu'ils aiment :
+      | A         Db
+Interminable Requiem
+
+#chorus
+     | G                D
+J'aimerais avoir votre courage
+      | A               Bm
+J'aimerais avoir votre sang froid
+         |  C               G
+J'aimerais tant voir vos visages
+        | A                   D
+Et simplement vous rendre hommage
+
+| G          D
+Tous se mobilisent
+         | A           Bm
+Quand les autres se divisent
+         |   C          G
+Ils seront bientôt oubliés
+| A           D
+Slava Oukrainié
+| G   D  | A  Bm  | C   G  | A   D  |
+
+
+#verse
+      | D            Db
+Les voleurs envahisseurs
+             | D              Db
+Ont pris vos terres et vos enfants
+| Bm            F#m
+ Tuant, pillant et violant
+    | A             Db
+Ecoutant le baratineur
+
+| D                Db
+ Votre seul crime est
+  | D          Db
+De vouloir goûter
+| Bm           F#m
+ D'un peu trop près
+     |  A          Db
+Démocratie et liberté
+
+#chorus
+     | G                D
+J'aimerais avoir votre courage
+      | A               Bm
+J'aimerais avoir votre sang froid
+         |  C               G
+J'aimerais tant voir vos visages
+      | A                   D
+Simplement vous rendre hommage
+| G          D
+Tous se mobilisent
+         | A           Bm
+Quand les autres se divisent
+         |   C          G
+Ils seront bientôt oubliés
+| A           D
+Slava Oukrainié
+| G   D  | A  Bm  | C   G  | A   D  |
+
+
+#verse
+  | D               Db
+Comment ne pas admirer
+| D               Db
+Peuple si déterminé
+   | Bm               F#m
+Les corrompus sous-équipés
+     | A               Db
+Seront bientôt repoussés
+  |  D               Db
+Nul doute que votre pays
+    | D                  Db
+Se débarassera de l'ennemi
+| Bm                  F#m
+ Ou bien le monde ne sera plus
+            | A               Db
+Car le vieux russe l'aura voulu
+
+#chorus mod
+     | A                E
+J'aimerais avoir votre courage
+      | B              C#m
+J'aimerais avoir votre sang froid
+         |  D               A
+J'aimerais tant voir vos visages
+     | B                   E
+Simplement vous rendre hommage
+
+| A          E
+Tous se mobilisent
+         | B           C#m
+Quand les autres se divisent
+         |   D          A
+Ils seront bientôt oubliés
+| B           E
+Slava Oukrainié
+
+#outro
+| A          E
+Tous se mobilisent
+         | B           C#m
+Quand les autres se divisent
+         |   D          A
+Ils seront bientôt oubliés
+| B           E
+Slava Oukrainié
+| B           E
+Slava Oukrainié
+| B           (NC)
+Slava Oukrainié

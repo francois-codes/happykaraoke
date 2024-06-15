@@ -1,0 +1,208 @@
+Verrines de poires et speculoos
+Les Coqs en Pâte
+C
+Coqs 00s
+
+#Intro
+| C6      |  %        | G13       |  %        |
+
+
+#1 - Epluchez les poires (AMETYS)
+1A:    C6                     C°
+[1A] - Epluchez les poires, épluchez,
+    Dm7/C                | G13/C     | FmMaj7  G7b9 |  
+Epluchez les poires, épluchez les,
+    C6                     C°
+Epluchez les poires, épluchez,
+    Dm7/C                | G13/C     | FmMaj7  G7b9 |  
+Epluchez les poires, épluchez les,
+
+1B :    Am7                   E7#9
+[1B] - Epluchez les poires, épluchez,
+    FMaj7                | Bm7b5     | E7#9     |  
+Epluchez les poires, retirez leur trognon,
+    Am7                   E7#9
+Epluchez les poires, épluchez,
+    FMaj7                | Bm7b5     | E7#9     |  
+Epluchez les poires,  Retirez le trognon,
+↻1B↻
+== [BOUCLE SUR ↻1B-Am] ==
+
+#2 - Coupez les poires (LOUIS)
+F#m7b5          FmMaj7              | C/E     | Ebdim     |
+coupez les poires,  en tous petits dés
+Dm7              G7                 | Em7b5   | A7#9      |
+coupez les poires,  en tous petits dés
+F#m7b5          FmMaj7              | C/E     | Ebdim     |
+coupez les poires,  en tous petits dés
+Dm7              G7                 | C6      | G7      |
+coupez les poires,  en tous petits dés
+| C6      | G7      | C6      | G7      |  
+
+↻↻
+
+
+#3 - Sucre glace (LOUIS, calme)
+C6                        Dm7
+Mettez les petites poires dans un bol
+Em7   Dm7              G7  C6          |  Gsus4  G7  |
+Mettez les petites poires dans un bol
+C6                        Dm7
+Mettez les petites poires dans un bol
+Em7   Dm7              G7  C6          |  Gsus4  G7  |
+Mettez les petites poires dans un bol
+↻↻
+
+
+#4 - Coupez le Citron (Tutti)
+F#m7b5               FmMaj7     C/E           Ebdim
+coupez le citron, coupez le, et pressez le oh sur les poires, (choeurs : SUR LES POIRES)
+Dm7                    G7       | Em7b5   | A7#9      |
+coupez le citron, coupez, pressez le
+F#m7b5               FmMaj7     C/E           Ebdim
+coupez le citron, coupez le, et pressez le oh sur les poires,
+Dm7                    G7       | C6      | G7      |
+coupez le citron, coupez, pressez le
+| C6      | G7      | C6      | G7      |  
+
+↻↻
+
+
+
+#PARTIE II - RNB
+#5 - Crème (Louis)
+Bm7b6          
+Versez la crème liquide dans le grand saladier,
+   A13
+La crème liquide dans le grand saladier,
+↻↻
+
+Bm7b6          
+Ajoutez le mascarpone avec la crème liquide
+   A13
+Le mascarpone avec la crème liquide
+↻↻
+
+
+Dm7b6                       
+Ajoutez une pincée de Cannelle,
+C13
+une pincée de Cannelle,
+Bm7b6                       
+Ajoutez une pincée de Cannelle,
+A13
+une pincée de Cannelle,
+↻↻
+
+
+Dm7b6
+Mélangez, la crème liquide et le mascarpone,
+C13
+ Franchement
+Bm7b6                       
+Mélangez, de plus en plus fort, Mélangez, de plus en plus fort,
+A13
+Mélangez, mélangez
+
+#6 - Fouettez (Tutti, BOURRINANCE)
+F#    G        Em   F#7      
+Fouettez,      Fouettez (x1000)
+↻↻
+[]
+
+F#    G        A     B      
+Fouettez,      Fouettez
+
+#PARTIE III, samba retour
+| G6      |  %        | D13       |  %        |
+
+
+#7 - Mettez des poires (Paulo)
+G6                            Bb7maj7                       Eb7maj7  
+Mettez des poires dans chaque verre, (choeurs : dans chaque verre)
+      G6                               | Bm7    | E7    |  
+dans chaque verre, des petits dés de poire
+    Am7           Cm7       F7    Bm7              Bbdim  
+au fond de chacun des verres, des petits dés de poire
+Am7             D7           | Ab7maj7  Db7maj7  | Ab7maj7  Db7maj7  |
+Mettez dans chaque verre les poires
+↻↻
+
+
+#8 - Brisez un speculoos en morceaux (Tutti)
+Gm7       Fm7              | Bb7     |  Eb7maj7   |        
+Brisez un Speculos en morceaux
+Cm7      Dm7   Eb7maj7  Dm7  Cm7      Dm7       Eb7maj7  D7#9
+Dans chacun des verres,      dans chacun des verres
+Gm7       Fm7              | Bb7     |  Eb7maj7   |        
+Brisez un Speculos en morceaux
+Cm7      Dm7   Eb7maj7  Dm7  Cm7      Dm7       Eb7maj7  D7#9
+Dans chacun des verres,      dans chacun des verres
+
+Cm7        F7              Dm7  G7  
+Brisez un speculoos en morCEAUX (choeurs : EN MORCEAUX !!!)
+Eb7maj7  Dm7         Cm7  Dm7  Eb7maj7  Dm7       Cm7  Dm7
+Dans chacun des verres, dans chacun des verres (choeurs : dans chacun des verres)
+Eb7maj7  Dm7         Cm7  Dm7  Eb7maj7  Dm7       Cm7  Dm7
+Dans chacun des verres, dans chacun des verres (choeurs : dans chacun des verres)
+
+Eb7maj7  Dm7         Cm7  Dm7  Eb7maj7  Dm7       Cm7  Dm7
+Dans chacun des verres, dans chacun des verres (breaks)
+↻↻
+[choeurs breaks + solo batterie / bass]
+
+#9 - Crème poche (Ametys)
+G6        A7/G                Am7b5/G    D7b9/G  
+Mettez la crème dans la poche patissière
+G6        A7/G                Am7b5/G    B7b9  
+Dans la poche,	mettez la crème, doucement
+Em7    G7                      A7    Ebdim  
+Mettez la crème dans la poche patissière
+G6        A7/G                Am7b5/G    D7b9  
+Dans la poche,	mettez la crème, doucement
+↻↻
+
+↻↻
+(warning boucle : txt Louis emploi poche patissière)
+
+#10 - Recouvrez de crème (Tutti)
+10A - CMaj7  Bm7     Am7  Bm7  CMaj7  Bm7   Am7  Bm7
+[10A] - Recouvrez de crème,      recouvrez de crème
+CMaj7  Bm7     Am7  Bm7  CMaj7  Bm7   Am7  Bm7
+Recouvrez de crème,      recouvrez de crème
+↻↻
+
+10A - Cm7  Dm7     EbMaj7  Dm7  Cm7  Dm7        EbMaj7  Dm7
+[10B] - Recouvrez de crème,      recouvrez de crème
+Cm7  Dm7      EbMaj7  Dm7  Cm7  Dm7      EbMaj7  Dm7
+Recouvrez de crème,      recouvrez de crème
+↻↻
+
+
+#11 - Sucre Doré
+CMaj7/D
+Décorez de sucre doré, yes le sucre doré (choeurs : Yeah)
+CMaj7/D
+Décorez de sucre doré, yes le sucre doré (choeurs : Yeah Yeah)
+CMaj7/D
+Décorez de sucre doré (choeurs : Yeah, yeah, yeah, yeah)
+CMaj7/D
+Décorez de sucre doré
+
+CMaj7#/D#
+Décorez de sucre doré, yes le sucre doré (choeurs : Yeah)
+CMaj7#/D#
+Décorez de sucre doré, yes le sucre doré (choeurs : Yeah Yeah)
+CMaj7/D
+Décorez de sucre doré (choeurs : Yeah, yeah, yeah, yeah)
+CMaj7/D
+Décorez de sucre doré
+↻↻
+
+
+#fin
+Bm4/7
+
+#samba
+| G6      |  %        | D13       |  %        |
+↻↻

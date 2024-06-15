@@ -1,0 +1,74 @@
+Faut oublier
+-M-
+Cm
+variété 00s
+
+#Intro
+| Ebmaj7   |  Bb/D    | Gm     | Bb13   |
+
+| Ebmaj7   |  Bb/D    | Gm     | Bb13   |
+
+
+#couplet
+Ebmaj7     Bb/D
+Dans les oubliettes
+<Gm         Bb13
+De ma sombre pensée
+Ebmaj7     Bb/D
+Comme un antidote
+<Gm_Gm/Bb   Am7b5        
+    Pour me protéger
+<Gm_Gm/Bb   Am7b5        
+        Faut oublier
+
+Ebmaj7     Bb/D
+J'oublie les mensonges
+<Gm         Bb13
+Et les actes manqués
+Ebmaj7     Bb/D
+Parfois certains songes
+<Gm_Gm/Bb   Am7b5        
+Trahissent mes pensées
+<Gm_Gm/Bb   Am7b5        
+       Faut oublier
+
+#Refrain
+Dm                Cm
+J'mitraille en automatic
+    Eb              D             Cm
+Dans ma tête ça va très, très vite
+     Dm             Cm          
+Mais ma mémoire est sélective
+    Eb              D      
+Les souvenirs qui dérangent dérivent
+<Cm  Dm      | Ebmaj7   |  Bb/D    | Gm     | Bb13   |
+Vers  je ne sais où
+
+#couplet
+Ebmaj7     Bb/D
+Dans les oubliettes
+<Gm         Bb13
+De ma triste pensée
+Ebmaj7     Bb/D
+J'évite toutes ces guêpes
+<Gm_Gm/Bb   Am7b5        
+Qui pourraient bien me tuer
+<Gm_Gm/Bb   Am7b5        
+        Faut oublier
+
+#Refrain
+Dm                Cm
+J'mitraille en automatic
+    Eb              D             Cm
+Dans ma tête ça va très, très vite
+     Dm             Cm          
+Mais ma mémoire est sélective
+    Eb              D      
+Les souvenirs qui dérangent dérivent
+<Cm  Dm      | Cm    | Cm   Eb  | D     |
+Vers  je ne sais où
+Cm   Dm          Cm    | Cm   Eb  | D     | Cm   Dm |
+Vers    je ne sais où
+
+#instru
+| Cm     | Cm   Eb | D      | Cm   Dm | (x2)

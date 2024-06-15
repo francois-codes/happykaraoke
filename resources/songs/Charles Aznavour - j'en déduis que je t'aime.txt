@@ -1,0 +1,76 @@
+J’en déduis que je t’aime
+Charles Aznavour
+Cm
+chanson_française 60s
+
+#Intro
+| C5      | %      | C5      | %      |
+
+| C5      | %      | C5      | %      |
+
+
+#Verse 1
+NC                  Fm7   Bb7                    Ebmaj7
+Par la peur de te perdre et de ne plus te voir
+<Abmaj7           Dm7b5  G7             Cm
+Par ce monde insensé qui grouille dans ma tête
+NC                Fm7  Bb7                   Ebmaj7
+Par ces nuits sans sommeil où la folie me guette
+<Abmaj7           Dm7b5    G7             Cm
+Quand le doute m’effleure et tend mon cœur de noir
+Dm7b5     G7         Cm
+J’en déduis que je t’aime
+Dm7b5     G7        | Cm      | NC
+J’en déduis que je t’aime
+
+#Verse 2
+NC                  Fm7   Bb7                    Ebmaj7
+Par le temps que je prends   pour ne penser qu’à toi
+<Abmaj7           Dm7b5   G7             Cm
+Par ces rêves de jour où tu règnes en idole
+NC                Fm7  Bb7                   Ebmaj7
+Par ton corps désiré,    de mon corps qui s’affole
+<Abmaj7           Dm7b5    G7             Cm
+Et l’angoisse à l’idée que tu te joues de moi
+| Dm7b5     G7      |   Cm      |
+   J’en déduis que je t’aime
+
+#Bridge
+| Fm7    Bb 7      |   Eb     
+  J’en déduis que je t’aime
+G7  |    Cm             Cm7  | A°       Ab7      |
+Par   le froid qui m’étreint lorsque je t’aperçois
+  | Cm/G            Ab7/F#  |  Fm7          Eb6/11  |  
+Par mon souffle coupé,  et mon sang qui se glace
+   | Dm7b5           Ebmaj7  |
+Par la désolation qui réduit mon espace
+   |  Fm6/Ab                NC |  Dm7b5   G7   |
+Et le mal que souvent tu me fais  malgré toi
+
+#Verse 3
+NC               Fm7  Bb7                   Ebmaj7
+Par la contradiction     de ma tête et mon cœur
+<Abmaj7             Dm7b5  G7            Cm
+Par mes vingt ans perdus qu’en toi je réalise
+NC                   Fm7  Bb7                   Ebmaj7
+Par tes regards lointains    qui parfois me suffisent
+<Abmaj7        Dm7b5    G7             Cm
+Et me font espérer en quelques jours meilleurs
+| Dm7b5     G7      |   Cm      |
+   J’en déduis que je t’aime
+
+#Verse 4
+| Fm7    Bb 7      |   Eb     
+  J’en déduis que je t’aime
+  G7  |    Cm      Fm7  | Bb7              Ebmaj7
+Par l’idée que la fin    pourrait être un début
+<Abmaj7           Dm7b5   G7             Cm
+Par mes joies éventrées par ton indifférence
+NC                Fm7  Bb7                   Ebmaj7
+Par tous les mots d’amour qui restent en souffrance
+<Abmaj7           Dm7b5    G7             Cm
+Puisque de te les dire est pour moi défendu
+| Dm7b5     G7      |   Cm      |
+J’en déduis que je t’aime
+| Dm7b5    G7   | NC   | Cm      |
+J’en déduis       mon amour

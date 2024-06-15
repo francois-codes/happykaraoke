@@ -1,0 +1,160 @@
+Les Cloches
+Notre Dame de Paris
+Dm
+comédie_musicale 90s
+
+#Gringoire
+Dm              C        Bb
+Les cloches ne sonnent plus
+Dm            C      Bb
+La cathédrale s'est tue
+Dm              C        Bb
+Quasimodo est malheureux
+Dm              C        Bb
+Quasimodo est amoureux
+
+#Frollo
+Dm              C        Bb
+Il fait la grève des cloches
+Dm              C        Bb
+Depuis déjà trois jours
+Dm              C        Bb
+Quasimodo est triste
+Dm              C        Bb
+Quasimodo est fou
+
+#Gringoire et Frollo
+Dm              C        Bb
+Parce qu'il se meurt d'amour
+
+#Instrumental
+| G7    | G7    | G7    | G7    |
+
+#Quasimodo chorus
+G
+Les cloches que je sonne
+G
+Sont mes amours, sont mes amantes
+G
+Je veux qu'elles claironnent,
+G
+Qu'elles tambourinent et qu'elles chantent
+Gm                    Eb
+Qu'il grêle ou qu'il tonne
+          Fm7             G
+Ou qu'il pleuve ou qu'il vente
+G
+Je veux qu'elles résonnent
+G
+Dans la joie comme dans la tourmente
+| Eb    | C7     | A7    | NC    |
+
+
+#Rapide
+Dm
+Celles qui sonnent quand on naît
+Dm/C
+Celles qui sonnent quand on meurt
+Bb                                 C                              Dm
+Celles qui sonnent tous les jours, toutes les nuits, toutes les heures
+Dm
+Celles qui sonnent quand on prie
+Dm/C
+Celles qui sonnent quand on pleure
+Bb                            C                          Fm
+Celles qui sonnent pour le peuple qui se lève de bonne heure
+
+Fm                        Fm/Eb
+Pour le fête des Rameaux, Pour la Quasimodo
+Db               Eb                        Fm
+Pour le jour de Noël et le jour de la Toussaint
+Db                   Fm/Eb
+Pour l'Annonciation, Pour le Résurrection
+Db              Eb                        G#m
+Pour la St-Valentin et pour le Vendredi Saint
+
+G#m                     G#m/F#
+Pour les célébrations   et pour les processions
+E                     F#                         Bm
+La plus belle c'est celle qu'on appelle le Fête Dieu
+Bm                         Bm/A
+Jour de l'an, jour des rois, Jour de Pâques, jour de joie
+G               A                        Dm
+Jour de la Pentecôte avec ses langues de feu
+
+#modulation chant plus bas
+Dm                    Dm/C
+Pour les confirmations Et pour les communions
+Bb               C                   Fm
+L'Angélus et le glas dies irae dies illa
+Fm                    Fm/Eb
+La jour de l'Ascension, le jour de l'Assomption
+Db               Eb                     | F    | F   | NC     |
+Pour tous les hosannas et tous les alleluias
+
+#Retour Quasimodo lent
+Fm          Eb        Db
+Mais celle que je préfère
+Fm     Eb           Db
+Parmi toutes ces femmes de fer
+Fm          Eb       Db
+Ce sont les trois Maries
+Fm           Eb          Db
+Qui sont mes meilleures amies
+
+#modulation Dm
+Dm        C       Bb
+Il y a la petite Marie
+Dm           C           Bb
+Pour les enfants qu'on met en terre
+Dm         C     Bb
+Il y a la grande Marie
+Dm           C         Bb
+Pour les marins qui partent en mer
+
+Fm            Eb             Db
+Mais quand je sonne la grosse Marie
+Fm          Eb          Db
+Pour les amants qui se marient
+Fm             Eb        Db
+C'est pas que j'ai le cœur à rire
+Fm            Eb      | Db   | NC   |
+Je l'aurais plutôt à mourir
+
+#Rythme rapide
+Dm                    Dm/C
+De les voir si joyeux, de les voir si heureux
+Bb                      C                        Fm
+Moi qu'aucune femme ne regardera jamais dans les yeux
+Fm                  Fm/Eb
+De les voir convoler, de les voir s'envoler
+C#               Eb                      G#m
+Au milieu des étoiles sous la voûte des cieux
+
+G#m                           G#m/F#
+Toutes les cloches que je sonne, Kyrie Eleison
+E            F#                 Bm
+Hosanna alleluia dies irae dies illa
+Bm                          Bm/A
+Toutes ces cloches de malheur, toutes ces cloches de bonheur
+G                        A                            Dm
+Toutes ces cloches qui n'ont jamais encore sonné pour moi
+
+#Instrumental
+|  Dm/C  | Bb    | C    | Fm   |
+
+| Fm/Eb  | Db    | Eb   | F    |
+
+#Chorus
+F
+Les cloches que je sonne
+F
+Sont mes amies sont mes amantes
+F
+Je veux qu'elles claironnent
+F
+Si Esméralda est vivante
+
+#Outro
+F                                               F
+Pour dire au monde - que Quasimodo aime - Esméralda

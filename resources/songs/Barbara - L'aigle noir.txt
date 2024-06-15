@@ -1,0 +1,142 @@
+L'aigle noir
+Barbara
+F
+Chanson_française 70s
+
+#intro:
+F, C, F, C
+
+#Couplet 1
+ F                                         C
+Un beau jour, ou peut-être une nuit
+Gm                                    D
+Près d'un lac, je m'étais endormie
+Bb                                          F
+Quand soudain semblant crever le ciel
+                Eb
+Et venant de nulle part
+                Gm      D
+Surgit un aigle noir
+
+#Couplet 2
+G                                 D
+Lentement ses ailes déployées
+Am                            E
+Lentement je le vis tournoyer
+C                                        G
+Près de moi dans un bruissement d'ailes
+                    F
+Comme tombé du ciel
+                     Am    E
+L'oiseau vint se poser
+
+#Couplet 3
+A                               E
+Il avait les yeux couleur rubis
+Bm                                       F#
+Et des plumes aux couleurs de la nuit
+D                                    A
+A son front brillant de mille feux
+                    G
+L'oiseau roi couronné
+                     Bm      F#
+Portait un diamant bleu
+
+#Couplet 4
+B                              F#
+De son bec, il a touché ma joue
+C#m                            G#
+Dans ma main il a glissé son cou
+E                                  B
+C'est alors que je l'ai reconnu
+                  A
+Surgissant du passé
+                  G#4, G#
+Il m'était revenu
+
+#Couplet 5
+ A                                    E
+Dis l'oiseau Oh! dis emmène moi
+Bm                              F#
+Retournons au pays d'autrefois
+D                                    A
+Comme avant dans mes rêves d'enfant
+                          G
+Pour cueillir en tremblant
+                     Bm       F#
+Des étoiles, des étoiles
+
+#Couplet 6
+B                                        F#
+Comme avant dans mes rêves d'enfant
+C#m                             G#
+Comme avant sur un nuage blanc
+E                                   B
+Comme avant rallumer le soleil
+               A
+Etre faiseur de pluie
+              G#4            G#
+Et faire des merveilles
+
+#Couplet 7
+Db                                     Ab
+L'aigle noir dans un bruissement d'ailes
+Ebm                               Bb
+Prit son vol pour regagner le ciel
+Db, Cb, Bb4, Bb
+Ah
+
+#Couplet 1
+ F                                         C
+Un beau jour, ou peut-être une nuit
+Gm                                    D
+Près d'un lac, je m'étais endormie
+Bb                                          F
+Quand soudain semblant crever le ciel
+                Eb
+Et venant de nulle part
+                Gm      D
+Surgit un aigle noir
+
+#Couplet 2
+G                                 D
+Un beau jour, ou peut-être une nuit
+Am                            E
+Près d'un lac, je m'étais endormie
+C                                        G
+Quand soudain semblant crever le ciel
+                    F
+Et venant de nulle part
+                     Am    E
+Surgit un aigle noir
+
+#Couplet 3
+A               E
+Un beau jour,     une nuit
+Bm            F#
+Près d'un lac, endormie
+D                  A
+Quand soudain,
+                    G
+Surgissant de nulle part
+                     Bm      F#
+Surgit un aigle noir.
+
+#Couplet 4
+B               F#
+Un beau jour,     une nuit
+C#m           G#
+Près d'un lac, endormie
+E               B
+Quand soudain,
+          A
+Il venait de nulle part
+            G#4, G#      C#
+Il a surgit l'aigle noir
+
+
+#fin (ralenti)
+C#               G#
+Un beau jour,     une nuit
+D#m                       A#
+Près d'un lac, je m'étais endormie

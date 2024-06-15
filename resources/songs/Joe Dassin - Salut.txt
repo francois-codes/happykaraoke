@@ -1,0 +1,100 @@
+Salut
+Joe Dassin
+Dm
+Variété 60s
+
+#Intro
+| Dm  Dm7 | Dm6  Dm7 | Dm  Dm7 | Dm6  Dm7 |
+
+| Dm      | Gm       | C       | F    Dm  |
+
+| Gm  A   | Dm  Dm7  | G/B  G7 | A        |
+
+#Chorus
+| Dm          | Gm
+Salut, c'est encore moi.
+| C           |  F      Dm
+Salut, comment tu vas?
+| Gm     A     | Dm      Dm7
+Le temps   m'a paru tres long.
+    |   G/B       G7    |  A
+Loin de la maison j'ai pensé a toi.
+
+#Verse
+| Dm                 | Gm
+J'ai un peu trop navigué
+| C            |  F   Dm
+Et je me sens fatigué.
+| Gm       A  | Dm    Dm7
+    Fais-moi un bon cafe,
+|G            G7     |  A
+J'ai une histoire à te raconter.
+
+| Dm                  |  Gm
+Il était une fois quelqu'un,
+| C                     |  F   Dm
+Quelqu'un que tu connais bien,
+| Gm      A  |  Dm        Dm7
+    Il est   parti tres loin,
+| G           G7     |   A   C |
+Il s'est perdu, il est revenu.
+
+#Chorus
+| Fm         |  Bbm
+Salut, c'est encore moi.
+| Eb        |   Ab      |
+Salut, comment tu vas?
+|Bbm     C7   |   Fm          Fm7
+Le temps    m'a paru tres loin.
+      | G        G7    |    C      C7
+Loin de la maison,  j'ai pensé à toi.
+
+| Fm       |  Bbm
+Pa-bam, pa-ba-ba-bam
+| Eb      |   Ab      |
+Pa-bam, pa-ba-ba-bam
+|Bbm   C7      |   Fm    Fm7
+Pa-bam,   pa-ba-ba-ba bam
+     | G        G7    |    C      C7 |
+Pa-ba ba bam-pam, pa-ba-pa-ba bam
+
+#Bridge (modulation)
+| Fm     | Fm    | Gm     |       |
+
+#Verse
+|  Gm             Gm/D   |  Cm  
+Tu sais, j'ai beaucoup changé.
+| F                  |  Bb    Gm  |
+ Je m'étais fait des idées,
+| Cm      D    |  Gm      Gm7
+    Sur toi, sur moi, sur nous,
+| C         C7        |   D      D7   |
+Des idées folles, mais j'étais fou
+
+| Gm                 |  Cm
+Tu n'as plus rien a me dire,
+| F                 | Bb   Gm
+Je ne suis qu'un souvenir.
+| Cm      D    |  Gm      Gm7/F
+    Peut-être pas trop mauvais,
+     C/E       C7    |  D      D7
+Mais jamais plus je ne te dirai
+
+#Chorus
+| Gm         | Cm7
+Salut, c'est encore moi.
+| F          | Bb      Gm7
+Salut, comment tu vas?
+| Cm    D7    | Gm      Gm7   
+Le temps  m'a paru tres long.
+        C/E       C7     |  D      D7
+Loin de la maison,  j'ai pensé a toi.
+
+| Gm         | Cm7
+Pa-bam, pa-ba-ba-bam
+| F          | Bb      Gm7
+Pa-bam, pa-ba-ba-bam
+| Cm    D7    | Gm      Gm7   
+Pa-bam, pa-ba-ba-ba bam
+      C/E       C7     |  D      D7
+Pa-ba ba bam-pam, pa-ba-pa-ba bam

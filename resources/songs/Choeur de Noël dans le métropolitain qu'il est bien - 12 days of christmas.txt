@@ -1,0 +1,214 @@
+12 days of christmas
+Choeur de Noël dans le métropolitain qu'il est bien
+F
+Christmas english traditionnel
+
+#day 1
+F                   Dm            Bb        C       F
+On the first day of Christmas, my true love gave to me
+      F    Dm   Bb   C     F Bb F
+(S) A partridge in a pear tree
+
+#day 2
+F                    Dm            Bb        C       F
+On the second day of Christmas, my true love gave to me
+C
+(B) Two turtle doves
+      F    Dm   Bb   C    F Bb F
+(S) And a partridge in a pear tree
+
+#day 3
+F                   Dm           Bb         C       F
+On the third day of Christmas, my true love gave to me
+C
+(T) Three French hens
+C
+(B) Two turtle doves
+      F    Dm   Bb   C    F Bb F
+(S) And a partridge in a pear tree
+
+#day 4
+F                    Dm            Bb        C       F
+On the fourth day of Christmas, my true love gave to me
+C
+(A) Four calling birds
+C
+(T) Three French hens
+C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree
+
+#day 5
+F                   Dm            Bb        C       F
+On the fifth day of Christmas, my true love gave to me
+F     G	  C
+Five gold rings
+NC	     F
+(A) Four calling birds
+      Bb
+(T) Three French hens
+G          C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree
+
+#day 6
+F                   Dm            Bb        C       F
+On the sixth day of Christmas, my true love gave to me
+C
+(S) Six geese a-laying
+F     G	  C
+Five gold rings
+NC	      F
+(A) Four calling birds
+      Bb
+(T) Three French hens
+G          C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree
+
+#day 7
+F                     Dm            Bb        C       F
+On the seventh day of Christmas, my true love gave to me
+C
+(B) Seven swans a-swimming
+C
+(S) Six geese a-laying
+F     G	  C
+Five gold rings
+NC	     F
+(A) Four calling birds
+      Bb
+(T) Three French hens
+G          C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree
+
+#day 8
+F                    Dm            Bb        C       F
+On the eighth day of Christmas, my true love gave to me
+C
+(T) Eight maids a-milking
+C
+(B) Seven swans a-swimming
+C
+(S) Six geese a-laying
+F     G	  C
+Five gold rings
+NC	     F
+(A) Four calling birds
+      Bb
+(T) Three French hens
+G          C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree
+
+#day 9
+F                   Dm            Bb        C      F
+On the ninth day of Christmas, my true love gave to me
+C
+(A) Nine ladies dancing
+C
+(T) Eight maids a-milking
+C
+(B) Seven swans a-swimming
+C
+(S) Six geese a-laying
+F     G	  C
+Five gold rings
+
+NC	     F
+(A) Four calling birds
+      Bb
+(T) Three French hens
+G          C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree
+
+#day 10
+F                   Dm            Bb        C       F
+On the tenth day of Christmas, my true love gave to me
+C
+(S) Ten lords a-leaping
+C
+(A) Nine ladies dancing
+C
+(T) Eight maids a-milking
+C
+(B) Seven swans a-swimming
+C
+(S) Six geese a-laying
+F     G	  C
+Five gold rings
+
+NC	     F
+(A) Four calling birds
+      Bb
+(T) Three French hens
+G          C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree
+
+#day 11
+F                      Dm            Bb        C       F
+On the eleventh day of Christmas, my true love gave to me
+C
+(T+B) Eleven pipers piping
+C
+(S) Ten lords a-leaping
+C
+(A) Nine ladies dancing
+C
+(T) Eight maids a-milking
+C
+(B) Seven swans a-swimming
+C
+(S) Six geese a-laying
+F     G	  C
+Five gold rings
+
+NC	      F
+(A) Four calling birds
+      Bb
+(T) Three French hens
+G          C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree
+
+#day 12
+F                     Dm
+On the twelfth day of Christmas,
+   Bb        C       F
+My true love gave to me
+C
+(S+A) Twelve drummers drummiing
+C
+(T+B) Eleven pipers piping
+C
+(S) Ten lords a-leaping
+C
+(A) Nine ladies dancing
+C
+(T) Eight maids a-milking
+C
+(B) Seven swans a-swimming
+C
+(S) Six geese a-laying
+F     G	  C
+Five gold rings
+
+NC	     F
+(A) Four calling birds
+      Bb
+(T) Three French hens
+G          C
+(B) Two turtle doves
+         F    Dm   Bb   C     F Bb F
+(S) And a partridge in a pear tree

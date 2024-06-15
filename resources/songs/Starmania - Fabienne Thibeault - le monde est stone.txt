@@ -1,0 +1,60 @@
+Le monde est stone
+Starmania - Fabienne Thibeault
+C
+Variété comédie_musicale 70s
+
+
+#Intro
+Fmaj7  E7  Dm7  C  Fmaj7  E7  C#m  C
+J'ai la tête qui éclate, j'voudrais seulement dormir
+C
+M'étendre sur l'asphalte, et me laisser mourir
+
+
+#refrain
+C   Em/B            Am  Am7/G             F  Fmaj7              F/G  G
+Stone le monde est stone, je cherche le soleil, au milieu de la nuit
+                       C  Em/B                Am  Am7/G               F  Fmaj7
+J'sais pas si c'est la terre, qui tourne à l'envers, ou bien si c'est moi
+                  F/G  G                 Cm
+Qui m'fais du cinéma, qui m'fais mon cinéma
+Fm  Db  Csus4  C  Fm  Db
+
+Csus4    C       Db  Fm/C              Bbm7
+Je cherche le soleil, au milieu de ma nuit
+
+#instru
+Eb  Dbsus4  Db  Gsus4  G7
+
+C  Em/B             Am  Am7/G  F  Fmaj7  F/G  G
+Stone le monde est stone
+C  Em/B  Am  Am7/G  F  Fmaj7  F/G  G
+
+C  Em/B  Am  Am7/G  F  Fmaj7  Dm/G  G  Cm
+
+Fm                     Db     C7                    Fm                    Db
+J'ai plus envie d'me battre, j'ai plus envie d'courir, comme tous ces automates
+C7                  Db   Fm/C                  Bbm7  Bm7/Ab                      Dm
+Qui bâtissent des empires, que le vent peut détruire, comme des châteaux de cartes
+Dsus4  D  Gsus4  G7
+
+
+#refrain
+C  Em/B             Am  Am7/G
+Stone le monde est stone
+F  Fmaj7  Gsus4  G7
+
+                   C  Em/B                Am  Am7/G            F  Fmaj7
+Laissez-moi me débattre, venez pas m'secourir, venez plutôt m'abattre
+                      Gsus4  G7                 C  Em/B                      Am  Am7/G
+Pour m'empêcher d'souffrir, j'ai la tête qui éclate, j'voudrais seulement dormir
+                   F  Fmaj7                Gsus4  G7  C#dim/A  A7
+M'étendre sur l'asphalte, et me laisser mourir
+
+#refrain modulation
+                  D  F#m7/C#              Bm  Bm7/A             G  Gmaj7
+Laissez-moi me débattre, venez pas m'secourir, venez plutôt m'abattre
+                      Asus4  A7                D  F#m7/C#                    Bm  Bm7/A
+Pour m'empêcher d'souffrir, j'ai la tête qui éclate, j'voudrais seulement dormir
+                   G  Gmaj7                Asus4  A7              D
+M'étendre sur l'asphalte, et me laisser mourir, et me laisser mourir

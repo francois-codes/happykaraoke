@@ -1,0 +1,179 @@
+Vienne
+William Sheller
+C
+chanson_française 70s
+
+#Intro : (4/4)     
+| C         | %            | G7b5        | G7        |
+
+| Gm        | %            | Asus4       |  A        |
+
+|Dm  A7/C#  | D7/C  Gm/Bb  | F/A         | C         |
+
+
+#Couplet
+F                       C/E
+Si je t'écris ce soir de Vienne,
+Cm/Eb                       D
+J'aimerais bien que tu comprennes
+Bbm/Db
+Que j'ai choisi l'absence
+F/C
+Comme dernière chance.
+G7/B                    C7/Bb
+Notre ciel devenait si lourd
+
+F/A       F                C/E
+Si je t'écris ce soir de Vienne
+Cm/Eb                       D
+Que c'est beau l'automne à Vienne
+Bbm/Db
+C'est que, sans réfléchir,
+F/C
+J'ai préféré partir
+C7                       F     F/Eb
+Et je suis à Vienne sans toi.
+
+#refrain (3/4)
+Db                 Ab
+Je marche, je rêve dans Vienne
+Abm                   Bbmsus4 Bbm
+Sur trois temps de valse lointaine.
+Gbm
+Il semble que les ombres
+Db/F
+Tournent et se confondent.
+Eb7                       Ab
+Qu'ils étaient beaux les soirs de Vienne.
+
+Db                   Ab
+Ta lettre a du croiser la mienne.
+   Abm                     Bbmsus4  Bbm
+Non, je ne veux pas que tu viennes.
+Gbm
+Je suis seul
+                Db/F
+Et j'aime être libre.
+       Ab7sus4    Ab7            Db
+Que j'aime cet exil à Vienne sans toi.
+
+#couplet
+C                   G/B
+Une vieille dame autrichienne
+Gm/Bb              A
+Comme il n'en existe qu'à Vienne
+Fm/Ab
+Me logeait dans ma chambre
+C
+Tombent de pourpre et d'ambre
+D                       G
+De lourdes tentures de soies
+
+      C                     G/B
+C'est beau à travers les persiennes
+            Gm/Bb        A
+Je vois l'église Saint-Etienne
+Fm/Ab
+Et quand le soir se pose
+C
+Ses bleus, ses gris, ses mauves
+G7                           C    C7/Bb
+Et la nuit par dessus les toits
+Ab           Eb  Eb7   Db/F     C/E
+C'est beau Vienne, c'est beau Vienne
+
+
+#couplet (4/4)
+F                    C/G
+Cela va faire une semaine,
+Fm/Ab                      Bb
+Déjà, que je suis seul à Vienne.
+Bbm/Db
+C'est curieux le hasard :
+F/C
+J'ai croisé l'autre soir
+G7/B                C7/Bb
+Nos amis de Lontaccini.
+
+F                    C/G
+Cela va faire une semaine.
+Fm/Ab                      Bb
+Ils étaient de passage à Vienne.
+Bbm/Db
+Ils n'ont rien demandé
+F/C
+Mais se sont étonnés
+C7                      F      F7/Eb
+De me voir à Vienne sans toi.
+
+#refrain
+Db                 Ab
+Moi, moi, je me promène.
+Abm6          Eb9/G       
+Je suis bien, je suis bien.
+Db9/F  Db/F  Cm9b/Eb  Cm/Eb  Bbm9/Db  Bbm/Db  Ab/C  
+
+G79b
+
+
+#couplet (6/4)
+Cm                     Gm/Bb
+Et puis, de semaine en semaine,
+Gb/Bb                     Fm/Ab
+Voila que je suis seul à Vienne.
+Abm6
+Tes lettres se font rares.
+Eb/G              Gm
+Peut être qu'autre part,
+Db/F                     Csus4/F  C/E
+Tu as trouvé l'oubli de moi.
+
+Cm                          Gm/Bb
+Je lis et j'écris mais, quand même,
+Gb/Bb                          Fm/Ab
+Ce qu'il est long l'automne à Vienne.
+Abm6
+Dans ce lit à deux places
+Eb/G               Gm
+Où, la nuit, je me glace,
+Fdim7                     Eb
+Tout à coup, j'ai le mal de toi.
+Ebdim7          Bb/D     Ddim7        C
+Que c'est long Vienne, que c'est loin Vienne.
+
+#refrain (3/4)
+F                 C/E
+Si je t'écris ce soir de Vienne,
+             Cm/Eb                D
+Tu sais, c'est qu'il faut que tu viennes.
+Bbm/Db                  F/C
+J'étais parti. Pardonne moi.
+G7/B            C7/Bb
+Notre ciel devenait si lourd
+
+   F/A  F               C/E
+Et toi, de Paris jusqu'à Vienne,
+                Cm/Eb     D
+Au bout d'une invisible chaîne,
+Bbm/Db
+Tu me guettes et je pense,
+F/C
+Jouant l'indifférence,
+C7                   F   F7/Eb
+Tu m'as gardé malgré moi.
+
+#couplet
+Db                Abm/B
+Il est minuit ce soir à Vienne.
+Bb7                       Ebm7
+Mon Amour, il faut que tu viennes.
+Bbm
+Tu vois, je m'abandonne.
+A5b          F#m7
+Il est si beau l'automne
+                            Db
+Et j'aimerais le vivre avec toi.
+
+#coda(4/4)
+A             E     F#dim7      C#
+C'est beau Vienne, avec toi Vienne.

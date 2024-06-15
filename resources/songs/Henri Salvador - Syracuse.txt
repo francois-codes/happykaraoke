@@ -1,0 +1,65 @@
+Syracuse
+Henri Salvador
+A
+variété 80s
+
+#Intro
+| Cmaj9   | Dm9   |  Cmaj9  | Dm9
+
+#Verse 1
+| Cmaj9                   | Dm9
+   J'aimerais tant voir Syracuse
+| Dm9                | Cmaj9
+   L'île de Pâques et Kairouan
+| Dm9                         | Dm9  
+   Et les grands oiseaux qui s'amusent
+| Dm9         Dm7/G        | Cmaj9
+   A glisser l'aile sous le vent
+
+#Verse 2
+| Cmaj9                   | Dm9
+    Voir les jardins de Babylone
+| Dm9                     | Cmaj9
+    Et le palais du grand Lama
+| Dm9                    | Dm9  
+    Rêver des amants de Vérone
+| Dm9         Dm7/G   | Cmaj9
+    Au sommet du Fuji-Yama
+
+#Bridge
+| Gm7                    | Gm7
+    Voir le pays du matin calme
+| Gm7                   | Fmaj7
+    Aller pecher au cormoran
+| Fm7/9                   | Fm7/9  
+    Et m'enivrer de vin de palme
+      | Dm9        | G9
+    En écoutant chanter le vent
+
+#Verse 3
+| Cmaj9                   | Dm9
+    Avant que ma jeunesse s'use
+| Dm9                    | Cmaj9
+    Et que mes printemps soient partis
+| Dm9                      | Dm9  
+    J'aimerais tant voir Syracuse
+| Dm9         Dm7/G      | Cmaj9
+    Pour m'en souvenir  à Paris
+
+#Grille solo
+
+A | Cmaj9       | Dm9         | %            | Cmaj9       |
+
+  | Dm9         | %           | Dm9   Dm7/G  | Cmaj9       |
+
+A | Cmaj9       | Dm9         | %            | Cmaj9       |
+
+  | Dm9         | *           | Dm9   Dm7/G  | Cmaj9       |
+
+B | Gm7         | %           | %            | Fmaj7       |
+
+  | Fm(maj7)    |Fm(maj7)     | Dm9          | G9          |
+
+A | Cmaj9       | Dm9         | %            | Cmaj9       |
+
+  | Dm9         | %           | Dm9   Dm7/G  | Cmaj9       |

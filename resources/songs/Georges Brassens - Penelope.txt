@@ -1,0 +1,137 @@
+Penelope
+Georges Brassens
+Am
+Chanson_Française 60s
+
+#Intro
+| E     | C#m     | A     | B7     |   (x2)
+
+#Couplet 1
+E               C#m
+Toi l'épouse modèle
+A              B7
+Le grillon du foyer
+E                 Ddim
+Toi qui n'a point d'accrocs
+         C#7
+Dans ta robe de mariée
+F#m         A         G#7
+Toi l'intraitable Pénélope
+
+A               B7
+En suivant ton petit
+E             C#m
+Bonhomme de bonheur
+G#7
+Ne berces-tu jamais
+C#m
+En tout bien tout honneur
+
+ A           B         Ddim    C#7
+De jolies pensées interlopes
+ A            G#7      C#m     B7
+De jolies pensées interlopes...
+
+#Couplet 2
+E               C#m
+Derrière tes rideaux
+A               B7
+Dans ton juste milieu
+E                Ddim
+En attendant l'retour
+        C#7
+D'un Ulysse de banlieue
+
+F#m          A             G#7
+Penchée sur tes travaux de toile
+A                     B7
+Les soirs de vague à l'âme
+E           C#m
+Et de mélancolie
+G#7
+N'as tu jamais en rêve
+C#m
+Au ciel d'un autre lit
+
+ A           B         Ddim    C#7
+Compté de nouvelles étoiles
+ A            G#7      C#m     B7
+Compté de nouvelles étoiles...
+
+#couplet 3
+E               C#m
+N'as-tu jamais encore
+A               B7
+Appelé de tes voeux
+E               Ddim
+L'amourette qui passe
+           C#7
+Qui vous prend aux cheveux
+
+F#m          A             G#7
+Qui vous compte des bagatelles
+A                B7
+Qui met la marguerite
+E             C#m
+Au jardin potager
+G#7
+La pomme défendue
+C#m
+Aux branches du verger
+
+ A             B         Ddim    C#7
+Et le désordre à vos dentelles
+ A            G#7      C#m     B7
+Et le désordre à vos dentelles...
+
+#couplet 4
+E               C#m
+N'as-tu jamais souhaité
+A               B7
+De revoir en chemin
+E             Ddim
+Cet ange, ce démon
+        C#7
+Qui son arc à la main
+
+F#m          A             G#7
+Décoche des fléches malignes
+A                       B7
+Qui rend leur chair de femme
+E                   C#m
+Aux plus froides statues
+G#7
+Les bascul' de leur socle
+C#m
+Bouscule leur vertu
+
+ A           B         Ddim    C#7
+Arrache leur feuille de vigne
+ A            G#7      C#m     B7
+Arrache leur feuille de vigne...
+
+#couplet 5
+E                    C#m
+N'aie crainte que le ciel
+A                  B7
+Ne t'en tienne rigueur
+E                    Ddim
+Il n'y a vraiment pas là
+        C#7
+De quoi fouetter un coeur
+
+F#m         A             G#7
+Qui bat la campagne et galope
+A               B7
+C'est la faute commune
+E            C#m
+Et le péché véniel
+G#7
+C'est la face cachée
+C#m
+De la lune de miel
+
+ A           B       Ddim    C#7
+Et la rançon de Pénélope
+ A            G#7    C#m     B7
+Et la rançon de Pénélope...

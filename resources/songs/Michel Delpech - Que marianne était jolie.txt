@@ -1,0 +1,66 @@
+Que Mariane était jolie
+Michel Delpech
+Em
+70s variété
+
+#Couplet 1
+| Em7              |   Em7b5         A7             |  Dmaj7
+ Ell'est née dans le Paris dix sept cents quatre vingt dix
+         Dmaj7   |  Dm7       G7             |  Cmaj7      |
+Comm'une rose épanouie au jardin des fleurs de lys.
+| Em7          |  Em7b5         A7      |   Dmaj7
+Mariann'a cinq enfants qu'ell'élève de son mieux
+    Dmaj7      |  Dm7           G7            |  Cmaj7     |
+Mariann'a maintenant quelques rides au coin des yeux.
+
+#refrain
+| F#m7         | F#m7             B7
+ Dieu ! Mais que Mariann'était jolie
+       |  G#m7                      C#7
+Quand ell'marchait dans les rues de Paris
+| G#m7                C#7      |  F#m7     |  B7         |  Emaj7  Fdim7 |
+  En chantant à pleine voix : « Ça ira,   ça ira  toute la vie ! »
+| F#m7         | F#m7             B7
+ Dieu ! Mais que Mariann'était jolie
+       |  G#m7                      C#7
+Quand ell'embrasait le coeur de Paris
+| G#m7                C#7      |  F#m7     |  B7         |  Emaj7    |
+En criant dessus les  toits : « Ça ira, ça ira  toute la vie ! »
+
+#Couplet 2
+| Em7              |  Em7b5         A7           |  Dmaj7
+ Il n'y a pas si longtemps que l'on se battait pour elle
+        Dmaj7       |  Dm7           G7             |  Cmaj7     |
+Et j'ai connu des printemps qui brillaient sous son soleil.
+| Em7         |   Em7b5          A7         |   Dmaj7
+Mariann'a cinq enfants, quatre fils qu'ell'a perdus
+      Dmaj7        |  Dm7         G7        |   Cmaj7    |
+Et le cinquième à présent qu'elle ne reconnaît plus.
+
+#refrain
+| F#m7         | F#m7             B7
+ Dieu ! Mais que Mariann'était jolie
+       |  G#m7                      C#7
+Quand ell'marchait dans les rues de Paris
+| G#m7                C#7      |  F#m7     |  B7         |  Emaj7  Fdim7 |
+  En chantant à pleine voix : « Ça ira,   ça ira  toute la vie ! »
+| F#m7         | F#m7             B7
+ Dieu ! Mais que Mariann'était jolie
+       |  G#m7                      C#7
+Quand ell'embrasait le coeur de Paris
+| G#m7                C#7      |  F#m7     |  B7         |  Emaj7    |
+En criant dessus les  toits : « Ça ira, ça ira  toute la vie ! »
+
+#modulation
+| Gm7           | Gm7             C7
+ Dieu ! Mais que Mariann'était jolie
+        |  Am7                      D7
+Quand ell'marchait dans les rues de Paris
+| Am7                D7      |  Gm7     |  C7         |  Fmaj7  Edim7 |
+  En chantant à pleine voix : « Ça ira,   ça ira  toute la vie ! »
+| Gm7         | Gm7             C7
+ Dieu ! Mais que Mariann'était jolie
+       |  Am7                      D7
+Quand ell'embrasait le coeur de Paris
+| Am7                D7      |  Gm7     |  C7         |  Fmaj7    |
+En criant dessus les  toits : « Ça ira, ça ira  toute la vie ! »

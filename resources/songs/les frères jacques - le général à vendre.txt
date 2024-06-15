@@ -1,0 +1,189 @@
+Le général à vendre
+Les Frères Jacques
+Am
+chanson_française 50s
+
+#Intro
+| Em   Em/D   Em/C#   Em/C   | Em/B   Em/C   Em/C#   Em/D#   |    
+
+| Em   Em/D   Em/C#   Em/C   | Em/B   Em/C   Em/C#   Em/D#   |    
+
+
+#couplet
+       Em      Em/D   Em/C     Em/B     Em      Em/D   Em/C     Em/B
+De bon matin me suis levé c'était dimanche
+          Em     Em/D  Em/C  Em/B     Em      Em/D   Em/C     Em/B
+A la carriole j'ai attelé la jument blanche
+           E7           Am
+Pour m'en aller au marché
+             D7       G
+Dans le chef-lieu du comté
+               Am                 Bbdim  B7
+Paraît qu'y avait des généraux à vendre
+
+           Em   Em/D   Em/C     Em/B     Em      Em/D   Em/C     Em/B
+Mais le soleil écrasait tant la route blanche
+          Em     Em/D   Em/C    Em/B       Em       Em/D   Em/C     Em/B
+La jument s'arrêtait si souvent sous les branches
+            E7        Am
+Que lorsque je fus rendu
+             D7       G
+On n'm'avait pas attendu
+            Em/B     B7            Em
+Et tous les généraux étaient vendus
+
+#refrain
+            Am           D9               Em
+Pourtant là-bas tout au fond du champ de foire
+              Am7          A#dim          B7
+Par un coup d'chance il en restait encore un
+           Em           
+Il n'était pas couvert de gloire
+     E7   Am
+Mais avec un peu d'ripolin
+            B       C6        B7
+Il pouvait faire encore très bien
+
+#couplet
+            Em       Em/D  Em/C    Em/B        Em      Em/D    Em/C     Em/B
+J'l'ai échangé contre un cageot de pommes pas mûres
+             Em       Em/D   Em/C     Em/B  Em     Em/D     Em/C     Em/B
+Quatre choux-fleurs et une tartine de confiture
+             E7      Am
+Tout ça pour un général
+             D7           G
+C'était vraiment pas trop mal
+           Am                     Bbdim  B7
+Et puis je l'ai chargé dans ma voiture
+
+        Em     Em/D     Em/C    Em/B    Em      Em/D    Em/C     Em/B
+A la maison on m'a fait des reproches amers
+            Em     Em/D    Em/C      Em/B    Em      Em/D    Em/C     Em/B
+Encore une fois paraît que j'm'étais laissé faire
+        E7            Am
+Un Général dans c't'état
+           D7             G
+Ça valait beaucoup moins qu'ça
+              Em/B    B7               Em
+Mais puisque c'était fait tant pis pour moi
+
+#refrain
+            Am            D9            Em
+Et puis les gosses ont eu peur de sa moustache
+            Am7         A#dim            B7
+Elle était rousse et ça les faisait pleurer
+           Em           
+On lui a coupé d'un côté
+          E7       Am
+Mais l'chien s'est mis à aboyer
+         B     C6             B7
+Alors on a laissé l'autre moitié
+
+#couplet
+           Em        Em/D   Em/C   Em/B     Em     Em/D    Em/C     Em/B
+Il fichait rien pour pas salir son beau costume
+            Em      Em/D   Em/C     Em/B    Em      Em/D    Em/C     Em/B
+De temps en temps il épluchait quelques légumes
+        E7        Am
+Ou réparait l'escabeau
+          D7         G
+Ou débouchait l'lavabo
+            Em/B     B7               Em
+Mais y n'savait même pas jouer du piano
+
+#transition Adagio
+     E7            Am    D7                G
+Pourtant certains soirs, certains soirs d'été
+Em      Am      A#dim          B7
+Le Général s'asseyait sur la paille
+        E7     Am   D7            G
+Et les yeux perdus dans l'immensité
+   Em         Am         B7
+Il nous racontait ses batailles
+
+#Pont marche
+Em         Em/D     Em/C    Em/D   Em/C       Em/D      Em   Em/D
+Il nous parlait des Dardanelles,   quand il n'était que Colonel
+G/D      G     G/D      G    G/D        G        G/D     G
+Et de la campagne d'Orient quand il n'était que Commandant
+Am/E     Am   Am/E   A  Am/E          A     Am/E   A
+L'épopée napoléonienne  quand il n'était que Capitaine
+B/C        B      B/F#    B     B/F#          B      B/F#    B
+Et puis la Guerre de Cent Ans   quand il n'était que Lieutenant
+
+Am/E          Am   Am/E    Am   Am/E         Am      Am/E     Am
+Les Croisades et Pépin le Bref  quand il n'était que Sergent-Chef
+G/D    G         G/D    G     G/D          G      G/D   G
+Et les éléphants d'Annibal   quand il n'était que Caporal
+C/G        C      C/G   C   C/G         C        C/G       C
+Les Thermopyles, Léonidas  quand il n'était que deuxième classe
+F#        F#/C#    F#     F#/C#    Am6                        B7
+Et Ramsès II, la première guerre  quand sa mère était cantinière
+
+#transition Adagio
+     E7      Am   D7               G
+Et   le  Général jusqu'au p'tit matin
+Em           Am          A#dim          B7
+Déroulait le fil de son immense histoire
+          E7    Am   D7               G
+Puis il s'endormait sur sa botte de foin
+   Em            Am       A#dim       B7
+Et nous sans parler, nous rêvions de gloire
+
+#couplet
+          Em      Em/D     Em/C     Em/B     Em     Em/D    Em/C     Em/B
+Il est resté comme ça chez nous jusqu'à l'automne
+            Em      Em/D    Em/C    Em/B  Em      Em/D    Em/C     Em/B
+Sans travailler sans trouver la vie monotone
+           E7       Am
+Ça nous a même étonnés
+            D7        G
+D'apprendre par le curé
+             Am                    Bbdim  B7
+Qu'il avait fait deux jumeaux à la bonne
+
+           Em       Em/D    Em/C  Em/B   Em     Em/D    Em/C     Em/B
+Et puis voilà qu'par un beau matin de décembre
+         Em      Em/D  Em/C    Em/B      Em      Em/D    Em/C     Em/B
+Il est entré sans même frapper dans ma chambre
+             E7              Am
+Il v'nait de lire dans l'journal
+             D7        G
+Qu'on le nommait Maréchal
+         Em/B     B7              Em
+Alors il nous quittait c'était fatal
+
+#refrain
+              Am          D9            Em
+Je l'ai r'conduit en carriole jusqu'à la ville
+          Am7           A#dim            B7
+On m'a rendu mes choux-fleurs et mes cageots
+          Em           
+Et sans émotion inutile
+      E7       Am
+Sans pleurs et sans se dire un mot
+     B       C6             B7
+On s'est quittés en vrais héros
+
+#couplet
+        Em     Em/D     Em/C     Em/B  Em     Em/D    Em/C     Em/B
+A la maison la vie a r'pris sans aventure
+            Em        Em/D    Em/C    Em/B  Em      Em/D    Em/C     Em/B
+Y a plus personne pour nous chiper des confitures
+        E7       Am
+Le Général au bistrot
+           D7        G
+Avait planté un drapeau
+            Am                  Bbdim  B7
+Pour la patrie j'ai payé la facture
+
+           Em      Em/D   Em/C  Em/B   Em     Em/D    Em/C     Em/B
+Je ne suis plus jamais retourné au marché
+              Em       Em/D    Em/C   Em/B     Em      Em/D    Em/C     Em/B
+Mais quelques fois dans le ciel de la nuit d'été
+           E7           Am
+On voit briller cinq étoiles
+            D7         G
+Et ça nous fait un peu mal
+         Em/B     B7              E6
+Oh n'achetez jamais un Général

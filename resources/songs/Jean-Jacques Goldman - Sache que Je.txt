@@ -1,0 +1,75 @@
+Sache que je
+Jean-Jacques Goldman
+F#m
+Variété 90s
+
+
+#intro:
+E5 D5 C5  x2
+
+#couplet@
+E5          é                D5       C5
+Il y a des ombres dans "je t'aime"
+E5                          D5       C5
+Pas que de l'amour pas que ca
+E5                          D5       C5
+Des traces de temps qui trainent
+C5                           B5
+Y'a du contrat dans ces mots la
+
+E5                          D5       C5
+Tu dis l'amour a son langage
+E5                          D5       C5
+Et moi les mots ne servent a rien
+E5                          D5       C5
+S'il te faut des phrases en otage
+C5                           B5
+Comme un sceau sur un parchemin
+
+#retrain
+Em            C  Am        B
+     Alors sache que       je
+Em  C  Am             B
+       Sache le
+Em  C  Am             B
+       Sache que      je
+
+Em  C  Am             B
+
+#couplet
+E5                        D5       C5
+Il y a mourir dans je t'aime
+E5                          D5       C5
+Il y a je ne vois plus que toi
+E5                      D5       C5
+Mourir au monde a ses poemes
+C5                           B5
+Ne plus lire que ses rimes a soi
+
+#couplet
+E5                    D5       C5
+Un malhonnete stratageme
+E5                      D5            C5
+Ces trois mots la ne s'affirment pas
+E5                      D5               C5
+Il y a une question dans je "je t'aime"
+C5                           B5
+Qui demande "et m'aimes-tu toi ?"
+
+#refrain
+Em             C  Am        B
+      Alors sache que       je
+Em  C  Am             B
+       Sache le
+Em  C  Am             B
+       Sache que      je
+| Em    C| C      | A    B7| B7     |
+
+#solo Fin
+| Em    C| C      | A    B7| B7     | (x4)
+
+| Em    C| C      | A    B7| B7     | (x2)
+
+| Em    D| D      | G    C | C      |
+
+| Am     |        | B7     |        |

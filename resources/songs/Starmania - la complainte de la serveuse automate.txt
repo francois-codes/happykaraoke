@@ -1,0 +1,149 @@
+La complainte de la serveuse automate
+Starmania
+Cm
+Variété comédie_musicale 70s
+
+#Intro
+| Cm   Ab/C  | Cm   Ab/C |
+
+
+#Verse 1
+Cm          Ab/C              Cm   Ab/C
+J'ai pas d'mandé à v'nir au monde
+Cm              Ab/C                   Eb    Ebmaj7
+J'voudrais seul'ment qu'on m'fiche la paix
+Cm          Cm/Bb                    Cm/Ab
+J'ai pas envie d'faire comme tout l'monde
+                                 Gsus4   G
+Mais faut bien que j'paye mon loyer...
+               Gm7/Bb   G7/B   Cm    Ab/C   Cm   Ab/C
+J'travaille à l'Underground Café
+
+#Verse 2
+Cm                 Ab/C         Cm   Ab/C
+J'suis rien qu'une serveuse automate
+Cm                Ab/C            Eb   Ebmaj7
+Ça m'laisse tout mon temps pour rêver
+Cm                  Cm/Bb                 Cm/Ab
+Même quand j'tiens plus d'bout sur mes pattes
+                                Gsus4  G
+J'suis toujours prête à m'envoler...
+               Gm7/Bb   G7/B   Cm    Ab/C   Cm   Ab/C   Cm
+J'travaille à l'Underground Café
+
+#Pre-Chorus
+Bdim7           Cm
+  Un jour vous verrez
+Bdim7             Cm
+  La serveuse automate
+Bdim7   Cm
+   S'en aller
+Abmaj7            Gsus4  G7
+  Cultiver ses tomates
+      Gm7/C  C7
+Au soleil
+
+#Chorus
+Fm7                    Bb7           Ebmaj7
+Qu'est-ce que j'vais faire aujourd'hui ?
+                      Abmaj7     F#dim7
+Qu'est-ce que j'vais faire demain ?
+Gsus4              G7            Gm7/C   C7
+ C'est c'que j'me dis tous les matins
+Fm7                    Bb7          Ebmaj7
+Qu'est-ce que je vais faire de ma vie ?
+            Abmaj7     F#dim7
+Moi j'ai envie de rien
+Gsus4          G7          Gm7/C   C7
+ J'ai juste envie d'êt' bien
+
+#Bridge
+Fm7/Ab
+J'veux pas travailler
+Cm
+Juste pour travailler
+Abmaj7       Gsus4  G
+Pour gagner ma vie
+      Gm7/C  C7
+Comme on dit
+Fm7/Ab
+J'voudrais seul'ment faire
+Cm
+Quelque chose que j'aime
+Abmaj7             Gsus4  G
+J'sais pas c'que j'aime
+             Gm7/C  C7
+C'est mon problème
+
+#Verse 3
+Cm            Ab/C                Cm   Ab/C
+De temps en temps j'gratte ma guitare
+Cm                Ab/C                    Eb   Ebmaj7
+C'est tout c'que j'sais faire d'mes dix doigts
+Cm           Cm/Bb           Cm/Ab
+J'ai jamais rêvé d'être une star
+                             Gsus4  G
+J'ai seul'ment envie d'être moi
+          Gm7/Bb   G7/B  Cm    Ab/C
+Ma vie ne me ressemble pas...
+G              Gm7/Bb   G7/B   Cm   Ab/C   Cm   Ab/C
+J'travaille à l'Underground Café
+
+#Verse 4
+Cm                Ab/C            Cm   Ab/C
+Y a longtemps qu'j'ai pas vu l'soleil
+Cm         Ab/C          Eb    Ebmaj7
+Dans mon univers souterrain
+Cm            Cm/Bb             Cm/Ab
+Pour moi tous les jours sont pareils
+                           Gsus4  G
+Pour moi la vie ça sert à rien
+             Gm7/Bb  G7/B   Cm   Ab/C
+Je suis comme un néon éteint...
+G              Gm7/Bb   G7/B   Cm   Ab/C   Cm   Ab/C   Cm
+J'travaille à l'Underground Café
+
+#Pre-Chorus
+Bdim7           Cm
+  Un jour vous verrez
+Bdim7             Cm
+  La serveuse automate
+Bdim7   Cm
+   S'en aller
+Abmaj7            Gsus4  G7
+  Cultiver ses tomates
+      Gm7/C  C7
+Au soleil
+
+#Chorus
+Fm7                    Bb7           Ebmaj7
+Qu'est-ce que j'vais faire aujourd'hui ?
+                      Abmaj7     F#dim7
+Qu'est-ce que j'vais faire demain ?
+Gsus4              G7            Gm7/C   C7
+ C'est c'que j'me dis tous les matins
+Fm7                    Bb7          Ebmaj7
+Qu'est-ce que je vais faire de ma vie ?
+            Abmaj7     F#dim7
+Moi j'ai envie de rien
+Gsus4          G7          Gm7/C   C7
+ J'ai juste envie d'êt' bien
+
+#Instrumental
+| Fm7   Bb7  | Ebmaj7    Abmaj7  | F#dim7   G7sus4 G7  | Gm7/C   C7 |
+
+#Chorus
+Fm7             Bb7
+Un jour vous verrez
+                Ebmaj7
+La serveuse automate
+        Abmaj7            F#dim7
+S'en aller cultiver ses tomates
+G7sus4   G7      Gm7/C   C7
+           Au soleil
+
+#Outro
+| Fm7   Bb7  | Ebmaj7    Abmaj7  | F#dim7
+
+G7sus4 G7 |  Gm7/C   C7 |
+       Au soleil...

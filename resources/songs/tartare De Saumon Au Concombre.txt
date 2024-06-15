@@ -1,0 +1,437 @@
+Tartare de Saumon au concombre
+Les Coqs en Pâte
+C
+coqs 00s
+
+#Pelez le concombre
+<BbM7       C                   D-7      D-7/C
+Pelez, oui, pelez le concombre, pelez-le mes frères
+<BbM7       C                   D-7       D-7/C
+Pelez, oui, pelez le concombre, pelez-le mes frères
+<BbM7       C                   D-7           D-7/C
+Pelez, oui, pelez le concombre, pelez le concombre
+<Bm7     BbM7       A-7           A7#9
+pelez le concombre, pelez le concombre
+<BbM7       C                   D-7      D-7/C
+Pelez, oui, pelez le concombre.
+
+
+<BbM7       C                   D-7      D-7/C
+
+<BbM7       C                   D-7      D-7/C
+
+
+<BbM7       C                   D-7             D-7/C
+Pelez, oui, pelez le concombre, pelez le concombre
+<Bm7     BbM7      A-7                A7#9
+pelez le concombre, pelez le concombre...
+
+
+<G-7 C7    G-7    C7     FM7    Db7
+Pelez-le, pelez-le concombre
+<G-7 C7    G-7    C7        FM7  D7#9
+
+<G-7 C7    G-7    C7     FM7    Db7
+Pelez-le, pelez-le concombre
+<G-7 C7    G-7    C7    FM7
+
+
+
+#Ôtez les graines
+<FM7  EbM7/F        BbM7/F         Bbm6/F
+Ouvreeeeeeez le concombre en deux
+<FM7  EbM7/F        BbM7/F         Bbm6/F
+Coupeeeeeeez, dans le sens de la longueur (x4)
+
+<G-7/C A-7/C    G-7/C    A-7/C
+Ôtez les graines,
+<G-7/C A-7/C    G-7/C    A-7/C
+Avec une cuiller.
+<G-7/C A-7/C    G-7/C    A-7/C
+Ôtez les graines,
+<G-7/C A-7/C    G-7/C    A-7/C
+Ôtez les graines,
+
+<Bb-7   Eb7      Bb-7     Eb7
+Epépinez,
+<Bb-7   Eb7      Bb-7     Eb7
+Bien nettoyer.
+<G-7/C  A-7/C    G-7/C    A-7/C
+Epépinez,
+<G-7/C  A-7/C    G-7/C    A-7/C
+Bien nettoyer.
+
+
+#Coupez le concombre
+
+N.C.
+Coupez le concombre, coupez en petits petits dés, coupez en tout petits dés
+N.C.
+Coupez le concombre, coupez en petits petits dés... en petits dés
+N.C.
+Mais prenez bien garde, les couteaux sont bien aiguisés, les couteaux sont aiguisés
+N.C.
+Coupez le concombre, coupez en petits petits dés
+
+<G-7                C7                       D-7      D7#9
+Coupez le concombre, coupez en petits petits dés, coupez en tous petits dés
+<G-7                C7                       D-7      D7#9
+Coupez le concombre, coupez en petits petits dés... en petits dés
+<G-7                   C7                           D-7       D7#9
+Mais prenez bien garde, les couteaux sont bien aiguisés, les couteaux sont aiguisés
+<G-7                C7                       D-7      D7#9
+Coupez le concombre, coupez en petits petits dés
+
+#solo
+<G-7                C7                       D-7      D7#9
+
+
+<G-7              C7                     D-7     D7#9
+Déposez les dés, déposez-les dans la timbale, petits dés dans la timbale
+<G-7              C7                     D-7     D7#9
+Déposez les dés, déposez-les dans la timbale, la timbale
+<G-7              C7                     D-7     D7#9
+Déposez les dés, déposez-les dans la timbale, petits dés dans la timbale
+<G-7              C7                     D-7     D7#9
+Déposez les dés, déposez-les dans la timbale
+
+
+#Prenez la menthe
+<G
+Maintenant prenez les ciseaux (maintenant prenez les ciseaux)
+<G/F
+Et prenez le verre de menthe (et prenez le verre de menthe)
+<C-7/Eb                  C-7/D
+Maintenant prenez les ciseaux (maintenant prenez les ciseaux)
+<Cdim                  D7b9
+Et prenez le verre de menthe
+
+
+#Coupez la menthe - début
+Eb             D7b9        G
+Coupez, coupez avec des ciseaux,
+<Eb            D7b9        G
+Coupez en tous petits morceaux,
+<C-        C-5+          C#dim              D7
+Coupez la menthe en tous petits, petits, petits morceaux,
+<Eb            D7b9        G
+Coupez la menthe dans le verre. (bis)
+
+
+#solo 4x4
+Eb             D7b9        G
+
+Eb            D7b9        G
+
+C-        C-5+          C#dim              D7
+
+Eb            D7b9        G
+
+
+#Coupez la menthe - fin
+Eb             D7b9        G
+Coupez, coupez avec des ciseaux,
+<Eb            D7b9        G
+Coupez en tous petits morceaux,
+<C-        C-5+          C#dim              D7
+Coupez la menthe en tous petits, petits, petits morceaux,
+<Eb            D7b9        G
+Et mettez la sur le concombre,
+<Eb            D7b9        G
+Et mettez la sur le concombre,
+<Eb            D7b9        G
+Et mettez la sur le concombre.
+
+
+#Crème
+N.C.               G
+Ajoutez la crème fraîche,
+                        A-7
+Deux belles cuillers à soupe,
+                        C-7
+Deux belles cuillers à soupe ,
+                        D7
+Deux belles cuillers à soupe,
+                     G
+De crème sur les concombres (bis)
+
+
+#solo
+
+G          %         A-7        %
+
+C-7        D7        G          %
+
+G          %         A-7        %
+
+                        C-7
+Deux belles cuillers à soupe ,
+                        D7
+Deux belles cuillers à soupe,
+                     G         B7
+De crème sur les concombres
+
+
+#Salez, poivrez
+N.C.                 E-7
+Mettez du sel et du poivre,
+ A                      F#-         B7
+Salez, poivrez selon votre goût
+                     E-7
+Mettez du sel et du poivre,
+ A                      F#-         B7
+Salez, poivrez selon votre goût
+
+             E-7     A
+Une jolie pincée de sel,
+             F#-     B7
+Une jolie pincée de poivre
+                     E-7
+Mettez du sel et du poivre,
+A        F#-         B7
+
+N.C.
+Mélangez, mélangez, mélangez, mélangez...
+N.C.
+Mélangez, mélangez, mélangez, mélangez... (bis)
+
+
+#Le saumon
+E-7        A7        E-7        A7
+
+
+E-7                  A7                    E-7          A7
+Coupez le saumon doucement, en tous petits dés
+E-7                  A7                    E-7          A7
+Coupez le saumon doucement, en tous petits dés, petits dés
+E-7                  A7                    E-7          A7
+Découpez le saumon en dés, le plus fin possible, possible
+G-7                  C7                    E-7          A7
+Découpez le saumon en dés, le plus fin possible (bis)
+
+#Instrumental
+DM7        CM7/D        GM7        G-7    C7
+
+DM7        CM7/D        E-7        A7
+
+DM7        CM7/D        GM7        G-7    C7
+
+DM7        CM7/D        E-7        A7
+
+
+#Bass solo
+E-7                  A7                    E-7          A7
+
+
+#Instrumental
+DM7        CM7/D        GM7        G-7    C7
+
+DM7        CM7/D        E-7        A7
+
+DM7        CM7/D        GM7        G-7    C7
+
+DM7        CM7/D        E-7        A7
+
+
+#Réservez
+E-7                        A7
+Réservez, dans l'autre timbale (x4)
+
+E-7        D#5+        D-7        G7
+
+
+#Marinade : l'huile d’olive
+C        C+        D-7      %
+
+G        G7        C        A7/C#
+
+D-7      G7        C        A-
+
+D7                 G7
+
+
+C       C+       D-7
+Versez l'huile d'olive,
+G         G7         C     A7/C#
+2 belles cuillers à soupe
+D-7       G7           C         A-
+2 belles cuillères sur le saumon
+D7                G7
+Versez, l’huile d’olive
+
+C       C+       D-7
+Versez l'huile d'olive,
+G         G7         C     A7/C#
+2 belles cuillers à soupe
+D-7       G7           C         A-
+2 belles cuillères sur le saumon
+D7      G7          C
+Versez, l’huile d’olive
+
+
+#Marinade : le citron
+C                                   C   G   C
+Pressez-vous, pressez-vous, pressez le citron
+C                               G
+Pressez-vous, pressez vous, sur le saumon
+C                                   C   G   C
+Pressez-vous, pressez-vous, pressez le citron,
+        G             C   G   C
+Pressez le citron sur le saumon (bis)
+
+
+A-                           A-  D  A-
+Par pitié pressez-le pressez doucement,
+A-                   D-  A-  E  A-
+Pressez-le doucement pauvre citron
+A-                           A-  D  A-
+Par pitié pressez-le pressez doucement,
+A-                       D7     G
+Pressez-le doucement sur le saumon
+
+
+A-                                 A-  D  A-
+Non messieurs, sans pitié, pressez le citron,
+A-                    D-  A-  E  A-
+Sans pitié pressez-le sur le saumon
+A-                                 A-  D  A-
+Non messieurs, sans pitié, pressez le citron,
+A-                        D7     G
+Sans pitié pressez-le sur le saumon
+
+
+C                                   C   G   C
+Pressez-vous, pressez-vous, pressez le citron
+C                               G
+Pressez-vous, pressez-vous, sur le saumon
+C                                   C   G   C
+Pressez-vous, pressez-vous, pressez-le citron,
+        G             C   G   C
+Pressez-le citron sur le saumon (bis)
+
+B7
+
+
+#Marinade : le sel et les baies
+N.C.                 E-
+Mettez du sel et du poivre,
+A                       F#-        B7b9
+Salez, poivrez selon votre goût (bis)
+
+
+              E-     A                 F#-    B7b9
+Une jolie pincée de sel, une jolie pincée de poivre
+                     E-        A    F#m    B7    E7
+Mettez du sel et du poivre
+
+
+    A-       D-                     B7b5         E7
+Mettez des baies, de jolies petites baies roses
+                      A-      D-                     B7b5         E7
+Saupoudrez sur le saumon, saupoudrez d’une pincée de baies roses
+                A-       D-     B7b5     E7
+Parfumez la marinade
+                A-       D-     B7b5     E7
+
+
+
+#Marinade : la coriandre
+  E                   D-7
+Coupez la coriandre, coupez la coriandre
+  E                   D-7         E
+Coupez dans le verre, avec les ciseaux (sik sik sik) (bis)
+
+
+  E                   D-7
+Versez la coriandre, versez la coriandre,
+  E                 D-7        E
+Versez la coriandre sur le saumon (bis)
+
+
+#Solo
+A-7        D-7        A-7        B7    E7
+
+A-7        D-7        A-7        B7    E7
+
+E          D-7        E          D-7   E
+
+E          D-7        E          D-7   E
+
+
+A-7   D-7       A-7       B7         E7
+Mélangez, mélangez, mélangez la marinade de saumon (bis)
+N.C.
+Mélangez, mélangez, mélangez la marinade de saumon (bis)
+
+#Solo
+E          D-7        E          D-7   E
+
+E          D-7        E          D-7   E
+
+E          D-7        E          D-7   E
+
+E          D-7        E          D-7   E
+
+
+
+#Montage
+GM7/A        F#-7/A
+
+
+<GM7/A               F#-7/A
+Répartissez donc le concombre,
+<GM7/A               F#-7/A
+Répartissez donc le concombre,
+<FM7/G       E-/G
+Dans chaque verre,
+<FM7/G       E-/G
+Dans chaque verre. (bis)
+
+CM7/D        Bm7/D
+(x4)
+
+
+<C6                  G6
+Répartissez donc le saumon,
+<C6                  G6
+Répartissez donc le saumon dans chaque verre,
+<C6                  B-7          FM7
+Répartissez donc le saumon dans chaque verre. (bis)
+
+
+C6                   G6
+
+C6                   G6
+
+C6                   B-7
+
+FM7                  %
+
+
+<C6                   G6
+Voilà, la recette est finie,
+<C6                   G6
+Vous allez pouvoir déguster,
+<C6                   B-7
+Voilà, la recette est finie,
+FM7
+Alleluia
+
+
+
+#Fin
+Bb/D        C6/D        D-7         G7/D
+
+Bb/D        C6/D        D-7         G7/D
+
+Bb          C6          D-7         G7/D
+
+Bb          C6          D-7         G7/D
+
+Eb          Fsus4       G-7         C7
+
+Eb          Fsus4       Gsus47      G7
+
+C6          B-7         A-7         D7
+
+Gm

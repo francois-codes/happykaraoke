@@ -1,0 +1,48 @@
+Because
+The Beatles
+C#m
+English pop 60s
+
+
+#Intro
+   C#m      C#m/E_C#m/G#_C#m       C#m/E_C#m/G#_D#m7-5          G#
+|  /  /  /   /___/  |  /  /  /   /___/  |  /  /  /  / | /  /  /  / |
+
+   A        A/E    C#m       C#m/G#     A7           A13
+|  /  /  /   /  |  /  /  /   /    |  /  /  /  / |  /  /  /  / |
+D                        Ddim
+Ah, ah, ah - ah -ah - ah, ah------!
+
+#Verse 1
+      C#m       C#m/E_C#m/G#_C#m        C#m/E  C#m/G#_D#m7b5_G#
+Be - cause the world is    round it turns me   on--------,
+      A    A/E_C#m    C#m/G#   A7     A13
+Be - cause the  world is     round----------,
+D                        Ddim
+Ah, ah, ah - ah -ah - ah, ah----!
+
+#Verse 2
+     C#m        C#m/E_C#m/G#_C#m      C#m/E  C#m/G#  D#m7b5   G#
+Be - cause the wind is   high it blows my    mind-------,
+     A     A/E  C#m   C#m/G#  A7     A13
+Be - cause the  wind is     high----------,
+D                        Ddim
+Ah, ah, ah - ah -ah - ah, ah!
+
+#Break
+        Ddim        F#                            G#7
+Love is old, love is new, ...love is all, love is you
+
+#Verse 3
+      C#m       C#m/E_C#m/G#_C#m       C#m/E  C#m/G#_D#m7b5  G#
+Be - cause the sky  is   blue, it makes me   cry-------,
+     A     A/E  C#m  C#m/G#   A7    A13
+Be - cause the  sky is     blue--------,
+D                        Ddim   C#m
+Ah, ah, ah - ah -ah - ah, ah---------!
+
+#Coda
+D#m7b5               G#               A
+Ah,  ah - ah - ah!  Ah, ah, ah, ah, ah!
+C#m   A7               A13   D                    Ddim
+     Ah, ah, ah - ah, ah!   Ah, ah - ah, ah - ah, ah!

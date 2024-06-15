@@ -1,0 +1,108 @@
+Dragostea din tei
+O-Zone
+C
+pop english 00s
+
+#Intro
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+
+#Verse 1
+  F     C        G          Am
+Alo, Salut, sunt eu, un haiduc,
+      F      C              G        Am
+Și te rog, iubirea mea, primește fericirea.
+  F    C       G       Am
+Alo, alo, sunt eu Picasso,
+          F  (NC)          C
+Ți-am dat beep, și sunt voinic,
+       G                Am
+Dar sa știi, nu-ți cer nimic.
+
+#Chorus
+        F                      C
+Vrei să pleci dar nu mă, nu mă iei,
+             G                        Am
+Nu mă, nu mă iei, nu mă, nu mă, nu mă iei.
+       F                    C
+Chipul tău și dragostea din tei,
+       G             Am
+Mi-amintesc de ochii tăi.
+
+        F                      C
+Vrei să pleci dar nu mă, nu mă iei,
+             G                        Am
+Nu mă, nu mă iei, nu mă, nu mă, nu mă iei.
+       F                    C
+Chipul tău și dragostea din tei,
+       G             Am
+Mi-amintesc de ochii tăi.
+
+#Verse 2
+   F          C        G     Am
+Te sun, să-ți spun, ce simt acum,
+F      C               G       Am
+Alo, iubirea mea, sunt eu, fericirea.
+  F    C        G              Am
+Alo, alo, sunt iarăși eu, Picasso,
+          F             C
+Ți-am dat beep, și sunt voinic,
+        G               Am
+Dar sa știi, nu-ți cer nimic
+
+#Chorus
+        F                      C
+Vrei să pleci dar nu mă, nu mă iei,
+             G                        Am
+Nu mă, nu mă iei, nu mă, nu mă, nu mă iei.
+       F                    C
+Chipul tău și dragostea din tei,
+       G             Am
+Mi-amintesc de ochii tăi.
+
+#Chorus
+        F                      C
+Vrei să pleci dar nu mă, nu mă iei,
+             G                        Am
+Nu mă, nu mă iei, nu mă, nu mă, nu mă iei.
+       F                    C
+Chipul tău și dragostea din tei,
+       G             Am
+Mi-amintesc de ochii tăi.
+
+#Instrumental
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+      F         C         G         Am
+Ma-ia-hii Ma-ia-huu Ma-ia-hoo Ma-ia-haha
+
+#Chorus
+        F                      C
+Vrei să pleci dar nu mă, nu mă iei,
+             G                        Am
+Nu mă, nu mă iei, nu mă, nu mă, nu mă iei.
+       F                    C
+Chipul tău și dragostea din tei,
+       G             Am
+Mi-amintesc de ochii tăi.
+
+        F                      C
+Vrei să pleci dar nu mă, nu mă iei,
+             G                        Am
+Nu mă, nu mă iei, nu mă, nu mă, nu mă iei.
+       F                    C
+Chipul tău și dragostea din tei,
+       G             Am
+Mi-amintesc de ochii tăi.

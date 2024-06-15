@@ -1,0 +1,101 @@
+Elle a fait un bébé toute seule
+Jean-Jacques Goldman
+F
+Variété 80s
+
+#intro country
+| F      | Bb      | F      | Bb      |
+
+
+#couplet 1
+       F        Bb   C7    F
+ Elle a fait un bébé toute seule
+       Dm7      G7         C
+ Elle a fait un bébé toute seule
+         F               A
+ C'était dans ces années un peu folles
+        Dm                   Bb
+ Où les papas n'étaient plus à la mode
+       F        Bb   C7    F
+ Elle a fait un bébé toute seule
+
+
+#couplet 2
+       F        Bb   C7    F
+ Elle a fait un bébé toute seule
+       Dm7      G7         C
+ Elle a fait un bébé toute seule
+         F                 A
+ Elle a choisi le père en scientifique
+           Dm                 Bb
+ Pour ses gènes, son signe astrologique
+       F        Bb   C7    F
+ Elle a fait un bébé toute seule
+
+#refrain
+         F_A7/E_Dm           Bb
+ Et elle court toute la journée
+        F_A7/E_Dm           Bb
+ Elle court de décembre en été
+     F               Gm7
+ De la nourrice à la baby-sitter
+      F/A                       Bb
+ Des paquets de couches au biberon de quatre heures
+          Gm7   F/A   Bb            C7        F
+ Et elle fume, fume, fume, même au petit déjeuner
+
+#couplet 3
+       F         Bb        C7    F
+ Elle défait son grand lit toute seule
+       Dm7       G7              C
+ Elle défait son grand lit toute seule
+           F                   A
+ Elle vit comme dans tous ces magazines
+        Dm                 Bb
+ Où le fric et les hommes sont faciles
+       F          Bb       C7    F
+ Elle défait son grand lit toute seule
+
+#refrain
+         F_A7/E_Dm           Bb
+ Et elle court toute la journée
+       F_A7/E_Dm           Bb
+ Elle court de décembre en été
+     F                   Gm7
+ Le garage, la gym et le blues alone
+         F/A                            Bb
+ Et les copines qui pleurent des heures au téléphone
+          Gm7  F/A   Bb          C7         F
+ Elle assume, sume, sume, sa nouvelle féminité
+
+#pont musical
+| D7         |  %         | G          | C (NC)   Cmaj7 (NC) | C7      NC  |
+
+
+#refrain
+         F_A7/E_Dm           Bb
+ Et elle court toute la journée
+       F_A7/E_Dm           Bb
+ Elle court de décembre en été
+     F               Gm7
+ De la nourrice à la baby-sitter
+      F/A                       Bb
+ Des paquets de couches au biberon de quatre heures
+          Gm7   F/A    Bb             C7        F
+ Et elle fume, fume, fume, même au petit déjeuner
+
+#outro (Très calme)
+         F                           A
+ Elle m'téléphone quand elle est mal
+                  Bb         F
+ Quand elle peut pas dormir
+       Gm7                    F              Bb             C
+ J'l'emmène au cinéma, j'lui fais des câlins, j'la fais rire
+    Dm
+ Un peu comme un grand frère
+     F               Bb              F
+ Un peu incestueux quand elle veut
+ Gm7                               F     Bb                       C
+ Puis son gamin, c'est presque le mien, sauf qu'il a les yeux bleus
+      F           Bb   C7      F
+ Elle a fait un bébé toute seule

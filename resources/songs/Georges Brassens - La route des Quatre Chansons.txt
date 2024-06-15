@@ -1,0 +1,84 @@
+La route des quatres chansons
+Georges Brassens
+A
+chanson_française 50s
+
+#intro
+| A      | (x4)
+
+
+#Verse 1
+A                  E7       A                E7
+J'ai pris la route de Dijon, Pour voir un peu la Marjolaine,
+   A            E7            A             E7
+La belle, digue digue don, Qui pleurait près de la fontaine.
+A                   E7         A               E7
+Mais elle avait changé de ton, Il lui fallait des ducatons
+  A                E7   A                 Dm  G7
+Dedans son bas de laine, Pour n'avoir plus de peine.
+
+C                  G7              C                 G7
+Elle m'a dit : « Tu viens, chéri ? Et si tu me payes un bon prix
+   C          G7       C             Dm  E7
+Aux anges je t'emmène, Digue digue don daine. »
+A                  D  E7  A                        D  E7  A
+La Marjolaine pleurait surtout, Quand elle n'avait pas de sous.
+A                D  E7  A                       D E7 A
+La Marjolaine de la chanson, Avait de plus nobles façons.
+
+#Verse 2
+A                  E7          A                  E7
+J'ai passé le pont d'Avignon, Pour voir un peu les belles dames
+ A                      E7             A                       E7
+Et les beaux messieurs tous en rond, Qui dansaient, dansaient, corps et âmes.
+A                    E7         A                   E7
+Mais ils avaient changé de ton, Ils faisaient fi des rigodons,
+     A      E7      A               Dm G7
+Menuets et pavanes, Tarentelles, sardanes,
+
+C                        G7           C                G7
+Et les belles dames m'ont dit ceci : « Étranger, sauve-toi d'ici
+      C           G7        C                 Dm E7
+Ou l'on donne l'alarme, Aux chiens et aux gendarmes ! »
+A                    D   E7 A                          D  E7 A
+Quelle mouche les a donc piquées, Ces belles dames si distinguées ?
+A                   D E7 A                          D E7 A
+Les belles dames de la chanson, Avaient de plus nobles façons.
+
+#Verse 3
+A                     E7          A                    E7
+Je me suis fait faire prisonnier, Dans les vieilles prisons de Nantes,
+ A                 E7          A                  E7
+Pour voir la fille du geôlier, Qui, paraît-il, est avenante.
+A                    E7         A                   E7
+Mais elle avait changé de ton, Quand j'ai demandé : « Que dit-on
+     A           E7     A                Dm G7
+Des affaires courantes, Dans la ville de Nantes ? »
+
+C                G7       C                   G7
+La mignonne m'a répondu : « On dit que vous serez pendu
+      C           G7      C              Dm E7
+Aux matines sonnantes, Et j'en suis bien contente ! »
+A                   D   E7  A                           D   E7 A
+Les geôlières n'ont plus de cœur, Aux prisons de Nantes et d'ailleurs.
+A              D   E7 A                      D E7 A
+La geôlière de la chanson, Avait de plus nobles façons.
+
+#Verse 4
+A              E7         A                E7
+Voulant mener à bonne fin, Ma folle course vagabonde,
+ A              E7         A                  E7
+Vers mes pénates je revins, Pour dormir auprès de ma blonde,
+A                  E7           A             E7
+Mais elle avait changé de ton, Avec elle, sous l'édredon,
+     A        E7   A                    Dm G7
+Il y avait du monde, Dormant près de ma blonde.
+
+C                      G7           C                   G7
+J'ai pris le coup d'un air blagueur, Mais, en cachette, dans mon cœur,
+      C           G7     C                    Dm E7
+La peine était profonde, L'chagrin lâchait la bonde.
+A                   D E7 A                        D  E7 A
+Hélas ! du jardin de mon père, La colombe s'est fait la paire...
+A                    D E7 A                        D     E7 A
+Par bonheur, par consolation, Me sont restées les quatre chansons.

@@ -1,0 +1,119 @@
+Hécatombe
+Georges Brassens
+G
+Chanson_Française 50s
+
+#intro
+| D     | D     |
+
+#couplet 1
+        D
+ Au marché de Brive-la-Gaillarde,
+                         D7
+ A propos de bottes d'oignons
+             G      A7      D
+ Quelques douzaines de gaillardes,
+       Bm                    E
+ Se crêpaient un jour le chignon
+         D
+ A pied, à cheval, en voiture,
+                         D7
+ Les gendarmes mal inspirés
+                G      A7   D
+ Vinrent pour tenter l'aventure,
+          Em      A7      D
+ D'interrompre l'échauffourée.
+
+#couplet 2
+          D
+ Or, sous tous les cieux sans vergogne,
+                         D7
+ C'est un usage bien établi
+               G        A7     D
+ Dès qu'il s'agit d'rosser les cognes,
+               Bm         E
+ Tout le monde se réconcilie
+       D
+ Ces furies perdant toute mesure,
+                        D7
+ Se ruèrent sur les guignols
+           G      A7       D
+ Et donnèrent je vous l'assure,
+        Em       A7        D
+ Un spectacle assez croquignol.
+
+#couplet 3
+       D
+ En voyant ces braves pandores,
+                             D7
+ Être à deux doigts de succomber
+                 G      A7   D
+ Moi, j'bichais car je les adore,
+         Bm              E
+ Sous la forme de macchabées
+           D
+ De la mansarde où je réside,
+                           D7
+ J'excitais les farouches bras
+        G        A7  D
+ Des mégères gendarmicides,
+       Em          A7            D
+ En criant: "Hip, hip, hip, hourra!"
+
+#couplet 4
+       D
+ Frénétique, l'une d'elles attache,
+                          D7
+ Le vieux maréchal des logis
+               G      A7      D
+ Et lui fait crier: "Mort aux vaches,
+          Bm                E
+ Mort aux lois, vive l'anarchie!"
+           D
+ Une autre fourre avec rudesse,
+                           D7
+ Le crâne d'un de ces lourdauds
+            G   A7      D
+ Entre ses gigantesques fesses,
+          Em      A7      D
+ Qu'elle serre comme un étau.
+
+#couplet 5
+          D
+ La plus grasse de ses femelles,
+                         D7
+ Ouvrant son corsage dilaté
+            G      A7         D
+ Matraque à grands coups de mamelles,
+           Bm             E
+ Ceux qui passent à sa portée
+              D
+ Ils tombent, tombent, tombent, tombent,
+                        D7
+ Et selon les avis compétents
+            G        A7  D
+ Il paraît que cette hécatombe,
+          Em       A7          D
+ Fut la plus belle de tous les temps.
+
+#couplet 6
+         D
+ Jugeant enfin que leurs victimes,
+                            D7
+ Avaient eu leur content de gnons
+            G         A7     D
+ Ces furies comme outrage ultime,
+          Bm               E
+ En retournant à leurs oignons
+        D
+ Ces furies à peine si j'ose,
+                         D7
+ Le dire tellement c'est bas
+               G       A7      D
+ Leur auraient même coupé les choses,
+       Em        A7          F#
+Par bonheur ils n'en avaient pas
+               G       A7      D
+Leur auraient même coupé les choses,
+       Em        A7            D  A7   D
+Par bonheur ils n'en avaient pas...

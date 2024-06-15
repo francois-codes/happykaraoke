@@ -1,0 +1,84 @@
+La Tendresse
+Jacques Brel
+D
+50s chanson_française
+
+#Intro
+| Bm  F# | D   E   | G/B  D | Gmaj7  A  |
+
+#Verse
+| D         A6    | D    A6
+Pour un peu de tendresse
+| D          A6    | D      A6
+Je donnerais les diamants
+| D         A6 | D      A6
+Que le diable caresse
+| D      Fdim7 |  G/B    A
+Dans mes coffres d'argent
+
+| B              |   Em
+Pourquoi crois-tu la belle
+ A               |  D
+Que les marins au port
+ G              | Em/C#
+Vident leurs escarcelles
+     F#7      |  Bm
+Pour offrir des trésors
+     Bm/A      |  G    F#7
+A de fausses princesses
+| Bm        Em  |  Bm   F#7 | ->
+Pour un peu de tendresse
+
+#Instrumental
+| Bm  F#  | D  E  | G/B  D  | Gmaj7  A  |
+
+#Verse
+| D         A6     | D    A6
+Pour un peu de tendresse
+| D           A6  | D      A6
+Je changerais de visage
+| D       A6     |  D      A6
+Je changerais d'ivresse
+| D           Fdim7  | G/B  A
+Je changerais  de  langage
+
+| B                    Em
+Pourquoi crois-tu la belle
+A                  |  D
+Qu'au sommet de leurs chants
+Gmaj7           |  Em/C#
+Empereurs et ménestrels
+  F#7     |  Bm
+Abandonnent souvent
+     Bm/A    | G       F#7
+Puissances et richesses
+| Bm        Em  |  Bm   F#7 | ->
+Pour un peu de tendresse
+
+#Instrumental
+| Bm  F#  | D  E  | G/B  D  | Gmaj7  A  |
+
+#Verse
+| D         A6    | D     A6
+Pour un peu de tendresse
+| D        A6     | D     A6
+Je t'offrirais le temps
+| D         A6    | D   A6
+Qu'il reste de jeunesse
+| D      Fdim7 | G/B   A
+A l'été  finissant
+| B                 | Em
+Pourquoi crois-tu la belle
+A              |  D
+Que monte ma chanson
+Gmaj7           |  Em/C#
+Vers la claire dentelle
+    F#7        |   Bm
+Qui danse sur ton front
+    Bm/A          | G      F#7
+Penché vers ma détresse
+| Bm        Em  |  Bm   F#7 | ->
+Pour un peu de tendresse
+
+#Outro
+| B   | G    | B     |

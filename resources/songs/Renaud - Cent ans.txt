@@ -1,0 +1,127 @@
+Cent ans - 100 ans
+Renaud
+Em
+80s chanson_française
+
+#Intro
+| G    |
+
+
+#Couplet 1
+| Em      Emmaj7 | Em7           Em6 |
+J'ai cent ans et j'suis bien content
+| Am7        D7   | G   B7   
+J'suis assis sur un banc
+| Em    Emmaj7   | Em7     Em6
+Et je regarde mes contemporains
+| Am7           D7       |  G   G7  |
+C'est dire si j'contemple rien
+
+| Cmaj7               Emmaj7   | Bm
+J'file des coups d'canne aux passants
+           C#dim      |  Am7
+Des coups d'pompe aux clébards
+      D7            |  G7   G7   |
+Qui m'énervent et j'me marre
+Cmaj7           Emmaj7          | Bm
+On peut rien m'dire, j'suis trop vieux
+        C#dim       |  Am7
+Trop fragile, trop précieux
+          D7      |   G     G
+J'ai cent ans qui dit mieux
+
+#Refrain
+Em          Emmaj7        |   Em7
+J'ai plus d'amour, plus d'plaisir
+      Em6           |   Am7    D7
+Plus de haine, plus d'désirs
+    | G
+Plus rien
+B7        | Em           Emmaj7  
+Mais j'suis comme le platane
+       |  Em7             Em6      |   Am7   D7
+Un peu d'pluie, j'suis en vie, ça m'suffit
+     | G    G
+J'suis bien
+
+
+| Cmaj7     Emmaj7           | Bm         C#dim  
+J'ai des marmots qui m'courent partout autour
+  | Am7                D7           |  G   G
+Des gonzesses moins, mais ça mange pas d'pain
+ | Cmaj7            Emmaj7    |  Bm           C#maj7
+J'parle aux oiseaux, comme disait l'autre idiot
+        | Am7           D7       |  G       G
+Et j'me d'mande où j'ai mis mon chapeau
+
+#Couplet 2
+| Em      Emmaj7 | Em7           Em6 |
+J'ai cent ans et j'suis bien content
+| Am7        D7    | G   B7   
+J'ai encore mal aux dents
+  |  Em      Emmaj7     | Em7      Em6
+Mais la souffrance c'est très rassurant
+| Am7           D7   | G   G7  |
+Ça n'arrive qu'aux vivants
+
+| Cmaj7        Emmaj7       | Bm
+J'attends tranquille sur mon banc
+       C#dim       |  Am7
+Que ce vieux monde explose
+        D7     | G7   G7   |
+Tant il se décompose
+    Cmaj7       Emmaj7        | Bm
+Moi ça fait quatre vingt quinze ans
+            C#dim       |  Am7
+Que j'crois plus à grand chose
+        D7            |   G     G
+Il est temps que j'me repose
+
+#Refrain
+Em          Emmaj7        |   Em7
+J'ai plus d'amour, plus d'plaisir
+      Em6           |   Am7    D7
+Plus de haine, plus d'désirs
+    | G
+Plus rien
+B7        | Em           Emmaj7  
+Mais j'suis comme le platane
+       |  Em7             Em6      | Am7   D7
+Comme ma canne, j'suis solide et ancien
+     | G    G
+J'suis bien
+
+        | Cmaj7            Emmaj7         | Bm      
+J'souhaite pas aux p'tits jeunes une bonne guerre
+           C#dim    |  Am7       D7 | G   G
+Vu qu'moi j'en ai pas eu, à part Mai 68
+| Cmaj7       Emmaj7       | Bm           C#maj7
+Mais j'me rappelle même plus en quelle année c'était
+| Am7           D7      | G   G
+Ni qui c'est qu'avait gagné
+
+
+#Couplet 3
+| Em          Emmaj7 | Em7        Em6 |
+J'ai pas cent ans, je faisais semblant
+| Am7             D7     | G   B7   
+C'étaient qu'des mots, du vent
+| Em   Emmaj7          | Em7     Em6
+Mais j'aimerais bien les avoir demain
+| Am7         D7       |  G   G7  |
+Même aujourd'hui j'veux bien
+
+| Cmaj7       Emmaj7   | Bm
+Pour jouir enfin du bonheur
+        C#dim   | Am7
+D'avoir pu traverser
+        D7       |  G7   G7   |
+Sans me faire écraser
+Cmaj7         Emmaj7     | Bm
+Cette pute de vie, ses malheurs
+        C#dim       |  Am7
+Ses horreurs, ses dangers
+          D7      |   G   
+Et ses passages cloutés
+       G | NC
+Et voilà!

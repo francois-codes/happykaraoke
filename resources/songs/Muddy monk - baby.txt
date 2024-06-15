@@ -1,0 +1,66 @@
+Baby
+Muddy Monk
+C
+00s
+
+
+#Intro
+| Fmaj7   Dm6   | Em7  Am7 |
+
+| Fmaj7  Bm7b5  | Em7  Am  |
+
+
+#Verse
+| Fmaj7     G6                |  Em7            Am
+Baby tu me rêves en quelqu'un de plus grand que moi
+| Fmaj7    G6              |  Em          Am
+Baby mes lèvres n’ont pas les super pouvoirs
+         |  Fmaj7_Dm6
+Que tu leur prêtes
+         |  Em7  Am7
+Que tu leur rêves
+| Fmaj7     G                   | Em7          C
+Baby si tes lèvres parlent encore un peu de moi
+|  Fmaj7        G7           |  Em7           Am7
+Je me ferai discret pour être encore un peu à toi
+
+      |  F/C  G7/B
+Oh tu m'élèves
+       |  G6/D C6
+Oh tu me rêves
+
+#interlude
+| Fmaj7   G6   | Em7  Am7/C |
+
+| Fmaj7   G6   | Em7  C6    |
+
+| Fmaj7   Dm   | Em7  C6    |
+
+#verse accords suspendus
+| Am7         G                | Dm7/F     C6/E
+Baby si mes rêves parlent encore un peu de toi
+| Am7              G                | Dm7/F     C6/E
+Je donnerai à mes lèvres, chacun des super pouvoirs
+         |  Am   G
+Que tu leur prêtes
+         |  F  G
+Que tu leur rêves
+| Am         G6             |  Fmaj7                 C6
+Baby si tes lèvres, ont dit la chose que l'on n’ose pas
+ | Am/C          Bm7b5             |  G             C6
+Je quitterai mes rêves pour croire enfin un peu en moi
+
+      |   F/A   G
+Oh tu m'élèves
+      |  Em7/G  C/A
+Oh tu me rêves
+
+#interlude / outro
+| Fmaj7  G6    | Em7  C6    |
+
+| Fmaj7  Dm6/G | Em7  C6    |
+
+| Fmaj7  Dm6   | Em7  C6    |
+
+Fmaj7         G7                 Em7               Am7 NC
+Baby dans nos danses, j'ai vu du bleu pour toi et moi

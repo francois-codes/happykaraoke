@@ -1,0 +1,128 @@
+Florence
+Notre Dame de Paris
+Dm
+comédie_musicale 90s
+
+#Intro
+| D   | D   | Gm/D   | Gm/D   |
+
+| D   | D   | Gm/D   | Gm/D   |
+
+
+#Frollo
+D              | Gm6    |
+Parlez-moi de Florence
+Gm6             |  D     |
+Et de la Renaissance
+D              | Gm6    |
+Parlez-moi de Bramante
+Gm6             |  D     |
+Et de l'Enfer de Dante
+
+
+#Gringoire
+D     D/C#    |  Bm     |
+À Florence on raconte
+A                |   D     |
+Que la terre serait ronde
+Gm                  |    D   |
+Et qu'il y aurait un autre
+Gm        |  D        | D    |
+Continent en ce monde
+N.C.             |  Gm7    |
+Des bateaux sont partis
+C7         | Fmaj7      |
+Déjà sur l'océan
+Bb              |   Em7-5     |
+Pour y chercher la porte
+A7                |  D      |
+De la route des Indes
+
+
+#Frollo
+Dm           | Gm7     |
+Luther va réécrire
+C7            | Fmaj7    |
+Le Nouveau Testament
+Bb             | Em7-5    |
+Et nous sommes à l'aube
+A7              | D       | D    |
+D'un monde qui se scinde
+
+
+#Gringoire
+D             | Gm6     |
+Un dénommé Gutenberg
+Gm6              |  D      |
+A changé la face du monde
+
+
+#Frollo
+D                  | Gm6     |
+Sur les presses de Nuremberg
+Gm6              |  D           |
+On imprime à chaque seconde
+
+
+#Gringoire
+D          D/C#      |   Bm      |
+Des poèmes sur du papier
+A                    |  D        |
+Des discours et des pamphlets
+
+
+#Frollo/Gringoire
+Gm         |  D      |
+De nouvelles idées
+Gm         |  D      | D      |
+Qui vont tout balayer
+
+
+#Gringoire
+N.C.               |  Gm7      |
+Les petites choses toujours
+C7               |  Fmaj7      |
+Viennent à bout des grandes
+Bb          |   Em7-5      |
+Et la littérature
+A7           |  D      |
+Tuera l'architecture
+
+
+#Frollo
+Dm            | Gm7      |
+Les livres des écoles
+C7             | Fmaj7      |
+Tueront les cathédrales
+Bb             |  Em7-5      |
+La Bible tuera l'Eglise
+A7           |  D      | D    | Gm      |
+Et l'homme sera Dieu
+Gm       |  D      | D      |
+Ceci tuera cela
+
+
+#Frollo/Gringoire
+N.C.             |  Gm7     |
+Des bateaux sont partis
+C7         | Fmaj7      |
+Déjà sur l'océan
+Bb               |  Em7-5    |
+Pour y chercher la porte
+A7               |   D     |
+De la route des Indes
+Dm          | Gm7     |
+Luther va réécrire
+C7           |  Fmaj7     |
+Le Nouveau Testament
+Bb             | Em7-5     |
+Et nous sommes à l'aube
+A7             |  D      | D    | Gm      |
+D'un monde qui se scinde
+
+
+#Frollo/Gringoire
+Gm      |  D      | D    | Gm      |
+Ceci tuera cela
+Gm      |  D      | D    | D       |
+Ceci tuera cela

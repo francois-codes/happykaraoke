@@ -1,0 +1,78 @@
+Chanson Triste
+François Verger
+Db
+20s
+
+#intro
+| Ebm  Db | Fm  Gb | Ebm    Db Db/C | Absus4  Ab |
+
+
+#verse
+| Bbm                  (NC) | Bbm (2/4)
+      Je voulais me permettre
+| Fm                 (NC)  | Fm (2/4)
+      De parler de mal-être
+| Gb              (NC) | Gb (2/4)
+     Depuis si longtemps
+  | Ab             (NC)  | Ab (2/4)
+ Aimer n'est pas évident
+
+#chorus
+    | Ebm                       | Db
+Mais j'ai pas pu écrire de chanson triste
+      |  Fm                   | Gb
+J'ai eu trop de plaisir grâce à vous artistes
+   | Ebm                         | Db  Db/C
+Vos talent rendent chaque soir magique
+        | Absus4         | Ab
+Vous avez un pouvoir chamanique
+
+#verse
+| Bbm                      (NC) | Bbm (2/4)
+       Pas besoin d'être en couple
+| Fm                      (NC)  | Fm (2/4)
+    Et je suis pas le plus souple
+| Gb                      (NC) | Gb (2/4)
+     Mais juste prendre une main
+| Ab             (NC)        | Ab (2/4)
+    Je pleure d'anciens câlins
+
+#chorus
+    | Ebm                       | Db
+Mais j'ai pas pu écrire de chanson triste
+      |  Fm                   | Gb
+J'ai eu trop de plaisir grâce à vous artistes
+   | Ebm                         | Db  Db/C
+Vos talent rendent chaque soir magique
+        | Absus4         | Ab
+Vous avez un pouvoir chamanique
+
+#verse
+| Bbm                  (NC) | Bbm (2/4)
+      Je me régale de vos voix
+| Fm                   (NC)  | Fm (2/4)
+  De vos grooves, de vos joies
+| Gb             (NC) | Gb (2/4)
+     Suis-je défectueux ?
+| Ab             (NC)  | Ab (2/4)
+   Toujours pas amoureux
+
+#chorus mod1
+    | Fm                       | E
+Mais j'ai pas pu écrire de chanson triste
+      |  Gm                   | Ab
+J'ai eu trop de plaisir grâce à vous artistes
+   | Fm                         | E  E/D
+Vos talent rendent chaque soir magique
+        | Bbsus4         | Bb
+Vous avez un pouvoir chamanique
+
+#chorus mod2 pour les cochonous
+    | Gm                       | F#
+Mais j'ai pas pu écrire de chanson triste
+      |  Am                   | Bb
+J'ai eu trop de plaisir grâce à vous artistes
+   | Gm                         | F#  F#/E
+Vos talent rendent chaque soir magique
+        | Csus4           | (NC)
+Vous avez un pouvoir chamanique

@@ -1,0 +1,47 @@
+Something about us
+Daft Punk
+F
+groove pop english 00s
+
+#intro
+| BbMaj7   | Am7     | Dm9     | G      |
+
+| BbMaj7   | A7      | D7sus4  | G7     |
+
+
+#Verse 1
+BbMaj7           Am7
+It might not be the right time
+Dm6                  G
+I might not be the right one
+            BbMaj7               A7
+But there's something about us I want to say
+              D7sus4                   G7
+Cause there's something between us anyway
+
+
+#Verse 2
+BbMaj7              Am7
+I might not be the right one
+Dm6                   G
+It might not be the right time
+            BbMaj7                  A7
+But there's something about us I've got to do
+D7sus4                     G7
+Some kind of secret I will share with you
+
+
+#Verse 3
+BbMaj7                   Am7
+I need you more than anything in my life
+Dm6                       G
+I want you more than anything in my life
+BbMaj7                      A7
+I'll miss you more than anyone in my life
+D7sus4                    G7
+I love you more than anyone in my life
+
+#Instru
+| BbMaj7   | Am7     | Dm9     | G      |
+
+| BbMaj7   | A7      | D7sus4  | G7     |

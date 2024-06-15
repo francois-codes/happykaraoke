@@ -1,0 +1,66 @@
+La chanson de Maxence
+Les demoiselles de Rochefort
+Fm
+comédie_musicale 60s
+
+#couplet 1
+ Bbm7               C7                          Fm  Fm7
+ Je l'ai cherchée partout j'ai fait le tour du monde
+   Db           Eb7                Abmaj7
+ De Venise à Java de Manille à Hankor
+ Dm7             G7      Cm7            F7
+ De Jeanne à Victoria de Vénus en Joconde
+ Bbm7                Eb7     Db(dim)        Abmaj7  F7
+ Je ne l'ai pas trouvée et je la cherche encore
+
+#couplet 2
+ Bbm7                C7                     Fm   Fm7
+ Je ne connais rien d'elle et pourtant je la vois
+ Db              Eb7                  Abmaj7
+ J'ai inventé son nom j'ai entendu sa voix
+ Dm7                G7      Cm7             F7
+ J'ai dessiné son corps et j'ai peint son visage
+ Bbm7              Eb7           Db(dim)       Abmaj7  F7
+ Son portrait et l'amour ne font plus qu'une image
+
+#couplet 3
+ Bbm7           C7                       Fm  Fm7
+ Elle a cette beauté des filles romantiques
+ Db           Eb7                   Abmaj7
+ Et d'un Botticelli le regard innocent
+ Dm7               G7      Cm7             F7
+ Son profil est celui de ces vierges mythiques
+ Bbm7              Eb7      Db(dim)      Abmaj7  F7
+ Qui hantent les musées et les adolescents
+
+#couplet 4
+ Bbm7            C7                       Fm  Fm7
+ Sa démarche ressemble aux souvenirs d'enfant
+ Db                   Eb7                  Abmaj7
+ Qui trottent dans ma tête et dansent en rêvant
+ Dm7                     G7      Cm7             F7
+ Sur son front, ses cheveux sont de l'or en bataille
+ Bbm7            Eb7      Db(dim)           Abm7  F7
+ Que le vent de la mer et le soleil chamaillent
+
+#couplet 5
+ Bbm7              C7                       Fm   Fm7
+ Je pourrais vous parler de ses yeux, de ses mains
+ Db                  Eb7                  Abmaj7
+ Je pourrais vous parler d'elle jusqu'à demain
+ Dm7                 G7      Cm7             F7
+ Son amour, c'est ma vie mais à quoi bon rêver ?
+ Bbm7                Eb7      Db(dim)           Abmaj7  F7
+ Je l'ai cherchée partout je ne l'ai pas trouvée
+
+#couplet 5
+ Bbm7            C7                       Fm  Fm7
+ Est-elle loin d'ici ? Est-elle près de moi ?
+ Db                   Eb7                        Abmaj7
+ Je n'en sais rien encore mais je sais qu'elle existe
+ Dm7             G7      Cm7   F#(dim)   F7
+ Est-elle pécheresse ou bien fille de roi ?
+ Bbm7        Eb7      Db(dim)              Abmaj7
+ Que m'importe son sang puisque je suis artiste
+ Db5            C7       Fm
+ Et que l'amour dicte sa loi
