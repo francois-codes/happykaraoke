@@ -6,6 +6,8 @@ export const userLoginPayload = z.object({
   sessionName: z.string().min(1)
 })
 
+export type UserLoginPayload = z.infer<typeof userLoginPayload>
+
 export const userLoginResponse = z.object({
   user: z.object({
     id: z.string(),
@@ -13,3 +15,5 @@ export const userLoginResponse = z.object({
     type: z.nativeEnum(UserType)
   })
 })
+
+export type UserLoginResponse = z.infer<typeof userLoginResponse>

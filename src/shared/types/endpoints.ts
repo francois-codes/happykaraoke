@@ -1,8 +1,10 @@
 import type { Request, Response, Express } from 'express'
 import axios from 'axios'
 
+// @ts-expect-error - this is fine
 interface TypedRequest<Payload> extends Request {
   body: Payload
+  params: Payload
 }
 
 interface TypedResponse<Payload> extends Response {
@@ -31,7 +33,8 @@ export function createEndpoint<Payload, ResponsePayload>({
     const { data } = await axios<ResponsePayload>({
       method,
       url,
-      data: payload
+      data: method === 'post' ? payload : undefined,
+      params: method === 'get' ? payload : undefined
     })
 
     return data

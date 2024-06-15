@@ -5,6 +5,7 @@ import { messages } from '@shared/messages'
 import { endpoints } from '@shared/endpoints'
 import bodyParser from 'body-parser'
 import { socketEmitter } from '@shared/server/socketEmitter'
+import { config } from '@shared/config'
 
 export async function startServer(configure: (app: express.Express) => void) {
   socketEmitter.on('socket:emit', ({ event, payload }) => {
@@ -25,8 +26,8 @@ export async function startServer(configure: (app: express.Express) => void) {
 
   configure(app)
 
-  server.listen(8081, () => {
-    console.log('Server started at http://localhost:8081')
+  server.listen(config.PORT, () => {
+    console.log(`Server started at http://localhost:${config.PORT}`)
   })
 
   return server

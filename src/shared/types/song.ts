@@ -1,9 +1,9 @@
-export interface ISong {
+export interface SongData {
   title: string
   author: string
   key: string
   tags: string[]
-  lines: ISongLine[]
+  lines: SongLine[]
 }
 
 export enum LineType {
@@ -14,7 +14,7 @@ export enum LineType {
   break = 'break'
 }
 
-export interface ISongLine {
+export interface SongLine {
   content: string
   type: LineType
 }

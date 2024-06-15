@@ -8,5 +8,5 @@ export function getUser(id: string) {
 
 export function createUser(id: string, name: string, type = UserType.GUEST) {
   users.set(id, { id, name, type })
-  return users.get(id)
+  return users.get(id)!
 }

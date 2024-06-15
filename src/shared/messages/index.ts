@@ -1,3 +1,3 @@
-import { testMessage } from './test'
+import { createMessage } from '@shared/types/messages'
 
-export const messages = [testMessage]
+export const messages: Array<ReturnType<typeof createMessage>> = []

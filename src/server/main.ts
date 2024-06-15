@@ -3,6 +3,7 @@ import { electronApp, optimizer } from '@electron-toolkit/utils'
 import express from 'express'
 import { startServer } from './server'
 import { join } from 'path'
+import { config } from '@shared/config'
 
 startServer((app) => {
   app.use(express.static(join(__dirname, '../client')))
@@ -11,8 +12,7 @@ startServer((app) => {
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    ...config.VIEWPORT,
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
@@ -24,7 +24,7 @@ function createWindow(): void {
     mainWindow.show()
   })
 
-  mainWindow.loadURL('http://localhost:8081')
+  mainWindow.loadURL(`http://localhost:${config.PORT}`)
 }
 
 // This method will be called when Electron has finished

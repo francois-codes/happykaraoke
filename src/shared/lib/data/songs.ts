@@ -1,6 +1,6 @@
 import { readdirSync } from 'fs'
 import { resolve } from 'path'
-import { Song, songsFolder } from './song'
+import { Song, songsFolder } from '../song/song'
 
 const songFiles = readdirSync(resolve(songsFolder))
 
