@@ -10,6 +10,6 @@ export const setScroll = createEndpoint<ScrollChangePayload, unknown>({
   handler: async (req, res) => {
     const { type, value } = req.body
     scrollChanged.server.emit({ type, value })
-    res.status(200)
+    res.sendStatus(200)
   }
 })

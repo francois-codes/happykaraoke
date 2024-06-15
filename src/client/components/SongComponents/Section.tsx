@@ -1,0 +1,13 @@
+import { titleize } from '@/utils'
+import { SongLineProps } from '@shared/types'
+import { FC } from 'react'
+
+export const Section: FC<SongLineProps> = ({ content }) => {
+  const sectionTitle = titleize(content.replace('#', ''))
+
+  return (
+    <h3 className="pb-2">
+      <strong>{sectionTitle}</strong>
+    </h3>
+  )
+}

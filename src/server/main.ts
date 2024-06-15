@@ -1,22 +1,23 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import express from 'express'
 import { startServer } from './server'
 import { join } from 'path'
 import { config } from '@shared/config'
 
-startServer((app) => {
+startServer(async (app) => {
   app.use(express.static(join(__dirname, '../client')))
 })
 
-function createWindow(): void {
+function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     ...config.VIEWPORT,
     show: false,
     autoHideMenuBar: true,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      preload: join(__dirname, 'preload.js')
     }
   })
 
@@ -33,6 +34,15 @@ function createWindow(): void {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
+  createWindow()
+
+  ipcMain.handle('request:datapath:selection', async () => {
+    const { filePaths } = await dialog.showOpenDialog({
+      properties: ['openDirectory']
+    })
+
+    return filePaths[0]
+  })
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
@@ -40,8 +50,6 @@ app.whenReady().then(() => {
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
-
-  createWindow()
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

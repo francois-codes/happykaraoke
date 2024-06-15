@@ -4,7 +4,7 @@ import axios from 'axios'
 // @ts-expect-error - this is fine
 interface TypedRequest<Payload> extends Request {
   body: Payload
-  params: Payload
+  query: Payload
 }
 
 interface TypedResponse<Payload> extends Response {

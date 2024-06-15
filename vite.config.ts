@@ -4,7 +4,12 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { resolve } from 'path'
 
 export default defineConfig({
-  plugins: [react(), nodePolyfills()],
+  plugins: [
+    react(),
+    nodePolyfills({
+      include: ['path', 'os', 'stream', 'util', 'buffer']
+    })
+  ],
   root: './src/client',
   build: {
     outDir: '../../out/client',
@@ -13,7 +18,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src/client'),
-      '@shared': resolve(__dirname, 'src/shared')
+      '@shared': resolve(__dirname, 'src/shared'),
+      fs: 'memfs'
     }
   }
 })

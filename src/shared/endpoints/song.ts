@@ -1,6 +1,7 @@
 import { getAllSongs } from '@shared/lib/data/songs'
+import { setSessionConfig } from '@shared/lib/session'
 import { Song } from '@shared/lib/song/song'
-import { songChanged } from '@shared/messages/song'
+import { songChanged, transpoChanged } from '@shared/messages/song'
 import { SongData } from '@shared/types'
 import { createEndpoint } from '@shared/types/endpoints'
 
@@ -8,7 +9,7 @@ export const getSong = createEndpoint<{ title: string }, { song: SongData }>({
   method: 'get',
   url: '/song',
   handler: async (req, res) => {
-    const { title } = req.params
+    const { title } = req.query
     const song = new Song(title)
     const data = song.load()
 
@@ -34,7 +35,21 @@ export const changeSong = createEndpoint<{ title: string }, unknown>({
   handler: async (req, res) => {
     const { title } = req.body
     songChanged.server.emit({ title })
+    transpoChanged.server.emit({ transpo: 0 })
+    setSessionConfig({ currentSong: title, transpo: 0 })
 
-    res.status(200)
+    res.sendStatus(200)
+  }
+})
+
+export const setTranspo = createEndpoint<{ transpo: number }, unknown>({
+  method: 'post',
+  url: '/set-transpo',
+  handler: async (req, res) => {
+    const { transpo } = req.body
+    setSessionConfig({ transpo })
+    transpoChanged.server.emit({ transpo })
+
+    res.sendStatus(200)
   }
 })

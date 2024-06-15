@@ -1,23 +1,24 @@
-import { ISong, ISongLine, LineType } from '../../types'
+import { SongData, SongLine, LineType } from '../../types'
 import path from 'path'
 import { Chord } from './chord'
-import { readFileSync } from 'fs'
-
-export const songsFolder = path.resolve(process.cwd(), './src/data/songs')
+import fs from 'fs'
+import { getSessionConfig } from '../session'
 
 export class Song {
   fileName: string
   rawContent?: string
-  songData?: ISong
+  songData?: SongData
 
   constructor(fileName: string) {
     this.fileName = fileName
   }
 
   load() {
-    const file = readFileSync(path.resolve(songsFolder, this.fileName + '.txt'))
+    const file = fs?.readFileSync(
+      path.resolve(getSessionConfig().songsFolder, this.fileName + '.txt')
+    )
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [title, author, key, tags, _, ...lines] = file.toString().split(/\r?\n/)
+    const [title, author, key, tags, _, ...lines] = file?.toString().split(/\r?\n/) || []
 
     this.songData = {
       title,
@@ -30,7 +31,7 @@ export class Song {
     return this.songData
   }
 
-  private parseLines(lines: string[]): ISongLine[] {
+  private parseLines(lines: string[]): SongLine[] {
     const songLines = lines.map((line) => {
       if (line === '') {
         return {

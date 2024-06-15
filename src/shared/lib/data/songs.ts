@@ -1,24 +1,16 @@
 import { readdirSync } from 'fs'
-import { resolve } from 'path'
-import { Song, songsFolder } from '../song/song'
+import { Song } from '../song/song'
+import { getSessionConfig } from '../session'
 
-const songFiles = readdirSync(resolve(songsFolder))
-
-const EXCLUDED_FILES = ['.DS_Store', '_old', '.', '..', 'Icon']
-
-const songs = songFiles.flatMap((file) => {
-  if (EXCLUDED_FILES.includes(file)) return []
+const songFiles = (() => {
   try {
-    const fileName = file.replace('.txt', '')
-    const song = new Song(fileName)
-    const songData = song.load()
-
-    return { ...songData, fileName }
-  } catch (e) {
-    console.error('Error loading song', file)
+    return readdirSync(getSessionConfig().songsFolder)
+  } catch {
     return []
   }
-})
+})()
+
+const EXCLUDED_FILES = ['.DS_Store', '_old', '.', '..', 'Icon']
 
 const sanitizeSearchString = (query: string) =>
   query
@@ -29,7 +21,21 @@ const sanitizeSearchString = (query: string) =>
     .replace(/[^a-zA-Z0-9]/g, '')
 
 export function getAllSongs() {
-  return songs.map(({ author, title, tags, fileName }) => ({ author, title, tags, fileName }))
+  return songFiles
+    .flatMap((file) => {
+      if (EXCLUDED_FILES.includes(file)) return []
+      try {
+        const fileName = file.replace('.txt', '')
+        const song = new Song(fileName)
+        const songData = song.load()
+
+        return { ...songData, fileName }
+      } catch (e) {
+        console.error('Error loading song: ', file)
+        return []
+      }
+    })
+    .map(({ author, title, tags, fileName }) => ({ author, title, tags, fileName }))
 }
 
 export function searchSong(query: string) {

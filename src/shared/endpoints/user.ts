@@ -12,7 +12,7 @@ export const loginUser = createEndpoint<UserLoginPayload, UserLoginResponse>({
     const { password } = req.body
 
     if (password !== config.ADMIN_PASSWORD) {
-      res.status(401)
+      res.sendStatus(401)
       return
     }
 
@@ -27,11 +27,11 @@ export const fetchUser = createEndpoint<{ id: string }, UserLoginResponse>({
   method: 'get',
   url: '/user',
   handler: async (req, res) => {
-    const { id } = req.params
+    const { id } = req.query
     const user = getUser(id)
 
     if (!user) {
-      res.send(404)
+      res.sendStatus(404)
       return
     }
 

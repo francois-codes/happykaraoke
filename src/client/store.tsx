@@ -1,11 +1,23 @@
 import { FC, PropsWithChildren, Dispatch, createContext, useContext, useReducer } from 'react'
 
 interface Store {
-  currentSong: string | null
+  currentSong?: string | null
+  isAdmin?: boolean
+  songKey?: string
+  chordsEnabled: boolean
+  transpo: number
+  transpoOpen: boolean
+  songsFolder?: string
+  songsFolderOpen: boolean
+  hostUrl: string
 }
 
 const initialStore: Store = {
-  currentSong: null
+  chordsEnabled: true,
+  transpo: 0,
+  transpoOpen: false,
+  songsFolderOpen: false,
+  hostUrl: ''
 }
 
 const StoreContext = createContext<Store>(initialStore)

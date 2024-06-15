@@ -1,0 +1,16 @@
+
+
+
+.note {
+  position: absolute;
+  font-size: 2rem;
+  opacity: 0;
+  animation: show 0.1s ease forwards;
+  /* animation: moveNote 5s linear infinite; */
+}
+
+@keyframes show {
+  to {
+    opacity: 1;
+  }
+}
