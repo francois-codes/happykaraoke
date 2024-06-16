@@ -181,7 +181,8 @@ export const myEndpoint = createEndpoint<RequestBody, ResponseBody>({
   url: '/my-endpoint',
   handler: async (req, res) => {
     // implementation here
-    // req.body is typed with RequestBody
+    // req.body is typed with RequestBody (post, put)
+    // req.params is typed with RequestBody (get)
     // res.json is typed with ResponseBody
   }
 })
@@ -197,7 +198,8 @@ export const endpoints = [
 ]
 ```
 
-That's it. The endpoint is automatically registered in the express.js app. you can call it directly from the client side like this:
+That's it. The endpoint is automatically registered in the express.js app. you can call it directly from the client side like this.
+if the request is a post or a put request, it will put the payload in the body of the request. If it's a get request, it will put the payload in the params of the request, and you'll be able to get it in req.params.
 
 ```typescript
 // src/client/component/my-component.tsx
