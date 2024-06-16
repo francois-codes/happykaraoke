@@ -11,16 +11,15 @@ import { useAutoScroller } from '@/lib/useAutoScroller'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
 import { setScroll } from '@shared/endpoints/scroll'
-import { songChanged, transpoChanged } from '@shared/messages/song'
+import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/song'
 import { EmptySong } from './EmptySong'
 
 export const SongComponent = () => {
-  const { transpo, isAdmin, currentSong, searchOpen, transpoOpen, songsFolder } = useStore()
+  const { transpo, isAdmin, currentSong, searchOpen, transpoOpen } = useStore()
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
 
   const [scrolling, setScrolling] = useState(false)
-  const [currentSongFolder, setCurrentSongFolder] = useState(songsFolder)
 
   const scroller = useAutoScroller()
 
@@ -169,14 +168,17 @@ export const SongComponent = () => {
     [scroller, isAdmin, searchOpen, transpoOpen]
   )
 
-  useEffect(() => {
-    if (songsFolder && songsFolder !== currentSongFolder) {
-      reload()
-      setCurrentSongFolder(songsFolder)
-    }
-  }, [reload, songsFolder, currentSongFolder])
+  songFileChanged.client.useMessage(
+    socket,
+    ({ filename }) => {
+      if (filename.replace('.txt', '') === song?.filename) {
+        reload()
+      }
+    },
+    [song, reload]
+  )
 
-  if (!song) return <EmptySong />
+  if (!song || !currentSong) return <EmptySong />
 
   return (
     <>

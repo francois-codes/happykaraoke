@@ -5,17 +5,17 @@ import fs from 'fs'
 import { getSessionConfig } from '../session'
 
 export class Song {
-  fileName: string
+  filename: string
   rawContent?: string
   songData?: SongData
 
-  constructor(fileName: string) {
-    this.fileName = fileName
+  constructor(filename: string) {
+    this.filename = filename
   }
 
   load() {
     const file = fs?.readFileSync(
-      path.resolve(getSessionConfig().songsFolder, this.fileName + '.txt')
+      path.resolve(getSessionConfig().songsFolder, this.filename + '.txt')
     )
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [title, author, key, tags, _, ...lines] = file?.toString().split(/\r?\n/) || []
@@ -25,7 +25,8 @@ export class Song {
       author,
       key,
       tags: tags.split(' '),
-      lines: this.parseLines(lines)
+      lines: this.parseLines(lines),
+      filename: this.filename
     }
 
     return this.songData

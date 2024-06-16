@@ -5,6 +5,7 @@
   "main": "out/server/main.js",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch --tsconfig tsconfig.node.json src/server/index.ts",
+    "dev:electron": "NODE_ENV=development electron .",
     "build:client": "vite build",
     "build:server": "tsx esbuild.config.ts",
     "build:electron": "electron-builder build --config electron-builder.yml",

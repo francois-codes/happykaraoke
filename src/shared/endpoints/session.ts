@@ -1,4 +1,5 @@
 import { SessionConfig, getSessionConfig, setSessionConfig } from '@shared/lib/session'
+import { socketEmitter } from '@shared/server/socketEmitter'
 import { createEndpoint } from '@shared/types/endpoints'
 
 export const fetchSessionConfig = createEndpoint<unknown, SessionConfig>({
@@ -15,6 +16,7 @@ export const setSongsFolder = createEndpoint<{ folder: string }, unknown>({
   handler: (req, res) => {
     const { folder } = req.body
     setSessionConfig({ songsFolder: folder })
+    socketEmitter.emit('folder:changed')
     res.sendStatus(200)
   }
 })

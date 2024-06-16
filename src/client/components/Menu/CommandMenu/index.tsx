@@ -16,7 +16,7 @@ export function CommandMenu() {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [songResults, setSongResults] = useState<
-    { tags: string[]; author: string; title: string; fileName: string }[]
+    { tags: string[]; author: string; title: string; filename: string }[]
   >([])
 
   const { currentSong, songsFolder } = useStore()
@@ -74,7 +74,7 @@ export function CommandMenu() {
               onSelect={selectSong}
               key={index}
               keywords={[song.author, song.title, ...song.tags]}
-              value={song.fileName}
+              value={song.filename}
             >
               {song.author} - {song.title}
             </CommandItem>

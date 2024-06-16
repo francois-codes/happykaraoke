@@ -2,13 +2,13 @@ import { readdirSync } from 'fs'
 import { Song } from '../song/song'
 import { getSessionConfig } from '../session'
 
-const songFiles = (() => {
+const getSongFiles = () => {
   try {
     return readdirSync(getSessionConfig().songsFolder)
   } catch {
     return []
   }
-})()
+}
 
 const EXCLUDED_FILES = ['.DS_Store', '_old', '.', '..', 'Icon']
 
@@ -21,21 +21,21 @@ const sanitizeSearchString = (query: string) =>
     .replace(/[^a-zA-Z0-9]/g, '')
 
 export function getAllSongs() {
-  return songFiles
+  return getSongFiles()
     .flatMap((file) => {
       if (EXCLUDED_FILES.includes(file)) return []
       try {
-        const fileName = file.replace('.txt', '')
-        const song = new Song(fileName)
+        const filename = file.replace('.txt', '')
+        const song = new Song(filename)
         const songData = song.load()
 
-        return { ...songData, fileName }
+        return { ...songData, filename }
       } catch (e) {
         console.error('Error loading song: ', file)
         return []
       }
     })
-    .map(({ author, title, tags, fileName }) => ({ author, title, tags, fileName }))
+    .map(({ author, title, tags, filename }) => ({ author, title, tags, filename }))
 }
 
 export function searchSong(query: string) {

@@ -11,21 +11,28 @@ export const getSong = createEndpoint<{ title: string }, { song: SongData }>({
   handler: async (req, res) => {
     const { title } = req.query
     const song = new Song(title)
-    const data = song.load()
-
-    res.status(200).json({ song: data })
+    try {
+      const data = song.load()
+      res.status(200).json({ song: data })
+    } catch (e) {
+      res.sendStatus(500)
+    }
   }
 })
 
 export const getSongsList = createEndpoint<
   unknown,
-  { songs: { title: string; author: string; fileName: string; tags: string[] }[] }
+  { songs: { title: string; author: string; filename: string; tags: string[] }[] }
 >({
   method: 'get',
   url: '/songs',
   handler: async (_, res) => {
-    const songs = getAllSongs()
-    res.status(200).json({ songs })
+    try {
+      const songs = getAllSongs()
+      res.status(200).json({ songs })
+    } catch (e) {
+      res.sendStatus(500)
+    }
   }
 })
 

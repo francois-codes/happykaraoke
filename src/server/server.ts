@@ -6,10 +6,18 @@ import { endpoints } from '@shared/endpoints'
 import bodyParser from 'body-parser'
 import { socketEmitter } from '@shared/server/socketEmitter'
 import { config } from '@shared/config'
+import { watchForChanges } from '@shared/lib/data/watcher'
 
 export async function startServer(configure: (app: express.Express) => void) {
+  const ab = new AbortController()
+
   socketEmitter.on('socket:emit', ({ event, payload }) => {
     serverSocket.emit(event, payload)
+  })
+
+  socketEmitter.on('folder:changed', () => {
+    ab.abort()
+    watchForChanges(ab.signal)
   })
 
   app.use(bodyParser.json())
@@ -29,6 +37,8 @@ export async function startServer(configure: (app: express.Express) => void) {
   server.listen(config.PORT, () => {
     console.log(`Server started at http://localhost:${config.PORT}`)
   })
+
+  watchForChanges(ab.signal)
 
   return server
 }

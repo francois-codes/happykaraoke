@@ -4,6 +4,7 @@ export interface SongData {
   key: string
   tags: string[]
   lines: SongLine[]
+  filename: string
 }
 
 export enum LineType {
