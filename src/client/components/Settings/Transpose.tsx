@@ -42,9 +42,13 @@ export function Transpose() {
 
   const songTona = songKey?.replace('m', '')
 
+  function getSongTonaIndex() {
+    return tonalitiesNames.findIndex((tona) => tona === songTona)
+  }
+
   useEffect(() => {
     if (songTona) {
-      setCurrentTonaIndex(tonalitiesNames.findIndex((tona) => tona === songTona) + transpo)
+      setCurrentTonaIndex(getSongTonaIndex() + transpo)
     }
   }, [songTona])
 
@@ -53,34 +57,45 @@ export function Transpose() {
   }, [currentTonaIndex])
 
   async function saveTranspo(tona) {
-    console.log('setting ', tona)
     const transpo = stepsBetweenKeys(songKey, tona)
     await setTranspo.call({ transpo })
     setOpen(false)
   }
 
-  function navigateTona(event) {
+  function getOffsets(event: KeyboardEvent) {
     if (keyUp.matches(event)) {
-      if (currentTonaIndex < 4) return
-      setCurrentTonaIndex(currentTonaIndex - 4)
+      return [-1, 4]
     }
 
     if (keyDown.matches(event)) {
-      if (currentTonaIndex > 7) return
-      setCurrentTonaIndex(currentTonaIndex + 4)
-    }
-
-    if (keyRight.matches(event)) {
-      if (currentTonaIndex > 10) return
-      setCurrentTonaIndex(currentTonaIndex + 1)
+      return [1, 4]
     }
 
     if (keyLeft.matches(event)) {
-      if (currentTonaIndex < 1) return
-      setCurrentTonaIndex(currentTonaIndex - 1)
+      return [-1, 1]
+    }
+
+    if (keyRight.matches(event)) {
+      return [1, 1]
+    }
+
+    return null
+  }
+
+  function navigateTona(event) {
+    if (!transpoOpen) return
+
+    const offset = getOffsets(event)
+
+    if (offset) {
+      const [factor, step] = offset
+      setCurrentTonaIndex(
+        (tonalitiesNames.length + currentTonaIndex + factor * step) % tonalitiesNames.length
+      )
     }
 
     if (o.matches(event)) {
+      setCurrentTonaIndex(getSongTonaIndex())
       saveTranspo(songTona)
     }
 
@@ -97,7 +112,7 @@ export function Transpose() {
     return () => {
       document.removeEventListener('keydown', navigateTona)
     }
-  }, [currentTonaIndex])
+  }, [currentTonaIndex, transpoOpen])
 
   if (!songTona) return null
 
@@ -125,6 +140,7 @@ export function Transpose() {
                   variant={variant}
                   className={'w-20'}
                   onClick={() => {
+                    setCurrentTonaIndex(index)
                     saveTranspo(tona)
                   }}
                 >
@@ -137,6 +153,7 @@ export function Transpose() {
             className="w-full"
             tabIndex={tonalitiesNames.length}
             onClick={() => {
+              setCurrentTonaIndex(getSongTonaIndex())
               saveTranspo(songTona)
             }}
           >
