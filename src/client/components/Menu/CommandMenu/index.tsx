@@ -8,7 +8,7 @@ import {
 } from '../../ui/command'
 
 import { CommandLoading } from 'cmdk'
-import { useStore } from '@/store'
+import { useDispatch, useStore } from '@/store'
 import { changeSong, getSongsList } from '@shared/endpoints/song'
 
 export function CommandMenu() {
@@ -20,6 +20,11 @@ export function CommandMenu() {
   >([])
 
   const { currentSong, songsFolder } = useStore()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch({ searchOpen: open })
+  }, [open])
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {

@@ -12,25 +12,15 @@ import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
 import { setScroll } from '@shared/endpoints/scroll'
 import { songChanged, transpoChanged } from '@shared/messages/song'
-
-const animate = (key: string) => {
-  const el = document.getElementById('key-stroke')
-  if (!el) return
-
-  el.classList.add('animate-fade-in-out')
-  el.innerHTML = `key pressed: ${key}`
-
-  setTimeout(() => {
-    el.classList.remove('animate-fade-in-out')
-  }, 2 * 1000)
-}
+import { EmptySong } from './EmptySong'
 
 export const SongComponent = () => {
-  const { transpo, isAdmin, currentSong, songsFolderOpen } = useStore()
+  const { transpo, isAdmin, currentSong, searchOpen, transpoOpen, songsFolder } = useStore()
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
 
   const [scrolling, setScrolling] = useState(false)
+  const [currentSongFolder, setCurrentSongFolder] = useState(songsFolder)
 
   const scroller = useAutoScroller()
 
@@ -105,22 +95,25 @@ export const SongComponent = () => {
     {
       key: [KEYS.t],
       preventDefault: true,
+      disable: () => {
+        return !isAdmin || searchOpen
+      },
       handler: () => {
-        if (!isAdmin) return
         dispatch({ transpoOpen: true })
       }
     },
-    [isAdmin, songsFolderOpen]
+    [isAdmin, searchOpen]
   )
 
   useKeyboardShortcut(
     {
       key: [KEYS.dollarSign],
       preventDefault: true,
+      disable: () => {
+        return !isAdmin || searchOpen
+      },
       handler: (e) => {
-        if (!isAdmin) return
         e.preventDefault()
-        animate('"$" <br />start/stop scrolling')
         const action = scrolling ? scroller.stopScrolling : scroller.startScrolling
         action()
 
@@ -130,15 +123,14 @@ export const SongComponent = () => {
         })
       }
     },
-    [scrolling, scroller, isAdmin]
+    [scrolling, scroller, isAdmin, searchOpen]
   )
 
   useKeyboardShortcut(
     {
       key: KEYS.add,
+      disable: () => !isAdmin,
       handler: () => {
-        if (!isAdmin) return
-        animate('"+" <br /> increase scrolling speed')
         scroller.increaseScrollSpeed()
         setScroll.call({ type: ScrollEventType.FASTER })
       }
@@ -149,9 +141,9 @@ export const SongComponent = () => {
   useKeyboardShortcut(
     {
       key: KEYS.subtract,
+      disable: () => !isAdmin,
       handler: () => {
         if (!isAdmin) return
-        animate('"-" <br /> decrease scrolling speed')
         scroller.decreaseScrollSpeed()
         setScroll.call({ type: ScrollEventType.SLOWER })
       }
@@ -162,10 +154,11 @@ export const SongComponent = () => {
   useKeyboardShortcut(
     {
       key: KEYS.up,
+      disable: () => {
+        return !isAdmin || searchOpen || transpoOpen
+      },
       handler: (event) => {
-        if (!isAdmin) return
         event.preventDefault()
-        animate('"↑" <br />back to top and stop scrolling')
         scroller.stopScrolling()
         setScrolling(false)
 
@@ -173,10 +166,17 @@ export const SongComponent = () => {
         setScroll.call({ type: ScrollEventType.TOP })
       }
     },
-    [scroller, isAdmin]
+    [scroller, isAdmin, searchOpen, transpoOpen]
   )
 
-  if (!song) return null
+  useEffect(() => {
+    if (songsFolder && songsFolder !== currentSongFolder) {
+      reload()
+      setCurrentSongFolder(songsFolder)
+    }
+  }, [reload, songsFolder, currentSongFolder])
+
+  if (!song) return <EmptySong />
 
   return (
     <>

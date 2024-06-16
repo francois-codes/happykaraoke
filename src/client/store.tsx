@@ -10,6 +10,7 @@ interface Store {
   songsFolder?: string
   songsFolderOpen: boolean
   hostUrl: string
+  searchOpen: boolean
 }
 
 const initialStore: Store = {
@@ -17,7 +18,8 @@ const initialStore: Store = {
   transpo: 0,
   transpoOpen: false,
   songsFolderOpen: false,
-  hostUrl: ''
+  hostUrl: '',
+  searchOpen: false
 }
 
 const StoreContext = createContext<Store>(initialStore)

@@ -8,17 +8,20 @@ export function useKeyboardShortcut(
     shortcuts,
     modifier = [],
     handler,
-    preventDefault = false
+    preventDefault = false,
+    disable = () => false
   }: {
     key?: MaybeArray<KEY_VALUES>
     modifier?: MaybeArray<ModifierKey>
     shortcuts?: MaybeArray<IShortcut>
     handler: (event: KeyboardEvent) => void
     preventDefault?: boolean
+    disable?: () => boolean
   },
   deps: unknown[] = []
 ) {
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    if (disable()) return
     if (!key && !shortcuts) {
       return handler(event)
     }
