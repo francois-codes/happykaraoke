@@ -14,5 +14,9 @@ export const ChordLabel: FC<ChordProps> = ({ label }) => {
 
   const transposed = transposeChord(songKey, transpo, chord.label)
 
-  return <span className="bg-gray-200 dark:bg-gray-600">{transposed}</span>
+  return (
+    <span className="bg-gray-200 dark:bg-gray-600 py-[2px] px-[4px] -my-[2px] -my-[4px]">
+      {transposed}
+    </span>
+  )
 }

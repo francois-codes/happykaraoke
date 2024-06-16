@@ -106,7 +106,7 @@ export const SongComponent = () => {
 
   useKeyboardShortcut(
     {
-      key: [KEYS.dollarSign],
+      key: [KEYS.Space],
       preventDefault: true,
       disable: () => {
         return !isAdmin || searchOpen
@@ -127,8 +127,9 @@ export const SongComponent = () => {
 
   useKeyboardShortcut(
     {
-      key: KEYS.add,
+      key: KEYS.up,
       disable: () => !isAdmin,
+      preventDefault: true,
       handler: () => {
         scroller.increaseScrollSpeed()
         setScroll.call({ type: ScrollEventType.FASTER })
@@ -139,10 +140,10 @@ export const SongComponent = () => {
 
   useKeyboardShortcut(
     {
-      key: KEYS.subtract,
+      key: KEYS.down,
       disable: () => !isAdmin,
+      preventDefault: true,
       handler: () => {
-        if (!isAdmin) return
         scroller.decreaseScrollSpeed()
         setScroll.call({ type: ScrollEventType.SLOWER })
       }
@@ -152,7 +153,7 @@ export const SongComponent = () => {
 
   useKeyboardShortcut(
     {
-      key: KEYS.up,
+      key: KEYS.dollarSign,
       disable: () => {
         return !isAdmin || searchOpen || transpoOpen
       },
@@ -166,6 +167,50 @@ export const SongComponent = () => {
       }
     },
     [scroller, isAdmin, searchOpen, transpoOpen]
+  )
+
+  function scrollToSection(
+    findOffset: (offset: number, sectionsOffsets: number[]) => number | undefined
+  ) {
+    const offset = scroller.element?.scrollTop
+    const sectionsOffsets: number[] = Array.from(document.querySelectorAll('.song-section')).map(
+      // @ts-expect-error wtf??
+      (node) => node.offsetTop
+    )
+
+    if (typeof offset === 'undefined' || offset === null || !sectionsOffsets) return
+
+    const scrollPosition = findOffset(offset, sectionsOffsets)
+    if (scrollPosition) {
+      scroller.scrollTo(scrollPosition)
+      setScroll.call({ type: ScrollEventType.POSITION, value: scrollPosition })
+    }
+  }
+
+  useKeyboardShortcut(
+    {
+      key: [KEYS.right],
+      disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
+      handler: () => {
+        scrollToSection((offset, sectionsOffsets) =>
+          sectionsOffsets.find((nodeOffset) => nodeOffset > offset)
+        )
+      }
+    },
+    [isAdmin, transpoOpen, searchOpen, scroller, scrolling]
+  )
+
+  useKeyboardShortcut(
+    {
+      key: [KEYS.left],
+      disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
+      handler: () => {
+        scrollToSection((offset, sectionsOffsets) =>
+          sectionsOffsets.findLast((nodeOffset) => nodeOffset < offset)
+        )
+      }
+    },
+    [isAdmin, transpoOpen, searchOpen, scroller, scrolling]
   )
 
   songFileChanged.client.useMessage(

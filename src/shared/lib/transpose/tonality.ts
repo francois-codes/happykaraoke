@@ -96,7 +96,7 @@ export function stepsBetweenKeys(startKey, endKey) {
 }
 
 export const transposeChord = (
-  originalTonality: string | null,
+  originalTonality: string | undefined,
   transpo: number,
   chordString: string
 ): string => {
