@@ -10,6 +10,8 @@ export const ChordLine: FC<SongLineProps> = ({ content }) => {
   const className = hasPrefix ? '-ml-4' : ''
   const { chordsEnabled } = useStore()
 
+  if (!chordsEnabled) return null
+
   return (
     <pre className={className}>
       {chordLine.split(/(\s+)/).map((word, id) => {
@@ -18,7 +20,7 @@ export const ChordLine: FC<SongLineProps> = ({ content }) => {
         const hasBar = word.startsWith('|')
 
         return (
-          <span key={id} className={chordsEnabled ? 'font-mono' : ''}>
+          <span key={id} className={'font-mono'}>
             {isChord && hasBar && '|'}
             {isChord ? <ChordLabel label={chordLabel} /> : word}
           </span>
