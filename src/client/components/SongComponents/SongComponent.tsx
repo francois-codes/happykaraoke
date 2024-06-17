@@ -1,60 +1,26 @@
-import { useCallback, useEffect, useState } from 'react'
 import { SongWrapper } from './SongWrapper'
 import { SongLine } from './SongLine'
 import { useSong } from '@/lib/useSong'
 import { useDispatch, useStore } from '@/store'
-import { scrollChanged } from '@shared/messages/scroll'
 import { socket } from '@/utils/socket'
-import { ScrollEventType } from '@shared/types/scroll'
 import { transposeChord } from '@shared/lib/transpose/tonality'
-import { useAutoScroller } from '@/lib/useAutoScroller'
-import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
-import { KEYS } from '@/lib/consts'
-import { setScroll } from '@shared/endpoints/scroll'
 import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/song'
 import { EmptySong } from './EmptySong'
+import { useSongKeyboardShortcuts } from './useSongKeyboardShortcuts'
+import { useSongScroll } from './useSongScroll'
 
 export const SongComponent = () => {
-  const { transpo, isAdmin, currentSong, searchOpen, transpoOpen, chordsEnabled } = useStore()
+  const { transpo, currentSong } = useStore()
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
 
-  const [scrolling, setScrolling] = useState(false)
+  const { scrolling, setScrolling } = useSongScroll()
 
-  const scroller = useAutoScroller()
-
-  scrollChanged.client.useMessage(
-    socket,
-    ({ type, value }) => {
-      if (isAdmin) {
-        return
-      }
-
-      const action = scrolling ? scroller.stopScrolling : scroller.startScrolling
-
-      switch (type) {
-        case ScrollEventType.START:
-          action()
-          return setScrolling(!scrolling)
-        case ScrollEventType.STOP:
-          action()
-          return setScrolling(!scrolling)
-        case ScrollEventType.FASTER:
-          return scroller.increaseScrollSpeed()
-        case ScrollEventType.SLOWER:
-          return scroller.decreaseScrollSpeed()
-        case ScrollEventType.TOP:
-          scroller.stopScrolling()
-          setScrolling(false)
-          return scroller.scrollToTop()
-        case ScrollEventType.POSITION:
-          if (value && !Number.isNaN(value)) {
-            return scroller.scrollTo(value)
-          }
-      }
-    },
-    [scrolling, setScrolling, scroller, isAdmin]
-  )
+  useSongKeyboardShortcuts({
+    scrolling,
+    setScrolling,
+    reload
+  })
 
   songChanged.client.useMessage(socket, (payload) => {
     dispatch({ currentSong: payload.title })
@@ -63,166 +29,6 @@ export const SongComponent = () => {
   transpoChanged.client.useMessage(socket, ({ transpo }) => {
     dispatch({ transpo })
   })
-
-  const followScroll = useCallback(() => {
-    if (isAdmin && !scrolling) {
-      setScroll.call({ type: ScrollEventType.POSITION, value: scroller.element?.scrollTop })
-    }
-  }, [scroller.element, scrolling, isAdmin])
-
-  useEffect(() => {
-    scroller.element?.addEventListener('scrollend', followScroll)
-
-    return () => {
-      scroller?.element?.removeEventListener('scrollend', followScroll)
-    }
-  }, [followScroll, scroller])
-
-  useKeyboardShortcut(
-    {
-      key: [KEYS.r],
-      modifier: [KEYS.Meta, KEYS.Ctrl],
-      preventDefault: true,
-      handler: () => {
-        reload()
-      }
-    },
-    [reload]
-  )
-
-  useKeyboardShortcut(
-    {
-      key: [KEYS.t],
-      preventDefault: true,
-      disable: () => {
-        return !isAdmin || searchOpen
-      },
-      handler: () => {
-        dispatch({ transpoOpen: true })
-      }
-    },
-    [isAdmin, searchOpen]
-  )
-
-  useKeyboardShortcut(
-    {
-      key: [KEYS.Space],
-      preventDefault: true,
-      disable: () => {
-        return !isAdmin || searchOpen
-      },
-      handler: (e) => {
-        e.preventDefault()
-        const action = scrolling ? scroller.stopScrolling : scroller.startScrolling
-        action()
-
-        setScrolling(!scrolling)
-        setScroll.call({
-          type: scrolling ? ScrollEventType.STOP : ScrollEventType.START
-        })
-      }
-    },
-    [scrolling, scroller, isAdmin, searchOpen]
-  )
-
-  useKeyboardShortcut(
-    {
-      key: KEYS.up,
-      disable: () => !isAdmin,
-      preventDefault: true,
-      handler: () => {
-        scroller.increaseScrollSpeed()
-        setScroll.call({ type: ScrollEventType.FASTER })
-      }
-    },
-    [scroller, isAdmin]
-  )
-
-  useKeyboardShortcut(
-    {
-      key: KEYS.down,
-      disable: () => !isAdmin,
-      preventDefault: true,
-      handler: () => {
-        scroller.decreaseScrollSpeed()
-        setScroll.call({ type: ScrollEventType.SLOWER })
-      }
-    },
-    [scroller, isAdmin]
-  )
-
-  useKeyboardShortcut(
-    {
-      key: KEYS.dollarSign,
-      disable: () => {
-        return !isAdmin || searchOpen || transpoOpen
-      },
-      handler: (event) => {
-        event.preventDefault()
-        scroller.stopScrolling()
-        setScrolling(false)
-
-        scroller.scrollToTop()
-        setScroll.call({ type: ScrollEventType.TOP })
-      }
-    },
-    [scroller, isAdmin, searchOpen, transpoOpen]
-  )
-
-  function scrollToSection(
-    findOffset: (offset: number, sectionsOffsets: number[]) => number | undefined
-  ) {
-    const offset = scroller.element?.scrollTop
-    const sectionsOffsets: number[] = Array.from(document.querySelectorAll('.song-section')).map(
-      // @ts-expect-error wtf??
-      (node) => node.offsetTop
-    )
-
-    if (typeof offset === 'undefined' || offset === null || !sectionsOffsets) return
-
-    const scrollPosition = findOffset(offset, sectionsOffsets)
-    if (scrollPosition) {
-      scroller.scrollTo(scrollPosition)
-      setScroll.call({ type: ScrollEventType.POSITION, value: scrollPosition })
-    }
-  }
-
-  useKeyboardShortcut(
-    {
-      key: [KEYS.right],
-      disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
-      handler: () => {
-        scrollToSection((offset, sectionsOffsets) =>
-          sectionsOffsets.find((nodeOffset) => nodeOffset > offset)
-        )
-      }
-    },
-    [isAdmin, transpoOpen, searchOpen, scroller, scrolling]
-  )
-
-  useKeyboardShortcut(
-    {
-      key: [KEYS.left],
-      disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
-      handler: () => {
-        scrollToSection((offset, sectionsOffsets) =>
-          sectionsOffsets.findLast((nodeOffset) => nodeOffset < offset)
-        )
-      }
-    },
-    [isAdmin, transpoOpen, searchOpen, scroller, scrolling]
-  )
-
-  useKeyboardShortcut(
-    {
-      key: [KEYS.c],
-      disable: () => searchOpen || transpoOpen,
-      handler: () => {
-        dispatch({ chordsEnabled: !chordsEnabled })
-      }
-    },
-    [searchOpen, transpoOpen, chordsEnabled]
-  )
 
   songFileChanged.client.useMessage(
     socket,
