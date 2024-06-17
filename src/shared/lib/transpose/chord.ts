@@ -1,7 +1,6 @@
 import Note from './note'
 
-const chordParseRegex = /^([ABCDEFG][b#]?|)([^/]*)(\/([ABCDEFG][#b]?|))?$/
-// const rootRegex = /^([ABCDEFG][#b]?)$/
+const chordParseRegex = /^([ABCDEFG][b#]?|)(7\/9|[^/]*)(\/([ABCDEFG][#b]?|))?$/
 
 interface ChordOptions {
   root?: string

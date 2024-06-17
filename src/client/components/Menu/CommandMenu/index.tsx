@@ -23,6 +23,14 @@ export function CommandMenu() {
   const dispatch = useDispatch()
 
   useEffect(() => {
+    console.log({ currentSong, songsFolder })
+    if (!currentSong && songsFolder) {
+      dispatch({ searchOpen: true })
+      setOpen(true)
+    }
+  }, [currentSong, songsFolder])
+
+  useEffect(() => {
     dispatch({ searchOpen: open })
   }, [open])
 
@@ -55,11 +63,7 @@ export function CommandMenu() {
   }, [songsFolder])
 
   return (
-    <CommandDialog
-      open={open || Boolean(!currentSong && songsFolder)}
-      onOpenChange={setOpen}
-      shouldFilter={false}
-    >
+    <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
       <CommandInput
         autoFocus={!currentSong}
         placeholder="Type a command or search..."
