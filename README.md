@@ -31,15 +31,15 @@ This project is a reboot of the HappiKaraoke app. The original app had great fea
 
 ## Architecture
 
-The app runs on Electron, but it is approached as a standard web app, with a server side, a client side, and a shared folder for common code. There is no Electron renderer process, and the app is served through a local server running on the Electron main process with the nodeIntegration enabled. I understand it might not be the best in terms of security, but this isn't a concern for this app. There's nothing to hack here ! I am not using any of the sandboxing / ipc features of electron because it didn't suit what I needed. Since security was not a concerned, I just skipped this part.
+The app runs on Electron, but it is approached as a standard web app, with a server side, a client side, and a shared folder for common code. There is no Electron renderer process, and the app is served through a local server running on the Electron main process with the nodeIntegration enabled. I understand it might not be the best in terms of security, or the standard approach, but this isn't a concern for this app. There's nothing to hack here ! And besides, this is needed to allow people to join a session from their browser.
 
-The shared code folder is an attempt to achieve some form of tRPC, where the server and client side are sharing the same code for endpoints and socket messages. Everything is fully typed, so we're sure there is a strong contract between the server and the client, enforced by the typescript compiler.
+The shared code folder is an attempt to achieve some form of tRPC, where the server and client side are sharing the same code for endpoints and socket messages. Everything is fully typed, so we're sure there is a strong contract between the server and the client, enforced by the typescript compiler. It's been a good UX to implement & consume endpoints this way.
 
 After a lot of browsing, I couldn't find a boilerplate that would tick all the boxes needed:
 
 - runs a node.js server that can accessed by any device on the host's network
 - the host (admin running the electron app) and the guests (users joining via the browser) are running the same code - which ruled out ipc since this wouldn't work when running the app in a browser
-- ability for the client to easily invoke endpoints on the node.js server, from within the electron app as well as from the browser
+- ability for the client to easily invoke endpoints on the node.js server, from within the electron app as well as from the browser, without having crazy CSP / CORS issues
 - implement rest endpoints & sockets on the server
 - using modern tooling (typescript, react, vite)
 - simple developer experience
@@ -47,8 +47,8 @@ After a lot of browsing, I couldn't find a boilerplate that would tick all the b
 
 I tried some options:
 
-- Nextron: it looks good, but it exports the next.js app as a static site, so we loose next.js's api handler feature, which I wish I could have used. I considered running next.js but I wasn't sure how to start the server without exporting the app as a static site as Nextron does, or having to tap into next.js's internals to start the server, which is never a good idea.
-- Electron-vite: a very good bootstrap, but it didn't provide the hooks needed to tap in the vite server so that I wouldn't have to run 2 server instances in dev mode. This was close though, and maybe I missed something.
+- Nextron: it looks good, but it exports the next.js app as a static site, so we loose next.js's api handler feature, which I wish I could have used. Nextron does this as it only uses next.js for the renderer process. I considered running next.js but I wasn't sure how to start the server without exporting the app as a static site as Nextron does, or having to tap into next.js's internals to start the server, which is never a good idea.
+- Electron-vite: a very good bootstrap, but it didn't provide the hooks needed to tap in the vite server so that I wouldn't have to run 2 server instances in dev mode. This was close though, and maybe I missed something. I tried several time as I was really impressed by how good this package is in terms of UX. But I got stuck trying to register endpoints on the express server running on the main process, and having weird node resolution errors when trying to run the vite dev server in the main process.
 
 I also considered for a moment to run the server in a docker container inside the electron app, but I quickly shook it off as I didn't have weeks to spend battling with docker and electron.
 
@@ -57,15 +57,23 @@ The stack is as follows:
 
 #### Server side
 
-express.js server, using socket.io for websockets, and built with esbuild. Somehow I couldn't get imports work for the server code, so building with esbuild looked like a solid option.
+express.js server, using socket.io for websockets, and built with esbuild. Somehow I couldn't get imports work for the server code, so building with esbuild looked like a solid option. The server package includes the preload script file (also built with esbuild).
 The server side code is pretty lean as the implementation of the endpoints & the socket messages is done in the shared folder, and these are declared in a way that they are bound to the socket & express server in a very easy way.
 
 the server side has 2 entry points:
 
-- index.ts => used in dev mode, starts the express server with the vite middleware for the client
-- main.ts => used in electron, starts the express server, opens a `BrowserWindow` and loads the home page of the express server, which uses the `express.static` middleware so there are no references to the vite server in the electron process.
+- index.ts => used in dev mode, starts the express server with the vite middleware for the client. Electron is not running here and none of the electron API will work. As an alternative, there is a `npm run dev:electron` script, but it runs the other entry points and has a few limitations explained below.
+- main.ts => used in electron, starts the express server, opens a `BrowserWindow` and loads the home page of the express server, which uses the `express.static` middleware so there are no references to the vite server in the electron process. This is where I would have loved to start the vite dev server when running electron in dev mode, but I couldn't figure it out. Seems like some sort of ESM / CJS issue (the package is not using ESM as the electron app wouldn't build with it, but I might give it another go)
 
-In spite of these 2 entry points, the express server implementation is shared in both modes so it doesn't have have to be duplicated.
+In spite of these 2 entry points, the express server implementation is shared in both modes so it doesn't have have to be duplicated. It has a hook which is used to either configure express's static assets middle or the vite dev server depending on the entry point used.
+
+```typescript
+import { startServer } from '@shared/server/server'
+
+startServer((app) => {
+  // runs in the express bootstrap, before setting up the listener
+})
+```
 
 #### Client side
 
@@ -76,6 +84,25 @@ React client, built with vite. The front end uses react-router for routing. I'm 
 The shared code is written in typescript, and is used by both the server and the client. The trick here is that the shared folder is imported by two different js environments, so I had to make sure that the code was not using modules that would fail to build one part or the other. The client is using some polyfills to make sure node modules can be used there without breaking the client side build. And when I have to use something that would break the client, I use the dependency injection pattern so that I don't have to directly import the module from within the shared folder. The only hack I had to do was to use a node event emitter to emit websocket messages from the shared folder. It's not ideal, but it works and it's not a huge deal in this context.
 
 All the code is in the `src` folder. Electron resources are in the `resources` folder, and build files in the `build` folder. The build outputs in `out` and this is where electron picks up what needs to be packaged in the artifacts.
+
+#### Limitations and potential improvements
+
+##### electron dev mode with hot reloading
+
+The reason why the server has 2 entry points is because I couldn't figure out a way to run the vite dev server to serve the front end from the main process. I guess I could have make it work by making the front end be served as the renderer process, but because we need people to join a session on the hosted server by opening the device's host URL in a browser, I couldn't go down this route.
+
+For this reason, most of the development is done by running the app as a standard dev server, which means that electron features are not available. This isn't a big deal as the only electron feature used is the dialog to open a folder. But to debug this, I had to do the following:
+
+- build the client side by running `npm run build:client`
+- run the electron app in dev mode with `npm run dev:electron`
+
+Which is quite annoying since there's no hot reloading on either side. The vite build is pretty quick on the front end, but any change on the server side would require to kill the app & restart it.
+
+So in the future, the best thing would be to replicate what was done on `electron-vite`, and provide a way to have effective hot reloading on both the server and the client side.
+
+##### double vite config
+
+Because the server in dev mode is creating its own instance of the vite dev server, it requires an inline configuration. I couldn't import the vite config at the root which is outside of the server's scope. This is not a big deal, but it's a bit annoying to have to maintain 2 vite configs. In case you need to modify the vite config, remember to also update it in the `src/server/index.ts` file before going crazy wondering why your changes don't apply.
 
 ## Project Setup
 
@@ -115,7 +142,7 @@ Since this is also building the server & the client side, you can run the server
 
 ## Contribute
 
-All paths are aliased so you can import from the shared folder with `@shared`, from the client with `@client`, and from the server with `@server`. The paths are defined in the `tsconfig.json` file and in the vite config for the client side.
+All paths are aliased so you can import from the shared folder with `@shared`, from the client and from the server. Server & client side have aliases to their respective roots with `@`. The paths are defined in the `tsconfig.[node|web].json` files, in the vite config for the client side.
 Both the server and the client can reference `@shared` but the client cannot import `@server` and the server cannot import `@client`.
 
 ### Client side
@@ -156,6 +183,44 @@ export function MyComponent() {
 ```
 
 It's a very basic store for a bunch of setting and it is fairly limited but it should be good enough for most use cases. If you need something more complex, there's probably a better way to achieve that anyway.
+
+#### front end architecture
+
+The front uses React-router v6 to handle routes. New screens can simply be created in the `screens` folder, and added to the router. Screens should be wrapped in the `Screen` component which handles data initialization, and can redirect to the relevant routes depending on the scenario. If an admin user reloads the page, its user id will be kept in session storage and can be reused to continue the session without re-creating it. Guests can also continue their session in the browser, provided they are not closing the tab. Because the main admin frequently uses the app across multiple tabs, I had to use sessionStorage to make sure the userId stored was not bleeding into sessions opened in other tabs.
+
+#### keyboard shortcuts
+
+There are many keyboard shortcuts in the app. They're great, especially for power users, and for managing a karaoke session while playing the keyboard for instance. The list of available keyboard shortcuts can be found in the [cheatsheet]('./CHEATSHEET.md')
+
+There is a nice bit of utility to easily implement keyboard shortcuts. It's a react hook that takes care of all the heavy lifting: registering & removing the event listener, handling default key prevention, mapping keys & modifiers to the action, etc. It can be used like this:
+
+```typescript
+import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
+import { KEYS } from '@/lib/consts'
+
+function MyComponent() {
+
+  useKeyboardShortcut({
+    key: [KEYS.SPACE],
+    modifier: [KEYS.Meta], // optional
+    preventDefault: true, // optional, but useful when using a shortcut bound to something else typically
+    disable: () => !searchOpen, // optional
+    handler: (event) => {
+      // do something
+      // event is passed if needed, but this will only be
+      // invoked if the key pressed matches the key & modifier
+      // and if the disable predicate returns false
+    }
+    // to make sure you always get a correct closure, you can pass in an array of dependencies
+    // to remove & add the listener again when the dependencies change. defaults to []
+  }, [searchOpen])
+
+  return (
+    // jsx here
+  )
+}
+
+```
 
 #### data fetching
 
