@@ -24,7 +24,7 @@ export function QrCode() {
 
   useKeyboardShortcut(
     {
-      key: [KEYS.q],
+      key: [KEYS.g],
       preventDefault: true,
       disable: () => searchOpen,
       handler: () => {
