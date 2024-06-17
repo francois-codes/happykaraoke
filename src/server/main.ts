@@ -7,6 +7,9 @@ import { config } from '@shared/config'
 
 startServer(async (app) => {
   app.use(express.static(join(__dirname, '../client')))
+  app.get('/session', (_, res) => {
+    res.redirect('/')
+  })
 })
 
 function createWindow() {
