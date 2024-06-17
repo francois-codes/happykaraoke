@@ -3,12 +3,12 @@ productName: HappiKaraoke
 directories:
   buildResources: build
 files:
-  - "!**/.vscode/*"
-  - "!src/*"
-  - "!vite.config.{js,ts,mjs,cjs}"
-  - "!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}"
-  - "!{.env,.env.*,.npmrc,pnpm-lock.yaml}"
-  - "!{tsconfig.json,tsconfig.node.json,tsconfig.web.json,tsconfig.node.tsbuildinfo}"
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!vite.config.{js,ts,mjs,cjs}'
+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json,tsconfig.node.tsbuildinfo}'
 asarUnpack:
   - resources/**
 win:
@@ -19,6 +19,7 @@ nsis:
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
 mac:
+  target: dmg
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
@@ -28,6 +29,29 @@ mac:
   notarize: false
 dmg:
   artifactName: ${name}-${version}.${ext}
+  background: build/background.png
+  backgroundColor: #edecec
+  window:
+    x: 180
+    y: 246
+    width: 660
+    height: 477
+  iconSize: 80
+  contents:
+    - x: 184
+      y: 155
+    - x: 480
+      y: 155
+      type: link
+      path: /Applications
+    - x: 184
+      y: 310
+      type: file
+      path: post-install.command
+    - x: 480
+      y: 310
+      type: file
+      path: readme.txt
 linux:
   target:
     - AppImage
