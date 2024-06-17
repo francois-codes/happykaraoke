@@ -8,12 +8,15 @@ import { sleep } from '@/utils'
 
 export function useScreenInit({ shouldAnimateLoader = true } = {}) {
   const [userInitialized, setUserInitialized] = useState(false)
+  const [redirectTarget, setRedirectTarget] = useState<string | null>(null)
   const [sessionInitialized, setSessionInitialized] = useState(false)
   const [loaderInitialized, setLoaderInitialized] = useState(false)
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
   const store = useStore()
+
+  const location = window.location.href.replace('http://localhost:8081', '')
 
   async function initUser() {
     if (typeof store.isAdmin === 'undefined' && !userInitialized) {
@@ -23,10 +26,16 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
           const { user } = await fetchUser.call({ id })
           if (user) {
             dispatch({ isAdmin: user.type === UserType.ADMIN })
+            if (location === '/' || location === '/join') {
+              setRedirectTarget('/session')
+            }
+          }
+        } else {
+          if (location === '/session') {
+            throw new Error('no user')
           }
         }
       } catch {
-        console.log('catching user error')
         navigate('/')
       }
     }
@@ -58,5 +67,7 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
     Promise.all([initUser(), initSession(), loader()])
   }, [])
 
-  return userInitialized && sessionInitialized && loaderInitialized
+  const initialized = userInitialized && sessionInitialized && loaderInitialized
+
+  return { initialized, redirectTarget }
 }

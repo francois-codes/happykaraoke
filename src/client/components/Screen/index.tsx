@@ -2,6 +2,7 @@ import { useScreenInit } from '@/lib/useScreenInit'
 import { FC, PropsWithChildren, useEffect, useState } from 'react'
 import { Loader } from '../ui/loader'
 import { useDarkTheme } from '@/lib/useDarkTheme'
+import { useNavigate } from 'react-router-dom'
 
 export const Screen: FC<
   PropsWithChildren<{ shouldAnimateLoader?: boolean; showTitle?: boolean }>
@@ -9,7 +10,14 @@ export const Screen: FC<
   useDarkTheme()
   const [open, setOpen] = useState(false)
   const [showLoader, setShowLoader] = useState(true)
-  const initialized = useScreenInit({ shouldAnimateLoader })
+  const navigate = useNavigate()
+  const { initialized, redirectTarget } = useScreenInit({ shouldAnimateLoader })
+
+  function navigateToRedirectTarget() {
+    if (redirectTarget) {
+      navigate(redirectTarget)
+    }
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -22,6 +30,7 @@ export const Screen: FC<
       setOpen(false)
       setTimeout(() => {
         setShowLoader(false)
+        navigateToRedirectTarget()
       }, 600)
     }
   }, [initialized, open])
