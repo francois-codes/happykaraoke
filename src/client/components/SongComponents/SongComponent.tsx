@@ -15,7 +15,7 @@ import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/s
 import { EmptySong } from './EmptySong'
 
 export const SongComponent = () => {
-  const { transpo, isAdmin, currentSong, searchOpen, transpoOpen } = useStore()
+  const { transpo, isAdmin, currentSong, searchOpen, transpoOpen, chordsEnabled } = useStore()
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
 
@@ -211,6 +211,17 @@ export const SongComponent = () => {
       }
     },
     [isAdmin, transpoOpen, searchOpen, scroller, scrolling]
+  )
+
+  useKeyboardShortcut(
+    {
+      key: [KEYS.c],
+      disable: () => searchOpen || transpoOpen,
+      handler: () => {
+        dispatch({ chordsEnabled: !chordsEnabled })
+      }
+    },
+    [searchOpen, transpoOpen, chordsEnabled]
   )
 
   songFileChanged.client.useMessage(

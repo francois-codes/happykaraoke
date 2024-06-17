@@ -4,7 +4,8 @@ import { FC } from 'react'
 
 export const Spacer: FC<SongLineProps> = ({ content }) => {
   const { chordsEnabled } = useStore()
-  if (chordsEnabled) {
+
+  if (chordsEnabled || !content || content?.length === 0) {
     return <div>{content}</div>
   }
 
