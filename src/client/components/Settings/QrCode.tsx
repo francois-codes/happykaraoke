@@ -34,6 +34,8 @@ export function QrCode() {
     [searchOpen, qrCodeOpen]
   )
 
+  const linkUrl = `${hostUrl}?join`
+
   return (
     <Dialog open={qrCodeOpen} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -49,8 +51,8 @@ export function QrCode() {
           </DialogDescription>
         </DialogHeader>
         <div className="gap-4 flex flex-col items-center p-4">
-          <QRCode value={hostUrl} style={{ margin: '0 auto' }} />
-          <Link target="_blank" to={hostUrl}>
+          <QRCode value={linkUrl} style={{ margin: '0 auto' }} />
+          <Link target="_blank" to={linkUrl}>
             {hostUrl}
           </Link>
         </div>
