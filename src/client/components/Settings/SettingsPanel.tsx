@@ -4,11 +4,45 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { ToggleChords } from '../Settings/ToggleChords'
 import { ToggleDarkMode } from '../Settings/ToggleDarkMode'
 import { useDarkTheme } from '@/lib/useDarkTheme'
+import { useDispatch, useStore } from '@/store'
+import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
+import { KEYS } from '@/lib/consts'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
+  const { settingsOpen, searchOpen, qrCodeOpen } = useStore()
+  const dispatch = useDispatch()
+
+  function setOpen(open: boolean) {
+    dispatch({ settingsOpen: open })
+  }
+
+  useKeyboardShortcut(
+    {
+      key: [KEYS.s],
+      preventDefault: true,
+      disable: () => searchOpen || qrCodeOpen,
+      handler: () => {
+        setOpen(!settingsOpen)
+      }
+    },
+    [searchOpen, settingsOpen, qrCodeOpen]
+  )
+
+  useKeyboardShortcut(
+    {
+      key: [KEYS.d],
+      preventDefault: true,
+      disable: () => searchOpen,
+      handler: () => {
+        theme.toggleTheme()
+      }
+    },
+    [searchOpen, theme.toggleTheme]
+  )
+
   return (
-    <Popover>
+    <Popover open={settingsOpen} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button className="text-xl">
           <IoSettingsOutline />

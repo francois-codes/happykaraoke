@@ -1,4 +1,4 @@
-import { useStore } from '@/store'
+import { useDispatch, useStore } from '@/store'
 import { Button } from '../ui/button'
 import {
   Dialog,
@@ -11,12 +11,31 @@ import {
 import { IoQrCodeOutline } from 'react-icons/io5'
 import QRCode from 'react-qr-code'
 import { Link } from 'react-router-dom'
+import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
+import { KEYS } from '@/lib/consts'
 
 export function QrCode() {
-  const { hostUrl } = useStore()
+  const { hostUrl, qrCodeOpen, searchOpen } = useStore()
+  const dispatch = useDispatch()
+
+  function setOpen(open: boolean) {
+    dispatch({ qrCodeOpen: open })
+  }
+
+  useKeyboardShortcut(
+    {
+      key: [KEYS.q],
+      preventDefault: true,
+      disable: () => searchOpen,
+      handler: () => {
+        setOpen(!qrCodeOpen)
+      }
+    },
+    [searchOpen, qrCodeOpen]
+  )
 
   return (
-    <Dialog>
+    <Dialog open={qrCodeOpen} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <IoQrCodeOutline />

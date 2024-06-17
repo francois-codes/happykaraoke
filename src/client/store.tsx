@@ -11,6 +11,8 @@ interface Store {
   songsFolderOpen: boolean
   hostUrl: string
   searchOpen: boolean
+  qrCodeOpen: boolean
+  settingsOpen: boolean
 }
 
 const initialStore: Store = {
@@ -19,7 +21,9 @@ const initialStore: Store = {
   transpoOpen: false,
   songsFolderOpen: false,
   hostUrl: '',
-  searchOpen: false
+  searchOpen: false,
+  qrCodeOpen: false,
+  settingsOpen: false
 }
 
 const StoreContext = createContext<Store>(initialStore)
