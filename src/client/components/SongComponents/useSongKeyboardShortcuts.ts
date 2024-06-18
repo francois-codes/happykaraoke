@@ -165,7 +165,7 @@ export function useSongKeyboardShortcuts({
   // c => toggle chords
   useKeyboardShortcut(
     {
-      key: [KEYS.c],
+      key: [KEYS.a],
       disable: () => searchOpen || transpoOpen,
       handler: () => {
         dispatch({ chordsEnabled: !chordsEnabled })

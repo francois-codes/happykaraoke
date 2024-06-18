@@ -8,7 +8,7 @@
     "dev:electron": "NODE_ENV=development electron .",
     "build:client": "vite build",
     "build:server": "tsx esbuild.config.ts",
-    "build:electron": "electron-builder build --config electron-builder.yml",
+    "build:electron": "cp CHEATSHEET.md README.TXT && electron-builder build --config electron-builder.yml",
     "build": "npm run clean && npm run build:client && npm run build:server && npm run build:electron",
     "clean": "rimraf out && rimraf tsconfig.node.tsbuildinfo",
     "start": "node out/server/index.js"

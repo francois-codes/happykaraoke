@@ -1,4 +1,5 @@
 export enum KEYS {
+  '@' = '@',
   Backspace = 'Backspace',
   Tab = 'Tab',
   Enter = 'Enter',
@@ -185,5 +186,6 @@ export const KEY_LABELS: Record<KEYS, string> = {
   "'": "'",
   [KEYS.questionMark]: '?',
   [KEYS.dollarSign]: '$',
-  [KEYS.dead]: '`'
+  [KEYS.dead]: '`',
+  [KEYS['@']]: '@'
 }

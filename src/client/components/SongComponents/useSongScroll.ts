@@ -7,7 +7,7 @@ import { ScrollEventType } from '@shared/types/scroll'
 import { useCallback, useEffect, useState } from 'react'
 
 export function useSongScroll() {
-  const { isAdmin } = useStore()
+  const { isAdmin, currentSong } = useStore()
   const [scrolling, setScrolling] = useState(false)
 
   const scroller = useAutoScroller()
@@ -58,6 +58,12 @@ export function useSongScroll() {
       scroller?.element?.removeEventListener('scrollend', followScroll)
     }
   }, [followScroll, scroller])
+
+  useEffect(() => {
+    if (currentSong) {
+      scroller.scrollToTop()
+    }
+  }, [currentSong])
 
   return { scrolling, setScrolling }
 }

@@ -10,6 +10,8 @@ import {
 import { CommandLoading } from 'cmdk'
 import { useDispatch, useStore } from '@/store'
 import { changeSong, getSongsList } from '@shared/endpoints/song'
+import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
+import { KEYS } from '@/lib/consts'
 
 export function CommandMenu() {
   const [loading, setLoading] = useState(false)
@@ -61,6 +63,17 @@ export function CommandMenu() {
   useEffect(() => {
     fetchSongs()
   }, [songsFolder])
+
+  useKeyboardShortcut(
+    {
+      key: [KEYS['@']],
+      preventDefault: true,
+      handler: () => {
+        setOpen(!open)
+      }
+    },
+    [setOpen, open]
+  )
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>

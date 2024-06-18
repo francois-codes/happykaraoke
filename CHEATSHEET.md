@@ -7,14 +7,14 @@ As a rule of thumb, all shortcuts are desactivated when the search is open
 
 - `S` : opens the settings panel
 - `G` : Opens the modal showing the QR code
-- `C` : toggles chords on & off
+- `A` : toggles chords on & off
 - `D` : toggles dark mode on & off
 
 ## Admin shortcuts
 
 General shortcuts:
 
-- `cmd + K` : opens the search bar
+- `cmd + K` or `@` : opens the search bar
 - `cmd + O`: opens the folder selection modal
 - `T`: opens the transpose modal
 
