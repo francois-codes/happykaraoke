@@ -87,10 +87,10 @@ export function useSongKeyboardShortcuts({
     [scrolling, scroller, isAdmin, searchOpen]
   )
 
-  // up => increase scroll speed (admin only)
+  // right => increase scroll speed (admin only)
   useKeyboardShortcut(
     {
-      key: KEYS.up,
+      key: KEYS.right,
       disable: () => !isAdmin,
       preventDefault: true,
       handler: () => {
@@ -101,10 +101,10 @@ export function useSongKeyboardShortcuts({
     [scroller, isAdmin]
   )
 
-  // down => decrease scroll speed (admin only)
+  // left => decrease scroll speed (admin only)
   useKeyboardShortcut(
     {
-      key: KEYS.down,
+      key: KEYS.left,
       disable: () => !isAdmin,
       preventDefault: true,
       handler: () => {
@@ -134,10 +134,10 @@ export function useSongKeyboardShortcuts({
     [scroller, isAdmin, searchOpen, transpoOpen]
   )
 
-  // right => scroll to next section (admin only)
+  // down => scroll to next section (admin only)
   useKeyboardShortcut(
     {
-      key: [KEYS.right],
+      key: [KEYS.down],
       disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
       handler: () => {
         scrollToSection((offset, sectionsOffsets) =>
@@ -148,10 +148,10 @@ export function useSongKeyboardShortcuts({
     [isAdmin, transpoOpen, searchOpen, scroller, scrolling]
   )
 
-  // left => scroll to previous section (admin only)
+  // up => scroll to previous section (admin only)
   useKeyboardShortcut(
     {
-      key: [KEYS.left],
+      key: [KEYS.up],
       disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
       handler: () => {
         scrollToSection((offset, sectionsOffsets) =>

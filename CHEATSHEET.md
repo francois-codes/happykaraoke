@@ -28,7 +28,7 @@ When the transpose modal opens, it is preselected with the key currently used (d
 Song screen:
 
 - `space`: starts | stops auto scrolling
-- `up | down`: scrolls faster | slower
-- `left | right`: scrolls to previous | next section in the song
+- `up | down`: scrolls to previous | next section in the song
+- `left | right`: scrolls slower | faster
 - `$`: scrolls back to top & stops scrolling
 - `cmd + ctrl + R`: reloads to song to reflect changes to the song file
