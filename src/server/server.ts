@@ -7,9 +7,11 @@ import bodyParser from 'body-parser'
 import { socketEmitter } from '@shared/server/socketEmitter'
 import { config } from '@shared/config'
 import { watchForChanges } from '@shared/lib/data/watcher'
+import { initializeConfig } from '@shared/lib/data/init'
 
 export async function startServer(configure: (app: express.Express) => void) {
   const ab = new AbortController()
+  await initializeConfig()
 
   socketEmitter.on('socket:emit', ({ event, payload }) => {
     serverSocket.emit(event, payload)

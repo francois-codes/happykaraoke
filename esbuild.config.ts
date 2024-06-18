@@ -13,7 +13,7 @@ esbuild
     loader: {
       '.svg': 'dataurl'
     },
-    external: Object.keys(require('./package.json').devDependencies),
+    external: [...Object.keys(require('./package.json').devDependencies), 'better-sqlite3'],
     tsconfig: 'tsconfig.node.json'
   })
   .catch(() => process.exit(1))

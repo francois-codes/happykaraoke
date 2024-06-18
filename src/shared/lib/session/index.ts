@@ -9,7 +9,7 @@ export interface SessionConfig {
 
 const sessionConfig: SessionConfig = {
   transpo: 0,
-  songsFolder: config.DEFAULT_SONGS_FOLDER,
+  songsFolder: '',
   hostUrl: `http://${ip.address()}:${config.PORT}`
 }
 

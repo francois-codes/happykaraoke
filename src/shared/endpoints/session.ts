@@ -13,8 +13,10 @@ export const fetchSessionConfig = createEndpoint<unknown, SessionConfig>({
 export const setSongsFolder = createEndpoint<{ folder: string }, unknown>({
   method: 'post',
   url: '/set-songs-folder',
-  handler: (req, res) => {
+  handler: async (req, res) => {
     const { folder } = req.body
+    const { setPersistedConfig } = await import('@shared/lib/data/config')
+    await setPersistedConfig('song_folder', folder)
     setSessionConfig({ songsFolder: folder })
     socketEmitter.emit('folder:changed')
     res.sendStatus(200)
