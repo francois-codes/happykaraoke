@@ -138,6 +138,7 @@ export function useSongKeyboardShortcuts({
   useKeyboardShortcut(
     {
       key: [KEYS.down],
+      preventDefault: true,
       disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
       handler: () => {
         scrollToSection((offset, sectionsOffsets) =>
@@ -152,6 +153,7 @@ export function useSongKeyboardShortcuts({
   useKeyboardShortcut(
     {
       key: [KEYS.up],
+      preventDefault: true,
       disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
       handler: () => {
         scrollToSection((offset, sectionsOffsets) =>
