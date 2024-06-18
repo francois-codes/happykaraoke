@@ -12,14 +12,16 @@ import { useDispatch, useStore } from '@/store'
 import { changeSong, getSongsList } from '@shared/endpoints/song'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
+import { searchSong } from '@shared/lib/data/songs'
+
+type Songs = Awaited<ReturnType<typeof getSongsList.call>>['songs']
 
 export function CommandMenu() {
   const [loading, setLoading] = useState(false)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const [songResults, setSongResults] = useState<
-    { tags: string[]; author: string; title: string; filename: string }[]
-  >([])
+  const [allSongs, setAllSongs] = useState<Songs>([])
+  const [filteredSongs, setFilteredSongs] = useState<Songs>([])
 
   const { currentSong, songsFolder } = useStore()
   const dispatch = useDispatch()
@@ -50,7 +52,7 @@ export function CommandMenu() {
     setLoading(true)
     const { songs } = await getSongsList.call()
     if (!songs) return
-    setSongResults(songs)
+    setAllSongs(songs)
     setLoading(false)
   }
 
@@ -74,6 +76,15 @@ export function CommandMenu() {
     [setOpen, open]
   )
 
+  useEffect(() => {
+    if (!query) {
+      setFilteredSongs(allSongs)
+    } else {
+      const results = searchSong(query, allSongs)
+      setFilteredSongs(results)
+    }
+  }, [query, allSongs])
+
   return (
     <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
       <CommandInput
@@ -83,9 +94,13 @@ export function CommandMenu() {
         onValueChange={setQuery}
       />
       <CommandList>
-        {loading && <CommandLoading>Recherche...</CommandLoading>}
+        {loading && (
+          <CommandLoading>
+            <CommandItem>Recherche...</CommandItem>
+          </CommandLoading>
+        )}
         {!loading &&
-          songResults.map((song, index) => (
+          filteredSongs.map((song, index) => (
             <CommandItem
               onSelect={selectSong}
               key={index}

@@ -38,11 +38,11 @@ export function getAllSongs() {
     .map(({ author, title, tags, filename }) => ({ author, title, tags, filename }))
 }
 
-export function searchSong(query: string) {
+export function searchSong(query: string, allSongs = getAllSongs()) {
   const normalizedQuery = sanitizeSearchString(query)
 
-  const results = getAllSongs()
-    .flatMap(({ author, title, tags }) => {
+  const results = allSongs
+    .flatMap(({ author, title, tags, filename }) => {
       let match = 0
       const authorNormalized = sanitizeSearchString(author)
       const titleNormalized = sanitizeSearchString(title)
@@ -67,7 +67,7 @@ export function searchSong(query: string) {
         match += 2
       }
 
-      if (match > 0) return { author, title, match }
+      if (match > 0) return { author, title, match, filename, tags }
 
       return []
     })
