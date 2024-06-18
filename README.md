@@ -145,6 +145,11 @@ Since this is also building the server & the client side, you can run the server
 All paths are aliased so you can import from the shared folder with `@shared`, from the client and from the server. Server & client side have aliases to their respective roots with `@`. The paths are defined in the `tsconfig.[node|web].json` files, in the vite config for the client side.
 Both the server and the client can reference `@shared` but the client cannot import `@server` and the server cannot import `@client`.
 
+### Set up
+
+Currently there is an annoying thing: since users are handled in memory, when the server restarts, they are being removed, so you need to login again. As a workaround, if you set an entry in your session storage where `userId` is `devAdmin`, the app will consider you logged in as an admin
+you can also use `userId` as `devUser` to be logged in as a guest. this way, no need to login again when the server restarts.
+
 ### Client side
 
 #### structure

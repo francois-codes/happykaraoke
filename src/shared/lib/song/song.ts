@@ -14,9 +14,7 @@ export class Song {
   }
 
   load() {
-    const file = fs?.readFileSync(
-      path.resolve(getSessionConfig().songsFolder, this.filename + '.txt')
-    )
+    const file = this.loadSongFile()
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [title, author, key, tags, _, ...lines] = file?.toString().split(/\r?\n/) || []
 
@@ -30,6 +28,23 @@ export class Song {
     }
 
     return this.songData
+  }
+
+  private loadSongFile() {
+    try {
+      return fs?.readFileSync(path.resolve(getSessionConfig().songsFolder, this.filename + '.txt'))
+    } catch (e) {
+      // trying to find the file with a different case, and potentially some extra spaces
+      const files = fs.readdirSync(getSessionConfig().songsFolder)
+      const file = files.find(
+        (f) => f.replace('.txt', '').trim().toLowerCase() === this.filename.toLowerCase()
+      )
+      if (file) {
+        return fs.readFileSync(path.resolve(getSessionConfig().songsFolder, file))
+      }
+    }
+
+    throw new Error('Song not found')
   }
 
   private parseLines(lines: string[]): SongLine[] {
