@@ -80,6 +80,18 @@ export class Song {
       if (
         line.type === LineType.break &&
         index > 1 &&
+        songLines[index - 1].type === LineType.Lyrics &&
+        songLines[index + 1]?.type === LineType.Chords
+      ) {
+        return {
+          type: LineType.Section,
+          content: ''
+        }
+      }
+
+      if (
+        line.type === LineType.break &&
+        index > 1 &&
         songLines[index - 1].type === LineType.Chords
       ) {
         return {
