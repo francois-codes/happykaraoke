@@ -14,7 +14,8 @@ export const ChordLine: FC<SongLineProps> = ({ content }) => {
 
   return (
     <pre className={className}>
-      {chordLine.split(/(\s+)/).map((word, id) => {
+      {chordLine.split(/(\s+)|_/g).map((word, id) => {
+        if (!word) return ' '
         const chordLabel = word.replace('|', '')
         const isChord = Chord.isChord(chordLabel)
         const hasBar = word.startsWith('|')
