@@ -15,6 +15,7 @@ export const getSong = createEndpoint<{ title: string }, { song: SongData }>({
       const data = song.load()
       res.status(200).json({ song: data })
     } catch (e) {
+      console.error(e)
       res.sendStatus(500)
     }
   }

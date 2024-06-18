@@ -25,7 +25,6 @@ export function CommandMenu() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log({ currentSong, songsFolder })
     if (!currentSong && songsFolder) {
       dispatch({ searchOpen: true })
       setOpen(true)
