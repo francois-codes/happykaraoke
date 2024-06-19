@@ -1,16 +1,8 @@
 import { app, BrowserWindow, dialog, ipcMain } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
-import express from 'express'
 import { startServer } from './server'
 import { join } from 'path'
 import { config } from '@shared/config'
-
-startServer(async (app) => {
-  app.use(express.static(join(__dirname, '../client')))
-  app.get('/session', (_, res) => {
-    res.redirect('/')
-  })
-})
 
 function createWindow() {
   // Create the browser window.
@@ -34,10 +26,11 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
+  await startServer()
+  createWindow()
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
-  createWindow()
 
   ipcMain.handle('request:datapath:selection', async () => {
     const { filePaths } = await dialog.showOpenDialog({
@@ -69,6 +62,3 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.

@@ -12,8 +12,6 @@ export async function initializeConfig() {
       .where(eq(config.key, 'song_folder'))
     const configValue = results?.[0]?.value
 
-    console.log({ results })
-
     if (configValue) {
       setSessionConfig({
         songsFolder: configValue.replace('$home', homedir())

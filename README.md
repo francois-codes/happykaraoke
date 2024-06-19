@@ -75,6 +75,9 @@ startServer((app) => {
 })
 ```
 
+The server can leverage a sqlite database that is configured to run both in dev mode (server) or production (electron).
+The only caveat for that is that you need to make sure that the db binary is built for the correct platform before running it or you'll have an error. See the run modes section below for more details.
+
 #### Client side
 
 React client, built with vite. The front end uses react-router for routing. I'm not using any state library to keep things simple, and because the server drives most of the app state from the websockets, I didn't feel the need for a client side state manager library
@@ -139,6 +142,15 @@ $ npm run build
 
 This creates the artefacts in the `dist` folder created by the electron build process. The binary can be launched from there.
 Since this is also building the server & the client side, you can run the server fron the `out` by running `npm start`
+
+### Run
+
+The app can be run in 2 modes:
+
+- server mode (with `npm run dev`)
+- electron mode (when running the artifact from `npm run build` or when running `npm run dev:electron`)
+
+Before running the app in a given mode, you need to make sure the better-sqlite3 binaries are correctly built for the environment you've chosen. you have `npm run install:deps:web` and `npm run install:deps:electron` for this. If you see an error telling you that better-sqlite3 wasn't built for the right node version, it means you have the binary built for node, but are running on electron or vice versa.
 
 ## Contribute
 

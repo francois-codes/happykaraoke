@@ -9,8 +9,6 @@ const dbPath =
     ? resolve(app.getAppPath(), '../resources/db.sqlite')
     : resolve(process.cwd(), './resources/db.sqlite')
 
-console.log({ dbPath })
-
 const sqlite = new Database(dbPath, {})
 
 export const db = drizzle(sqlite, { schema })

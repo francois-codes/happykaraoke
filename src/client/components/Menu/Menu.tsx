@@ -16,7 +16,7 @@ export const Menu: FC = () => {
     <header className="z-50 fixed flex items-center justify-between gap-8 w-full px-8 py-4 bg-background dark:bg-background">
       <div className="flex items-end align-start gap-8">
         <img width={36} height={36} src={image} alt="happikaraoke" />
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-3xl font-bold overflow-hidden text-ellipsis whitespace-nowrap">
           {song ? (
             <>
               {song.author} - {song.title}
