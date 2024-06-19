@@ -52,8 +52,18 @@ I tried some options:
 
 I also considered for a moment to run the server in a docker container inside the electron app, but I quickly shook it off as I didn't have weeks to spend battling with docker and electron.
 
-So I ended up bootstrapping this from scratch. In the end I'm fairly happy as I have been able to achieve all of the above.
-The stack is as follows:
+So I ended up bootstrapping this from scratch. Initially I was running the app as a web server, used vite to build the front and esbuild to build the server. It wasn't a problem initially as I wasn't using a lot of electron feature (the only one being the dialog to change the song folder).
+
+Things got more complicated as I integrated the sqlite database. The problem here is that the sqlite binary is built for the environment used. So switching between running dev on the web and building for electron required to constantly rebuild the sqlite binary for each environment. I created npm scripts for that, but it was still a bit annoying.
+
+So I looked again at the tooling to try to have a proper dev mode in electron, ideally with hot reloading. I looked at the electron-vite package which is building each process with vite and works really well. The problem is that I couldn't build the server with vite as I needed to set up a vite dev server as middleware to serve the client in dev mode. And that vite-ception quickly showed its limits.
+
+So I turned to esbuild instead, which is suprisingly effective & easy to use. I created a file with the base esbuild config for the preloader & the main process. Then I created 2 esbuild scripts:
+
+- one for the build, which is bundling the server side code and the preload script before the electron build
+- one for the dev mode, which is building & watching for changes on the server side code, and starts the electron app in dev mode. The server is configured to use the vite dev server as middleware, so the client side is served by vite in dev mode and hot reloading works.
+
+In the end I'm happy with this as it greatly simplifies the developer experience. The only issue I'll probably run into is that I'll most likely need to use the `npm run install:deps:web` script to run additional drizzle migrations on the sqlite database. Otherwise, I'll get the mismatch node version error. But this should not be too frequent, so I figured I can live with that.
 
 #### Server side
 
@@ -88,24 +98,19 @@ The shared code is written in typescript, and is used by both the server and the
 
 All the code is in the `src` folder. Electron resources are in the `resources` folder, and build files in the `build` folder. The build outputs in `out` and this is where electron picks up what needs to be packaged in the artifacts.
 
-#### Limitations and potential improvements
+#### sqlite database
 
-##### electron dev mode with hot reloading
+There's a sqlite database in `resources/db.sqlite`
+When building the electron app, it is packages as part of the build, so data persisted there and schema updates will be available in the built app.
 
-The reason why the server has 2 entry points is because I couldn't figure out a way to run the vite dev server to serve the front end from the main process. I guess I could have make it work by making the front end be served as the renderer process, but because we need people to join a session on the hosted server by opening the device's host URL in a browser, I couldn't go down this route.
+The sqlite database is managed by drizzle, with the drizzle-kit to perform migrations and such. There is a seed script that can also be executed once. The only caveat here, as mentioned above, is that there are two different binaries for running sqlite on electron and locally on the machine. The `npm run install:deps:web` and `npm run install:deps:electron` scripts are there to build the relevant version as needed.
 
-For this reason, most of the development is done by running the app as a standard dev server, which means that electron features are not available. This isn't a big deal as the only electron feature used is the dialog to open a folder. But to debug this, I had to do the following:
+For instance, if the binary is built for electron running `npm run install:deps:electron`, and you try to run migrations, you will get this error:
+![SQLITE_ERROR]('./sqlite-binary-error.png')
 
-- build the client side by running `npm run build:client`
-- run the electron app in dev mode with `npm run dev:electron`
+if that happens, simply run `npm run install:deps:web` and the binary will be rebuilt for the correct environment.
 
-Which is quite annoying since there's no hot reloading on either side. The vite build is pretty quick on the front end, but any change on the server side would require to kill the app & restart it.
-
-So in the future, the best thing would be to replicate what was done on `electron-vite`, and provide a way to have effective hot reloading on both the server and the client side.
-
-##### double vite config
-
-Because the server in dev mode is creating its own instance of the vite dev server, it requires an inline configuration. I couldn't import the vite config at the root which is outside of the server's scope. This is not a big deal, but it's a bit annoying to have to maintain 2 vite configs. In case you need to modify the vite config, remember to also update it in the `src/server/index.ts` file before going crazy wondering why your changes don't apply.
+Likewise, you can have the same error when running the app in electron dev mode, or when building it. In this case, make sure you run `npm run install:deps:electron` to rebuild the binary for the electron environment.
 
 ## Project Setup
 
@@ -117,9 +122,17 @@ the project was built using node 20.11.0, and uses npm as a package manager. All
 $ npm install
 ```
 
+The db should be built, configured and seeded, so no need to run anything here. But you can check the migration scripts in the package.json if needed, and the [sqlite](#sqlite-database) section above for more details.
+
+However, you'll need to make sure the sqlite binary is built for electron before running it. I chose not to add it as a postinstall script as this can take a while, so before running the app with the command below, you'll need to run
+
+```bash
+$ npm run install:deps:electron
+```
+
 ### Development
 
-the dev command starts the app as a web server and doesn't launch the electron app. I may add this in the future, but for now I prefer this as it allows me to build the app without relying on any electron specific features which would break when the app is used in a browser
+the dev command starts the electron app in dev mode. The main & preload process code is handled with esbuilt, and the client side is served by the vite dev server from the express app on the main process. The dev esbuild config has chokidar setup to listen for changes on the main & preload process, and reload the electron app when needed. you will lose context, but I couldn't figure out a way to have hot reload without reloading the electron app.
 
 ```bash
 $ npm run dev
@@ -142,15 +155,6 @@ $ npm run build
 
 This creates the artefacts in the `dist` folder created by the electron build process. The binary can be launched from there.
 Since this is also building the server & the client side, you can run the server fron the `out` by running `npm start`
-
-### Run
-
-The app can be run in 2 modes:
-
-- server mode (with `npm run dev`)
-- electron mode (when running the artifact from `npm run build` or when running `npm run dev:electron`)
-
-Before running the app in a given mode, you need to make sure the better-sqlite3 binaries are correctly built for the environment you've chosen. you have `npm run install:deps:web` and `npm run install:deps:electron` for this. If you see an error telling you that better-sqlite3 wasn't built for the right node version, it means you have the binary built for node, but are running on electron or vice versa.
 
 ## Contribute
 
