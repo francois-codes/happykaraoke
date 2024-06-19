@@ -1,36 +1,7 @@
 import esbuild from 'esbuild'
+import { mainConfig, preloadConfig } from './esbuild.base.config'
+const configs = [mainConfig, preloadConfig]
 
-esbuild
-  .build({
-    entryPoints: ['src/server/main.ts'],
-    outfile: 'out/server/main.js',
-    bundle: true,
-    platform: 'node',
-
-    define: {
-      'process.env.NODE_ENV': "'production'"
-    },
-    loader: {
-      '.svg': 'dataurl'
-    },
-    external: Object.keys(require('./package.json').devDependencies),
-    tsconfig: 'tsconfig.node.json'
-  })
-  .catch(() => process.exit(1))
-
-esbuild
-  .build({
-    entryPoints: ['src/server/preload.ts'],
-    bundle: true,
-    platform: 'node',
-    outfile: 'out/server/preload.js',
-    define: {
-      'process.env.NODE_ENV': "'production'"
-    },
-    loader: {
-      '.svg': 'dataurl'
-    },
-    external: Object.keys(require('./package.json').devDependencies),
-    tsconfig: 'tsconfig.node.json'
-  })
-  .catch(() => process.exit(1))
+configs.forEach((config) => {
+  esbuild.build(config('production')).catch(() => process.exit(1))
+})

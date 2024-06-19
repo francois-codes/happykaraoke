@@ -17,8 +17,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src/client'),
-      '@shared': resolve(__dirname, 'src/shared'),
+      '@': resolve(process.cwd(), 'src/client'),
+      '@shared': resolve(process.cwd(), 'src/shared'),
       fs: 'memfs'
     }
   }
