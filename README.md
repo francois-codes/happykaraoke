@@ -106,7 +106,7 @@ When building the electron app, it is packages as part of the build, so data per
 The sqlite database is managed by drizzle, with the drizzle-kit to perform migrations and such. There is a seed script that can also be executed once. The only caveat here, as mentioned above, is that there are two different binaries for running sqlite on electron and locally on the machine. The `npm run install:deps:web` and `npm run install:deps:electron` scripts are there to build the relevant version as needed.
 
 For instance, if the binary is built for electron running `npm run install:deps:electron`, and you try to run migrations, you will get this error:
-![SQLITE_ERROR](/sqlite-binary-error.png)
+![SQLITE_ERROR](/assets/sqlite-binary-error.png)
 
 if that happens, simply run `npm run install:deps:web` and the binary will be rebuilt for the correct environment.
 

@@ -9,7 +9,7 @@
     "build:client": "vite build",
     "build:server": "tsx esbuild.config.ts",
     "build:electron": "electron-builder build --config electron-builder.yml",
-    "prebuild": "npm run clean && cp CHEATSHEET.md README.TXT",
+    "prebuild": "npm run clean && cp assets/CHEATSHEET.md README.TXT && npm run install:deps:electron",
     "build": "npm run build:client && npm run build:server && npm run build:electron",
     "clean": "rimraf out",
     "install:deps:electron": "electron-rebuild -f -w better-sqlite3 && cd node_modules/better-sqlite3 && npx node-gyp rebuild --debug --build-from-source --runtime=electron --target=30.1.0 --dist-url=https://electronjs.org/headers",

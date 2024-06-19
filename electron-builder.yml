@@ -49,7 +49,7 @@ dmg:
     - x: 184
       y: 310
       type: file
-      path: post-install.command
+      path: assets/post-install.command
     - x: 480
       y: 310
       type: file
