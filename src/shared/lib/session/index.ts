@@ -1,5 +1,4 @@
 import { config } from '@shared/config'
-
 import { sessionLog } from '@shared/db/schema'
 import { differenceInMinutes, formatISO } from 'date-fns'
 
@@ -66,4 +65,18 @@ export async function addSessionLog(song: string) {
   })
 
   return result
+}
+
+export async function getSessionLogs(date: string) {
+  const { db } = await import('@shared/db')
+  const { sql } = await import('drizzle-orm')
+
+  const results = await db
+    .select()
+    .from(sessionLog)
+    .where(sql`DATE(${sessionLog.timestamp}) = ${date}`)
+
+  console.log({ results })
+
+  return results
 }
