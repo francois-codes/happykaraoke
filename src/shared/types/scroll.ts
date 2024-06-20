@@ -1,6 +1,7 @@
 export enum ScrollEventType {
   START = 'start',
   STOP = 'stop',
+  TOGGLE = 'toggle',
   FASTER = 'faster',
   SLOWER = 'slower',
   TOP = 'top',

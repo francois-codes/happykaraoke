@@ -4,38 +4,16 @@ import { useAutoScroller } from '@/lib/useAutoScroller'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
 import { setScroll } from '@shared/endpoints/scroll'
-import { Dispatch, SetStateAction } from 'react'
 
 export function useSongKeyboardShortcuts({
-  scrolling,
-  setScrolling,
+  scroller,
   reload
 }: {
-  scrolling: boolean
-  setScrolling: Dispatch<SetStateAction<boolean>>
+  scroller: ReturnType<typeof useAutoScroller>
   reload: () => void
 }) {
   const { isAdmin, searchOpen, transpoOpen, chordsEnabled } = useStore()
   const dispatch = useDispatch()
-  const scroller = useAutoScroller()
-
-  function scrollToSection(
-    findOffset: (offset: number, sectionsOffsets: number[]) => number | undefined
-  ) {
-    const offset = scroller.element?.scrollTop
-    const sectionsOffsets: number[] = Array.from(document.querySelectorAll('.song-section')).map(
-      // @ts-expect-error wtf??
-      (node) => node.offsetTop
-    )
-
-    if (typeof offset === 'undefined' || offset === null || !sectionsOffsets) return
-
-    const scrollPosition = findOffset(offset, sectionsOffsets)
-    if (scrollPosition) {
-      scroller.scrollTo(scrollPosition)
-      setScroll.call({ type: ScrollEventType.POSITION, value: scrollPosition })
-    }
-  }
 
   // cmd + ctrl + r => reload song
   useKeyboardShortcut(
@@ -73,18 +51,15 @@ export function useSongKeyboardShortcuts({
       disable: () => {
         return !isAdmin || searchOpen
       },
-      handler: (e) => {
-        e.preventDefault()
-        const action = scrolling ? scroller.stopScrolling : scroller.startScrolling
-        action()
+      handler: () => {
+        scroller.toggleScrolling()
 
-        setScrolling(!scrolling)
         setScroll.call({
-          type: scrolling ? ScrollEventType.STOP : ScrollEventType.START
+          type: ScrollEventType.TOGGLE
         })
       }
     },
-    [scrolling, scroller, isAdmin, searchOpen]
+    [scroller, isAdmin, searchOpen]
   )
 
   // right => increase scroll speed (admin only)
@@ -125,7 +100,6 @@ export function useSongKeyboardShortcuts({
       handler: (event) => {
         event.preventDefault()
         scroller.stopScrolling()
-        setScrolling(false)
 
         scroller.scrollToTop()
         setScroll.call({ type: ScrollEventType.TOP })
@@ -139,14 +113,12 @@ export function useSongKeyboardShortcuts({
     {
       key: [KEYS.down],
       preventDefault: true,
-      disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
+      disable: () => !isAdmin || searchOpen || transpoOpen,
       handler: () => {
-        scrollToSection((offset, sectionsOffsets) =>
-          sectionsOffsets.find((nodeOffset) => nodeOffset > offset)
-        )
+        scroller.nextSection()
       }
     },
-    [isAdmin, transpoOpen, searchOpen, scroller, scrolling]
+    [isAdmin, transpoOpen, searchOpen, scroller]
   )
 
   // up => scroll to previous section (admin only)
@@ -154,14 +126,12 @@ export function useSongKeyboardShortcuts({
     {
       key: [KEYS.up],
       preventDefault: true,
-      disable: () => !isAdmin || searchOpen || transpoOpen || scrolling,
+      disable: () => !isAdmin || searchOpen || transpoOpen,
       handler: () => {
-        scrollToSection((offset, sectionsOffsets) =>
-          sectionsOffsets.findLast((nodeOffset) => nodeOffset < offset)
-        )
+        scroller.previousSection()
       }
     },
-    [isAdmin, transpoOpen, searchOpen, scroller, scrolling]
+    [isAdmin, transpoOpen, searchOpen, scroller]
   )
 
   // c => toggle chords

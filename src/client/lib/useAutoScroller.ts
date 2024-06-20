@@ -1,60 +1,139 @@
 'use client'
-import { useState, useRef, useEffect } from 'react'
+import { useScrollContext } from '@/contexts/scroll'
+import { useStore } from '@/store'
+import { useRef, useCallback, useEffect } from 'react'
 
 export const useAutoScroller = () => {
-  const [scrolling, setScrolling] = useState(false)
-  const [scrollSpeed, setScrollSpeed] = useState(1) // Default speed, you can adjust as needed
-  const scrollRef = useRef<Nullable<NodeJS.Timeout>>(null)
+  const { currentSong } = useStore()
+  const scrollContainerRef = useScrollContext()
+  const scrollSpeedRef = useRef(0.1)
+  const scrollPosition = useRef(0)
+  const animationFrameRef = useRef<Nullable<number>>(null)
+  const sectionsRef = useRef<Nullable<number[]>>(null)
+  const sectionIndexRef = useRef(0)
 
-  const element = document.getElementById('scroll-container')
+  const scrollStep = useCallback(() => {
+    if (scrollContainerRef.current) {
+      const position = scrollPosition.current ?? scrollContainerRef.current.scrollTop ?? 0
+      const top = position + (scrollSpeedRef.current ?? 0.1)
+      if (top >= scrollContainerRef.current.scrollHeight - window.innerHeight - 200) {
+        stopScrolling()
+        return
+      }
 
-  useEffect(() => {
-    if (scrolling) {
-      scrollRef.current = setInterval(() => {
-        const scroll = element?.scrollTop ?? 0
-        element?.scrollTo({ top: scroll + scrollSpeed, behavior: 'smooth' })
-      }, 100) // Scroll every 100ms, adjust as needed
+      const nextSection = resolveSections()[sectionIndexRef.current + 1]
 
-      return () => clearInterval(scrollRef.current!)
+      if (nextSection && top >= nextSection) {
+        sectionIndexRef.current += 1
+      }
+
+      scrollPosition.current = top
+      scrollContainerRef.current!.scrollTop = top
+      animationFrameRef.current = requestAnimationFrame(scrollStep)
     }
-  }, [scrolling, scrollSpeed])
+  }, [])
 
-  const startScrolling = (speed = scrollSpeed) => {
-    setScrollSpeed(speed++)
-    setScrolling(true)
-  }
+  const startScrolling = useCallback(() => {
+    if (animationFrameRef.current) return // prevent multiple animations
 
-  const stopScrolling = () => {
-    setScrolling(false)
-    if (scrollRef.current) {
-      clearInterval(scrollRef.current)
+    animationFrameRef.current = requestAnimationFrame(scrollStep)
+  }, [scrollStep])
+
+  const stopScrolling = useCallback(() => {
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current)
+      animationFrameRef.current = null
     }
+  }, [])
+
+  const toggleScrolling = useCallback(() => {
+    if (animationFrameRef.current) {
+      stopScrolling()
+    } else {
+      startScrolling()
+    }
+  }, [])
+
+  const increaseScrollSpeed = (increment = 0.2) => {
+    scrollSpeedRef.current += increment
   }
 
-  const increaseScrollSpeed = (increment = 1) => {
-    setScrollSpeed((prevSpeed) => prevSpeed + increment)
-  }
-
-  const decreaseScrollSpeed = (decrement = 1) => {
-    setScrollSpeed((prevSpeed) => Math.max(prevSpeed - decrement, 1)) // Ensures speed doesn't go below 1
+  const decreaseScrollSpeed = (decrement = 0.2) => {
+    scrollSpeedRef.current = Math.max(scrollSpeedRef.current - decrement, 0.1) // Ensures speed doesn't go below 1
   }
 
   const scrollTo = (top: number) => {
-    element?.scrollTo({ top, behavior: 'smooth' })
+    scrollPosition.current = top
+    if (animationFrameRef.current) {
+      scrollContainerRef.current!.scrollTop = top
+    } else {
+      scrollContainerRef.current?.scrollTo({ top, behavior: 'smooth' })
+    }
   }
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
+    stopScrolling()
     scrollTo(0)
+    sectionIndexRef.current = 0
+    if (animationFrameRef.current) startScrolling()
+  }, [startScrolling, stopScrolling])
+
+  function resolveSections() {
+    if (!sectionsRef.current?.length) {
+      const sections = Array.from(document.querySelectorAll('.song-section')).map(
+        // @ts-expect-error wtf??
+        (child) => child.offsetTop
+      )
+      sectionsRef.current = sections
+    }
+
+    return sectionsRef.current
   }
+
+  const nextSection = useCallback(() => {
+    const sections = resolveSections()
+    if (sections && sectionIndexRef.current < sections.length - 1) {
+      sectionIndexRef.current += 1
+      if (sections?.[sectionIndexRef.current]) {
+        scrollTo(sections[sectionIndexRef.current])
+      }
+    }
+  }, [])
+
+  const previousSection = useCallback(() => {
+    const sections = resolveSections()
+    if (sections && sectionIndexRef.current > 0) {
+      sectionIndexRef.current -= 1
+      if (sectionIndexRef.current >= 0 && sections?.[sectionIndexRef.current] !== undefined) {
+        scrollTo(sections[sectionIndexRef.current])
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (animationFrameRef.current) {
+      stopScrolling()
+      startScrolling()
+    }
+  }, [startScrolling, stopScrolling])
+
+  useEffect(() => {
+    return () => stopScrolling() // cleanup on unmount
+  }, [stopScrolling])
+
+  useEffect(() => {
+    sectionsRef.current = null
+  }, [currentSong])
 
   return {
+    toggleScrolling,
     startScrolling,
     stopScrolling,
     increaseScrollSpeed,
     decreaseScrollSpeed,
-    scrollSpeed,
+    nextSection,
+    previousSection,
     scrollToTop,
-    scrollTo,
-    element
+    scrollTo
   }
 }

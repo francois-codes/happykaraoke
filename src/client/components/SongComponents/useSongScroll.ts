@@ -1,16 +1,15 @@
+import { useScrollContext } from '@/contexts/scroll'
 import { useAutoScroller } from '@/lib/useAutoScroller'
 import { useStore } from '@/store'
 import { socket } from '@/utils/socket'
 import { setScroll } from '@shared/endpoints/scroll'
 import { scrollChanged } from '@shared/messages/scroll'
 import { ScrollEventType } from '@shared/types/scroll'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 
-export function useSongScroll() {
+export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const { isAdmin, currentSong } = useStore()
-  const [scrolling, setScrolling] = useState(false)
-
-  const scroller = useAutoScroller()
+  const scrollContainerRef = useScrollContext()
 
   scrollChanged.client.useMessage(
     socket,
@@ -19,22 +18,18 @@ export function useSongScroll() {
         return
       }
 
-      const action = scrolling ? scroller.stopScrolling : scroller.startScrolling
-
       switch (type) {
         case ScrollEventType.START:
-          action()
-          return setScrolling(!scrolling)
+          return scroller.startScrolling()
         case ScrollEventType.STOP:
-          action()
-          return setScrolling(!scrolling)
+          return scroller.stopScrolling()
+        case ScrollEventType.TOGGLE:
+          return scroller.toggleScrolling()
         case ScrollEventType.FASTER:
           return scroller.increaseScrollSpeed()
         case ScrollEventType.SLOWER:
           return scroller.decreaseScrollSpeed()
         case ScrollEventType.TOP:
-          scroller.stopScrolling()
-          setScrolling(false)
           return scroller.scrollToTop()
         case ScrollEventType.POSITION:
           if (value && !Number.isNaN(value)) {
@@ -42,20 +37,21 @@ export function useSongScroll() {
           }
       }
     },
-    [scrolling, setScrolling, scroller, isAdmin]
+    [scroller, isAdmin]
   )
 
   const followScroll = useCallback(() => {
-    if (isAdmin && !scrolling) {
-      setScroll.call({ type: ScrollEventType.POSITION, value: scroller.element?.scrollTop })
-    }
-  }, [scroller.element, scrolling, isAdmin])
+    setScroll.call({
+      type: ScrollEventType.POSITION,
+      value: scrollContainerRef.current?.scrollTop
+    })
+  }, [])
 
   useEffect(() => {
-    scroller.element?.addEventListener('scrollend', followScroll)
+    scrollContainerRef.current?.addEventListener('scrollend', followScroll)
 
     return () => {
-      scroller?.element?.removeEventListener('scrollend', followScroll)
+      scrollContainerRef.current?.removeEventListener('scrollend', followScroll)
     }
   }, [followScroll, scroller])
 
@@ -64,6 +60,4 @@ export function useSongScroll() {
       scroller.scrollToTop()
     }
   }, [currentSong])
-
-  return { scrolling, setScrolling }
 }

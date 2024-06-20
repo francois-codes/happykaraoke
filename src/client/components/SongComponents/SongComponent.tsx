@@ -8,17 +8,17 @@ import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/s
 import { EmptySong } from './EmptySong'
 import { useSongKeyboardShortcuts } from './useSongKeyboardShortcuts'
 import { useSongScroll } from './useSongScroll'
+import { useAutoScroller } from '@/lib/useAutoScroller'
 
 export const SongComponent = () => {
   const { currentSong } = useStore()
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
-
-  const { scrolling, setScrolling } = useSongScroll()
+  const scroller = useAutoScroller()
+  useSongScroll(scroller)
 
   useSongKeyboardShortcuts({
-    scrolling,
-    setScrolling,
+    scroller,
     reload
   })
 
