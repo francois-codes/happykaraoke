@@ -9,5 +9,5 @@ export const Lyrics: FC<SongLineProps> = ({ content }) => {
     return <pre className="py-2 font-mono">{content}</pre>
   }
 
-  return <p className="py-2 text-xl w-full leading-[48px]">{content}</p>
+  return <p className="py-2 text-3xl w-full leading-[48px]">{content}</p>
 }
