@@ -18,6 +18,8 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
         return
       }
 
+      const top = Number(value)
+
       switch (type) {
         case ScrollEventType.START:
           return scroller.startScrolling()
@@ -32,8 +34,8 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
         case ScrollEventType.TOP:
           return scroller.scrollToTop()
         case ScrollEventType.POSITION:
-          if (value && !Number.isNaN(value)) {
-            return scroller.scrollTo(value)
+          if (!Number.isNaN(top)) {
+            return scroller.scrollTo(top)
           }
       }
     },
