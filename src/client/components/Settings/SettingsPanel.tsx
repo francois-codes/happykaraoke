@@ -7,10 +7,11 @@ import { useDarkTheme } from '@/lib/useDarkTheme'
 import { useDispatch, useStore } from '@/store'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
+import { SessionLogs } from './SessionLogs'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
-  const { settingsOpen, searchOpen, qrCodeOpen } = useStore()
+  const { settingsOpen, searchOpen, qrCodeOpen, isAdmin } = useStore()
   const dispatch = useDispatch()
 
   function setOpen(open: boolean) {
@@ -56,6 +57,7 @@ export function SettingsPanel() {
           <div className="grid gap-4">
             <ToggleChords />
             <ToggleDarkMode {...theme} />
+            {isAdmin && <SessionLogs />}
           </div>
         </div>
       </PopoverContent>

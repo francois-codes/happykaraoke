@@ -52,7 +52,6 @@ export async function addSessionLog(song: string) {
         })
         .where(eq(sessionLog.id, lastLog.id))
 
-      console.log('update', { result })
       return result
     }
   }
@@ -75,8 +74,6 @@ export async function getSessionLogs(date: string) {
     .select()
     .from(sessionLog)
     .where(sql`DATE(${sessionLog.timestamp}) = ${date}`)
-
-  console.log({ results })
 
   return results
 }

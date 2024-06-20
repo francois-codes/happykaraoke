@@ -15,6 +15,13 @@
       "when": 1718891073463,
       "tag": "0001_handy_thor",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1718907352717,
+      "tag": "0002_smooth_blindfold",
+      "breakpoints": true
     }
   ]
 }
