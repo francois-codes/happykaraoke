@@ -8,6 +8,13 @@
       "when": 1718715188070,
       "tag": "0000_thick_ultragirl",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1718891073463,
+      "tag": "0001_handy_thor",
+      "breakpoints": true
     }
   ]
 }

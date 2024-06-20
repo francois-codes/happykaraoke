@@ -5,3 +5,9 @@ export const config = sqliteTable('config', {
   key: text('key'),
   value: text('value')
 })
+
+export const sessionLog = sqliteTable('session_log', {
+  id: integer('id').primaryKey(),
+  song: text('song'),
+  timestamp: text('timestamp')
+})
