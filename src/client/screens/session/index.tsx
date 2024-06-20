@@ -10,7 +10,7 @@ export function SessionScreen() {
   return (
     <Screen>
       <Menu />
-      <main className="flex min-h-screen flex-col items-start justify-between mt-16 p-16">
+      <main className="flex min-h-screen flex-col items-start justify-between mt-16 p-8">
         {isAdmin && <CommandMenu />}
         <SongComponent />
       </main>
