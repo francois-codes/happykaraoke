@@ -26,8 +26,6 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
           const numberId = Number(id)
           const { user } = await fetchUser.call({ id: numberId })
 
-          console.log({ user, location })
-
           if (user) {
             dispatch({ isAdmin: user.type === UserType.ADMIN })
             if (location === '/' || location === '/join') {

@@ -111,9 +111,7 @@ export function SessionLogs() {
     if (!date) return
 
     const formattedDate = getFormattedDate(date)
-
     const results = await fetchSessionLog.call({ date: formattedDate })
-    console.log({ results })
     setLogs(results)
   }
 
@@ -131,7 +129,7 @@ export function SessionLogs() {
       }}
     >
       <DialogTrigger asChild>
-        <Button>Logs de session</Button>
+        <Button variant="outline">Logs de session</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

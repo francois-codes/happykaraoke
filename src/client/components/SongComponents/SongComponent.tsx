@@ -9,12 +9,16 @@ import { EmptySong } from './EmptySong'
 import { useSongKeyboardShortcuts } from './useSongKeyboardShortcuts'
 import { useSongScroll } from './useSongScroll'
 import { useAutoScroller } from '@/lib/useAutoScroller'
+import { useNextInQueue } from './useNextInQueue'
+import { Button } from '../ui/button'
 
 export const SongComponent = () => {
   const { currentSong } = useStore()
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
   const scroller = useAutoScroller()
+  const { nextInQueue, playNextInQueue } = useNextInQueue()
+
   useSongScroll(scroller)
 
   useSongKeyboardShortcuts({
@@ -48,6 +52,7 @@ export const SongComponent = () => {
         {song.lines.map((line, id) => (
           <SongLine key={id} {...line} />
         ))}
+        {nextInQueue && <Button onClick={playNextInQueue}>Lancer {nextInQueue.song}</Button>}
       </SongWrapper>
     </>
   )
