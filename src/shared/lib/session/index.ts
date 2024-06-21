@@ -68,12 +68,13 @@ export async function addSessionLog(song: string) {
 
 export async function getSessionLogs(date: string) {
   const { db } = await import('@shared/db')
-  const { sql } = await import('drizzle-orm')
+  const { sql, asc } = await import('drizzle-orm')
 
   const results = await db
     .select()
     .from(sessionLog)
     .where(sql`DATE(${sessionLog.timestamp}) = ${date}`)
+    .orderBy(asc(sessionLog.id))
 
   return results
 }

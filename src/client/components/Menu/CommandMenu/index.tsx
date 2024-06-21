@@ -52,6 +52,13 @@ export function CommandMenu() {
     setLoading(true)
     const { songs } = await getSongsList.call()
     if (!songs) return
+
+    songs.forEach((song) => {
+      if (song.author.includes('|EM') || song.title.includes('Intro')) {
+        console.log({ song })
+      }
+    })
+
     setAllSongs(songs)
     setLoading(false)
   }
