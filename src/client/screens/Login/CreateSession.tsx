@@ -46,7 +46,7 @@ export const CreateSession = () => {
 
     try {
       const { user } = await loginUser.call({ password, sessionName: 'session' })
-      window.sessionStorage.setItem('userId', user.id)
+      window.localStorage.setItem('userId', `${user.id}`)
       dispatch({ isAdmin: user.type === UserType.ADMIN })
       navigate('/session')
     } catch (e) {

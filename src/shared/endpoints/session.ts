@@ -38,3 +38,13 @@ export const fetchSessionLog = createEndpoint<{ date: ISODate }, SessionLog[]>({
     res.status(200).json(logs)
   }
 })
+
+export const closeSession = createEndpoint<unknown, unknown>({
+  method: 'post',
+  url: '/close-session',
+  handler: async (_, res) => {
+    const { closeSession } = await import('@shared/lib/session')
+    await closeSession()
+    res.sendStatus(200)
+  }
+})

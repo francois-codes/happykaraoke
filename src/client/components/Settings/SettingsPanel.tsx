@@ -8,6 +8,7 @@ import { useDispatch, useStore } from '@/store'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
 import { SessionLogs } from './SessionLogs'
+import { CloseSession } from './CloseSession'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
@@ -58,6 +59,7 @@ export function SettingsPanel() {
             <ToggleChords />
             <ToggleDarkMode {...theme} />
             {isAdmin && <SessionLogs />}
+            {isAdmin && <CloseSession />}
           </div>
         </div>
       </PopoverContent>

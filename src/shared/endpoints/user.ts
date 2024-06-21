@@ -1,9 +1,9 @@
 import { config } from '@shared/config'
+import { startSessionIfNeeded } from '@shared/lib/session'
 import { createUser, getUser } from '@shared/lib/users'
 import { UserLoginPayload, UserLoginResponse } from '@shared/schemas/users'
 import { UserType } from '@shared/types'
 import { createEndpoint } from '@shared/types/endpoints'
-import { v4 as uuid } from 'uuid'
 
 export const loginUser = createEndpoint<UserLoginPayload, UserLoginResponse>({
   method: 'post',
@@ -16,19 +16,20 @@ export const loginUser = createEndpoint<UserLoginPayload, UserLoginResponse>({
       return
     }
 
-    const userId = uuid()
-    const user = createUser(userId, 'admin', UserType.ADMIN)
+    await startSessionIfNeeded()
+
+    const user = await createUser('admin', UserType.ADMIN)
 
     res.status(200).json({ user })
   }
 })
 
-export const fetchUser = createEndpoint<{ id: string }, UserLoginResponse>({
+export const fetchUser = createEndpoint<{ id: number }, UserLoginResponse>({
   method: 'get',
   url: '/user',
   handler: async (req, res) => {
     const { id } = req.query
-    const user = getUser(id)
+    const user = await getUser(id)
 
     if (!user) {
       res.sendStatus(404)
@@ -44,9 +45,11 @@ export const joinSession = createEndpoint<{ userName: string }, UserLoginRespons
   url: '/join',
   handler: async (req, res) => {
     const { userName } = req.body
-    const userId = uuid()
-    const user = createUser(userId, userName, UserType.GUEST)
-
-    res.status(200).json({ user })
+    try {
+      const user = await createUser(userName, UserType.GUEST)
+      res.status(200).json({ user })
+    } catch {
+      res.sendStatus(401)
+    }
   }
 })

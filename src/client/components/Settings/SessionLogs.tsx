@@ -113,6 +113,7 @@ export function SessionLogs() {
     const formattedDate = getFormattedDate(date)
 
     const results = await fetchSessionLog.call({ date: formattedDate })
+    console.log({ results })
     setLogs(results)
   }
 

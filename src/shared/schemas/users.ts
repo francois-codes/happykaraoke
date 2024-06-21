@@ -10,7 +10,7 @@ export type UserLoginPayload = z.infer<typeof userLoginPayload>
 
 export const userLoginResponse = z.object({
   user: z.object({
-    id: z.string(),
+    id: z.number().int(),
     name: z.string(),
     type: z.nativeEnum(UserType)
   })
