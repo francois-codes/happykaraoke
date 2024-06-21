@@ -36,6 +36,9 @@ export function getAllSongs() {
       }
     })
     .map(({ author, title, tags, filename }) => ({ author, title, tags, filename }))
+    .sort((a, b) => {
+      return a.author.localeCompare(b.author) || a.title.localeCompare(b.title)
+    })
 }
 
 export function searchSong(query: string, allSongs = getAllSongs()) {
