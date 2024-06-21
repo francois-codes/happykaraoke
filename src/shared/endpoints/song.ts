@@ -1,5 +1,5 @@
 import { getAllSongs } from '@shared/lib/data/songs'
-import { setSessionConfig } from '@shared/lib/session'
+import { addSessionLog, setSessionConfig } from '@shared/lib/session'
 import { Song } from '@shared/lib/song/song'
 import { songChanged, transpoChanged } from '@shared/messages/song'
 import { SongData } from '@shared/types'
@@ -45,6 +45,7 @@ export const changeSong = createEndpoint<{ title: string }, unknown>({
     songChanged.server.emit({ title })
     transpoChanged.server.emit({ transpo: 0 })
     setSessionConfig({ currentSong: title, transpo: 0 })
+    addSessionLog(title)
 
     res.sendStatus(200)
   }

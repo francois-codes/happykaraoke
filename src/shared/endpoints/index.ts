@@ -1,7 +1,7 @@
 import { loginUser, fetchUser, joinSession } from './user'
 import { getSong, getSongsList, changeSong, setTranspo } from './song'
 import { setScroll } from './scroll'
-import { fetchSessionConfig, setSongsFolder } from './session'
+import { fetchSessionConfig, fetchSessionLog, setSongsFolder } from './session'
 
 export const endpoints = [
   loginUser,
@@ -13,5 +13,6 @@ export const endpoints = [
   setTranspo,
   setScroll,
   fetchSessionConfig,
-  setSongsFolder
+  setSongsFolder,
+  fetchSessionLog
 ]
