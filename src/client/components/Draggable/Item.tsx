@@ -71,7 +71,6 @@ export function DraggableItem({ item, isOverlay, onSave }: ItemProps) {
         <Button
           variant="secondary"
           onClick={async () => {
-            console.log('deleting', { item })
             await removeFromQueue.call({ queueId: item.id as number })
             onSave()
           }}

@@ -91,8 +91,6 @@ export function CommandMenu() {
     return searchSong(query, allSongs)
   }, [allSongs, query])
 
-  console.log({ open, filteredSongs })
-
   return (
     <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
       <CommandInput
