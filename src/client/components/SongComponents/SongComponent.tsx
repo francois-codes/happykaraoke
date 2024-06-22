@@ -52,11 +52,18 @@ export const SongComponent = () => {
         {song.lines.map((line, id) => (
           <SongLine key={id} {...line} />
         ))}
-        {isAdmin && nextInQueue && (
-          <Button onClick={playNextInQueue} className="mt-16">
-            Lancer {nextInQueue.song}
-          </Button>
-        )}
+        <div className="mt-16">
+          {nextInQueue &&
+            (isAdmin ? (
+              <Button onClick={playNextInQueue}>Lancer {nextInQueue.song}</Button>
+            ) : (
+              <div className="text-xl font-bold">
+                Prochaine chanson
+                <br />
+                {nextInQueue.song}
+              </div>
+            ))}
+        </div>
       </SongWrapper>
     </>
   )
