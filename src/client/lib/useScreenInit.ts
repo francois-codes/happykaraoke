@@ -16,14 +16,16 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
   const dispatch = useDispatch()
   const store = useStore()
 
-  const location = window.location.href.replace('http://localhost:8081', '')
+  const location = window.location.pathname
 
   async function initUser() {
     if (typeof store.isAdmin === 'undefined' && !userInitialized) {
       try {
-        const id = window.sessionStorage.getItem('userId')
+        const id = window.localStorage.getItem('userId')
         if (id) {
-          const { user } = await fetchUser.call({ id })
+          const numberId = Number(id)
+          const { user } = await fetchUser.call({ id: numberId })
+
           if (user) {
             dispatch({ isAdmin: user.type === UserType.ADMIN })
             if (location === '/' || location === '/join') {

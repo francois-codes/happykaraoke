@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1718715188070,
-      "tag": "0000_thick_ultragirl",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1718891073463,
-      "tag": "0001_handy_thor",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1718907352717,
-      "tag": "0002_smooth_blindfold",
+      "when": 1718972578421,
+      "tag": "0000_small_shinobi_shaw",
       "breakpoints": true
     }
   ]

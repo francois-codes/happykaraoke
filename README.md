@@ -163,9 +163,6 @@ Both the server and the client can reference `@shared` but the client cannot imp
 
 ### Set up
 
-Currently there is an annoying thing: since users are handled in memory, when the server restarts, they are being removed, so you need to login again. As a workaround, if you set an entry in your session storage where `userId` is `devAdmin`, the app will consider you logged in as an admin
-you can also use `userId` as `devUser` to be logged in as a guest. this way, no need to login again when the server restarts.
-
 ### Client side
 
 #### structure
@@ -207,7 +204,7 @@ It's a very basic store for a bunch of setting and it is fairly limited but it s
 
 #### front end architecture
 
-The front uses React-router v6 to handle routes. New screens can simply be created in the `screens` folder, and added to the router. Screens should be wrapped in the `Screen` component which handles data initialization, and can redirect to the relevant routes depending on the scenario. If an admin user reloads the page, its user id will be kept in session storage and can be reused to continue the session without re-creating it. Guests can also continue their session in the browser, provided they are not closing the tab. Because the main admin frequently uses the app across multiple tabs, I had to use sessionStorage to make sure the userId stored was not bleeding into sessions opened in other tabs.
+The front uses React-router v6 to handle routes. New screens can simply be created in the `screens` folder, and added to the router. Screens should be wrapped in the `Screen` component which handles data initialization, and can redirect to the relevant routes depending on the scenario. If an admin user reloads the page, its user id will be kept in session storage and can be reused to continue the session without re-creating it. Guests can also continue their session in the browser, provided they are not closing the tab. Because the main admin frequently uses the app across multiple tabs, I had to use localStorage to make sure the userId stored was not bleeding into sessions opened in other tabs.
 
 #### keyboard shortcuts
 

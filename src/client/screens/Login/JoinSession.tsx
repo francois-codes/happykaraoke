@@ -19,6 +19,7 @@ import { useDispatch } from '@/store'
 import { joinSession } from '@shared/endpoints/user'
 import { UserType } from '@shared/types'
 import { Link } from 'react-router-dom'
+import { AxiosError } from 'axios'
 
 const formSchema = z.object({
   // sessionName: z.string().min(1),
@@ -45,10 +46,16 @@ export const JoinSession = () => {
 
     try {
       const { user } = await joinSession.call({ userName })
-      window.sessionStorage.setItem('userId', user.id)
+      window.localStorage.setItem('userId', `${user.id}`)
       dispatch({ isAdmin: user.type === UserType.ADMIN })
       navigate('/session')
     } catch (e) {
+      if (e instanceof AxiosError) {
+        if (e.response?.status === 401) {
+          setFormError('Aucune session en cours')
+          return
+        }
+      }
       // shouldn't happen, we'll see later
       setFormError('Houston, on a un problème')
     } finally {

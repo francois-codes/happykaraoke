@@ -8,6 +8,8 @@ import { useDispatch, useStore } from '@/store'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
 import { SessionLogs } from './SessionLogs'
+import { CloseSession } from './CloseSession'
+import { SessionQueue } from './SessionQueue'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
@@ -57,7 +59,9 @@ export function SettingsPanel() {
           <div className="grid gap-4">
             <ToggleChords />
             <ToggleDarkMode {...theme} />
+            {isAdmin && <SessionQueue />}
             {isAdmin && <SessionLogs />}
+            {isAdmin && <CloseSession />}
           </div>
         </div>
       </PopoverContent>

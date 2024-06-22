@@ -7,6 +7,9 @@ export default defineConfig({
   dbCredentials: {
     url: './resources/db.sqlite'
   },
+  migrations: {
+    table: 'drizzle_migrations'
+  },
   verbose: true,
   strict: true
 })
