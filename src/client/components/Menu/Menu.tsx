@@ -3,9 +3,9 @@ import image from '@/assets/live-band-logo.png'
 import { useSong } from '@/lib/useSong'
 import { useStore } from '@/store'
 import { Transpose } from '../Settings/Transpose'
-import { SongsFolderSelector } from '../Settings/SongsFolderSelector'
 import { SettingsPanel } from '../Settings/SettingsPanel'
 import { QrCode } from '../Settings/QrCode'
+import { SessionQueue } from '../Settings/SessionQueue'
 
 export const Menu: FC = () => {
   const { currentSong, isAdmin } = useStore()
@@ -27,7 +27,7 @@ export const Menu: FC = () => {
         </h1>
       </div>
       <div className="flex items-center align-center gap-8">
-        {isAdmin && !!window.electron && <SongsFolderSelector />}
+        {isAdmin && !!window.electron && <SessionQueue />}
         {isAdmin && <Transpose />}
         <QrCode />
         <SettingsPanel />

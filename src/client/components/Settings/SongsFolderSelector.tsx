@@ -7,42 +7,25 @@ import {
   DialogTitle,
   DialogTrigger
 } from '../ui/dialog'
-import { useDispatch, useStore } from '@/store'
-import { IoFolderOpenOutline } from 'react-icons/io5'
 import { Label } from '../ui/label'
-
-import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
-import { KEYS } from '@/lib/consts'
-
 import { Input } from '../ui/input'
 import { setSongsFolder } from '@shared/endpoints/session'
+import { useDispatch, useStore } from '@/store'
 
-export function SongsFolderSelector() {
-  const { songsFolderOpen, songsFolder } = useStore()
-
+export function SongsFolderSelector({
+  open,
+  onOpenChange
+}: {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}) {
+  const { songsFolder } = useStore()
   const dispatch = useDispatch()
 
-  function setOpen(open: boolean) {
-    dispatch({ songsFolderOpen: open })
-  }
-
-  useKeyboardShortcut(
-    {
-      key: [KEYS.o],
-      modifier: [KEYS.Meta],
-      handler: () => {
-        setOpen(!songsFolderOpen)
-      }
-    },
-    [songsFolderOpen]
-  )
-
   return (
-    <Dialog open={songsFolderOpen} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button>
-          <IoFolderOpenOutline />
-        </Button>
+        <Button variant="outline">Modifier le dossier source</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -63,7 +46,7 @@ export function SongsFolderSelector() {
               if (!folder) return
               await setSongsFolder.call({ folder })
               dispatch({ currentSong: null, songsFolder: folder })
-              setOpen(false)
+              onOpenChange(false)
             }}
           >
             Ouvrir

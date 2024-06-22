@@ -9,12 +9,16 @@ import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
 import { SessionLogs } from './SessionLogs'
 import { CloseSession } from './CloseSession'
-import { SessionQueue } from './SessionQueue'
+import { SongsFolderSelector } from './SongsFolderSelector'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
-  const { settingsOpen, searchOpen, qrCodeOpen, isAdmin } = useStore()
+  const { settingsOpen, searchOpen, qrCodeOpen, isAdmin, songsFolderOpen } = useStore()
   const dispatch = useDispatch()
+
+  function setFolderChangeOpen(open: boolean) {
+    dispatch({ songsFolderOpen: open })
+  }
 
   function setOpen(open: boolean) {
     dispatch({ settingsOpen: open })
@@ -59,7 +63,9 @@ export function SettingsPanel() {
           <div className="grid gap-4">
             <ToggleChords />
             <ToggleDarkMode {...theme} />
-            {isAdmin && <SessionQueue />}
+            {isAdmin && (
+              <SongsFolderSelector open={songsFolderOpen} onOpenChange={setFolderChangeOpen} />
+            )}
             {isAdmin && <SessionLogs />}
             {isAdmin && <CloseSession />}
           </div>

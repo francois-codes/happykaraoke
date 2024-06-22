@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from 'react'
 import { type QueueType } from '@shared/db/schema'
 import { getQueue } from '@shared/endpoints/queue'
 import { DraggableList } from '../Draggable'
+import { IoPlayCircleOutline } from 'react-icons/io5'
 
 export function SessionQueue() {
   const keyRef = useRef(1)
@@ -31,8 +32,8 @@ export function SessionQueue() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={'outline'} onClick={() => setOpen(true)}>
-          Prochaines chansons
+        <Button onClick={() => setOpen(true)}>
+          <IoPlayCircleOutline />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
