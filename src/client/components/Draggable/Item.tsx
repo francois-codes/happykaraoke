@@ -5,8 +5,9 @@ import { Card, CardContent } from '@/components/ui/card'
 import { cva } from 'class-variance-authority'
 import { GripVertical } from 'lucide-react'
 import { Button } from '../ui/button'
-import { IoTrashBinOutline } from 'react-icons/io5'
+import { IoPlayCircleOutline, IoTrashBinOutline } from 'react-icons/io5'
 import { removeFromQueue } from '@shared/endpoints/queue'
+import { changeSong } from '@shared/endpoints/song'
 
 export interface ItemType {
   id: UniqueIdentifier
@@ -71,11 +72,21 @@ export function DraggableItem({ item, isOverlay, onSave }: ItemProps) {
         <Button
           variant="secondary"
           onClick={async () => {
+            await changeSong.call({ title: item.content })
             await removeFromQueue.call({ queueId: item.id as number })
             onSave()
           }}
         >
-          <IoTrashBinOutline />
+          <IoPlayCircleOutline size={24} />
+        </Button>
+        <Button
+          variant="secondary"
+          onClick={async () => {
+            await removeFromQueue.call({ queueId: item.id as number })
+            onSave()
+          }}
+        >
+          <IoTrashBinOutline size={16} />
         </Button>
       </CardContent>
     </Card>

@@ -30,8 +30,8 @@ export function DraggableList({
 
   function onDragOver({ active, over }) {
     setItems((items) => {
-      const activeIndex = items.findIndex((i) => i.id === active.id)
-      const overIndex = items.findIndex((i) => i.id === over.id)
+      const activeIndex = items.findIndex((i) => i.id === active?.id)
+      const overIndex = items.findIndex((i) => i.id === over?.id)
 
       return arrayMove(items, activeIndex, overIndex)
     })
