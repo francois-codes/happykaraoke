@@ -26,13 +26,13 @@ export function SessionQueue() {
   }
 
   useEffect(() => {
-    fetchQueueItems()
-  }, [])
+    open && fetchQueueItems()
+  }, [open])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button onClick={() => setOpen(true)}>
+        <Button>
           <IoPlayCircleOutline size={24} />
         </Button>
       </DialogTrigger>
@@ -42,7 +42,7 @@ export function SessionQueue() {
           <DialogDescription>Liste des prochaines chansons</DialogDescription>
         </DialogHeader>
 
-        <div className="flex flex-grow flex-col gap-2">
+        <div className="flex flex-grow flex-col gap-2 overflow-scroll max-h-[calc(100vh-280px)]">
           {queueItems.length ? (
             <DraggableList
               key={keyRef.current}
