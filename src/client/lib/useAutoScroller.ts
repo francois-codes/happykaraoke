@@ -109,11 +109,14 @@ export const useAutoScroller = () => {
     // otherwise, we go to the top of the current section
     if (
       sections &&
-      sectionIndexRef.current > 0 &&
+      sectionIndexRef.current >= 0 &&
       sections?.[sectionIndexRef.current] !== undefined &&
       scrollContainerRef.current?.scrollTop !== undefined
     ) {
-      if (scrollContainerRef.current?.scrollTop <= sections[sectionIndexRef.current] + 5) {
+      if (
+        sectionIndexRef.current > 0 &&
+        scrollContainerRef.current?.scrollTop <= sections[sectionIndexRef.current] + 5
+      ) {
         sectionIndexRef.current -= 1
       }
       scrollTo(sections[sectionIndexRef.current])
