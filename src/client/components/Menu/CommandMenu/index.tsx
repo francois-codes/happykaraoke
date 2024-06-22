@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   CommandDialog,
   CommandEmpty,
@@ -25,7 +25,6 @@ export function CommandMenu() {
   const [query, setQuery] = useState('')
   const [allSongs, setAllSongs] = useState<Songs>([])
   const [selectedSong, setSelectedSong] = useState<Nullable<Song>>(null)
-  const [filteredSongs, setFilteredSongs] = useState<Songs>([])
 
   const { currentSong, songsFolder } = useStore()
   const dispatch = useDispatch()
@@ -87,44 +86,40 @@ export function CommandMenu() {
     [setOpen, open]
   )
 
-  useEffect(() => {
-    if (!query) {
-      setFilteredSongs(allSongs)
-    } else {
-      const results = searchSong(query, allSongs)
-      setFilteredSongs(results)
-    }
-  }, [query, allSongs])
+  const filteredSongs = useMemo(() => {
+    if (!query) return allSongs
+    return searchSong(query, allSongs)
+  }, [allSongs, query])
+
+  console.log({ open, filteredSongs })
 
   return (
-    <>
-      <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
-        <CommandInput
-          autoFocus={!currentSong}
-          placeholder="Type a command or search..."
-          value={query}
-          onValueChange={setQuery}
-        />
-        <CommandList>
-          {loading && (
-            <CommandLoading>
-              <CommandItem>Recherche...</CommandItem>
-            </CommandLoading>
-          )}
-          {!loading &&
-            filteredSongs.map((song, index) => (
-              <CommandItem
-                onSelect={setSelectedSong}
-                key={index}
-                keywords={[song.author, song.title, ...song.tags]}
-                value={song.filename}
-              >
-                {song.author} - {song.title}
-              </CommandItem>
-            ))}
-          <CommandEmpty>Pas de résultats</CommandEmpty>
-        </CommandList>
-      </CommandDialog>
+    <CommandDialog open={open} onOpenChange={setOpen} shouldFilter={false}>
+      <CommandInput
+        autoFocus={!currentSong}
+        placeholder="Type a command or search..."
+        value={query}
+        onValueChange={setQuery}
+      />
+      <CommandList>
+        {loading && (
+          <CommandLoading>
+            <CommandItem>Recherche...</CommandItem>
+          </CommandLoading>
+        )}
+        {!loading &&
+          filteredSongs.map((song, index) => (
+            <CommandItem
+              onSelect={setSelectedSong}
+              key={index}
+              keywords={[song.author, song.title, ...song.tags]}
+              value={song.filename}
+            >
+              {song.author} - {song.title}
+            </CommandItem>
+          ))}
+        <CommandEmpty>Pas de résultats</CommandEmpty>
+      </CommandList>
       <Modal
         title="Play or queue?"
         desc="Selectionnez l'action à réaliser"
@@ -136,6 +131,6 @@ export function CommandMenu() {
         <Button onClick={selectSong}>Lancer la chanson</Button>
         <Button onClick={queueSong}>Ajouter en file d&apos;attente</Button>
       </Modal>
-    </>
+    </CommandDialog>
   )
 }
