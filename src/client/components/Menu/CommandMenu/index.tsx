@@ -86,6 +86,18 @@ export function CommandMenu() {
     [setOpen, open]
   )
 
+  useKeyboardShortcut(
+    {
+      key: [KEYS.Enter],
+      preventDefault: true,
+      disable: () => !selectedSong,
+      handler: () => {
+        selectSong()
+      }
+    },
+    [selectSong, selectedSong]
+  )
+
   const filteredSongs = useMemo(() => {
     if (!query) return allSongs
     return searchSong(query, allSongs)
