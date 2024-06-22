@@ -102,11 +102,21 @@ export const useAutoScroller = () => {
 
   const previousSection = useCallback(() => {
     const sections = resolveSections()
-    if (sections && sectionIndexRef.current > 0) {
-      sectionIndexRef.current -= 1
-      if (sectionIndexRef.current >= 0 && sections?.[sectionIndexRef.current] !== undefined) {
-        scrollTo(sections[sectionIndexRef.current])
+    // when going to the previous section,
+    // if the current scroll is less than 5px of
+    // the position of the current index,
+    // we go to the previous (if it exists)
+    // otherwise, we go to the top of the current section
+    if (
+      sections &&
+      sectionIndexRef.current > 0 &&
+      sections?.[sectionIndexRef.current] !== undefined &&
+      scrollContainerRef.current?.scrollTop !== undefined
+    ) {
+      if (scrollContainerRef.current?.scrollTop <= sections[sectionIndexRef.current] + 5) {
+        sectionIndexRef.current -= 1
       }
+      scrollTo(sections[sectionIndexRef.current])
     }
   }, [])
 
