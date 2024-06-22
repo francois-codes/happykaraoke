@@ -3,10 +3,14 @@ import { type QueueType } from '@shared/db/schema'
 import { getQueue, removeFromQueue } from '@shared/endpoints/queue'
 import { changeSong } from '@shared/endpoints/song'
 import { queueChanged } from '@shared/messages/queue'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export function useNextInQueue() {
   const [nextInQueue, setNextInQueue] = useState<QueueType | null>(null)
+
+  useEffect(() => {
+    fetchQueue()
+  }, [])
 
   async function fetchQueue() {
     const { queue } = await getQueue.call()

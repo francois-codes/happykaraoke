@@ -15,7 +15,6 @@ As a rule of thumb, all shortcuts are desactivated when the search is open
 General shortcuts:
 
 - `cmd + K` or `@` : opens the search bar
-- `cmd + O`: opens the folder selection modal
 - `T`: opens the transpose modal
 
 Transpose modal:

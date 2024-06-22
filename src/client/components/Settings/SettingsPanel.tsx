@@ -10,15 +10,12 @@ import { KEYS } from '@/lib/consts'
 import { SessionLogs } from './SessionLogs'
 import { CloseSession } from './CloseSession'
 import { SongsFolderSelector } from './SongsFolderSelector'
+import { SongsFolderSelectorButton } from './SongsFolderSelectorButton'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
-  const { settingsOpen, searchOpen, qrCodeOpen, isAdmin, songsFolderOpen } = useStore()
+  const { settingsOpen, searchOpen, qrCodeOpen, isAdmin } = useStore()
   const dispatch = useDispatch()
-
-  function setFolderChangeOpen(open: boolean) {
-    dispatch({ songsFolderOpen: open })
-  }
 
   function setOpen(open: boolean) {
     dispatch({ settingsOpen: open })
@@ -48,6 +45,15 @@ export function SettingsPanel() {
     [searchOpen, theme.toggleTheme]
   )
 
+  useKeyboardShortcut({
+    key: [KEYS.o],
+    modifier: [KEYS.Meta],
+    preventDefault: true,
+    handler: () => {
+      dispatch({ songsFolderOpen: true })
+    }
+  })
+
   return (
     <Popover open={settingsOpen} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -63,13 +69,12 @@ export function SettingsPanel() {
           <div className="grid gap-4">
             <ToggleChords />
             <ToggleDarkMode {...theme} />
-            {isAdmin && (
-              <SongsFolderSelector open={songsFolderOpen} onOpenChange={setFolderChangeOpen} />
-            )}
+            {isAdmin && <SongsFolderSelectorButton />}
             {isAdmin && <SessionLogs />}
             {isAdmin && <CloseSession />}
           </div>
         </div>
+        {isAdmin && <SongsFolderSelector />}
       </PopoverContent>
     </Popover>
   )

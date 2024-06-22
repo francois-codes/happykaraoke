@@ -3,21 +3,18 @@ import { SongLine } from './SongLine'
 import { useSong } from '@/lib/useSong'
 import { useDispatch, useStore } from '@/store'
 import { socket } from '@/utils/socket'
-
 import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/song'
 import { EmptySong } from './EmptySong'
 import { useSongKeyboardShortcuts } from './useSongKeyboardShortcuts'
 import { useSongScroll } from './useSongScroll'
 import { useAutoScroller } from '@/lib/useAutoScroller'
-import { useNextInQueue } from './useNextInQueue'
-import { Button } from '../ui/button'
+import { NextInQueueIndicator } from '../Queue/NextInQueueIndicator'
 
 export const SongComponent = () => {
-  const { currentSong, isAdmin } = useStore()
+  const { currentSong } = useStore()
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
   const scroller = useAutoScroller()
-  const { nextInQueue, playNextInQueue } = useNextInQueue()
 
   useSongScroll(scroller)
 
@@ -52,18 +49,7 @@ export const SongComponent = () => {
         {song.lines.map((line, id) => (
           <SongLine key={id} {...line} />
         ))}
-        <div className="mt-16">
-          {nextInQueue &&
-            (isAdmin ? (
-              <Button onClick={playNextInQueue}>Lancer {nextInQueue.song}</Button>
-            ) : (
-              <div className="text-xl font-bold">
-                Prochaine chanson
-                <br />
-                {nextInQueue.song}
-              </div>
-            ))}
-        </div>
+        <NextInQueueIndicator />
       </SongWrapper>
     </>
   )

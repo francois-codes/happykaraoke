@@ -6,8 +6,6 @@ import { cva } from 'class-variance-authority'
 import { GripVertical } from 'lucide-react'
 import { Button } from '../ui/button'
 import { IoPlayCircleOutline, IoTrashBinOutline } from 'react-icons/io5'
-import { removeFromQueue } from '@shared/endpoints/queue'
-import { changeSong } from '@shared/endpoints/song'
 
 export interface ItemType {
   id: UniqueIdentifier
@@ -17,14 +15,14 @@ export interface ItemType {
 export interface ItemProps {
   item: ItemType
   isOverlay?: boolean
-  onSave: () => void
+  onClick: (args: { item: ItemType; action: string }) => void
 }
 
 export interface ItemDragData {
   item: ItemType
 }
 
-export function DraggableItem({ item, isOverlay, onSave }: ItemProps) {
+export function DraggableItem({ item, isOverlay, onClick }: ItemProps) {
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
     id: item.id,
     data: {
@@ -71,19 +69,16 @@ export function DraggableItem({ item, isOverlay, onSave }: ItemProps) {
         </div>
         <Button
           variant="secondary"
-          onClick={async () => {
-            await changeSong.call({ title: item.content })
-            await removeFromQueue.call({ queueId: item.id as number })
-            onSave()
+          onClick={() => {
+            onClick({ item, action: 'play' })
           }}
         >
           <IoPlayCircleOutline size={24} />
         </Button>
         <Button
           variant="secondary"
-          onClick={async () => {
-            await removeFromQueue.call({ queueId: item.id as number })
-            onSave()
+          onClick={() => {
+            onClick({ item, action: 'remove' })
           }}
         >
           <IoTrashBinOutline size={16} />

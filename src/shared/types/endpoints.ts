@@ -20,10 +20,12 @@ export type Endpoint<Payload, ResponsePayload> = ReturnType<
 export function createEndpoint<Payload, ResponsePayload>({
   method,
   url,
+  cache,
   handler
 }: {
   method: Method
   url: string
+  cache?: boolean
   handler: (req: TypedRequest<Payload>, res: TypedResponse<ResponsePayload>) => void
 }) {
   function register(app: Express) {
@@ -34,7 +36,10 @@ export function createEndpoint<Payload, ResponsePayload>({
       method,
       url,
       data: method === 'post' ? payload : undefined,
-      params: method === 'get' ? payload : undefined
+      params: method === 'get' ? payload : undefined,
+      headers: {
+        ...(!cache && { 'Cache-Control': 'no-cache' })
+      }
     })
 
     return data

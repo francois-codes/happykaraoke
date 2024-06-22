@@ -5,6 +5,7 @@ import { createEndpoint } from '@shared/types/endpoints'
 export const getQueue = createEndpoint<unknown, { queue: QueueType[] }>({
   method: 'get',
   url: '/get-queue',
+  cache: false,
   handler: async (_, res) => {
     const { getQueueForCurrentSession } = await import('@shared/lib/session/queue')
     const queue = await getQueueForCurrentSession()

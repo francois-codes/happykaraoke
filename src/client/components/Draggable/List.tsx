@@ -14,10 +14,12 @@ import { reorderQueue } from '@shared/endpoints/queue'
 
 export function DraggableList({
   items: initialItems,
-  onSave
+  onItemClick,
+  refresh
 }: {
   items: ItemType[]
-  onSave: () => void
+  onItemClick: (args: { item: ItemType; action: string }) => void
+  refresh: () => void
 }) {
   const [items, setItems] = useState<ItemType[]>(initialItems)
   const [activeItem, setActiveItem] = useState<null | ItemType>(null)
@@ -44,7 +46,7 @@ export function DraggableList({
     }))
 
     await reorderQueue.call({ queue: orderQueuePayload })
-    onSave()
+    refresh()
   }
 
   const itemIds = useMemo(() => items.map(({ id }) => id), [items])
@@ -58,13 +60,13 @@ export function DraggableList({
     >
       <SortableContext items={itemIds}>
         {items.map((item) => (
-          <DraggableItem key={item.id} item={item} onSave={onSave} />
+          <DraggableItem key={item.id} item={item} onClick={onItemClick} />
         ))}
       </SortableContext>
       {'document' in window &&
         createPortal(
           <DragOverlay>
-            {activeItem && <DraggableItem onSave={onSave} item={activeItem} isOverlay />}
+            {activeItem && <DraggableItem onClick={onItemClick} item={activeItem} isOverlay />}
           </DragOverlay>,
           document.body
         )}

@@ -1,19 +1,12 @@
 import { stepsBetweenKeys, tonalitiesNames } from '@shared/lib/transpose/tonality'
 import { Button } from '../ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '../ui/dialog'
 import { useDispatch, useStore } from '@/store'
 import { setTranspo } from '@shared/endpoints/song'
 import { IoMusicalNotesOutline } from 'react-icons/io5'
 import { useEffect, useState } from 'react'
 import { keyboardShortcut } from '@/lib/shortcut'
 import { KEYS } from '@/lib/consts'
+import { Modal } from '../Modal'
 
 function getVariant(tona: string, selected: string, song: string) {
   if (tona === selected) return 'default'
@@ -117,50 +110,49 @@ export function Transpose() {
   if (!songTona) return null
 
   return (
-    <Dialog open={transpoOpen} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Modal
+      trigger={
         <Button>
           <IoMusicalNotesOutline size={24} />
         </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Choisissez la nouvelle tonalité</DialogTitle>
-          <DialogDescription>Selectionnez la tonalité pour la chanson en cours</DialogDescription>
-        </DialogHeader>
-        <div className="gap-4">
-          <div className="flex flex-row flex-wrap gap-4 py-4">
-            {tonalitiesNames.map((tona, index) => {
-              const variant = getVariant(tona, selectedTona, songTona)
+      }
+      title="Choisissez la nouvelle tonalité"
+      desc="Selectionnez la tonalité pour la chanson en cours"
+      open={transpoOpen}
+      onOpenChange={setOpen}
+    >
+      <div className="gap-4">
+        <div className="flex flex-row flex-wrap gap-4 py-4">
+          {tonalitiesNames.map((tona, index) => {
+            const variant = getVariant(tona, selectedTona, songTona)
 
-              return (
-                <Button
-                  tabIndex={index + 1}
-                  key={tona}
-                  variant={variant}
-                  className={'w-20'}
-                  onClick={() => {
-                    setCurrentTonaIndex(index)
-                    saveTranspo(tona)
-                  }}
-                >
-                  {tona}
-                </Button>
-              )
-            })}
-          </div>
-          <Button
-            className="w-full"
-            tabIndex={tonalitiesNames.length}
-            onClick={() => {
-              setCurrentTonaIndex(getSongTonaIndex())
-              saveTranspo(songTona)
-            }}
-          >
-            Revenir à l&apos;original
-          </Button>
+            return (
+              <Button
+                tabIndex={index + 1}
+                key={tona}
+                variant={variant}
+                className={'w-20'}
+                onClick={() => {
+                  setCurrentTonaIndex(index)
+                  saveTranspo(tona)
+                }}
+              >
+                {tona}
+              </Button>
+            )
+          })}
         </div>
-      </DialogContent>
-    </Dialog>
+        <Button
+          className="w-full"
+          tabIndex={tonalitiesNames.length}
+          onClick={() => {
+            setCurrentTonaIndex(getSongTonaIndex())
+            saveTranspo(songTona)
+          }}
+        >
+          Revenir à l&apos;original
+        </Button>
+      </div>
+    </Modal>
   )
 }

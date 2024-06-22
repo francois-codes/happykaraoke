@@ -3,7 +3,7 @@ import { CommandMenu } from '@/components/Menu/CommandMenu'
 import { SongComponent } from '@/components/SongComponents/SongComponent'
 import { Screen } from '@/components/Screen'
 import { useStore } from '@/store'
-import { SessionQueuePanel } from '@/components/Settings/SessionQueuePanel'
+import { SessionQueuePanel } from '@/components/Queue/SessionQueuePanel'
 
 export function SessionScreen() {
   const { isAdmin } = useStore()
@@ -15,7 +15,6 @@ export function SessionScreen() {
         {isAdmin && <CommandMenu />}
         <div className="w-full relative">
           <SongComponent />
-
           {isAdmin && <SessionQueuePanel />}
         </div>
       </main>

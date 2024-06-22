@@ -1,33 +1,26 @@
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '../ui/dialog'
 import { Button } from '../ui/button'
 import { IoPlayCircleOutline } from 'react-icons/io5'
-import { SessionQueue } from './SessionQueue'
+import { SessionQueue } from '../Queue/SessionQueue'
+import { useModal } from '@/utils/useModal'
+import { Modal } from '../Modal'
 
 export function SessionQueueButton() {
+  const modalProps = useModal()
   return (
     <div className="lg:invisible">
-      <Dialog>
-        <DialogTrigger asChild>
+      <Modal
+        {...modalProps}
+        title="Prochaines chansons"
+        desc="Liste des prochaines chansons"
+        modalSize="sm:max-w-[calc(100vw-64px)]"
+        trigger={
           <Button>
             <IoPlayCircleOutline size={24} />
           </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Prochaines chansons</DialogTitle>
-            <DialogDescription>Liste des prochaines chansons</DialogDescription>
-          </DialogHeader>
-
-          <SessionQueue />
-        </DialogContent>
-      </Dialog>
+        }
+      >
+        <SessionQueue />
+      </Modal>
     </div>
   )
 }
