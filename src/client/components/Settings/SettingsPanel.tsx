@@ -52,7 +52,7 @@ export function SettingsPanel() {
     <Popover open={settingsOpen} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button className="text-xl">
-          <IoSettingsOutline />
+          <IoSettingsOutline size={24} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">

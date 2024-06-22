@@ -33,7 +33,7 @@ export function SessionQueue() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button onClick={() => setOpen(true)}>
-          <IoPlayCircleOutline />
+          <IoPlayCircleOutline size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

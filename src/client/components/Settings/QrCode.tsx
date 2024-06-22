@@ -40,7 +40,7 @@ export function QrCode() {
     <Dialog open={qrCodeOpen} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <IoQrCodeOutline />
+          <IoQrCodeOutline size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">

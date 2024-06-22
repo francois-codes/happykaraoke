@@ -120,7 +120,7 @@ export function Transpose() {
     <Dialog open={transpoOpen} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <IoMusicalNotesOutline />
+          <IoMusicalNotesOutline size={24} />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
