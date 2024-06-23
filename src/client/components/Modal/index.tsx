@@ -10,7 +10,7 @@ import {
 import { DialogTrigger } from '@radix-ui/react-dialog'
 import { PropsWithChildren, ReactNode } from 'react'
 
-interface ModalProps {
+export interface ModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   title: string

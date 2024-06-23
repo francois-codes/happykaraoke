@@ -19,7 +19,7 @@ export function SessionQueueButton() {
           </Button>
         }
       >
-        <SessionQueue />
+        <SessionQueue maxHeight="max-h-[calc(100vh-280px)]" />
       </Modal>
     </div>
   )

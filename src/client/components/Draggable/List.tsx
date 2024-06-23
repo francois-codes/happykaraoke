@@ -6,24 +6,37 @@ import {
   useSensor,
   useSensors
 } from '@dnd-kit/core'
-import { useMemo, useState } from 'react'
+import { Ref, forwardRef, useImperativeHandle, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { DraggableItem, ItemType } from './Item'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { reorderQueue } from '@shared/endpoints/queue'
 
-export function DraggableList({
-  items: initialItems,
-  onItemClick,
-  refresh
-}: {
-  items: ItemType[]
+interface Props {
+  emptyState: JSX.Element
   onItemClick: (args: { item: ItemType; action: string }) => void
   refresh: () => void
-}) {
-  const [items, setItems] = useState<ItemType[]>(initialItems)
+}
+
+export interface DraggableRef {
+  setListItems: (items: ItemType[]) => void
+}
+
+function DraggableListComponent(
+  { emptyState, onItemClick, refresh }: Props,
+  ref: Ref<DraggableRef>
+) {
+  const [items, setItems] = useState<ItemType[]>([])
   const [activeItem, setActiveItem] = useState<null | ItemType>(null)
   const sensors = useSensors(useSensor(MouseSensor), useSensor(TouchSensor))
+
+  useImperativeHandle<DraggableRef, DraggableRef>(
+    ref,
+    () => ({
+      setListItems: setItems
+    }),
+    []
+  )
 
   function onDragStart({ active }) {
     const activeItem = active.data.current.item as ItemType
@@ -59,9 +72,15 @@ export function DraggableList({
       onDragEnd={onDragEnd}
     >
       <SortableContext items={itemIds}>
-        {items.map((item) => (
-          <DraggableItem key={item.id} item={item} onClick={onItemClick} />
-        ))}
+        {items.length ? (
+          <>
+            {items.map((item) => (
+              <DraggableItem key={item.id} item={item} onClick={onItemClick} />
+            ))}
+          </>
+        ) : (
+          <>{emptyState}</>
+        )}
       </SortableContext>
       {'document' in window &&
         createPortal(
@@ -73,3 +92,5 @@ export function DraggableList({
     </DndContext>
   )
 }
+
+export const DraggableList = forwardRef<DraggableRef, Props>(DraggableListComponent)

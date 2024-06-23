@@ -96,3 +96,14 @@ export async function reorderQueue(queueItems: { id: number; order: number }[]) 
     )
   )
 }
+
+export async function clearQueue() {
+  const { db } = await import('@shared/db')
+  const { queue } = await import('@shared/db/schema')
+  const { eq } = await import('drizzle-orm')
+  const { getCurrentSession } = await import('./index')
+
+  const currentSession = await getCurrentSession()
+
+  return db.delete(queue).where(eq(queue.sessionId, currentSession.id))
+}

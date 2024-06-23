@@ -48,3 +48,14 @@ export const reorderQueue = createEndpoint<{ queue: Pick<QueueType, 'id' | 'orde
     res.sendStatus(200)
   }
 })
+
+export const clearQueue = createEndpoint<unknown, unknown>({
+  method: 'post',
+  url: '/clear-queue',
+  handler: async (_, res) => {
+    const { clearQueue } = await import('@shared/lib/session/queue')
+    await clearQueue()
+    queueChanged.server.emit({})
+    res.sendStatus(200)
+  }
+})

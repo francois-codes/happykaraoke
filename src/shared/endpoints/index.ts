@@ -2,7 +2,7 @@ import { loginUser, fetchUser, joinSession } from './user'
 import { getSong, getSongsList, changeSong, setTranspo } from './song'
 import { setScroll } from './scroll'
 import { closeSession, fetchSessionConfig, fetchSessionLog, setSongsFolder } from './session'
-import { addToQueue, getQueue, removeFromQueue, reorderQueue } from './queue'
+import { addToQueue, getQueue, removeFromQueue, reorderQueue, clearQueue } from './queue'
 
 export const endpoints = [
   loginUser,
@@ -20,5 +20,6 @@ export const endpoints = [
   getQueue,
   addToQueue,
   removeFromQueue,
-  reorderQueue
+  reorderQueue,
+  clearQueue
 ]

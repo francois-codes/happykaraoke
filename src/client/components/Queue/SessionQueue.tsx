@@ -1,20 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
-import { type QueueType } from '@shared/db/schema'
-import { getQueue, removeFromQueue } from '@shared/endpoints/queue'
-import { DraggableList, ItemType } from '../Draggable'
+import { clearQueue, getQueue, removeFromQueue } from '@shared/endpoints/queue'
+import { DraggableList, DraggableRef, ItemType } from '../Draggable'
 import { queueChanged } from '@shared/messages/queue'
 import { socket } from '@/utils/socket'
 import { changeSong } from '@shared/endpoints/song'
+import { ButtonWithConfirmAction } from '../ButtonWithConfirmAction'
 
-export function SessionQueue() {
-  const key = useRef(0)
-  const [queueItems, setQueueItems] = useState<QueueType[]>([])
+export function SessionQueue({ maxHeight }: { maxHeight: string }) {
+  const [hasItems, setHasItems] = useState(false)
+  const draggableRef = useRef<DraggableRef>(null)
 
   async function fetchQueueItems() {
     const { queue } = await getQueue.call()
+    setHasItems(queue.length > 0)
+    draggableRef.current?.setListItems(queue.map(({ id, song }) => ({ id, content: song })))
+  }
 
-    setQueueItems(queue)
-    key.current += 1
+  async function emptyQueue() {
+    await clearQueue.call()
+    fetchQueueItems()
   }
 
   async function onItemClick({ item, action }: { item: ItemType; action: string }) {
@@ -40,16 +44,23 @@ export function SessionQueue() {
   }, [])
 
   return (
-    <div className="flex flex-grow flex-col gap-2 overflow-scroll max-h-[calc(100vh-280px)]">
-      {queueItems.length ? (
-        <DraggableList
-          key={key.current}
-          onItemClick={onItemClick}
-          refresh={fetchQueueItems}
-          items={queueItems.map(({ id, song }) => ({ id, content: song }))}
-        />
-      ) : (
-        <p className="lg:invisible">Aucune chanson en attente</p>
+    <div className={`flex flex-grow flex-col gap-2 overflow-scroll ${maxHeight}`}>
+      <DraggableList
+        ref={draggableRef}
+        onItemClick={onItemClick}
+        refresh={fetchQueueItems}
+        emptyState={<p className="lg:invisible">Aucune chanson en attente</p>}
+      />
+      {hasItems && (
+        <ButtonWithConfirmAction
+          title="Etes-vous sur ?"
+          desc="la file d'attente sera vidée. Cette action ne peux pas être annulée"
+          label="Vider la file"
+          onClick={emptyQueue}
+          className="w-full"
+        >
+          Oui, vider la file
+        </ButtonWithConfirmAction>
       )}
     </div>
   )
