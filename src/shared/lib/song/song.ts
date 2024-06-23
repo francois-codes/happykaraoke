@@ -56,7 +56,7 @@ export class Song {
         }
       }
 
-      if (line.startsWith('#')) {
+      if (line.startsWith('#') || line.startsWith('[')) {
         return {
           type: LineType.Section,
           content: line

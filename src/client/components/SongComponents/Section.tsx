@@ -3,7 +3,7 @@ import { SongLineProps } from '@shared/types'
 import { FC } from 'react'
 
 export const Section: FC<SongLineProps> = ({ content }) => {
-  const sectionTitle = titleize(content.replace('#', ''))
+  const sectionTitle = titleize(content.replace(/#|\[|\]/g, ''))
 
   return (
     <h3 className="song-section text-2xl pb-2 pt-8">
