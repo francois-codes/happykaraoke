@@ -3,10 +3,12 @@ import { useScrollContext } from '@/contexts/scroll'
 import { useStore } from '@/store'
 import { useRef, useCallback, useEffect } from 'react'
 
+const SCROLL_INCREMENT = 0.1
+
 export const useAutoScroller = () => {
   const { currentSong } = useStore()
   const scrollContainerRef = useScrollContext()
-  const scrollSpeedRef = useRef(0.1)
+  const scrollSpeedRef = useRef(0.05)
   const scrollPosition = useRef(0)
   const animationFrameRef = useRef<Nullable<number>>(null)
   const sectionsRef = useRef<Nullable<number[]>>(null)
@@ -54,11 +56,11 @@ export const useAutoScroller = () => {
     }
   }, [])
 
-  const increaseScrollSpeed = (increment = 0.2) => {
+  const increaseScrollSpeed = (increment = SCROLL_INCREMENT) => {
     scrollSpeedRef.current += increment
   }
 
-  const decreaseScrollSpeed = (decrement = 0.2) => {
+  const decreaseScrollSpeed = (decrement = SCROLL_INCREMENT) => {
     scrollSpeedRef.current = Math.max(scrollSpeedRef.current - decrement, 0.1) // Ensures speed doesn't go below 1
   }
 
