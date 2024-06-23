@@ -66,28 +66,28 @@ export function useSongKeyboardShortcuts({
   useKeyboardShortcut(
     {
       key: KEYS.right,
-      disable: () => !isAdmin,
+      disable: () => !isAdmin || searchOpen,
       preventDefault: true,
       handler: () => {
         scroller.increaseScrollSpeed()
         setScroll.call({ type: ScrollEventType.FASTER })
       }
     },
-    [scroller, isAdmin]
+    [scroller, isAdmin, searchOpen]
   )
 
   // left => decrease scroll speed (admin only)
   useKeyboardShortcut(
     {
       key: KEYS.left,
-      disable: () => !isAdmin,
+      disable: () => !isAdmin || searchOpen,
       preventDefault: true,
       handler: () => {
         scroller.decreaseScrollSpeed()
         setScroll.call({ type: ScrollEventType.SLOWER })
       }
     },
-    [scroller, isAdmin]
+    [scroller, isAdmin, searchOpen]
   )
 
   // $ => scroll to top (admin only)
