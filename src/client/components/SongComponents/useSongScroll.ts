@@ -50,6 +50,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   }, [])
 
   useEffect(() => {
+    if (!isAdmin) return
     scrollContainerRef.current?.addEventListener('scrollend', followScroll)
 
     return () => {
