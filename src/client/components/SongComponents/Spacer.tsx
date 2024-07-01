@@ -9,5 +9,5 @@ export const Spacer: FC<SongLineProps> = ({ content }) => {
     return <div>{content}</div>
   }
 
-  return <div className="text-xl leading-[48px]">{content}</div>
+  return <div className="text-xl leading-[24px] md:leading-[48px]">{content}</div>
 }
