@@ -59,15 +59,21 @@ export async function startServer() {
 
     app.use(viteDevServer.middlewares)
 
-    // there's no fancy SSR here, so we just serve the index.html file
-    // transformed by the vite dev server
-    app.use('/', async (req, res) => {
+    const handler = async (req, res) => {
       const template = resolve(process.cwd(), './src/client/index.html')
       const html = viteDevServer.transformIndexHtml(
         req.url,
         await import('fs').then((m) => m.promises.readFile(template, 'utf-8'))
       )
       res.send(html)
+    }
+
+    const frontendRoutes = ['/', '/session', '/join']
+
+    // there's no fancy SSR here, so we just serve the index.html file
+    // transformed by the vite dev server
+    frontendRoutes.forEach((path) => {
+      app.use(path, handler)
     })
   } else {
     // in production, we use the static assets built by vite

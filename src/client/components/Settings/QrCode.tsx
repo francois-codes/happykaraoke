@@ -27,7 +27,7 @@ export function QrCode() {
     [searchOpen, qrCodeOpen]
   )
 
-  const linkUrl = `${hostUrl}?join`
+  const linkUrl = `${hostUrl}/join`
 
   return (
     <Modal
@@ -44,7 +44,7 @@ export function QrCode() {
       <div className="gap-4 flex flex-col items-center p-4">
         <QRCode value={linkUrl} style={{ margin: '0 auto' }} />
         <Link target="_blank" to={linkUrl}>
-          {hostUrl}
+          {linkUrl}
         </Link>
       </div>
     </Modal>

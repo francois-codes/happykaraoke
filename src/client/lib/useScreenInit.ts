@@ -5,6 +5,7 @@ import { UserType } from '@shared/types'
 import { fetchSessionConfig } from '@shared/endpoints/session'
 import { useNavigate } from 'react-router-dom'
 import { sleep } from '@/utils'
+import { AxiosError } from 'axios'
 
 export function useScreenInit({ shouldAnimateLoader = true } = {}) {
   const [userInitialized, setUserInitialized] = useState(false)
@@ -19,6 +20,7 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
   const location = window.location.pathname
 
   async function initUser() {
+    console.log({ location })
     if (typeof store.isAdmin === 'undefined' && !userInitialized) {
       try {
         const id = window.localStorage.getItem('userId')
@@ -37,8 +39,13 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
             throw new Error('no user')
           }
         }
-      } catch {
-        navigate('/')
+      } catch (e) {
+        const errorCode = e instanceof AxiosError ? e.response?.status : null
+        if (errorCode === 404) {
+          navigate(location)
+        } else {
+          navigate('/')
+        }
       }
     }
     setUserInitialized(true)
