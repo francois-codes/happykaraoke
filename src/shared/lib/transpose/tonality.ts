@@ -53,7 +53,14 @@ const tonalities = [
   }
 ]
 
-export const tonalitiesNames = tonalities.map((tona) => tona.names[0])
+export const tonalitiesNames = tonalities.flatMap((tona) => {
+  const { preferredAccidental } = tona
+
+  return (
+    tona.names.find((name) => name.includes(preferredAccidental) && !name.includes('-')) ??
+    tona.names[0]
+  )
+})
 
 // Define positive modulus function
 const modulus = (n: number, m: number): number => ((n % m) + m) % m
