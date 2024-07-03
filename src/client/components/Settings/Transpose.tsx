@@ -1,9 +1,14 @@
-import { stepsBetweenKeys, tonalitiesNames } from '@shared/lib/transpose/tonality'
+import {
+  getTonalityIndex,
+  getTonalityPreferredName,
+  stepsBetweenKeys,
+  tonalities
+} from '@shared/lib/transpose/tonality'
 import { Button } from '../ui/button'
 import { useDispatch, useStore } from '@/store'
 import { setTranspo } from '@shared/endpoints/song'
 import { IoMusicalNotesOutline } from 'react-icons/io5'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { keyboardShortcut } from '@/lib/shortcut'
 import { KEYS } from '@/lib/consts'
 import { Modal } from '../Modal'
@@ -25,7 +30,7 @@ const o = keyboardShortcut(KEYS.o)
 
 export function Transpose() {
   const { songKey, transpoOpen, transpo } = useStore()
-  const [selectedTona, setSelectedTona] = useState(tonalitiesNames[0])
+  const [selectedTona, setSelectedTona] = useState(tonalities[0])
   const [currentTonaIndex, setCurrentTonaIndex] = useState(0)
   const dispatch = useDispatch()
 
@@ -33,20 +38,16 @@ export function Transpose() {
     dispatch({ transpoOpen: open })
   }
 
-  const songTona = songKey?.replace('m', '')
-
-  function getSongTonaIndex() {
-    return tonalitiesNames.findIndex((tona) => tona === songTona)
-  }
+  const minorMode = useMemo(() => songKey?.includes('m') || songKey?.includes('-'), [songKey])
 
   useEffect(() => {
-    if (songTona) {
-      setCurrentTonaIndex(getSongTonaIndex() + transpo)
+    if (songKey) {
+      setCurrentTonaIndex(getTonalityIndex(songKey) + transpo)
     }
-  }, [songTona])
+  }, [songKey])
 
   useEffect(() => {
-    setSelectedTona(tonalitiesNames[currentTonaIndex])
+    setSelectedTona(tonalities[currentTonaIndex])
   }, [currentTonaIndex])
 
   async function saveTranspo(tona) {
@@ -83,19 +84,19 @@ export function Transpose() {
     if (offset) {
       const [factor, step] = offset
       setCurrentTonaIndex(
-        (tonalitiesNames.length + currentTonaIndex + factor * step) % tonalitiesNames.length
+        (tonalities.length + currentTonaIndex + factor * step) % tonalities.length
       )
     }
 
     if (o.matches(event)) {
-      setCurrentTonaIndex(getSongTonaIndex())
-      saveTranspo(songTona)
+      songKey && setCurrentTonaIndex(getTonalityIndex(songKey))
+      saveTranspo(songKey)
     }
 
     if (enter.matches(event)) {
       event.preventDefault()
-      const tona = tonalitiesNames[currentTonaIndex]
-      saveTranspo(tona)
+      const tona = tonalities[currentTonaIndex]
+      saveTranspo(getTonalityPreferredName(tona, minorMode))
     }
   }
 
@@ -107,7 +108,7 @@ export function Transpose() {
     }
   }, [currentTonaIndex, transpoOpen])
 
-  if (!songTona) return null
+  if (!songKey) return null
 
   return (
     <Modal
@@ -123,8 +124,13 @@ export function Transpose() {
     >
       <div className="gap-4">
         <div className="flex flex-row flex-wrap gap-4 py-4">
-          {tonalitiesNames.map((tona, index) => {
-            const variant = getVariant(tona, selectedTona, songTona)
+          {tonalities.map((tonality, index) => {
+            const tona = getTonalityPreferredName(tonality, minorMode)
+            const variant = getVariant(
+              tona,
+              getTonalityPreferredName(selectedTona, minorMode),
+              songKey
+            )
 
             return (
               <Button
@@ -144,10 +150,10 @@ export function Transpose() {
         </div>
         <Button
           className="w-full"
-          tabIndex={tonalitiesNames.length}
+          tabIndex={tonalities.length}
           onClick={() => {
-            setCurrentTonaIndex(getSongTonaIndex())
-            saveTranspo(songTona)
+            setCurrentTonaIndex(getTonalityIndex(songKey))
+            saveTranspo(songKey)
           }}
         >
           Revenir à l&apos;original

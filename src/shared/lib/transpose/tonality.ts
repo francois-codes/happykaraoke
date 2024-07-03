@@ -2,7 +2,12 @@ import Chord from './chord'
 
 const tonaRegex = /^[A-G][b#]?(-|m|min)?$/
 
-const tonalities = [
+export interface Tonality {
+  names: string[]
+  preferredAccidental: string
+}
+
+export const tonalities: Tonality[] = [
   {
     names: ['C', 'A-'],
     preferredAccidental: ''
@@ -53,19 +58,19 @@ const tonalities = [
   }
 ]
 
-export const tonalitiesNames = tonalities.flatMap((tona) => {
-  const { preferredAccidental } = tona
+export function getTonalityPreferredName(tonality: Tonality, minorMode) {
+  const names = tonality.names.filter((name) => minorMode === name.includes('-'))
 
   return (
-    tona.names.find((name) => name.includes(preferredAccidental) && !name.includes('-')) ??
-    tona.names[0]
+    names.find((name) => name.includes(tonality.preferredAccidental) && !name.includes('-')) ??
+    names[0]
   )
-})
+}
 
 // Define positive modulus function
 const modulus = (n: number, m: number): number => ((n % m) + m) % m
 
-function getTonalityIndex(name: string): number {
+export function getTonalityIndex(name: string): number {
   if (!tonaRegex.test(name)) {
     throw new Error("Couldn't initialize tonality, invalid name.")
   } else {
@@ -79,11 +84,6 @@ function getPreferredAccidental(index: number): string {
   return tonalities[index].preferredAccidental
 }
 
-// function getTonalityNames(index: number): string[] {
-//   index = modulus(index, tonalities.length)
-//   return tonalities[index].names
-// }
-
 export function stepsBetweenKeys(startKey, endKey) {
   const startIndex = getTonalityIndex(startKey)
   const endIndex = getTonalityIndex(endKey)
@@ -96,7 +96,7 @@ export function stepsBetweenKeys(startKey, endKey) {
 
   // Ensure steps is positive and within the bounds of the array
   if (steps < 0) {
-    steps += tonalitiesNames.length
+    steps += tonalities.length
   }
 
   return steps
