@@ -3,8 +3,6 @@ import { Input } from '../ui/input'
 import { setSongsFolder } from '@shared/endpoints/session'
 import { useDispatch, useStore } from '@/store'
 import { Modal } from '../Modal'
-import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
-import { KEYS } from '@/lib/consts'
 
 export function SongsFolderSelector() {
   const { songsFolder, songsFolderOpen } = useStore()
