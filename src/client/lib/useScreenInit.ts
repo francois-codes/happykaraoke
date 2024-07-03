@@ -20,7 +20,6 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
   const location = window.location.pathname
 
   async function initUser() {
-    console.log({ location })
     if (typeof store.isAdmin === 'undefined' && !userInitialized) {
       try {
         const id = window.localStorage.getItem('userId')
