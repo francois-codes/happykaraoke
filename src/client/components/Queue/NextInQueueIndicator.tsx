@@ -27,12 +27,21 @@ export function NextInQueueIndicator() {
   return (
     <div className="mt-16">
       {isAdmin ? (
-        <Button onClick={playNextInQueue}>Lancer {nextInQueue.song}</Button>
+        <Button onClick={playNextInQueue}>
+          Lancer {nextInQueue.song}
+          {nextInQueue.user && <> - chanté par: {nextInQueue.user}</>}
+        </Button>
       ) : (
         <div className="text-xl font-bold">
           Prochaine chanson
           <br />
           {nextInQueue.song}
+          {nextInQueue.user && (
+            <>
+              <br />
+              intepreté par: {nextInQueue.user}
+            </>
+          )}
         </div>
       )}
     </div>

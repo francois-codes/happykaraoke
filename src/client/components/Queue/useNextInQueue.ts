@@ -6,7 +6,9 @@ import { queueChanged } from '@shared/messages/queue'
 import { useEffect, useState } from 'react'
 
 export function useNextInQueue() {
-  const [nextInQueue, setNextInQueue] = useState<QueueType | null>(null)
+  const [nextInQueue, setNextInQueue] = useState<
+    (Omit<QueueType, 'userId'> & { user: string | null }) | null
+  >(null)
 
   useEffect(() => {
     fetchQueue()

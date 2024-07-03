@@ -2,24 +2,26 @@ import { QueueType } from '@shared/db/schema'
 import { queueChanged } from '@shared/messages/queue'
 import { createEndpoint } from '@shared/types/endpoints'
 
-export const getQueue = createEndpoint<unknown, { queue: QueueType[] }>({
-  method: 'get',
-  url: '/get-queue',
-  cache: false,
-  handler: async (_, res) => {
-    const { getQueueForCurrentSession } = await import('@shared/lib/session/queue')
-    const queue = await getQueueForCurrentSession()
-    res.status(200).json({ queue })
+export const getQueue = createEndpoint<unknown, { queue: (QueueType & { user: string | null })[] }>(
+  {
+    method: 'get',
+    url: '/get-queue',
+    cache: false,
+    handler: async (_, res) => {
+      const { getQueueForCurrentSession } = await import('@shared/lib/session/queue')
+      const queue = await getQueueForCurrentSession()
+      res.status(200).json({ queue })
+    }
   }
-})
+)
 
-export const addToQueue = createEndpoint<{ song: string }, unknown>({
+export const addToQueue = createEndpoint<{ song: string; userId?: string }, unknown>({
   method: 'post',
   url: '/add-song-to-queue',
   handler: async (req, res) => {
-    const { song } = req.body
+    const { song, userId } = req.body
     const { addSongToQueue } = await import('@shared/lib/session/queue')
-    await addSongToQueue(song)
+    await addSongToQueue(song, userId)
     queueChanged.server.emit({})
     res.sendStatus(200)
   }

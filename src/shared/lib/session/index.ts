@@ -1,5 +1,5 @@
 import { config } from '@shared/config'
-import { queue, session, sessionLog, suggestion, user } from '@shared/db/schema'
+import { queue, session, sessionLog, user } from '@shared/db/schema'
 import { differenceInMinutes, formatISO } from 'date-fns'
 import { inArray } from 'drizzle-orm'
 
@@ -66,8 +66,7 @@ export async function closeSession() {
 
   await Promise.all([
     db.delete(user).where(inArray(user.sessionId, deletedSessionIds)),
-    db.delete(queue).where(inArray(queue.sessionId, deletedSessionIds)),
-    db.delete(suggestion).where(inArray(suggestion.sessionId, deletedSessionIds))
+    db.delete(queue).where(inArray(queue.sessionId, deletedSessionIds))
   ])
 
   return result

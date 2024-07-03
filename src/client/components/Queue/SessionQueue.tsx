@@ -13,7 +13,9 @@ export function SessionQueue({ maxHeight }: { maxHeight: string }) {
   async function fetchQueueItems() {
     const { queue } = await getQueue.call()
     setHasItems(queue.length > 0)
-    draggableRef.current?.setListItems(queue.map(({ id, song }) => ({ id, content: song })))
+    draggableRef.current?.setListItems(
+      queue.map(({ id, song, user }) => ({ id, content: song, user }))
+    )
   }
 
   async function emptyQueue() {
@@ -44,7 +46,7 @@ export function SessionQueue({ maxHeight }: { maxHeight: string }) {
   }, [])
 
   return (
-    <div className={`flex flex-grow flex-col gap-2 overflow-scroll ${maxHeight}`}>
+    <div className={`flex flex-grow flex-col gap-2 overflow-scroll p-2 ${maxHeight}`}>
       <DraggableList
         ref={draggableRef}
         onItemClick={onItemClick}

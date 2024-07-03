@@ -2,7 +2,7 @@ import { type QueueInsert } from '@shared/db/schema'
 
 export async function getQueueForCurrentSession() {
   const { db } = await import('@shared/db')
-  const { queue } = await import('@shared/db/schema')
+  const { queue, user } = await import('@shared/db/schema')
   const { eq, asc } = await import('drizzle-orm')
   const { getCurrentSession } = await import('./index')
 
@@ -13,8 +13,16 @@ export async function getQueueForCurrentSession() {
   }
 
   const result = await db
-    .select()
+    .select({
+      user: user.name,
+      userId: user.id,
+      song: queue.song,
+      order: queue.order,
+      id: queue.id,
+      sessionId: queue.sessionId
+    })
     .from(queue)
+    .leftJoin(user, eq(queue.userId, user.id))
     .where(eq(queue.sessionId, currentSession.id))
     .orderBy(asc(queue.order))
 
@@ -40,7 +48,7 @@ async function getLastItemInQueue(sessionId: number) {
   }
 }
 
-export async function addSongToQueue(song: string) {
+export async function addSongToQueue(song: string, userId?: string) {
   const { db } = await import('@shared/db')
   const { queue } = await import('@shared/db/schema')
   const { getCurrentSession } = await import('./index')
@@ -56,6 +64,7 @@ export async function addSongToQueue(song: string) {
   const newQueueItem: QueueInsert = {
     song,
     sessionId: currentSession.id,
+    userId: userId ? Number(userId) : null,
     order: (lastItemInQueue?.order ?? 0) + 1
   }
 

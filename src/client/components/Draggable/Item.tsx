@@ -6,10 +6,12 @@ import { cva } from 'class-variance-authority'
 import { GripVertical } from 'lucide-react'
 import { Button } from '../ui/button'
 import { IoPlayCircleOutline, IoTrashBinOutline } from 'react-icons/io5'
+import { cn } from '@/utils'
 
 export interface ItemType {
   id: UniqueIdentifier
   content: string
+  user: string | null
 }
 
 export interface ItemProps {
@@ -55,7 +57,12 @@ export function DraggableItem({ item, isOverlay, onClick }: ItemProps) {
         dragging: isOverlay ? 'overlay' : isDragging ? 'over' : undefined
       })}
     >
-      <CardContent className="px-3 py-3 text-left whitespace-pre-wrap flex flex-row items-center space-between gap-2">
+      <CardContent
+        className={cn(
+          'px-3 py-3 text-left whitespace-pre-wrap flex flex-row items-center space-between gap-2',
+          item.user ? 'ring-offset-background ring-2 ring-offset-2 ring-ring rounded-md' : ''
+        )}
+      >
         <div className="flex flex-row gap-2 grow">
           <Button
             variant={'ghost'}
@@ -65,7 +72,11 @@ export function DraggableItem({ item, isOverlay, onClick }: ItemProps) {
           >
             <GripVertical />
           </Button>
-          <div className="leading-[32px]">{item.content}</div>
+          <div className="leading-[32px]">
+            {item.content}
+            <br />
+            {item.user}
+          </div>
         </div>
         <Button
           variant="secondary"

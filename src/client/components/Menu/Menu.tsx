@@ -6,6 +6,7 @@ import { Transpose } from '../Settings/Transpose'
 import { SettingsPanel } from '../Settings/SettingsPanel'
 import { QrCode } from '../Settings/QrCode'
 import { SessionQueueButton } from '../Settings/SessionQueueButton'
+import { Suggestion } from '../Settings/Suggestion'
 
 export const Menu: FC = () => {
   const { currentSong, isAdmin } = useStore()
@@ -29,6 +30,7 @@ export const Menu: FC = () => {
       <div className="flex items-center align-center gap-8">
         {isAdmin && !!window.electron && <SessionQueueButton />}
         {isAdmin && <Transpose />}
+        {!isAdmin && <Suggestion />}
         <QrCode />
         <SettingsPanel />
       </div>

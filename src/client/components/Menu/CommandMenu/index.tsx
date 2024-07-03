@@ -15,7 +15,9 @@ import { KEYS } from '@/lib/consts'
 import { searchSong } from '@shared/lib/data/songs'
 import { Modal } from '@/components/Modal'
 import { Button } from '@/components/ui/button'
-import { addToQueue } from '@shared/endpoints/queue'
+import { addToQueue, getQueue } from '@shared/endpoints/queue'
+import { queueChanged } from '@shared/messages/queue'
+import { socket } from '@/utils/socket'
 
 type Songs = Awaited<ReturnType<typeof getSongsList.call>>['songs']
 
@@ -24,12 +26,30 @@ export function CommandMenu() {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [allSongs, setAllSongs] = useState<Songs>([])
+  const [availableSuggestions, setAvailableSuggestions] = useState(3)
   const [selectedSong, setSelectedSong] = useState<Nullable<Song>>(null)
 
-  const { currentSong, songsFolder } = useStore()
+  const { currentSong, songsFolder, suggestionOpen, isAdmin } = useStore()
   const dispatch = useDispatch()
 
+  const userId = isAdmin ? undefined : window.localStorage.getItem('userId') ?? undefined
+
+  async function fetchAvailableSuggestions() {
+    if (!userId) return
+
+    const { queue } = await getQueue.call()
+
+    const suggestionsByUsers = queue.filter((item) => item.userId === Number(userId)).length
+
+    setAvailableSuggestions(Math.max(0, 3 - suggestionsByUsers))
+  }
+
   useEffect(() => {
+    setOpen(suggestionOpen)
+  }, [suggestionOpen])
+
+  useEffect(() => {
+    fetchAvailableSuggestions()
     if (!currentSong && songsFolder) {
       dispatch({ searchOpen: true })
       setOpen(true)
@@ -38,6 +58,9 @@ export function CommandMenu() {
 
   useEffect(() => {
     dispatch({ searchOpen: open })
+    if (!open) {
+      dispatch({ suggestionOpen: false })
+    }
   }, [open])
 
   useEffect(() => {
@@ -67,9 +90,14 @@ export function CommandMenu() {
   }
 
   async function queueSong() {
-    addToQueue.call({ song: selectedSong })
+    await addToQueue.call({ song: selectedSong, userId })
+    fetchAvailableSuggestions()
     setSelectedSong(null)
   }
+
+  queueChanged.client.useMessage(socket, () => {
+    fetchAvailableSuggestions()
+  })
 
   useEffect(() => {
     fetchSongs()
@@ -79,11 +107,12 @@ export function CommandMenu() {
     {
       key: [KEYS['@']],
       preventDefault: true,
+      disable: () => !isAdmin,
       handler: () => {
         setOpen(!open)
       }
     },
-    [setOpen, open]
+    [setOpen, open, isAdmin]
   )
 
   useKeyboardShortcut(
@@ -130,17 +159,39 @@ export function CommandMenu() {
           ))}
         <CommandEmpty>Pas de résultats</CommandEmpty>
       </CommandList>
-      <Modal
-        title="Play or queue?"
-        desc="Selectionnez l'action à réaliser"
-        open={!!selectedSong}
-        onOpenChange={() => {
-          setSelectedSong(null)
-        }}
-      >
-        <Button onClick={selectSong}>Lancer la chanson</Button>
-        <Button onClick={queueSong}>Ajouter en file d&apos;attente</Button>
-      </Modal>
+      {isAdmin ? (
+        <Modal
+          title="Play or queue?"
+          desc="Selectionnez l'action à réaliser"
+          open={!!selectedSong}
+          onOpenChange={() => {
+            setSelectedSong(null)
+          }}
+        >
+          <Button onClick={selectSong}>Lancer la chanson</Button>
+          <Button onClick={queueSong}>Ajouter en file d&apos;attente</Button>
+        </Modal>
+      ) : (
+        <Modal
+          title="Suggerer cette chanson ?"
+          desc="Confirmez pour demander à chanter cette chanson"
+          open={!!selectedSong}
+          onOpenChange={() => {
+            setSelectedSong(null)
+          }}
+        >
+          {availableSuggestions > 0 ? (
+            <>
+              <p>Vous ne pouvez avoir que {availableSuggestions} chansons dans la file</p>
+              <Button onClick={queueSong}>Suggerer la chanson</Button>
+            </>
+          ) : (
+            <>
+              <p>Vous avez déjà suggéré 3 chansons !</p>
+            </>
+          )}
+        </Modal>
+      )}
     </CommandDialog>
   )
 }

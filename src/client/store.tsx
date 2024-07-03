@@ -11,6 +11,7 @@ interface Store {
   songsFolderOpen: boolean
   hostUrl: string
   searchOpen: boolean
+  suggestionOpen: boolean
   qrCodeOpen: boolean
   settingsOpen: boolean
 }
@@ -22,6 +23,7 @@ const initialStore: Store = {
   songsFolderOpen: false,
   hostUrl: '',
   searchOpen: false,
+  suggestionOpen: false,
   qrCodeOpen: false,
   settingsOpen: false
 }

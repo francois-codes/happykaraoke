@@ -12,7 +12,7 @@ export function SessionScreen() {
     <Screen>
       <Menu />
       <main className="flex min-h-screen flex-col items-start justify-between mt-16 p-8">
-        {isAdmin && <CommandMenu />}
+        <CommandMenu />
         <div className="w-full relative">
           <SongComponent />
           {isAdmin && <SessionQueuePanel />}
