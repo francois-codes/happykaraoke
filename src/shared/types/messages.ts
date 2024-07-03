@@ -43,7 +43,7 @@ export function createMessage<Payload, ResponsePayload>({
       socket.on(event, callback)
 
       return () => {
-        socket.off(event)
+        socket.off(event, callback)
       }
     }, deps)
   }

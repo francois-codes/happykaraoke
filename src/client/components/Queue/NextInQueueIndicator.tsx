@@ -1,11 +1,26 @@
 import { useStore } from '@/store'
 import { useNextInQueue } from './useNextInQueue'
 import { Button } from '../ui/button'
+import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
+import { KEYS } from '@/lib/consts'
 
 export function NextInQueueIndicator() {
-  const { isAdmin } = useStore()
+  const { isAdmin, transpoOpen, searchOpen } = useStore()
 
   const { nextInQueue, playNextInQueue } = useNextInQueue()
+
+  useKeyboardShortcut(
+    {
+      key: KEYS.n,
+      modifier: [KEYS.Ctrl],
+      disable: () => !isAdmin || transpoOpen || searchOpen,
+      preventDefault: true,
+      handler: () => {
+        playNextInQueue()
+      }
+    },
+    [isAdmin, searchOpen, transpoOpen, playNextInQueue]
+  )
 
   if (!nextInQueue) return null
 
