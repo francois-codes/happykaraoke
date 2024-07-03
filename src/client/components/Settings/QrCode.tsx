@@ -38,7 +38,7 @@ export function QrCode() {
           <IoQrCodeOutline size={24} />
         </Button>
       }
-      title="sm:max-w-[425px]"
+      title="Rejoindre la session"
       desc="Flashez le code ci-dessous pour rejoindre la session sur un autre appareil"
     >
       <div className="gap-4 flex flex-col items-center p-4">
