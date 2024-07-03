@@ -45,6 +45,7 @@ export const queue = sqliteTable(
     id: integer('id').primaryKey(),
     song: text('song').notNull(),
     order: integer('order').notNull(),
+    userId: integer('userId').references(() => user.id),
     sessionId: integer('sessionId')
       .notNull()
       .references(() => session.id)
@@ -56,14 +57,3 @@ export const queue = sqliteTable(
 
 export type QueueType = InferSelectModel<typeof queue>
 export type QueueInsert = InferInsertModel<typeof queue>
-
-export const suggestion = sqliteTable('suggestion', {
-  id: integer('id').primaryKey(),
-  song: text('song').notNull(),
-  userId: integer('userId')
-    .notNull()
-    .references(() => user.id),
-  sessionId: integer('sessionId')
-    .notNull()
-    .references(() => session.id)
-})
