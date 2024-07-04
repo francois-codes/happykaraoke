@@ -17,7 +17,8 @@ export const router = createBrowserRouter([
     },
     element: <Login />,
     children: [
-      { path: '/', element: <CreateSession /> },
+      { path: '/', element: <JoinSession /> },
+      { path: '/new', element: <CreateSession /> },
       { path: '/join', element: <JoinSession /> }
     ]
   },

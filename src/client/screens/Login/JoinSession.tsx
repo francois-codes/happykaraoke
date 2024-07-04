@@ -103,7 +103,7 @@ export const JoinSession = () => {
         </form>
       </Form>
       <div className="pt-8 w-full text-center">
-        <Link to="/" className="text-sm text-slate-500">
+        <Link to="/new" className="text-sm text-slate-500">
           Ouvrir une session
         </Link>
       </div>

@@ -68,7 +68,7 @@ export async function startServer() {
       res.send(html)
     }
 
-    const frontendRoutes = ['/', '/session', '/join']
+    const frontendRoutes = ['/', '/session', '/join', '/new']
 
     // there's no fancy SSR here, so we just serve the index.html file
     // transformed by the vite dev server

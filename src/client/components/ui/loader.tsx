@@ -49,7 +49,7 @@ export function Loader({ open, showTitle = false }) {
     <div
       className={`w-full h-full flex flex-col gap-12 items-center justify-center fade-in ${open ? 'open' : ''}`}
     >
-      {showTitle && <h1 className="text-3xl font-bold">HappiKaraoke v2 🎙️ 🎸 🎹 🥁</h1>}
+      {showTitle && <h1 className="text-3xl font-bold">HappiKaraoke 🎙️ 🎸 🎹 🥁</h1>}
       <LoaderComponent key={key} />
     </div>
   )

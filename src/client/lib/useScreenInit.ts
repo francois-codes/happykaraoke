@@ -29,7 +29,7 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
 
           if (user) {
             dispatch({ isAdmin: user.type === UserType.ADMIN })
-            if (location === '/' || location === '/join') {
+            if (location === '/' || location === '/join' || location === '/new') {
               setRedirectTarget('/session')
             }
           }
