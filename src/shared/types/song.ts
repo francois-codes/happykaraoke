@@ -12,7 +12,8 @@ export enum LineType {
   Chords = 'chords',
   Section = 'section',
   Spacer = 'spacer',
-  break = 'break'
+  break = 'break',
+  Tab = 'tab'
 }
 
 export interface SongLine {

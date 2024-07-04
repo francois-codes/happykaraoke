@@ -56,6 +56,13 @@ export class Song {
         }
       }
 
+      if (line.trim().match(/^[a-gA-G]\|-.*/)) {
+        return {
+          type: LineType.Tab,
+          content: line
+        }
+      }
+
       if (line.startsWith('#') || line.startsWith('[')) {
         return {
           type: LineType.Section,
