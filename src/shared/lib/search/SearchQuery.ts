@@ -10,7 +10,6 @@ export class SearchQuery {
   constructor(query: string) {
     this.query = query
     this.parse()
-    console.log({ query: this.query, keywords: this.keywords, content: this._content })
   }
 
   get content(): string {
