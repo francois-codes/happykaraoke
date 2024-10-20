@@ -154,7 +154,7 @@ $ npm run build
 ```
 
 This creates the artefacts in the `dist` folder created by the electron build process. The binary can be launched from there.
-Since this is also building the server & the client side, you can run the server fron the `out` by running `npm start`
+Since this is also building the server & the client side, you can run the server from the `out` by running `npm start`
 
 ## Contribute
 
