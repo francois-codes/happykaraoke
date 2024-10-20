@@ -21,7 +21,7 @@ export const ChordLine: FC<SongLineProps> = ({ content }) => {
         const hasBar = word.startsWith('|')
 
         return (
-          <span key={id} className="font-mono">
+          <span key={id} className="chord-font font-mono">
             {isChord && hasBar && '|'}
             {isChord ? <ChordLabel label={chordLabel} /> : word}
           </span>
