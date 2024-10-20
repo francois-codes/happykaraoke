@@ -6,8 +6,8 @@ export const Spacer: FC<SongLineProps> = ({ content }) => {
   const { chordsEnabled } = useStore()
 
   if (chordsEnabled || !content || content?.length === 0) {
-    return <div>{content}</div>
+    return <div className="line responsive-font">Spacer{content}</div>
   }
 
-  return <div className="text-xl leading-[24px] md:leading-[48px]">{content}</div>
+  return <div className="lyrics-only-font line-lyrics-only">{content}</div>
 }

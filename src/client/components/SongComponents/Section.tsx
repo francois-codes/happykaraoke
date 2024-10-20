@@ -6,8 +6,11 @@ export const Section: FC<SongLineProps> = ({ content }) => {
   const sectionTitle = titleize(content.replace(/#|\[|\]/g, ''))
 
   return (
-    <h3 className="song-section text-2xl pb-2 pt-8">
-      <strong>{sectionTitle}</strong>
-    </h3>
+    <>
+      <div className="line" />
+      <h3 className="song-section text-2xl line">
+        <strong>{sectionTitle}</strong>
+      </h3>
+    </>
   )
 }

@@ -1,6 +1,6 @@
-import { scrollChanged } from '@shared/messages/scroll'
-import { createEndpoint } from '@shared/types/endpoints'
-import { ScrollEventType } from '@shared/types/scroll'
+import { scrollChanged } from '@shared/messages/scroll';
+import { createEndpoint } from '@shared/types/endpoints';
+import { ScrollEventType } from '@shared/types/scroll';
 
 type ScrollChangePayload = { type: ScrollEventType; value?: number }
 

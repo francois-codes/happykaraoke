@@ -1,5 +1,9 @@
-import { FC } from "react";
+import { useStore } from '@/store'
+import { FC } from 'react'
 
 export const BreakLine: FC = () => {
-  return <br />;
-};
+  const { chordsEnabled } = useStore()
+
+  const className = chordsEnabled ? 'line' : 'line-lyrics-only'
+  return <div className={className} />
+}
