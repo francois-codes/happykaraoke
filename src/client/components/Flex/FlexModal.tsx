@@ -3,6 +3,7 @@ import { useStore } from '@/store'
 import { getSongsList } from '@shared/endpoints/song'
 import { useEffect, useState } from 'react'
 import { Modal } from '../Modal'
+import { Button } from '../ui/button'
 
 type Songs = Awaited<ReturnType<typeof getSongsList.call>>['songs']
 
@@ -19,7 +20,6 @@ export function FlexModal() {
 
     setAllSongs(songs)
     setLoading(false)
-    setIsOpen(true)
   }
 
   useEffect(() => {
@@ -29,6 +29,7 @@ export function FlexModal() {
   return (
     <Modal
       title={`${allSongs.length} chansons dispo !`}
+      trigger={<Button variant="outline">Stats</Button>}
       desc="\o/"
       open={isOpen}
       modalSize="w-[60vw]"

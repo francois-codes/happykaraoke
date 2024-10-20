@@ -1,4 +1,3 @@
-import { FlexModal } from '@/components/Flex/FlexModal'
 import { CommandMenu } from '@/components/Menu/CommandMenu'
 import { Menu } from '@/components/Menu/Menu'
 import { SessionQueuePanel } from '@/components/Queue/SessionQueuePanel'
@@ -17,7 +16,6 @@ export function SessionScreen() {
         <div className="w-full relative">
           <SongComponent />
           {isAdmin && <SessionQueuePanel />}
-          {isAdmin && <FlexModal />}
         </div>
       </main>
     </Screen>

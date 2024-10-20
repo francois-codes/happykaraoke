@@ -1,14 +1,15 @@
-import { Button } from '../ui/button'
-import { IoSettingsOutline } from 'react-icons/io5'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { KEYS } from '@/lib/consts'
+import { useDarkTheme } from '@/lib/useDarkTheme'
+import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
+import { useDispatch, useStore } from '@/store'
+import { IoSettingsOutline } from 'react-icons/io5'
+import { FlexModal } from '../Flex/FlexModal'
 import { ToggleChords } from '../Settings/ToggleChords'
 import { ToggleDarkMode } from '../Settings/ToggleDarkMode'
-import { useDarkTheme } from '@/lib/useDarkTheme'
-import { useDispatch, useStore } from '@/store'
-import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
-import { KEYS } from '@/lib/consts'
-import { SessionLogs } from './SessionLogs'
+import { Button } from '../ui/button'
 import { CloseSession } from './CloseSession'
+import { SessionLogs } from './SessionLogs'
 import { SongsFolderSelector } from './SongsFolderSelector'
 import { SongsFolderSelectorButton } from './SongsFolderSelectorButton'
 
@@ -71,6 +72,7 @@ export function SettingsPanel() {
             <ToggleDarkMode {...theme} />
             {isAdmin && <SongsFolderSelectorButton />}
             {isAdmin && <SessionLogs />}
+            {isAdmin && <FlexModal />}
             {isAdmin && <CloseSession />}
           </div>
         </div>
