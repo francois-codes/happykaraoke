@@ -1,9 +1,10 @@
-import { Menu } from '@/components/Menu/Menu'
+import { FlexModal } from '@/components/Flex/FlexModal'
 import { CommandMenu } from '@/components/Menu/CommandMenu'
-import { SongComponent } from '@/components/SongComponents/SongComponent'
-import { Screen } from '@/components/Screen'
-import { useStore } from '@/store'
+import { Menu } from '@/components/Menu/Menu'
 import { SessionQueuePanel } from '@/components/Queue/SessionQueuePanel'
+import { Screen } from '@/components/Screen'
+import { SongComponent } from '@/components/SongComponents/SongComponent'
+import { useStore } from '@/store'
 
 export function SessionScreen() {
   const { isAdmin } = useStore()
@@ -16,6 +17,7 @@ export function SessionScreen() {
         <div className="w-full relative">
           <SongComponent />
           {isAdmin && <SessionQueuePanel />}
+          {isAdmin && <FlexModal />}
         </div>
       </main>
     </Screen>
