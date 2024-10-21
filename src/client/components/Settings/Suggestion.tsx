@@ -1,11 +1,12 @@
 import { useDispatch, useStore } from '@/store'
-import { Button } from '../ui/button'
 import { GiMicrophone } from 'react-icons/gi'
+import { Button } from '../ui/button'
 
 export function Suggestion() {
   const { suggestionOpen } = useStore()
   const dispatch = useDispatch()
 
+  const isMobile = window.innerWidth < 768
   return (
     <>
       <Button
@@ -13,7 +14,7 @@ export function Suggestion() {
           dispatch({ suggestionOpen: !suggestionOpen })
         }}
       >
-        <GiMicrophone size={24} />
+        <GiMicrophone size={isMobile ? 16 : 24} />
       </Button>
     </>
   )

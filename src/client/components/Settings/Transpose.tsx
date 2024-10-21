@@ -1,17 +1,17 @@
+import { KEYS } from '@/lib/consts'
+import { keyboardShortcut } from '@/lib/shortcut'
+import { useDispatch, useStore } from '@/store'
+import { setTranspo } from '@shared/endpoints/song'
 import {
   getTonalityIndex,
   getTonalityPreferredName,
   stepsBetweenKeys,
   tonalities
 } from '@shared/lib/transpose/tonality'
-import { Button } from '../ui/button'
-import { useDispatch, useStore } from '@/store'
-import { setTranspo } from '@shared/endpoints/song'
-import { IoMusicalNotesOutline } from 'react-icons/io5'
 import { useEffect, useMemo, useState } from 'react'
-import { keyboardShortcut } from '@/lib/shortcut'
-import { KEYS } from '@/lib/consts'
+import { IoMusicalNotesOutline } from 'react-icons/io5'
 import { Modal } from '../Modal'
+import { Button } from '../ui/button'
 
 function getVariant(tona: string, selected: string, song: string) {
   if (tona === selected) return 'default'
@@ -33,6 +33,8 @@ export function Transpose() {
   const [selectedTona, setSelectedTona] = useState(tonalities[0])
   const [currentTonaIndex, setCurrentTonaIndex] = useState(0)
   const dispatch = useDispatch()
+
+  const isMobile = window.innerWidth < 768
 
   function setOpen(open: boolean) {
     dispatch({ transpoOpen: open })
@@ -114,7 +116,7 @@ export function Transpose() {
     <Modal
       trigger={
         <Button>
-          <IoMusicalNotesOutline size={24} />
+          <IoMusicalNotesOutline size={isMobile ? 12 : 24} />
         </Button>
       }
       title="Choisissez la nouvelle tonalité"

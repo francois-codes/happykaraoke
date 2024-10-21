@@ -1,12 +1,12 @@
-import { FC } from 'react'
 import image from '@/assets/live-band-logo.png'
 import { useSong } from '@/lib/useSong'
 import { useStore } from '@/store'
-import { Transpose } from '../Settings/Transpose'
-import { SettingsPanel } from '../Settings/SettingsPanel'
+import { FC } from 'react'
 import { QrCode } from '../Settings/QrCode'
 import { SessionQueueButton } from '../Settings/SessionQueueButton'
+import { SettingsPanel } from '../Settings/SettingsPanel'
 import { Suggestion } from '../Settings/Suggestion'
+import { Transpose } from '../Settings/Transpose'
 
 export const Menu: FC = () => {
   const { currentSong, isAdmin } = useStore()
@@ -17,7 +17,7 @@ export const Menu: FC = () => {
     <header className="z-50 fixed flex items-center justify-between gap-8 w-full px-8 py-4 bg-background dark:bg-background">
       <div className="flex items-end align-start gap-2 md:gap-8">
         <img width={36} height={36} src={image} alt="happikaraoke" />
-        <h1 className="text-3xl font-bold overflow-hidden text-ellipsis whitespace-nowrap max-w-[calc(100vw-272px)] md:max-w-[calc(100vw-414px)]">
+        <h1 className="text-l sm:text-3xl font-bold overflow-hidden text-ellipsis whitespace-nowrap sm:max-w-[calc(100vw-272px)] md:max-w-[calc(100vw-414px)]">
           {song ? (
             <>
               {song.author} - {song.title}
