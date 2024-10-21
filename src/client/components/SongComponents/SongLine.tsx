@@ -1,10 +1,11 @@
-import { SongLine as SongLineType, LineType } from '@shared/types'
+import { LineType, SongLine as SongLineType } from '@shared/types'
 import { FC } from 'react'
+import { BreakLine } from './BreakLine'
+import { ChordsAndLyrics } from './ChordAndLyrics'
 import { ChordLine } from './ChordLine'
 import { Lyrics } from './Lyrics'
-import { BreakLine } from './BreakLine'
-import { Spacer } from './Spacer'
 import { Section } from './Section'
+import { Spacer } from './Spacer'
 import { TabLine } from './TabLine'
 
 interface SongLineProps extends SongLineType {}
@@ -25,8 +26,11 @@ export const SongLine: FC<SongLineProps> = ({ type, content }) => {
 
     case LineType.Tab:
       return <TabLine content={content} />
+    case LineType.ChordsAndLyrics:
+      return <ChordsAndLyrics content={content} />
 
     case LineType.Lyrics:
+      return <Lyrics content={content} />
     default:
       return <Lyrics content={content} />
   }

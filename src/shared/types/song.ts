@@ -13,7 +13,8 @@ export enum LineType {
   Section = 'section',
   Spacer = 'spacer',
   break = 'break',
-  Tab = 'tab'
+  Tab = 'tab',
+  ChordsAndLyrics = 'chordsAndLyrics'
 }
 
 export interface SongLine {

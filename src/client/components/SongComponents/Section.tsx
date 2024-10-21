@@ -8,7 +8,7 @@ export const Section: FC<SongLineProps> = ({ content }) => {
   return (
     <>
       <div className="line-break" />
-      <h3 className="song-section text-2xl line">
+      <h3 className="song-section ">
         <strong>{sectionTitle}</strong>
       </h3>
     </>

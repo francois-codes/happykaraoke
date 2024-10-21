@@ -72,11 +72,16 @@
 }
 
 .song-content {
-  font-size: 2.5vmin;
+  /* font-size: 2.5vmin; */
 }
 
 .song-section {
-  font-size: 4vmin;
+  font-size: 3.5vmin;
+  line-height: 2.2em;
+}
+
+.chord-height {
+  height: 4vmin;
 }
 
 .song-line {
@@ -102,4 +107,26 @@
   font-size: 2.5vmin;
   line-height: 4vmin;
   /* white-space: nowrap; */
+}
+
+.chords-and-lyrics {
+  position: relative;
+  font-size: 2.5vmin;
+  line-height: 8vmin;
+  white-space: pre-wrap;
+}
+
+.chords-and-lyrics.lyrics-only-font {
+  font-size: 3.8vmin;
+  line-height: 8vmin;
+}
+
+.chord-card {
+  white-space: nowrap;
+  display: inline-flex;
+  font-size: 0.8em;
+  font-weight: bold;
+  font-family: monospace;
+  position: absolute;
+  top: -1vmin;
 }

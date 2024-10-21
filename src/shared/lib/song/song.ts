@@ -1,8 +1,8 @@
-import { SongData, SongLine, LineType } from '../../types'
-import path from 'path'
-import { Chord } from './chord'
 import fs from 'fs'
+import path from 'path'
+import { LineType, SongData, SongLine } from '../../types'
 import { getSessionConfig } from '../session'
+import { Chord } from './chord'
 
 export class Song {
   filename: string
@@ -83,7 +83,7 @@ export class Song {
       }
     })
 
-    return songLines.map((line, index) => {
+    const parsedLines = songLines.map((line, index) => {
       if (
         line.type === LineType.break &&
         index > 1 &&
@@ -125,6 +125,8 @@ export class Song {
 
       return line
     })
+
+    return parsedLines
   }
 
   private hasChords(line: string) {

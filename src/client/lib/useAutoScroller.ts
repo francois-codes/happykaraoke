@@ -1,7 +1,7 @@
 'use client'
 import { useScrollContext } from '@/contexts/scroll'
 import { useStore } from '@/store'
-import { useRef, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 const SCROLL_INCREMENT = 0.1
 
