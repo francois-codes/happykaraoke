@@ -26,8 +26,6 @@
     --ring: 24.6 95% 53.1%;
     --radius: 0.5rem;
 
-    --song-height: calc(100vh - 152px);
-    --lines-per-screen: 25;
   }
  
   .dark {
@@ -73,31 +71,35 @@
   scrollbar-width: none;  /* Firefox */
 }
 
-
-
-.line {
-  height: calc(var(--song-height)/var(--lines-per-screen));
+.song-content {
+  font-size: 2.5vmin;
 }
 
-.line-chords-collapsed {
-  height: calc((var(--song-height)/var(--lines-per-screen))/2)
+.song-section {
+  font-size: 4vmin;
 }
 
-.line-lyrics-only {
-  height: calc(((var(--song-height)/var(--lines-per-screen))/2)*3)
+.song-line {
+  white-space: pre-wrap;
+}
+
+.line-break {
+  height: 4vmin;
 }
 
 .responsive-font {
-  font-size: calc(70vh / 30);
-  line-height: calc(var(--song-height)/var(--lines-per-screen));
+  font-size: 2.5vmin;
+  line-height: 4vmin;
 }
 
 .lyrics-only-font {
-  font-size: calc(70vh / 20);
-  line-height: calc((var(--song-height)/var(--lines-per-screen))*1.5);
+  white-space: pre-wrap;
+  font-size: 3.8vmin;
+  line-height: 8vmin;
 }
 
 .chord-font {
-  font-size: calc(70vh / 40);
-  line-height: calc(var(--song-height)/35);
+  font-size: 2.5vmin;
+  line-height: 4vmin;
+  /* white-space: nowrap; */
 }

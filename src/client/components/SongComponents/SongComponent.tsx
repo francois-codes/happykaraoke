@@ -1,14 +1,14 @@
-import { SongWrapper } from './SongWrapper'
-import { SongLine } from './SongLine'
+import { useAutoScroller } from '@/lib/useAutoScroller'
 import { useSong } from '@/lib/useSong'
 import { useDispatch, useStore } from '@/store'
 import { socket } from '@/utils/socket'
 import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/song'
+import { NextInQueueIndicator } from '../Queue/NextInQueueIndicator'
 import { EmptySong } from './EmptySong'
+import { SongLine } from './SongLine'
+import { SongWrapper } from './SongWrapper'
 import { useSongKeyboardShortcuts } from './useSongKeyboardShortcuts'
 import { useSongScroll } from './useSongScroll'
-import { useAutoScroller } from '@/lib/useAutoScroller'
-import { NextInQueueIndicator } from '../Queue/NextInQueueIndicator'
 
 export const SongComponent = () => {
   const { currentSong } = useStore()

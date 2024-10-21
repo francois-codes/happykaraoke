@@ -7,10 +7,6 @@ import { scrollChanged } from '@shared/messages/scroll'
 import { ScrollEventType } from '@shared/types/scroll'
 import { useCallback, useEffect } from 'react'
 
-const getLineHeight = () => {
-  return (window.innerHeight - 152) / 25
-}
-
 export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const { isAdmin, currentSong } = useStore()
   const scrollContainerRef = useScrollContext()
@@ -39,7 +35,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
           return scroller.scrollToTop()
         case ScrollEventType.POSITION:
           if (!Number.isNaN(top)) {
-            return scroller.scrollTo(top * getLineHeight())
+            return scroller.scrollTo(top)
           }
       }
     },
@@ -52,7 +48,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     if (!Number.isNaN(scrollTarget)) {
       setScroll.call({
         type: ScrollEventType.POSITION,
-        value: scrollTarget / getLineHeight()
+        value: scrollTarget
       })
     }
   }, [])

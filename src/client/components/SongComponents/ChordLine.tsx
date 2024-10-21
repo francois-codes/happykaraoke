@@ -13,7 +13,7 @@ export const ChordLine: FC<SongLineProps> = ({ content }) => {
   if (!chordsEnabled) return <div className="line-chords-collapsed" />
 
   return (
-    <pre className={`line flex items-center pt-2 ${className}`}>
+    <pre className={`line flex items-center ${className}`}>
       {chordLine.split(/(\s+)|_/g).map((word, id) => {
         if (!word) return ' '
         const chordLabel = word.replace('|', '')
