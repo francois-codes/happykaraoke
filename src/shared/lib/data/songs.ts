@@ -1,7 +1,8 @@
+import { sessionLog } from '@shared/db/schema'
 import { readdirSync } from 'fs'
-import { Song } from '../song/song'
-import { getSessionConfig } from '../session'
 import { Search } from '../search'
+import { getSessionConfig } from '../session'
+import { Song } from '../song/song'
 
 const getSongFiles = () => {
   try {
@@ -13,7 +14,7 @@ const getSongFiles = () => {
 
 const EXCLUDED_FILES = ['.DS_Store', '_old', '.', '..', 'Icon']
 
-export function getAllSongs() {
+export function getAllSongs(opts: { withKey?: boolean } = { withKey: false }) {
   return getSongFiles()
     .flatMap((file) => {
       if (EXCLUDED_FILES.includes(file)) return []
@@ -28,7 +29,13 @@ export function getAllSongs() {
         return []
       }
     })
-    .map(({ author, title, tags, filename }) => ({ author, title, tags, filename }))
+    .map(({ author, key, title, tags, filename }) => {
+      if (opts.withKey) {
+        return { author, key, title, tags, filename }
+      }
+
+      return { author, title, tags, filename }
+    })
     .sort((a, b) => {
       return (
         a.author.localeCompare(b.author, 'fr', { ignorePunctuation: true }) ||
@@ -40,4 +47,20 @@ export function getAllSongs() {
 export function searchSong(query: string, allSongs = getAllSongs()) {
   const search = new Search(query, allSongs)
   return search.execute()
+}
+
+export async function getSongStats() {
+  const { db } = await import('@shared/db')
+  const { sql } = await import('drizzle-orm')
+
+  const songCounts = await db
+    .select({
+      songTitle: sessionLog.song,
+      count: sql<number>`count(*)`.as('count')
+    })
+    .from(sessionLog)
+    .groupBy(sessionLog.song)
+    .orderBy(sql`count(*) DESC`)
+
+  return songCounts
 }

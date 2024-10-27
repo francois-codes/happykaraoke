@@ -1,4 +1,4 @@
-import { getAllSongs } from '@shared/lib/data/songs'
+import { getAllSongs, getSongStats } from '@shared/lib/data/songs'
 import { addSessionLog, setSessionConfig } from '@shared/lib/session'
 import { Song } from '@shared/lib/song/song'
 import { songChanged, transpoChanged } from '@shared/messages/song'
@@ -60,5 +60,28 @@ export const setTranspo = createEndpoint<{ transpo: number }, unknown>({
     transpoChanged.server.emit({ transpo })
 
     res.sendStatus(200)
+  }
+})
+
+export const getCSVData = createEndpoint<void, { csv: string }>({
+  method: 'get',
+  url: '/csv',
+  handler: async (_, res) => {
+    const songs = getAllSongs({ withKey: true })
+
+    const songStats = await getSongStats()
+    const statsMap = new Map<string, number>(
+      songStats.map(({ songTitle, count }) => [songTitle.toLowerCase(), count])
+    )
+
+    const csv = [
+      ['artiste', 'titre', 'key', 'tags', 'play count'].join(';'),
+      ...songs.map(
+        ({ title, author, key, tags }) =>
+          `${author};${title};${key};${tags.join(',')};${statsMap.get(`${author.toLowerCase()} - ${title.toLowerCase()}`) || 0}`
+      )
+    ].join('\n')
+
+    res.status(200).json({ csv })
   }
 })
