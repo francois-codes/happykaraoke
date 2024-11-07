@@ -12,6 +12,7 @@ import { CloseSession } from './CloseSession'
 import { SessionLogs } from './SessionLogs'
 import { SongsFolderSelector } from './SongsFolderSelector'
 import { SongsFolderSelectorButton } from './SongsFolderSelectorButton'
+import { ToggleGuitaristMode } from './ToggleGuitaristMode'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
@@ -69,6 +70,7 @@ export function SettingsPanel() {
           </div>
           <div className="grid gap-4">
             <ToggleChords />
+            <ToggleGuitaristMode />
             <ToggleDarkMode {...theme} />
             {isAdmin && <SongsFolderSelectorButton />}
             {isAdmin && <SessionLogs />}

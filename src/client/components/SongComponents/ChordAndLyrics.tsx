@@ -1,12 +1,20 @@
-import { useStore } from '@/store';
-import { Fragment } from 'react';
+import { useStore } from '@/store'
+import { Fragment } from 'react'
+
+function simplifyChord(content: string, guitaristMode: boolean) {
+  if (!guitaristMode) return content
+
+  const [chord] = content.split('/')
+
+  return chord
+}
 
 export function ChordsAndLyrics({
   content
 }: {
   content: (string | { index: number; content: string })[]
 }) {
-  const { chordsEnabled } = useStore()
+  const { chordsEnabled, guitaristMode } = useStore()
 
   return (
     <div className="block">
@@ -17,7 +25,7 @@ export function ChordsAndLyrics({
           ) : chordsEnabled ? (
             <span className="chord-card chord-font" key={index}>
               <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
-                {inner.content}
+                {simplifyChord(inner.content, guitaristMode)}
               </span>
             </span>
           ) : (

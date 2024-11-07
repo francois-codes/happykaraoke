@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, Dispatch, createContext, useContext, useReducer } from 'react'
+import { Dispatch, FC, PropsWithChildren, createContext, useContext, useReducer } from 'react'
 
 interface Store {
   currentSong?: string | null
@@ -14,6 +14,7 @@ interface Store {
   suggestionOpen: boolean
   qrCodeOpen: boolean
   settingsOpen: boolean
+  guitaristMode: boolean
 }
 
 const initialStore: Store = {
@@ -25,7 +26,8 @@ const initialStore: Store = {
   searchOpen: false,
   suggestionOpen: false,
   qrCodeOpen: false,
-  settingsOpen: false
+  settingsOpen: false,
+  guitaristMode: false
 }
 
 const StoreContext = createContext<Store>(initialStore)
