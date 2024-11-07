@@ -1,8 +1,7 @@
 import { useStore } from '@/store'
-import { Chord } from '@shared/lib/song/chord'
 import { SongLineProps } from '@shared/types'
 import { FC } from 'react'
-import { ChordLabel } from './Chord'
+import { ChordOrWord } from './ChordOrWord'
 
 export const ChordLine: FC<SongLineProps> = ({ content }) => {
   const hasPrefix = content.startsWith('<')
@@ -16,16 +15,7 @@ export const ChordLine: FC<SongLineProps> = ({ content }) => {
     <pre className={`line flex items-center chord-height ${className}`}>
       {chordLine.split(/(\s+)|_/g).map((word, id) => {
         if (!word) return ' '
-        const chordLabel = word.replace('|', '')
-        const isChord = Chord.isChord(chordLabel)
-        const hasBar = word.startsWith('|')
-
-        return (
-          <span key={id} className="chord-font font-mono">
-            {isChord && hasBar && '|'}
-            {isChord ? <ChordLabel label={chordLabel} /> : word}
-          </span>
-        )
+        return <ChordOrWord content={word} key={id} />
       })}
     </pre>
   )

@@ -133,7 +133,7 @@ export class Song {
     const trimmedLine = line.trim()
 
     return (
-      Chord.CHORD_REGEX.test(line) ||
+      Chord.CHORD_REGEX.test(line.replace('_', ' | ')) ||
       Chord.CHORD_STARTERS.some((str) => trimmedLine.startsWith(str))
     )
   }

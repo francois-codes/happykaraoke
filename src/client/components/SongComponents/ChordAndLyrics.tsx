@@ -1,5 +1,6 @@
-import { useStore } from '@/store';
-import { Fragment } from 'react';
+import { useStore } from '@/store'
+import { Fragment } from 'react'
+import { ChordOrWord } from './ChordOrWord'
 
 export function ChordsAndLyrics({
   content
@@ -19,7 +20,7 @@ export function ChordsAndLyrics({
               className="chord-card chord-font bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]"
               key={index}
             >
-              {inner.content}
+              <ChordOrWord content={inner.content} />
             </span>
           ) : (
             <Fragment key={index}></Fragment>
