@@ -107,7 +107,15 @@ export const SongComponent = () => {
       const nextLine = nextIndex < song.lines.length ? song.lines[nextIndex] : null
 
       if (line.type === LineType.Chords && nextLine?.type === LineType.Lyrics) {
-        const newLine = injectChordsIntoLyrics(line.content, nextLine.content)
+        const lyricsLine =
+          nextLine.content.length > line.content.length * 0.8
+            ? nextLine.content
+            : `${nextLine.content}${new Array(line.content.length - nextLine.content.length)
+                .fill(' ')
+                .map(() => '        ')
+                .join('')}`
+
+        const newLine = injectChordsIntoLyrics(line.content, lyricsLine)
 
         result.push({
           type: LineType.ChordsAndLyrics,
