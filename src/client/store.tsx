@@ -15,6 +15,7 @@ interface Store {
   qrCodeOpen: boolean
   settingsOpen: boolean
   guitaristMode: boolean
+  drummerMode: boolean
 }
 
 const initialStore: Store = {
@@ -27,7 +28,8 @@ const initialStore: Store = {
   suggestionOpen: false,
   qrCodeOpen: false,
   settingsOpen: false,
-  guitaristMode: false
+  guitaristMode: false,
+  drummerMode: false
 }
 
 const StoreContext = createContext<Store>(initialStore)

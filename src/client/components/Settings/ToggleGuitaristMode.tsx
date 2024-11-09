@@ -14,7 +14,7 @@ export const ToggleGuitaristMode: FC = () => {
   return (
     <div className="flex items-center space-x-2">
       <Switch id="airplane-mode" checked={guitaristMode} onClick={toggleGuitaristMode} />
-      <Label htmlFor="airplane-mode">Mode Guitariste</Label>
+      <Label htmlFor="airplane-mode">Mode Guitariste 🎸</Label>
     </div>
   )
 }

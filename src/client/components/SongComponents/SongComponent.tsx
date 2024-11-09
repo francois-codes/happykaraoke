@@ -67,7 +67,7 @@ function injectChordsIntoLyrics(chordString: string, lyricsString: string) {
 }
 
 export const SongComponent = () => {
-  const { currentSong } = useStore()
+  const { currentSong, drummerMode } = useStore()
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
   const scroller = useAutoScroller()
@@ -106,6 +106,14 @@ export const SongComponent = () => {
       const nextIndex = index + 1
       const nextLine = nextIndex < song.lines.length ? song.lines[nextIndex] : null
 
+      if (drummerMode && line.type === LineType.Chords) {
+        result.push({
+          type: LineType.Chords,
+          content: 'Boum Tchac Boum Boum Tchac | Boum Tchac  Boum Boum Tchac '
+        })
+        return
+      }
+
       if (line.type === LineType.Chords && nextLine?.type === LineType.Lyrics) {
         const lyricsLine =
           nextLine.content.length > line.content.length * 0.8
@@ -129,9 +137,10 @@ export const SongComponent = () => {
     })
 
     return result
-  }, [song?.title])
+  }, [song?.title, drummerMode])
 
   if (!song || !currentSong) return <EmptySong />
+
   return (
     <>
       <SongWrapper>
