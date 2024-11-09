@@ -2,7 +2,7 @@ import { useStore } from '@/store'
 import { Fragment } from 'react'
 
 function simplifyChord(content: string, guitaristMode: boolean) {
-  if (!guitaristMode) return content
+  if (!guitaristMode) return content.replace('_', ' ')
 
   const [chord] = content.split('/')
 

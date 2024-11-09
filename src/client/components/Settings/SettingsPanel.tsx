@@ -14,6 +14,7 @@ import { SongsFolderSelector } from './SongsFolderSelector'
 import { SongsFolderSelectorButton } from './SongsFolderSelectorButton'
 import { ToggleDrummerMode } from './ToggleDrummerMode'
 import { ToggleGuitaristMode } from './ToggleGuitaristMode'
+import { ToggleMusicianScroll } from './ToggleMusicianScroll'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
@@ -71,6 +72,7 @@ export function SettingsPanel() {
           </div>
           <div className="grid gap-4">
             <ToggleChords />
+            <ToggleMusicianScroll />
             <ToggleGuitaristMode />
             <ToggleDrummerMode />
             <ToggleDarkMode {...theme} />
