@@ -16,9 +16,11 @@ const getLineHeight = () => {
 export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const { isAdmin, currentSong, musicienScroll } = useStore()
   const scrollContainerRef = useScrollContext()
+  const targetLineRef = useRef<HTMLDivElement | null>(null)
+  const HEADER_HEIGHT = 68
 
   const currentScrollRef = useRef<number | null>(0)
-  const { findLastVisibleSection } = useSongSections()
+  const { resolveSections } = useSongSections()
 
   scrollChanged.client.useMessage(
     socket,
@@ -29,6 +31,15 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
 
       const top = Number(value)
       const scrollTarget = top * getLineHeight()
+
+      if (targetLineRef.current && type === ScrollEventType.POSITION) {
+        const scrollContainer = scrollContainerRef.current
+        if (scrollContainer) {
+          const containerRect = scrollContainer.getBoundingClientRect()
+          const relativePosition = scrollTarget - scrollContainer.scrollTop
+          targetLineRef.current.style.top = `${containerRect.top + relativePosition + HEADER_HEIGHT}px`
+        }
+      }
 
       switch (type) {
         case ScrollEventType.START:
@@ -48,17 +59,22 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
         case ScrollEventType.POSITION: {
           if (musicienScroll) {
             const currentScroll = currentScrollRef.current ?? 0
-            const lastVisibleSection = findLastVisibleSection(currentScroll)
-            const threshold = window.innerHeight * 0.6
+            const threshold = window.innerHeight * 0.55
+            
+            // For forward scrolling, use section-based approach
+            if (scrollTarget > currentScroll &&  scrollTarget - currentScroll > threshold) {
+              const sections = resolveSections() ?? []
+              const targetSection = sections.find((section, index) => {
+                const nextSection = sections[index + 1] ?? Infinity
+                return scrollTarget >= section && scrollTarget < nextSection
+              }) ?? sections[0]
 
-            console.log({ scrollTarget, currentScroll, lastVisibleSection })
-
-            if (scrollTarget - currentScroll > threshold) {
-              currentScrollRef.current = lastVisibleSection
-              scroller.scrollTo(lastVisibleSection)
+              currentScrollRef.current = targetSection
+              scroller.scrollTo(targetSection)
+              return 
             }
 
-            return
+            if (scrollTarget > currentScroll) return
           }
 
           currentScrollRef.current = scrollTarget
@@ -98,4 +114,28 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       scroller.scrollToTop()
     }
   }, [currentSong])
+
+  useEffect(() => {
+    if (!musicienScroll) return
+
+    // Create and style the target line
+    const targetLine = document.createElement('div')
+    targetLine.style.cssText = `
+      position: fixed;
+      left: 0;
+      right: 0;
+      height: 1px;
+      border-top: 1px dashed red;
+      pointer-events: none;
+      z-index: 1000;
+    `
+    document.body.appendChild(targetLine)
+    targetLineRef.current = targetLine
+
+    // Cleanup
+    return () => {
+      targetLine.remove()
+      targetLineRef.current = null
+    }
+  }, [musicienScroll])
 }
