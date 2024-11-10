@@ -5,12 +5,12 @@ import { socket } from '@/utils/socket'
 import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/song'
 import { LineType } from '@shared/types'
 import { useMemo } from 'react'
+import { useSongKeyboardShortcuts } from '../../lib/useSongKeyboardShortcuts'
+import { useSongScroll } from '../../lib/useSongScroll'
 import { NextInQueueIndicator } from '../Queue/NextInQueueIndicator'
 import { EmptySong } from './EmptySong'
 import { SongLine } from './SongLine'
 import { SongWrapper } from './SongWrapper'
-import { useSongKeyboardShortcuts } from './useSongKeyboardShortcuts'
-import { useSongScroll } from './useSongScroll'
 
 function stringToIndexedObjects(str) {
   const result: { index: number; content: string }[] = []

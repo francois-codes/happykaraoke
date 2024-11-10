@@ -6,6 +6,7 @@ import { setScroll } from '@shared/endpoints/scroll'
 import { scrollChanged } from '@shared/messages/scroll'
 import { ScrollEventType } from '@shared/types/scroll'
 import { useCallback, useEffect, useRef } from 'react'
+import { useSongSections } from './useSongSections'
 
 const getLineHeight = () => {
   const { innerHeight, innerWidth } = window
@@ -17,6 +18,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const scrollContainerRef = useScrollContext()
 
   const currentScrollRef = useRef<number | null>(0)
+  const { findLastVisibleSection } = useSongSections()
 
   scrollChanged.client.useMessage(
     socket,
@@ -30,39 +32,39 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
 
       switch (type) {
         case ScrollEventType.START:
-          currentScrollRef.current = scrollTarget
           return scroller.startScrolling()
         case ScrollEventType.STOP:
-          currentScrollRef.current = scrollTarget
           return scroller.stopScrolling()
         case ScrollEventType.TOGGLE:
           if (musicienScroll) return
-          currentScrollRef.current = scrollTarget
           return scroller.toggleScrolling()
         case ScrollEventType.FASTER:
-          currentScrollRef.current = scrollTarget
           return scroller.increaseScrollSpeed()
         case ScrollEventType.SLOWER:
-          currentScrollRef.current = scrollTarget
           return scroller.decreaseScrollSpeed()
         case ScrollEventType.TOP:
-          currentScrollRef.current = scrollTarget
+          currentScrollRef.current = 0
           return scroller.scrollToTop()
         case ScrollEventType.POSITION: {
           if (musicienScroll) {
             const currentScroll = currentScrollRef.current ?? 0
-            if (
-              Math.round(scrollTarget) >= Math.round(currentScroll) &&
-              scrollTarget - currentScroll < window.innerHeight / 2
-            ) {
-              return
+            const lastVisibleSection = findLastVisibleSection(currentScroll)
+            const threshold = window.innerHeight * 0.6
+
+            console.log({ scrollTarget, currentScroll, lastVisibleSection })
+
+            if (scrollTarget - currentScroll > threshold) {
+              currentScrollRef.current = lastVisibleSection
+              scroller.scrollTo(lastVisibleSection)
             }
+
+            return
           }
 
           currentScrollRef.current = scrollTarget
 
           if (!Number.isNaN(top)) {
-            return scroller.scrollTo(top * getLineHeight())
+            return scroller.scrollTo(scrollTarget)
           }
         }
       }
