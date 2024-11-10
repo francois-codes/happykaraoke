@@ -1,9 +1,9 @@
-import { useDispatch, useStore } from '@/store'
-import { ScrollEventType } from '@shared/types/scroll'
+import { KEYS } from '@/lib/consts'
 import { useAutoScroller } from '@/lib/useAutoScroller'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
-import { KEYS } from '@/lib/consts'
+import { useDispatch, useStore } from '@/store'
 import { setScroll } from '@shared/endpoints/scroll'
+import { ScrollEventType } from '@shared/types/scroll'
 
 export function useSongKeyboardShortcuts({
   scroller,
@@ -52,6 +52,7 @@ export function useSongKeyboardShortcuts({
         return !isAdmin || searchOpen
       },
       handler: () => {
+        console.log({ scroller})
         scroller.toggleScrolling()
 
         setScroll.call({

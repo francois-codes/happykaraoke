@@ -2,6 +2,7 @@
 import { useScrollContext } from '@/contexts/scroll'
 import { useStore } from '@/store'
 import { useCallback, useEffect, useRef } from 'react'
+import { useSongSections } from './useSongSections'
 
 const SCROLL_INCREMENT = 0.1
 
@@ -13,11 +14,13 @@ export const useAutoScroller = () => {
   const animationFrameRef = useRef<Nullable<number>>(null)
   const sectionsRef = useRef<Nullable<number[]>>(null)
   const sectionIndexRef = useRef(0)
+  const { resolveSections } = useSongSections()
 
   const scrollStep = useCallback(() => {
     if (scrollContainerRef.current) {
       const position = scrollPosition.current ?? scrollContainerRef.current.scrollTop ?? 0
       const top = position + (scrollSpeedRef.current ?? 0.1)
+
       if (top >= scrollContainerRef.current.scrollHeight - window.innerHeight - 200) {
         stopScrolling()
         return
@@ -79,18 +82,6 @@ export const useAutoScroller = () => {
     sectionIndexRef.current = 0
     if (animationFrameRef.current) startScrolling()
   }, [startScrolling, stopScrolling])
-
-  function resolveSections() {
-    if (!sectionsRef.current?.length) {
-      const sections = Array.from(document.querySelectorAll('.song-section')).map(
-        // @ts-expect-error wtf??
-        (child) => child.offsetTop
-      )
-      sectionsRef.current = sections
-    }
-
-    return sectionsRef.current
-  }
 
   const nextSection = useCallback(() => {
     const sections = resolveSections()

@@ -17,7 +17,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const { isAdmin, currentSong, musicienScroll } = useStore()
   const scrollContainerRef = useScrollContext()
   const targetLineRef = useRef<HTMLDivElement | null>(null)
-  const HEADER_HEIGHT = 68
+
 
   const currentScrollRef = useRef<number | null>(0)
   const { resolveSections } = useSongSections()
@@ -32,12 +32,14 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       const top = Number(value)
       const scrollTarget = top * getLineHeight()
 
-      if (targetLineRef.current && type === ScrollEventType.POSITION) {
+      if (targetLineRef.current && type === ScrollEventType.POSITION && currentScrollRef.current !== null) {
         const scrollContainer = scrollContainerRef.current
         if (scrollContainer) {
           const containerRect = scrollContainer.getBoundingClientRect()
-          const relativePosition = scrollTarget - scrollContainer.scrollTop
-          targetLineRef.current.style.top = `${containerRect.top + relativePosition + HEADER_HEIGHT}px`
+          // Calculate where the line should be relative to the viewport
+          // by adding the container's top offset and the relative scroll position
+          const linePosition = containerRect.top + scrollTarget - currentScrollRef.current
+          targetLineRef.current.style.top = `${linePosition}px`
         }
       }
 
@@ -57,10 +59,12 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
           currentScrollRef.current = 0
           return scroller.scrollToTop()
         case ScrollEventType.POSITION: {
+          
           if (musicienScroll) {
+
             const currentScroll = currentScrollRef.current ?? 0
-            const threshold = (window.innerHeight * 0.40) - HEADER_HEIGHT
-            
+            const threshold = (window.innerHeight * 0.35)
+
             // For forward scrolling, use section-based approach
             if (scrollTarget > currentScroll &&  scrollTarget - currentScroll > threshold) {
               const sections = resolveSections() ?? []
@@ -94,7 +98,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     if (!Number.isNaN(scrollTarget)) {
       setScroll.call({
         type: ScrollEventType.POSITION,
-        value: scrollTarget / getLineHeight()
+        value: (scrollTarget) / getLineHeight()
       })
     }
   }, [])
