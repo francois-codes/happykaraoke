@@ -11,7 +11,7 @@ export function SessionScreen() {
   return (
     <Screen>
       <Menu />
-      <main className="flex min-h-screen flex-col items-start justify-between mt-16 p-8">
+      <main className="flex min-h-screen flex-col items-start justify-between mt-16 py-8 px-4 md:px-8">
         <CommandMenu />
         <div className="w-full relative">
           <SongComponent />

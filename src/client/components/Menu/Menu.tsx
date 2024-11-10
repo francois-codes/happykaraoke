@@ -14,7 +14,7 @@ export const Menu: FC = () => {
   const { song } = useSong(currentSong ?? undefined)
 
   return (
-    <header className="z-50 fixed flex items-center justify-between gap-8 w-full px-8 py-4 bg-background dark:bg-background">
+    <header className="z-50 fixed flex items-center justify-between gap-8 w-full px-4 md:px-8 py-4 bg-background dark:bg-background">
       <div className="flex items-end align-start gap-2 md:gap-8">
         <img width={36} height={36} src={image} alt="happikaraoke" />
         <h1 className="text-l sm:text-3xl font-bold overflow-hidden text-ellipsis whitespace-nowrap max-w-[calc(100vw-200px)] sm:max-w-[calc(100vw-272px)] md:max-w-[calc(100vw-414px)]">
