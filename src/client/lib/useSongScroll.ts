@@ -59,7 +59,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
         case ScrollEventType.POSITION: {
           if (musicienScroll) {
             const currentScroll = currentScrollRef.current ?? 0
-            const threshold = window.innerHeight * 0.55
+            const threshold = (window.innerHeight * 0.40) - HEADER_HEIGHT
             
             // For forward scrolling, use section-based approach
             if (scrollTarget > currentScroll &&  scrollTarget - currentScroll > threshold) {
