@@ -18,7 +18,6 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const scrollContainerRef = useScrollContext()
   const targetLineRef = useRef<HTMLDivElement | null>(null)
 
-
   const currentScrollRef = useRef<number | null>(0)
   const { resolveSections } = useSongSections()
 
@@ -32,7 +31,11 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       const top = Number(value)
       const scrollTarget = top * getLineHeight()
 
-      if (targetLineRef.current && type === ScrollEventType.POSITION && currentScrollRef.current !== null) {
+      if (
+        targetLineRef.current &&
+        type === ScrollEventType.POSITION &&
+        currentScrollRef.current !== null
+      ) {
         const scrollContainer = scrollContainerRef.current
         if (scrollContainer) {
           const containerRect = scrollContainer.getBoundingClientRect()
@@ -59,23 +62,22 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
           currentScrollRef.current = 0
           return scroller.scrollToTop()
         case ScrollEventType.POSITION: {
-          
           if (musicienScroll) {
-
             const currentScroll = currentScrollRef.current ?? 0
-            const threshold = (window.innerHeight * 0.35)
+            const threshold = window.innerHeight * 0.35
 
             // For forward scrolling, use section-based approach
-            if (scrollTarget > currentScroll &&  scrollTarget - currentScroll > threshold) {
+            if (scrollTarget > currentScroll && scrollTarget - currentScroll > threshold) {
               const sections = resolveSections() ?? []
-              const targetSection = sections.find((section, index) => {
-                const nextSection = sections[index + 1] ?? Infinity
-                return scrollTarget >= section && scrollTarget < nextSection
-              }) ?? sections[0]
+              const targetSection =
+                sections.find((section, index) => {
+                  const nextSection = sections[index + 1] ?? Infinity
+                  return scrollTarget >= section && scrollTarget < nextSection
+                }) ?? sections[0]
 
               currentScrollRef.current = targetSection
               scroller.scrollTo(targetSection)
-              return 
+              return
             }
 
             if (scrollTarget > currentScroll) return
@@ -98,7 +100,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     if (!Number.isNaN(scrollTarget)) {
       setScroll.call({
         type: ScrollEventType.POSITION,
-        value: (scrollTarget) / getLineHeight()
+        value: scrollTarget / getLineHeight()
       })
     }
   }, [])
