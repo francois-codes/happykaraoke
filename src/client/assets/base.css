@@ -110,6 +110,7 @@
 }
 
 .chords-and-lyrics {
+  font-family: monospace;
   position: relative;
   font-size: 2.5vmin;
   line-height: 8vmin;

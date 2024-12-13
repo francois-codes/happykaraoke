@@ -40,11 +40,19 @@ function stringToIndexedObjects(str) {
     })
   }
 
+  console.log({ result })
+
   return result
 }
 
 function injectChordsIntoLyrics(chordString: string, lyricsString: string) {
   const chordObjects = stringToIndexedObjects(chordString)
+  
+  // Find the maximum chord index to determine if we need padding
+  const maxChordIndex = Math.max(...chordObjects.map(chord => chord.index))
+  
+  // If we have chords beyond the lyrics length, pad the lyrics with spaces
+  const paddedLyricsString = lyricsString.padEnd(maxChordIndex + 1, ' ')
 
   // Now, inject these chord objects into the lyrics string
   const result: (string | { index: number; content: string })[] = []
@@ -52,15 +60,15 @@ function injectChordsIntoLyrics(chordString: string, lyricsString: string) {
 
   for (const chord of chordObjects) {
     if (chord.index > lastIndex) {
-      result.push(lyricsString.substring(lastIndex, chord.index))
+      result.push(paddedLyricsString.substring(lastIndex, chord.index))
     }
     result.push(chord)
     lastIndex = chord.index
   }
 
   // Add any remaining lyrics after the last chord
-  if (lastIndex < lyricsString.length) {
-    result.push(lyricsString.substring(lastIndex))
+  if (lastIndex < paddedLyricsString.length) {
+    result.push(paddedLyricsString.substring(lastIndex))
   }
 
   return result
