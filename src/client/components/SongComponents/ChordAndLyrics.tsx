@@ -1,5 +1,6 @@
 import { useStore } from '@/store'
 import { Fragment } from 'react'
+import { ChordLabel } from './Chord'
 
 function simplifyChord(content: string, guitaristMode: boolean) {
   if (!guitaristMode) return content.replace('_', ' ')
@@ -25,7 +26,7 @@ export function ChordsAndLyrics({
           ) : chordsEnabled ? (
             <span className="chord-card chord-font" key={index}>
               <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
-                {simplifyChord(inner.content, guitaristMode)}
+                <ChordLabel label={simplifyChord(inner.content, guitaristMode)} />
               </span>
             </span>
           ) : (
