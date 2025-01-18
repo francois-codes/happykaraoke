@@ -1,5 +1,5 @@
 import { useStore } from '@/store'
-import { Fragment } from 'react'
+import { Fragment, useCallback } from 'react'
 import { ChordLabel } from './Chord'
 
 function simplifyChord(content: string, guitaristMode: boolean) {
@@ -17,6 +17,11 @@ export function ChordsAndLyrics({
 }) {
   const { chordsEnabled, guitaristMode } = useStore()
 
+  const chordLabel = useCallback(
+    (content: string) => simplifyChord(content, guitaristMode),
+    [guitaristMode]
+  )
+
   return (
     <div className="block">
       <div className={`chords-and-lyrics ${chordsEnabled ? '' : 'lyrics-only-font'}`}>
@@ -25,9 +30,13 @@ export function ChordsAndLyrics({
             <Fragment key={index}>{inner}</Fragment>
           ) : chordsEnabled ? (
             <span className="chord-card chord-font" key={index}>
-              <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
-                <ChordLabel label={simplifyChord(inner.content, guitaristMode)} />
-              </span>
+              {inner.content === '|' ? (
+                <>{inner.content}</>
+              ) : (
+                <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
+                  <ChordLabel label={chordLabel(inner.content)} />
+                </span>
+              )}
             </span>
           ) : (
             <Fragment key={index}></Fragment>
