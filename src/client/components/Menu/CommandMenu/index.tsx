@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import {
   CommandDialog,
   CommandEmpty,
@@ -7,17 +7,17 @@ import {
   CommandList
 } from '../../ui/command'
 
-import { CommandLoading } from 'cmdk'
-import { useDispatch, useStore } from '@/store'
-import { changeSong, getSongsList } from '@shared/endpoints/song'
-import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
-import { KEYS } from '@/lib/consts'
-import { searchSong } from '@shared/lib/data/songs'
 import { Modal } from '@/components/Modal'
 import { Button } from '@/components/ui/button'
-import { addToQueue, getQueue } from '@shared/endpoints/queue'
-import { queueChanged } from '@shared/messages/queue'
+import { KEYS } from '@/lib/consts'
+import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
+import { useDispatch, useStore } from '@/store'
 import { socket } from '@/utils/socket'
+import { addToQueue, getQueue } from '@shared/endpoints/queue'
+import { changeSong, getSongsList } from '@shared/endpoints/song'
+import { searchSong } from '@shared/lib/data/songs'
+import { queueChanged } from '@shared/messages/queue'
+import { CommandLoading } from 'cmdk'
 
 type Songs = Awaited<ReturnType<typeof getSongsList.call>>['songs']
 
@@ -120,11 +120,15 @@ export function CommandMenu() {
       key: [KEYS.Enter],
       preventDefault: true,
       disable: () => !selectedSong,
-      handler: () => {
-        selectSong()
+      handler: (event: KeyboardEvent) => {
+        if (event.metaKey) {
+          queueSong()
+        } else {
+          selectSong()
+        }
       }
     },
-    [selectSong, selectedSong]
+    [selectSong, selectedSong, queueSong]
   )
 
   const filteredSongs = useMemo(() => {
@@ -168,8 +172,9 @@ export function CommandMenu() {
             setSelectedSong(null)
           }}
         >
-          <Button onClick={selectSong}>Lancer la chanson</Button>
-          <Button onClick={queueSong}>Ajouter en file d&apos;attente</Button>
+          <h2>{selectedSong}</h2>
+          <Button onClick={selectSong}>Lancer la chanson (⏎)</Button>
+          <Button onClick={queueSong}>Ajouter en file d&apos;attente (⌘ + ⏎)</Button>
         </Modal>
       ) : (
         <Modal
