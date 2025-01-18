@@ -4,7 +4,7 @@ import { useDispatch, useStore } from '@/store'
 import { socket } from '@/utils/socket'
 import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/song'
 import { LineType } from '@shared/types'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
 import { useSongKeyboardShortcuts } from '../../lib/useSongKeyboardShortcuts'
 import { useSongScroll } from '../../lib/useSongScroll'
 import { NextInQueueIndicator } from '../Queue/NextInQueueIndicator'
@@ -77,6 +77,7 @@ export const SongComponent = () => {
   const dispatch = useDispatch()
   const { song, reload } = useSong(currentSong ?? undefined)
   const scroller = useAutoScroller()
+  const reloadKey = useRef(0)
 
   useSongScroll(scroller)
 
@@ -98,6 +99,7 @@ export const SongComponent = () => {
     ({ filename }) => {
       if (filename.replace('.txt', '') === song?.filename) {
         reload()
+        reloadKey.current++
       }
     },
     [song, reload]
@@ -143,7 +145,7 @@ export const SongComponent = () => {
     })
 
     return result
-  }, [song?.title, drummerMode])
+  }, [song?.title, drummerMode, reloadKey.current])
 
   if (!song || !currentSong) return <EmptySong />
 

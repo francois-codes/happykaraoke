@@ -1,6 +1,6 @@
+import { songFileChanged } from '@shared/messages/song'
 import { watch } from 'fs'
 import { getSessionConfig } from '../session'
-import { songFileChanged } from '@shared/messages/song'
 
 export function watchForChanges(signal: AbortSignal) {
   const folder = getSessionConfig().songsFolder
