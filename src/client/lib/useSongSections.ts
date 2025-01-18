@@ -1,20 +1,66 @@
-import { useStore } from '@/store'
-import { useEffect, useRef } from 'react'
+import { useStore } from '@/store';
+import { useEffect, useRef } from 'react';
+
+const findClosestLowerPosition = (
+  positions: number[],
+  scrollPosition: number
+): { value: number; index: number } => {
+  let left = 0
+  let right = positions.length - 1
+  let resultIndex = -1
+
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2)
+    if (positions[mid] <= scrollPosition) {
+      resultIndex = mid
+      left = mid + 1
+    } else {
+      right = mid - 1
+    }
+  }
+
+  return {
+    value: resultIndex === -1 ? -1 : positions[resultIndex],
+    index: resultIndex
+  }
+}
 
 export function useSongSections() {
   const sectionsRef = useRef<Nullable<number[]>>(null)
+  const blocksRef = useRef<Nullable<number[]>>(null)
 
   const { currentSong } = useStore()
 
   function resolveSections() {
+    const blocks = resolveBlocks()
+
     if (sectionsRef.current === null) {
-      sectionsRef.current = Array.from(document.querySelectorAll('.song-section')).map(
+      sectionsRef.current = Array.from(document.querySelectorAll('.song-section')).flatMap(
+        (child) => {
+          if (child instanceof HTMLElement) {
+            const closestBlock = findClosestLowerPosition(blocks, child.offsetTop)
+            if (closestBlock.index === -1) {
+              return child.offsetTop
+            }
+            return closestBlock.value
+          }
+          return []
+        }
+      )
+    }
+
+    return sectionsRef.current
+  }
+
+  function resolveBlocks() {
+    if (blocksRef.current === null) {
+      blocksRef.current = Array.from(document.querySelectorAll('.block')).map(
         // @ts-expect-error wtf??
         (child) => child.offsetTop
       )
     }
 
-    return sectionsRef.current
+    return blocksRef.current
   }
 
   function getClosestSection(scrollPosition: number) {

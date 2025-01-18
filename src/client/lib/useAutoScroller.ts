@@ -85,6 +85,7 @@ export const useAutoScroller = () => {
 
   const nextSection = useCallback(() => {
     const sections = resolveSections()
+
     if (sections && sectionIndexRef.current < sections.length - 1) {
       sectionIndexRef.current += 1
       if (sections?.[sectionIndexRef.current]) {

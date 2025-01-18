@@ -63,6 +63,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
           return scroller.scrollToTop()
         case ScrollEventType.POSITION: {
           if (musicienScroll) {
+            scroller.stopScrolling()
             const currentScroll = currentScrollRef.current ?? 0
             const threshold = window.innerHeight * 0.35
 
