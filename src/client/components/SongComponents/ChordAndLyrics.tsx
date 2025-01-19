@@ -26,29 +26,32 @@ export function ChordsAndLyrics({
     return content.trim()
   }, [])
 
-  const renderContent = useCallback((content: string) => {
-    if (content === '|' || content.includes('/4')) return <>{content}</>
-    if (content.startsWith('|')) {
+  const renderContent = useCallback(
+    (content: string) => {
+      if (content === '|' || content.includes('/4')) return <>{content}</>
+      if (content.startsWith('|')) {
+        return (
+          <>
+            <>{content.charAt(0)}</>
+            <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
+              <ChordLabel label={chordLabel(content.slice(1).trim())} />
+            </span>
+          </>
+        )
+      }
+
+      const extraStyle = content.startsWith('<') ? '-ml-4' : ''
+
       return (
-        <>
-          <>{content.charAt(0)}</>
-          <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
-            <ChordLabel label={chordLabel(content.slice(1).trim())} />
-          </span>
-        </>
+        <span
+          className={`bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px] relative ${extraStyle}`}
+        >
+          <ChordLabel label={chordLabel(content).replace('<', '')} />
+        </span>
       )
-    }
-
-    const extraStyle = content.startsWith('<') ? '-ml-4' : ''
-
-    return (
-      <span
-        className={`bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px] relative ${extraStyle}`}
-      >
-        <ChordLabel label={chordLabel(content).replace('<', '')} />
-      </span>
-    )
-  }, [])
+    },
+    [chordLabel]
+  )
 
   return (
     <div className="block">
