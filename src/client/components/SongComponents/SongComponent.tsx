@@ -18,7 +18,7 @@ function stringToIndexedObjects(str) {
   let startIndex = -1
 
   for (let i = 0; i < str.length; i++) {
-    if (str[i] !== ' ') {
+    if (str[i] !== ' ' && str[i] !== '_') {
       if (startIndex === -1) {
         startIndex = i
       }
@@ -30,6 +30,10 @@ function stringToIndexedObjects(str) {
       })
       currentWord = ''
       startIndex = -1
+    }
+
+    if (str[i] === '_') {
+      startIndex = i + 1
     }
   }
 
@@ -45,6 +49,7 @@ function stringToIndexedObjects(str) {
 
 function injectChordsIntoLyrics(chordString: string, lyricsString: string) {
   const chordObjects = stringToIndexedObjects(chordString)
+  console.log({ chordObjects })
 
   // Find the maximum chord index to determine if we need padding
   const maxChordIndex = Math.max(...chordObjects.map((chord) => chord.index))
