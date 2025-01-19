@@ -22,6 +22,34 @@ export function ChordsAndLyrics({
     [guitaristMode]
   )
 
+  const sanitize = useCallback((content: string) => {
+    return content.trim()
+  }, [])
+
+  const renderContent = useCallback((content: string) => {
+    if (content === '|') return <>{content}</>
+    if (content.startsWith('|')) {
+      return (
+        <>
+          <>{content.charAt(0)}</>
+          <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
+            <ChordLabel label={chordLabel(content.slice(1).trim())} />
+          </span>
+        </>
+      )
+    }
+
+    const extraStyle = content.startsWith('<') ? '-ml-4' : ''
+
+    return (
+      <span
+        className={`bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px] relative ${extraStyle}`}
+      >
+        <ChordLabel label={chordLabel(content).replace('<', '')} />
+      </span>
+    )
+  }, [])
+
   return (
     <div className="block">
       <div className={`chords-and-lyrics ${chordsEnabled ? '' : 'lyrics-only-font'}`}>
@@ -30,13 +58,7 @@ export function ChordsAndLyrics({
             <Fragment key={index}>{inner}</Fragment>
           ) : chordsEnabled ? (
             <span className="chord-card chord-font" key={index}>
-              {inner.content === '|' ? (
-                <>{inner.content}</>
-              ) : (
-                <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
-                  <ChordLabel label={chordLabel(inner.content)} />
-                </span>
-              )}
+              {renderContent(sanitize(inner.content))}
             </span>
           ) : (
             <Fragment key={index}></Fragment>
