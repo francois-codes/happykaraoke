@@ -27,7 +27,7 @@ export function ChordsAndLyrics({
   }, [])
 
   const renderContent = useCallback((content: string) => {
-    if (content === '|') return <>{content}</>
+    if (content === '|' || content.includes('/4')) return <>{content}</>
     if (content.startsWith('|')) {
       return (
         <>

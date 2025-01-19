@@ -49,7 +49,6 @@ function stringToIndexedObjects(str) {
 
 function injectChordsIntoLyrics(chordString: string, lyricsString: string) {
   const chordObjects = stringToIndexedObjects(chordString)
-  console.log({ chordObjects })
 
   // Find the maximum chord index to determine if we need padding
   const maxChordIndex = Math.max(...chordObjects.map((chord) => chord.index))
