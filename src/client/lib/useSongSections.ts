@@ -1,17 +1,14 @@
 import { useStore } from '@/store';
 import { useEffect, useRef } from 'react';
 
-const findClosestLowerPosition = (
-  positions: number[],
-  scrollPosition: number
-): { value: number; index: number } => {
+function findPreviousBlock(blocks: number[], scrollPosition: number) {
   let left = 0
-  let right = positions.length - 1
+  let right = blocks.length - 1
   let resultIndex = -1
 
   while (left <= right) {
     const mid = Math.floor((left + right) / 2)
-    if (positions[mid] <= scrollPosition) {
+    if (blocks[mid] < scrollPosition) {
       resultIndex = mid
       left = mid + 1
     } else {
@@ -20,7 +17,7 @@ const findClosestLowerPosition = (
   }
 
   return {
-    value: resultIndex === -1 ? -1 : positions[resultIndex],
+    value: resultIndex === -1 ? -1 : blocks[resultIndex],
     index: resultIndex
   }
 }
@@ -38,7 +35,8 @@ export function useSongSections() {
       sectionsRef.current = Array.from(document.querySelectorAll('.song-section')).flatMap(
         (child) => {
           if (child instanceof HTMLElement) {
-            const closestBlock = findClosestLowerPosition(blocks, child.offsetTop)
+            const closestBlock = findPreviousBlock(blocks, child.offsetTop)
+
             if (closestBlock.index === -1) {
               return child.offsetTop
             }

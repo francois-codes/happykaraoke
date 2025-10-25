@@ -148,8 +148,6 @@ export const SongComponent = () => {
       }
     })
 
-    console.log({ result})
-
     return result
   }, [song?.title, drummerMode, reloadKey.current])
 

@@ -52,7 +52,6 @@ export function useSongKeyboardShortcuts({
         return !isAdmin || searchOpen
       },
       handler: () => {
-        console.log({ scroller})
         scroller.toggleScrolling()
 
         setScroll.call({
