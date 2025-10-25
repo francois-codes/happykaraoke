@@ -23,7 +23,7 @@ export class Song {
       author,
       key,
       tags: tags.split(' '),
-      lines: this.parseLines(lines),
+      lines: this.parseLines(lines, title),
       filename: this.filename
     }
 
@@ -47,7 +47,7 @@ export class Song {
     throw new Error('Song not found')
   }
 
-  private parseLines(lines: string[]): SongLine[] {
+  private parseLines(lines: string[], title: string): SongLine[] {
     const songLines = lines.map((line) => {
       if (line === '') {
         return {
@@ -63,7 +63,7 @@ export class Song {
         }
       }
 
-      if (this.hasChords(line)) {
+      if (this.isChordLine(line)) {
         return {
           type: LineType.Chords,
           content: line
@@ -122,12 +122,20 @@ export class Song {
     return parsedLines
   }
 
-  private hasChords(line: string) {
-    const trimmedLine = line.trim()
+  private isChordLine(line: string) {
+    const words = line.replace('_', '|').replace(/\(|\)/g, '').split(' ').filter(Boolean)
 
-    return (
-      Chord.CHORD_REGEX.test(line.replace('_', ' | ')) ||
-      Chord.CHORD_STARTERS.some((str) => trimmedLine.startsWith(str))
-    )
+
+
+    return words.every((word) => Chord.CHORD_REGEX.test(word) || Chord.CHORD_STARTERS.some((str) => line.trim().startsWith(str)) || isSeparator(word) || isSignature(word))
   }
+}
+
+function isSeparator(word: string) {
+  return word === '|' || word === 'N.C' || word === 'NC' || word === '_'
+}
+
+function isSignature(word: string) {
+  // returns true of "word" is a music signature (i.e. 4/4, 3/4, 6/8, etc.)
+  return /^\d+\/\d+$/.test(word)
 }
