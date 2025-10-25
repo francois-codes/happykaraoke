@@ -33,7 +33,7 @@ export function ChordsAndLyrics({
         return (
           <>
             <>{content.charAt(0)}</>
-            <span className="bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px]">
+            <span className=" px-[4px] -mx-[2px] -my-[4px]">
               <ChordLabel label={chordLabel(content.slice(1).trim())} />
             </span>
           </>
@@ -44,7 +44,7 @@ export function ChordsAndLyrics({
 
       return (
         <span
-          className={`bg-gray-200 dark:bg-gray-600 px-[4px] -my-[2px] -my-[4px] relative ${extraStyle}`}
+          className={` px-[4px] -mx-[2px] -my-[4px] relative ${extraStyle}`}
         >
           <ChordLabel label={chordLabel(content).replace('<', '')} />
         </span>
