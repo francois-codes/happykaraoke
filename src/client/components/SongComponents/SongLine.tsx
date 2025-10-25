@@ -6,7 +6,6 @@ import { ChordLine } from './ChordLine'
 import { Lyrics } from './Lyrics'
 import { Section } from './Section'
 import { Spacer } from './Spacer'
-import { TabLine } from './TabLine'
 
 interface SongLineProps extends SongLineType {}
 
@@ -24,8 +23,6 @@ export const SongLine: FC<SongLineProps> = ({ type, content }) => {
     case LineType.Chords:
       return <ChordLine content={content} />
 
-    case LineType.Tab:
-      return <TabLine content={content} />
     case LineType.ChordsAndLyrics:
       return <ChordsAndLyrics content={content} />
 
