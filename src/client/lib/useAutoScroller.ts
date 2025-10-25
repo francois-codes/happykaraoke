@@ -109,7 +109,7 @@ export const useAutoScroller = () => {
     ) {
       if (
         sectionIndexRef.current > 0 &&
-        scrollContainerRef.current?.scrollTop <= sections[sectionIndexRef.current] + 5
+        scrollContainerRef.current?.scrollTop <= sections[sectionIndexRef.current] + 30
       ) {
         sectionIndexRef.current -= 1
       }
