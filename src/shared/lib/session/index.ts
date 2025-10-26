@@ -1,7 +1,7 @@
 import { config } from '@shared/config'
 import { queue, session, sessionLog, user } from '@shared/db/schema'
 import { differenceInMinutes, formatISO } from 'date-fns'
-import { inArray } from 'drizzle-orm'
+import { count, eq, inArray } from 'drizzle-orm'
 
 import ip from 'ip'
 export interface SessionConfig {
@@ -9,6 +9,16 @@ export interface SessionConfig {
   transpo: number
   songsFolder: string
   hostUrl: string
+}
+
+export interface Session {
+  id: number;
+  sessionDate: string;
+  closed: 0 | 1;
+}
+
+export interface SessionWithCount extends Session {
+  songCount: number
 }
 
 const sessionConfig: SessionConfig = {
@@ -122,6 +132,32 @@ export async function addSessionLog(song: string) {
   return result
 }
 
+export async function getAllSessions(): Promise<SessionWithCount[]> {
+  const { db } = await import('@shared/db')
+
+  const result = await db
+    .select({
+      id: session.id,
+      sessionDate: session.sessionDate,
+      closed: session.closed,
+      songCount: count(sessionLog.id)
+    })
+    .from(session)
+    .where(eq(session.closed, 1))
+    .innerJoin(sessionLog, eq(session.id, sessionLog.sessionId))
+    .groupBy(session.id)
+
+  return result
+}
+
+export async function getSessionLogsById(sessionId: number) {
+  const { db } = await import('@shared/db')
+
+  const result = await db.select().from(sessionLog).where(eq(sessionLog.sessionId, sessionId))
+
+  return result
+}
+
 export async function getSessionLogs(date: string) {
   const { db } = await import('@shared/db')
   const { sql, asc, inArray } = await import('drizzle-orm')
@@ -147,4 +183,15 @@ export async function getSessionLogs(date: string) {
     .orderBy(asc(sessionLog.sessionId), asc(sessionLog.id))
 
   return results
+}
+
+export async function deleteSessionLog(sessionId: number) {
+  const { db } = await import('@shared/db')
+
+  const result = await Promise.all([
+    db.delete(sessionLog).where(eq(sessionLog.sessionId, sessionId)),
+    db.delete(session).where(eq(session.id, sessionId))
+  ])
+
+  return result
 }

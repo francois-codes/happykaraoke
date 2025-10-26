@@ -1,7 +1,6 @@
 import { type SessionLog } from '@shared/db/schema'
-import { SessionConfig, getSessionConfig, setSessionConfig } from '@shared/lib/session'
+import { SessionConfig, SessionWithCount, getSessionConfig, setSessionConfig } from '@shared/lib/session'
 import { socketEmitter } from '@shared/server/socketEmitter'
-import { ISODate } from '@shared/types'
 import { createEndpoint } from '@shared/types/endpoints'
 
 export const fetchSessionConfig = createEndpoint<unknown, SessionConfig>({
@@ -25,15 +24,25 @@ export const setSongsFolder = createEndpoint<{ folder: string }, unknown>({
   }
 })
 
-export const fetchSessionLog = createEndpoint<{ date: ISODate }, SessionLog[]>({
+export const fetchAllSessions = createEndpoint<unknown, SessionWithCount[]>({
+  method: 'get',
+  url: '/fetch-all-sessions',
+  handler: async (_, res) => {
+    const { getAllSessions } = await import('@shared/lib/session')
+    const sessions = await getAllSessions()
+    res.status(200).json(sessions)
+  }
+})
+
+export const fetchSessionLog = createEndpoint<{ sessionId: number }, SessionLog[]>({
   method: 'get',
   url: '/fetch-session-log',
   handler: async (req, res) => {
-    const { date } = req.query
+    const { sessionId } = req.query
 
-    const { getSessionLogs } = await import('@shared/lib/session')
+    const { getSessionLogsById } = await import('@shared/lib/session')
 
-    const logs = await getSessionLogs(date)
+    const logs = await getSessionLogsById(sessionId)
 
     res.status(200).json(logs)
   }
@@ -45,6 +54,19 @@ export const closeSession = createEndpoint<unknown, unknown>({
   handler: async (_, res) => {
     const { closeSession } = await import('@shared/lib/session')
     await closeSession()
+    res.sendStatus(200)
+  }
+})
+
+export const deleteSessionLog = createEndpoint<{ sessionId: number }, unknown>({
+  method: 'post',
+  url: '/delete-session-log',
+  handler: async (req, res) => {
+    const { sessionId } = req.body
+
+    const { deleteSessionLog } = await import('@shared/lib/session')
+
+    await deleteSessionLog(sessionId)
     res.sendStatus(200)
   }
 })

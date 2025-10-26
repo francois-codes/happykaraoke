@@ -1,34 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button } from '../ui/button'
-import { type SessionLog } from '@shared/db/schema'
-import { fetchSessionLog } from '@shared/endpoints/session'
+import { deleteSessionLog, fetchAllSessions, fetchSessionLog } from '@shared/endpoints/session'
 import { formatDate } from 'date-fns'
-import { DatePicker } from '../ui/date-picker'
-import { download, getFormattedDate, logItemsToCSV } from '@/lib/sessionLogs'
+import { download, logItemsToCSV } from '@/lib/sessionLogs'
+import type { SessionWithCount } from '@shared/lib/session'
 import { Modal } from '../Modal'
+import { IoDownloadOutline, IoTrashBinOutline } from 'react-icons/io5'
 
 export function SessionLogs() {
   const [open, setOpen] = useState(false)
-  const [logs, setLogs] = useState<SessionLog[]>([])
-  const [date, setDate] = useState<Date>(new Date())
+  const [loading, setLoading] = useState(false)
+  const [sessions, setSessions] = useState<SessionWithCount[]>([])
 
-  function onOpenChange(open) {
-    if (!open) setLogs([])
-    setDate(new Date())
+  function onOpenChange(open: boolean) {
     setOpen(open)
+    setLoading(true)
+    fetchAllSessions.call().then((result) => {
+      console.log({ result })
+      setSessions(result)
+      setLoading(false)
+    })
   }
 
-  async function fetchLogs(date: Date) {
-    if (!date) return
-
-    const formattedDate = getFormattedDate(date)
-    const results = await fetchSessionLog.call({ date: formattedDate })
-    setLogs(results)
+  async function fetchLogs(session: SessionWithCount) {
+    const logs = await fetchSessionLog.call({ sessionId: session.id })
+    const csv = logItemsToCSV(logs)
+    download(csv, `happikaraoke logs - ${formatDate(session.sessionDate, 'yyyy-MM-dd')}.csv`)
   }
 
-  useEffect(() => {
-    fetchLogs(date)
-  }, [date])
 
   return (
     <Modal
@@ -37,23 +36,43 @@ export function SessionLogs() {
       trigger={<Button variant="outline">Logs de session</Button>}
       title="Logs de session"
       desc="Affiche les logs pour une session"
-      footerButtons={[
-        {
-          label: 'Télécharger',
-          disabled: logs.length === 0,
-          onClick: () => {
-            const csv = logItemsToCSV(logs)
-            download(csv, `happikaraoke logs - ${formatDate(date, 'yyyy-MM-dd')}.csv`)
-          }
-        }
-      ]}
     >
       <div className="gap-4 flex flex-col items-center p-4">
-        <DatePicker date={date} setDate={setDate} />
-        {logs.length ? (
-          <p>{logs.length} morceaux pour cette date</p>
+        {loading ? (
+          <p>Chargement...</p>
         ) : (
-          <p>Pas de logs pour cette date</p>
+          <div className="flex flex-col gap-2 w-full max-h-[60vh] overflow-scroll">
+            {sessions.map((session) => (
+              <div key={session.id} className='flex flex-row gap-1 items-center justify-between'>
+                <div className='flex flex-col'>
+                <p className='text-sm'>Date: {formatDate(session.sessionDate, 'yyyy-MM-dd')}</p>
+                <p className='text-xs'>Nombre de chansons: {session.songCount}</p>
+                </div>
+                <div className='flex flex-row items-center gap-1'>
+
+              <Button
+                size="sm"
+                onClick={() => {
+                  fetchLogs(session)
+                }}
+              >
+                <IoDownloadOutline size={16} />
+              </Button>
+              <Button
+                size="sm"
+                onClick={async () => {
+                  if (!confirm('Tu es sur ? tu ne pourras pas récupérer les logs de cette session.')) return
+                  await deleteSessionLog.call({ sessionId: session.id })
+                  const logs = await fetchAllSessions.call()
+                  setSessions(logs)
+                }}
+              >
+                <IoTrashBinOutline size={16} />
+              </Button>
+              </div>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </Modal>
