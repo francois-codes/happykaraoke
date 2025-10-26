@@ -22,8 +22,8 @@ import { Link } from 'react-router-dom'
 import { AxiosError } from 'axios'
 
 const formSchema = z.object({
-  // sessionName: z.string().min(1),
-  userName: z.string().min(1)
+  userName: z.string().min(1),
+  adminPassword: z.string()
 })
 
 export type FormSchema = z.infer<typeof formSchema>
@@ -36,16 +36,16 @@ export const JoinSession = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      userName: ''
-      // sessionName: ''
+      userName: '',
+      adminPassword: ''
     }
   })
 
-  const onSubmit = useCallback(async (formData) => {
-    const { userName } = formData
+  const onSubmit = useCallback(async (formData: z.infer<typeof formSchema>) => {
+    const { userName, adminPassword } = formData
 
     try {
-      const { user } = await joinSession.call({ userName })
+      const { user } = await joinSession.call({ userName, adminPassword })
       window.localStorage.setItem('userId', `${user.id}`)
       dispatch({ isAdmin: user.type === UserType.ADMIN })
       navigate('/session')
@@ -67,20 +67,7 @@ export const JoinSession = () => {
     <div className="min-w-96">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          {/* <FormField
-            control={form.control}
-            name="sessionName"
-            render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormLabel>Session</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormDescription>Ceci est le nom de la session</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
+
           <FormField
             control={form.control}
             name="userName"
@@ -91,6 +78,20 @@ export const JoinSession = () => {
                   <Input {...field} />
                 </FormControl>
                 <FormDescription>Ceci est votre nom</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="adminPassword"
+            render={({ field }) => (
+              <FormItem className="mb-4">
+                <FormLabel>Taper le mot de passe pour joindre en admin</FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormDescription>(Si vous savez, vous savez)</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

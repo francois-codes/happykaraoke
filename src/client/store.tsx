@@ -3,6 +3,7 @@ import { Dispatch, FC, PropsWithChildren, createContext, useContext, useReducer 
 interface Store {
   currentSong?: string | null
   isAdmin?: boolean
+  scrollMaster?: boolean
   songKey?: string
   chordsEnabled: boolean
   transpo: number

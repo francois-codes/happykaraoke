@@ -14,7 +14,7 @@ const getLineHeight = () => {
 }
 
 export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
-  const { isAdmin, currentSong, musicienScroll } = useStore()
+  const { scrollMaster, currentSong, musicienScroll } = useStore()
   const scrollContainerRef = useScrollContext()
   const targetLineRef = useRef<HTMLDivElement | null>(null)
 
@@ -24,7 +24,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   scrollChanged.client.useMessage(
     socket,
     ({ type, value }) => {
-      if (isAdmin) {
+      if (scrollMaster) {
         return
       }
 
@@ -92,7 +92,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
         }
       }
     },
-    [scroller, isAdmin, musicienScroll]
+    [scroller, scrollMaster, musicienScroll]
   )
 
   const followScroll = useCallback(() => {
@@ -107,13 +107,13 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   }, [])
 
   useEffect(() => {
-    if (!isAdmin) return
+    if (!scrollMaster) return
     scrollContainerRef.current?.addEventListener('scrollend', followScroll)
 
     return () => {
       scrollContainerRef.current?.removeEventListener('scrollend', followScroll)
     }
-  }, [followScroll, scroller])
+  }, [followScroll, scroller, scrollMaster])
 
   useEffect(() => {
     if (currentSong) {

@@ -15,6 +15,7 @@ import { SongsFolderSelectorButton } from './SongsFolderSelectorButton'
 import { ToggleDrummerMode } from './ToggleDrummerMode'
 import { ToggleGuitaristMode } from './ToggleGuitaristMode'
 import { ToggleMusicianScroll } from './ToggleMusicianScroll'
+import { ToggleScrollMaster } from './ToggleScrollMaster'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
@@ -76,6 +77,7 @@ export function SettingsPanel() {
             <ToggleGuitaristMode />
             <ToggleDrummerMode />
             <ToggleDarkMode {...theme} />
+            {isAdmin && <ToggleScrollMaster />}
             {isAdmin && <SongsFolderSelectorButton />}
             {isAdmin && <SessionLogs />}
             {isAdmin && <FlexModal />}

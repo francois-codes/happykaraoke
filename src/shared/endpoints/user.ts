@@ -46,13 +46,14 @@ export const fetchUser = createEndpoint<{ id: number }, UserLoginResponse>({
   }
 })
 
-export const joinSession = createEndpoint<{ userName: string }, UserLoginResponse>({
+export const joinSession = createEndpoint<{ userName: string, adminPassword: string }, UserLoginResponse>({
   method: 'post',
   url: '/join',
   handler: async (req, res) => {
-    const { userName } = req.body
+    const { userName, adminPassword } = req.body
     try {
-      const user = await createUser(userName, UserType.GUEST)
+      const userType = adminPassword === config.ADMIN_PASSWORD ? UserType.ADMIN : UserType.GUEST
+      const user = await createUser(userName, userType)
       res.status(200).json({ user })
     } catch {
       res.sendStatus(401)

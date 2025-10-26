@@ -28,7 +28,7 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
           const { user } = await fetchUser.call({ id: numberId })
 
           if (user) {
-            dispatch({ isAdmin: user.type === UserType.ADMIN })
+            dispatch({ isAdmin: user.type === UserType.ADMIN, scrollMaster: true })
 
             // If admin user is auto-logged in, refresh session to ensure validity
             if (user.type === UserType.ADMIN) {
