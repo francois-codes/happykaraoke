@@ -23,7 +23,7 @@ export class Song {
       author,
       key,
       tags: tags.split(' '),
-      lines: this.parseLines(lines, title),
+      lines: this.parseLines(lines),
       filename: this.filename
     }
 
@@ -47,7 +47,7 @@ export class Song {
     throw new Error('Song not found')
   }
 
-  private parseLines(lines: string[], title: string): SongLine[] {
+  private parseLines(lines: string[]): SongLine[] {
     const songLines = lines.map((line) => {
       if (line === '') {
         return {
@@ -132,7 +132,7 @@ export class Song {
 }
 
 function isSeparator(word: string) {
-  return word === '|' || word === 'N.C' || word === 'NC' || word === '_'
+  return Chord.ALLOWED_TERMS_IN_CHORDS.includes(word)
 }
 
 function isSignature(word: string) {
