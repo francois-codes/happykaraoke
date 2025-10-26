@@ -1,5 +1,5 @@
 import { getAllSongs, getSongStats } from '@shared/lib/data/songs'
-import { addSessionLog, setSessionConfig } from '@shared/lib/session'
+import { addSessionLog, checkAndRefreshSession, setSessionConfig } from '@shared/lib/session'
 import { Song } from '@shared/lib/song/song'
 import { songChanged, transpoChanged } from '@shared/messages/song'
 import { SongData } from '@shared/types'
@@ -42,10 +42,14 @@ export const changeSong = createEndpoint<{ title: string }, unknown>({
   url: '/set-song',
   handler: async (req, res) => {
     const { title } = req.body
+
+    // Check session validity before logging song
+    await checkAndRefreshSession()
+
     songChanged.server.emit({ title })
     transpoChanged.server.emit({ transpo: 0 })
     setSessionConfig({ currentSong: title, transpo: 0 })
-    addSessionLog(title)
+    await addSessionLog(title)
 
     res.sendStatus(200)
   }

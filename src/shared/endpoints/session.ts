@@ -1,5 +1,5 @@
 import { type SessionLog } from '@shared/db/schema'
-import { SessionConfig, SessionWithCount, getSessionConfig, setSessionConfig } from '@shared/lib/session'
+import { Session, SessionConfig, SessionWithCount, getSessionConfig, setSessionConfig } from '@shared/lib/session'
 import { socketEmitter } from '@shared/server/socketEmitter'
 import { createEndpoint } from '@shared/types/endpoints'
 
@@ -68,5 +68,15 @@ export const deleteSessionLog = createEndpoint<{ sessionId: number }, unknown>({
 
     await deleteSessionLog(sessionId)
     res.sendStatus(200)
+  }
+})
+
+export const refreshSession = createEndpoint<unknown, Session>({
+  method: 'post',
+  url: '/refresh-session',
+  handler: async (_, res) => {
+    const { checkAndRefreshSession } = await import('@shared/lib/session')
+    const session = await checkAndRefreshSession()
+    res.status(200).json(session)
   }
 })

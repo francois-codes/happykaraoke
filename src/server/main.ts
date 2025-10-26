@@ -20,6 +20,16 @@ function createWindow() {
     mainWindow.show()
   })
 
+  // Check session validity when window gains focus (coming back from background)
+  mainWindow.on('focus', async () => {
+    try {
+      const { checkAndRefreshSession } = await import('@shared/lib/session')
+      await checkAndRefreshSession()
+    } catch (error) {
+      console.error('Error refreshing session on focus:', error)
+    }
+  })
+
   mainWindow.loadURL(`http://localhost:${config.PORT}`)
 }
 

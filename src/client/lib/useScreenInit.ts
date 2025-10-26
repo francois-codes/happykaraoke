@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useStore } from '@/store'
 import { fetchUser } from '@shared/endpoints/user'
 import { UserType } from '@shared/types'
-import { fetchSessionConfig } from '@shared/endpoints/session'
+import { fetchSessionConfig, refreshSession } from '@shared/endpoints/session'
 import { useNavigate } from 'react-router-dom'
 import { sleep } from '@/utils'
 import { AxiosError } from 'axios'
@@ -29,6 +29,12 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
 
           if (user) {
             dispatch({ isAdmin: user.type === UserType.ADMIN })
+
+            // If admin user is auto-logged in, refresh session to ensure validity
+            if (user.type === UserType.ADMIN) {
+              await refreshSession.call()
+            }
+
             if (location === '/' || location === '/join' || location === '/new') {
               setRedirectTarget('/session')
             }

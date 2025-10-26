@@ -1,7 +1,8 @@
 import { config } from '@shared/config'
 import { queue, session, sessionLog, user } from '@shared/db/schema'
 import { differenceInMinutes, formatISO } from 'date-fns'
-import { count, eq, inArray } from 'drizzle-orm'
+import { and, count, desc, eq, inArray } from 'drizzle-orm'
+import { UserType } from '@shared/types'
 
 import ip from 'ip'
 export interface SessionConfig {
@@ -40,15 +41,22 @@ export async function startSessionIfNeeded() {
 
   const currentSession = await getCurrentSession()
 
-  if (currentSession) return currentSession
+  if (currentSession) {
+    // Update any admin users from old sessions to point to current session
+    await updateAdminUsersToCurrentSession(currentSession.id)
+    return currentSession
+  }
 
   const timestamp = formatISO(new Date())
 
-  const result = await db.insert(session).values({ sessionDate: timestamp, closed: 0 }).returning({
+  const [result] = await db.insert(session).values({ sessionDate: timestamp, closed: 0 }).returning({
     id: session.id,
     sessionDate: session.sessionDate,
     closed: session.closed
   })
+
+  // Update any admin users from old sessions to point to this new session
+  await updateAdminUsersToCurrentSession(result.id)
 
   return result
 }
@@ -64,7 +72,6 @@ export async function getCurrentSession() {
 
 export async function closeSession() {
   const { db } = await import('@shared/db')
-  const { eq } = await import('drizzle-orm')
 
   const result = await db
     .update(session)
@@ -72,21 +79,109 @@ export async function closeSession() {
     .where(eq(session.closed, 0))
     .returning({ id: session.id })
 
-  const deletedSessionIds = result.map(({ id }) => id)
+  const closedSessionIds = result.map(({ id }) => id)
 
+  // Delete guest users and queue items, but keep admin users
   await Promise.all([
-    db.delete(user).where(inArray(user.sessionId, deletedSessionIds)),
-    db.delete(queue).where(inArray(queue.sessionId, deletedSessionIds))
+    db.delete(user).where(
+      and(
+        inArray(user.sessionId, closedSessionIds),
+        eq(user.type, UserType.GUEST)
+      )
+    ),
+    db.delete(queue).where(inArray(queue.sessionId, closedSessionIds))
   ])
 
   return result
+}
+
+/**
+ * Updates all admin users from closed sessions to point to the current open session
+ * This ensures admin users persist across session refreshes
+ */
+async function updateAdminUsersToCurrentSession(currentSessionId: number) {
+  const { db } = await import('@shared/db')
+
+  // Get all closed session IDs
+  const closedSessions = await db
+    .select({ id: session.id })
+    .from(session)
+    .where(eq(session.closed, 1))
+
+  if (closedSessions.length === 0) {
+    return
+  }
+
+  const closedSessionIds = closedSessions.map(({ id }) => id)
+
+  // Update admin users from closed sessions to point to current session
+  await db
+    .update(user)
+    .set({ sessionId: currentSessionId })
+    .where(
+      and(
+        inArray(user.sessionId, closedSessionIds),
+        eq(user.type, UserType.ADMIN)
+      )
+    )
+}
+
+/**
+ * Checks if the current session is still valid
+ * Validates based on last activity (either last song log or session creation date)
+ * If session is expired (last activity > TIMEOUT_MINUTES ago) or doesn't exist,
+ * closes old session and creates a new one
+ * Also migrates any admin users from closed sessions to the current session
+ * @returns The current valid session
+ */
+export async function checkAndRefreshSession() {
+  const { db } = await import('@shared/db')
+
+  const currentSession = await getCurrentSession()
+
+  // If no session exists, create one (will also migrate admin users)
+  if (!currentSession) {
+    return await startSessionIfNeeded()
+  }
+
+  // Check if session has timed out by looking at last song log
+  const lastLog = await db
+    .select()
+    .from(sessionLog)
+    .where(eq(sessionLog.sessionId, currentSession.id))
+    .orderBy(desc(sessionLog.id))
+    .limit(1)
+
+  const lastLogEntry = lastLog?.[0]
+
+  const now = new Date()
+  let minutesSinceActivity: number
+
+  // If no logs exist, check session creation date instead
+  if (!lastLogEntry || !lastLogEntry.timestamp) {
+    const sessionDate = new Date(currentSession.sessionDate)
+    minutesSinceActivity = differenceInMinutes(now, sessionDate)
+  } else {
+    // Check last log timestamp
+    const lastLogDate = new Date(lastLogEntry.timestamp)
+    minutesSinceActivity = differenceInMinutes(now, lastLogDate)
+  }
+
+  // If session has timed out (either since last log or since creation), close it and create a new one
+  if (minutesSinceActivity >= config.SESSION.TIMEOUT_MINUTES) {
+    await closeSession()
+    return await startSessionIfNeeded()
+  }
+
+  // Session is still valid, but still migrate any admin users from old sessions
+  await updateAdminUsersToCurrentSession(currentSession.id)
+  return currentSession
 }
 
 export async function addSessionLog(song: string) {
   const timestamp = formatISO(new Date())
 
   const { db } = await import('@shared/db')
-  const { desc, eq } = await import('drizzle-orm')
 
   const currentSession = await getCurrentSession()
 
@@ -105,19 +200,11 @@ export async function addSessionLog(song: string) {
 
   if (lastLog && lastLog.timestamp) {
     const lastLogDate = new Date(lastLog.timestamp)
-    const diff = differenceInMinutes(timestamp, lastLogDate)
+    const diff = differenceInMinutes(new Date(timestamp), lastLogDate)
 
-    // if last song was played less than 2 minutes ago, update it
-    if (diff < 2) {
-      const result = await db
-        .update(sessionLog)
-        .set({
-          song,
-          timestamp
-        })
-        .where(eq(sessionLog.id, lastLog.id))
-
-      return result
+    // if last song was played less than MIN_LOG_GAP_MINUTES ago, delete it
+    if (diff < config.SESSION.MIN_LOG_GAP_MINUTES) {
+      await db.delete(sessionLog).where(eq(sessionLog.id, lastLog.id))
     }
   }
 

@@ -36,6 +36,12 @@ export const fetchUser = createEndpoint<{ id: number }, UserLoginResponse>({
       return
     }
 
+    // If admin user, ensure a valid session exists
+    if (user.type === UserType.ADMIN) {
+      const { checkAndRefreshSession } = await import('@shared/lib/session')
+      await checkAndRefreshSession()
+    }
+
     res.status(200).json({ user })
   }
 })
