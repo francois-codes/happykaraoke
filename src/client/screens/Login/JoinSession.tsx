@@ -11,6 +11,7 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/ui/password-input'
 import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui/button'
 
@@ -89,7 +90,7 @@ export const JoinSession = () => {
               <FormItem className="mb-4">
                 <FormLabel>Taper le mot de passe pour joindre en admin</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} />
+                  <PasswordInput {...field} />
                 </FormControl>
                 <FormDescription>(Si vous savez, vous savez)</FormDescription>
                 <FormMessage />

@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { PasswordInput } from '@/components/ui/password-input'
 import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
@@ -85,7 +85,7 @@ export const CreateSession = () => {
               <FormItem className="mb-4">
                 <FormLabel>Mot de passe</FormLabel>
                 <FormControl>
-                  <Input type="password" {...field} autoComplete="off" />
+                  <PasswordInput {...field} autoComplete="off" />
                 </FormControl>
                 <FormDescription>Mot de passe</FormDescription>
                 <FormMessage />
