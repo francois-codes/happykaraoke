@@ -89,7 +89,7 @@ export const JoinSession = () => {
               <FormItem className="mb-4">
                 <FormLabel>Taper le mot de passe pour joindre en admin</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input type="password" {...field} />
                 </FormControl>
                 <FormDescription>(Si vous savez, vous savez)</FormDescription>
                 <FormMessage />

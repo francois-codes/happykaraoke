@@ -6,10 +6,14 @@ import { SongComponent } from '@/components/SongComponents/SongComponent'
 import { ScrollProvider } from '@/contexts/scroll'
 import { useStore } from '@/store'
 import { useRef } from 'react'
+import { useScrollMasterSync } from '@/lib/useScrollMasterSync'
 
 export function SessionScreen() {
   const { isAdmin } = useStore()
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  // Sync scroll master state across admin clients
+  useScrollMasterSync()
 
   return (
     <Screen>

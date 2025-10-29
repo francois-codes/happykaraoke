@@ -1,14 +1,22 @@
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { useDispatch, useStore } from '@/store'
+import { enableScrollMaster } from '@shared/endpoints/scroll'
 import { FC } from 'react'
 
 export const ToggleScrollMaster: FC = () => {
   const { scrollMaster } = useStore()
   const dispatch = useDispatch()
+  const userId = window.localStorage.getItem('userId')
 
-  const toggleScrollMaster = () => {
-    dispatch({ scrollMaster: !scrollMaster })
+  const toggleScrollMaster = async () => {
+    const newValue = !scrollMaster
+    dispatch({ scrollMaster: newValue })
+
+    // Emit socket event when enabling scroll master to notify other admins
+    if (newValue && userId) {
+      await enableScrollMaster.call({ userId })
+    }
   }
 
   return (
