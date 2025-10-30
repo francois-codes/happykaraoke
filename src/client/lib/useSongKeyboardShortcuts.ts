@@ -12,7 +12,7 @@ export function useSongKeyboardShortcuts({
   scroller: ReturnType<typeof useAutoScroller>
   reload: () => void
 }) {
-  const { isAdmin, searchOpen, transpoOpen, chordsEnabled } = useStore()
+  const { isAdmin, searchOpen, transpoOpen, chordsEnabled, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
   const dispatch = useDispatch()
 
   // cmd + ctrl + r => reload song
@@ -34,13 +34,13 @@ export function useSongKeyboardShortcuts({
       key: [KEYS.t],
       preventDefault: true,
       disable: () => {
-        return !isAdmin || searchOpen
+        return !isAdmin || searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen
       },
       handler: () => {
         dispatch({ transpoOpen: true })
       }
     },
-    [isAdmin, searchOpen]
+    [isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // space => start/stop scrolling (admin only)
@@ -49,7 +49,7 @@ export function useSongKeyboardShortcuts({
       key: [KEYS.Space],
       preventDefault: true,
       disable: () => {
-        return !isAdmin || searchOpen
+        return !isAdmin || searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen
       },
       handler: () => {
         scroller.toggleScrolling()
@@ -59,35 +59,35 @@ export function useSongKeyboardShortcuts({
         })
       }
     },
-    [scroller, isAdmin, searchOpen]
+    [scroller, isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // right => increase scroll speed (admin only)
   useKeyboardShortcut(
     {
       key: KEYS.right,
-      disable: () => !isAdmin || searchOpen,
+      disable: () => !isAdmin || searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       preventDefault: true,
       handler: () => {
         scroller.increaseScrollSpeed()
         setScroll.call({ type: ScrollEventType.FASTER })
       }
     },
-    [scroller, isAdmin, searchOpen]
+    [scroller, isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // left => decrease scroll speed (admin only)
   useKeyboardShortcut(
     {
       key: KEYS.left,
-      disable: () => !isAdmin || searchOpen,
+      disable: () => !isAdmin || searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       preventDefault: true,
       handler: () => {
         scroller.decreaseScrollSpeed()
         setScroll.call({ type: ScrollEventType.SLOWER })
       }
     },
-    [scroller, isAdmin, searchOpen]
+    [scroller, isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // $ => scroll to top (admin only)
@@ -95,7 +95,7 @@ export function useSongKeyboardShortcuts({
     {
       key: KEYS.dollarSign,
       disable: () => {
-        return !isAdmin || searchOpen || transpoOpen
+        return !isAdmin || searchOpen || transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen
       },
       handler: (event) => {
         event.preventDefault()
@@ -105,7 +105,7 @@ export function useSongKeyboardShortcuts({
         setScroll.call({ type: ScrollEventType.TOP })
       }
     },
-    [scroller, isAdmin, searchOpen, transpoOpen]
+    [scroller, isAdmin, searchOpen, transpoOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // down => scroll to next section (admin only)
@@ -113,12 +113,12 @@ export function useSongKeyboardShortcuts({
     {
       key: [KEYS.down],
       preventDefault: true,
-      disable: () => !isAdmin || searchOpen || transpoOpen,
+      disable: () => !isAdmin || searchOpen || transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         scroller.nextSection()
       }
     },
-    [isAdmin, transpoOpen, searchOpen, scroller]
+    [isAdmin, transpoOpen, searchOpen, scroller, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // up => scroll to previous section (admin only)
@@ -126,23 +126,23 @@ export function useSongKeyboardShortcuts({
     {
       key: [KEYS.up],
       preventDefault: true,
-      disable: () => !isAdmin || searchOpen || transpoOpen,
+      disable: () => !isAdmin || searchOpen || transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         scroller.previousSection()
       }
     },
-    [isAdmin, transpoOpen, searchOpen, scroller]
+    [isAdmin, transpoOpen, searchOpen, scroller, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // c => toggle chords
   useKeyboardShortcut(
     {
       key: [KEYS.a],
-      disable: () => searchOpen || transpoOpen,
+      disable: () => searchOpen || transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         dispatch({ chordsEnabled: !chordsEnabled })
       }
     },
-    [searchOpen, transpoOpen, chordsEnabled]
+    [searchOpen, transpoOpen, chordsEnabled, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 }

@@ -3,6 +3,7 @@ import { enableScrollMaster, setScroll } from './scroll'
 import { closeSession, deleteSessionLog, fetchAllSessions, fetchSessionConfig, fetchSessionLog, refreshSession, setSongsFolder } from './session'
 import { changeSong, getCSVData, getSong, getSongsList, setTranspo } from './song'
 import { fetchUser, joinSession, loginUser } from './user'
+import { generateSong, getOpenAIKey, saveSong, setOpenAIKey } from './ai'
 
 export const endpoints = [
   loginUser,
@@ -26,5 +27,9 @@ export const endpoints = [
   addToQueue,
   removeFromQueue,
   reorderQueue,
-  clearQueue
+  clearQueue,
+  setOpenAIKey,
+  getOpenAIKey,
+  generateSong,
+  saveSong
 ]

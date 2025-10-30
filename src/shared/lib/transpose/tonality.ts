@@ -71,10 +71,10 @@ export function getTonalityPreferredName(tonality: Tonality, minorMode) {
 const modulus = (n: number, m: number): number => ((n % m) + m) % m
 
 export function getTonalityIndex(name: string): number {
-  if (!tonaRegex.test(name)) {
+  if (!tonaRegex.test(name.trim())) {
     throw new Error("Couldn't initialize tonality, invalid name.")
   } else {
-    const normalizedName = name.replace(/(m|min)/, '-')
+    const normalizedName = name.trim().replace(/(m|min)/, '-')
     return tonalities.findIndex((tona) => tona.names.includes(normalizedName))
   }
 }

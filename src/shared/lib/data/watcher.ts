@@ -6,7 +6,8 @@ export function watchForChanges(signal: AbortSignal) {
   const folder = getSessionConfig().songsFolder
 
   watch(folder, { signal }, (eventType, filename) => {
-    if (eventType === 'change' && filename?.endsWith('.txt')) {
+    // 'change' = file modified, 'rename' = file created or deleted
+    if ((eventType === 'change' || eventType === 'rename') && filename?.endsWith('.txt')) {
       songFileChanged.server.emit({ filename })
     }
   })

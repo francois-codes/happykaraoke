@@ -8,7 +8,7 @@ import { KEYS } from '@/lib/consts'
 import { Modal } from '../Modal'
 
 export function QrCode() {
-  const { hostUrl, qrCodeOpen, searchOpen } = useStore()
+  const { hostUrl, qrCodeOpen, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
   const dispatch = useDispatch()
 
   function setOpen(open: boolean) {
@@ -19,12 +19,12 @@ export function QrCode() {
     {
       key: [KEYS.g],
       preventDefault: true,
-      disable: () => searchOpen,
+      disable: () => searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         setOpen(!qrCodeOpen)
       }
     },
-    [searchOpen, qrCodeOpen]
+    [searchOpen, qrCodeOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   const linkUrl = `${hostUrl}/join`

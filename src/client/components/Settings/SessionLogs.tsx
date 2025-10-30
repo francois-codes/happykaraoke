@@ -16,7 +16,6 @@ export function SessionLogs() {
     setOpen(open)
     setLoading(true)
     fetchAllSessions.call().then((result) => {
-      console.log({ result })
       setSessions(result)
       setLoading(false)
     })

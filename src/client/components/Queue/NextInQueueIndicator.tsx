@@ -5,7 +5,7 @@ import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { KEYS } from '@/lib/consts'
 
 export function NextInQueueIndicator() {
-  const { isAdmin, transpoOpen, searchOpen } = useStore()
+  const { isAdmin, transpoOpen, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
 
   const { nextInQueue, playNextInQueue } = useNextInQueue()
 
@@ -13,13 +13,13 @@ export function NextInQueueIndicator() {
     {
       key: KEYS.n,
       modifier: [KEYS.Ctrl],
-      disable: () => !isAdmin || transpoOpen || searchOpen,
+      disable: () => !isAdmin || transpoOpen || searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       preventDefault: true,
       handler: () => {
         playNextInQueue()
       }
     },
-    [isAdmin, searchOpen, transpoOpen, playNextInQueue]
+    [isAdmin, searchOpen, transpoOpen, playNextInQueue, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   if (!nextInQueue) return null

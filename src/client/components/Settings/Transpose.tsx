@@ -29,7 +29,7 @@ const enter = keyboardShortcut(KEYS.Enter)
 const o = keyboardShortcut(KEYS.o)
 
 export function Transpose() {
-  const { songKey, transpoOpen, transpo } = useStore()
+  const { songKey, transpoOpen, transpo, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
   const [selectedTona, setSelectedTona] = useState(tonalities[0])
   const [currentTonaIndex, setCurrentTonaIndex] = useState(0)
   const dispatch = useDispatch()
@@ -79,7 +79,8 @@ export function Transpose() {
   }
 
   function navigateTona(event) {
-    if (!transpoOpen) return
+    // Disable when AI modals are open
+    if (!transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen) return
 
     const offset = getOffsets(event)
 
@@ -108,7 +109,7 @@ export function Transpose() {
     return () => {
       document.removeEventListener('keydown', navigateTona)
     }
-  }, [currentTonaIndex, transpoOpen])
+  }, [currentTonaIndex, transpoOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen])
 
   if (!songKey) return null
 

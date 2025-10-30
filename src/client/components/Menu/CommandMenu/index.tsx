@@ -17,6 +17,7 @@ import { addToQueue, getQueue } from '@shared/endpoints/queue'
 import { changeSong, getSongsList } from '@shared/endpoints/song'
 import { searchSong } from '@shared/lib/data/songs'
 import { queueChanged } from '@shared/messages/queue'
+import { songFileChanged } from '@shared/messages/song'
 import { CommandLoading } from 'cmdk'
 
 type Songs = Awaited<ReturnType<typeof getSongsList.call>>['songs']
@@ -29,7 +30,7 @@ export function CommandMenu() {
   const [availableSuggestions, setAvailableSuggestions] = useState(3)
   const [selectedSong, setSelectedSong] = useState<Nullable<Song>>(null)
 
-  const { currentSong, songsFolder, suggestionOpen, isAdmin } = useStore()
+  const { currentSong, songsFolder, suggestionOpen, isAdmin, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
   const dispatch = useDispatch()
 
   const userId = isAdmin ? undefined : window.localStorage.getItem('userId') ?? undefined
@@ -65,6 +66,9 @@ export function CommandMenu() {
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
+      // Disable shortcut when AI modals are open
+      if (aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen) return
+
       if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
         setOpen((open) => !open)
@@ -72,7 +76,7 @@ export function CommandMenu() {
     }
     document.addEventListener('keydown', down)
     return () => document.removeEventListener('keydown', down)
-  }, [])
+  }, [aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen])
 
   async function fetchSongs() {
     setLoading(true)
@@ -99,6 +103,10 @@ export function CommandMenu() {
     fetchAvailableSuggestions()
   })
 
+  songFileChanged.client.useMessage(socket, () => {
+    fetchSongs()
+  })
+
   useEffect(() => {
     fetchSongs()
   }, [songsFolder])
@@ -107,19 +115,19 @@ export function CommandMenu() {
     {
       key: [KEYS['@']],
       preventDefault: true,
-      disable: () => !isAdmin,
+      disable: () => !isAdmin || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         setOpen(!open)
       }
     },
-    [setOpen, open, isAdmin]
+    [setOpen, open, isAdmin, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   useKeyboardShortcut(
     {
       key: [KEYS.Enter],
       preventDefault: true,
-      disable: () => !selectedSong,
+      disable: () => !selectedSong || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: (event: KeyboardEvent) => {
         if (event.metaKey) {
           queueSong()
@@ -128,7 +136,7 @@ export function CommandMenu() {
         }
       }
     },
-    [selectSong, selectedSong, queueSong]
+    [selectSong, selectedSong, queueSong, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   const filteredSongs = useMemo(() => {

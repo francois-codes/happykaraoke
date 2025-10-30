@@ -16,10 +16,15 @@ import { ToggleDrummerMode } from './ToggleDrummerMode'
 import { ToggleGuitaristMode } from './ToggleGuitaristMode'
 import { ToggleMusicianScroll } from './ToggleMusicianScroll'
 import { ToggleScrollMaster } from './ToggleScrollMaster'
+import { OpenAIKeyButton } from './OpenAIKeyButton'
+import { OpenAIKeyModal } from './OpenAIKeyModal'
+import { AddSongWithAIButton } from './AddSongWithAIButton'
+import { AISongSearchModal } from './AISongSearchModal'
+import { AISongPreviewModal } from './AISongPreviewModal'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
-  const { settingsOpen, searchOpen, qrCodeOpen, isAdmin } = useStore()
+  const { settingsOpen, searchOpen, qrCodeOpen, isAdmin, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
   const dispatch = useDispatch()
 
   function setOpen(open: boolean) {
@@ -30,24 +35,24 @@ export function SettingsPanel() {
     {
       key: [KEYS.s],
       preventDefault: true,
-      disable: () => searchOpen || qrCodeOpen,
+      disable: () => searchOpen || qrCodeOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         setOpen(!settingsOpen)
       }
     },
-    [searchOpen, settingsOpen, qrCodeOpen]
+    [searchOpen, settingsOpen, qrCodeOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   useKeyboardShortcut(
     {
       key: [KEYS.d],
       preventDefault: true,
-      disable: () => searchOpen,
+      disable: () => searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         theme.toggleTheme()
       }
     },
-    [searchOpen, theme.toggleTheme]
+    [searchOpen, theme.toggleTheme, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   useKeyboardShortcut({
@@ -79,12 +84,17 @@ export function SettingsPanel() {
             <ToggleDarkMode {...theme} />
             {isAdmin && <ToggleScrollMaster />}
             {isAdmin && <SongsFolderSelectorButton />}
+            {isAdmin && <OpenAIKeyButton />}
+            {isAdmin && <AddSongWithAIButton />}
             {isAdmin && <SessionLogs />}
             {isAdmin && <FlexModal />}
             {isAdmin && <CloseSession />}
           </div>
         </div>
         {isAdmin && <SongsFolderSelector />}
+        {isAdmin && <OpenAIKeyModal />}
+        {isAdmin && <AISongSearchModal />}
+        {isAdmin && <AISongPreviewModal />}
       </PopoverContent>
     </Popover>
   )
