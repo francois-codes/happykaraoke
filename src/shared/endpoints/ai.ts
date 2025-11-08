@@ -1,8 +1,9 @@
 import { createEndpoint } from '@shared/types/endpoints'
 
 export interface GenerateSongRequest {
-  songName: string
-  artistName: string
+  songName?: string
+  artistName?: string
+  url?: string
   tags?: string
 }
 
@@ -42,10 +43,16 @@ export const generateSong = createEndpoint<GenerateSongRequest, any>({
   method: 'post',
   url: '/generate-song',
   handler: async (req, res) => {
-    const { songName, artistName, tags } = req.body
+    const { songName, artistName, url, tags } = req.body
 
-    if (!songName || !artistName) {
-      res.status(400).json({ error: 'Song name and artist name are required' })
+    // Validate input: either (songName + artistName) OR url must be provided
+    if (!url && (!songName || !artistName)) {
+      res.status(400).json({ error: 'Either provide song name + artist name, or provide a URL' })
+      return
+    }
+
+    if (url && (songName || artistName)) {
+      res.status(400).json({ error: 'Provide either URL or song name + artist name, not both' })
       return
     }
 
@@ -60,7 +67,76 @@ export const generateSong = createEndpoint<GenerateSongRequest, any>({
     try {
       const { generateText } = await import('ai')
       const { createPerplexity } = await import('@ai-sdk/perplexity')
-      const prompt = `You are a music transcription assistant with web search capabilities. Search the internet to find accurate lyrics and chords for the song "${songName}" by ${artistName}.
+
+      // Generate different prompts based on input mode
+      let prompt: string
+
+      if (url) {
+        // URL mode: fetch the content first, then ask AI to format it
+        try {
+          const response = await fetch(url)
+
+          if (!response.ok) {
+            res.status(400).json({ error: `Impossible d'accéder à l'URL: ${response.status} ${response.statusText}` })
+            return
+          }
+
+          const html = await response.text()
+
+          // Pass the HTML content to the AI to extract and format
+          prompt = `You are a music transcription assistant. Below is the HTML content from a webpage that contains song lyrics and chords. Extract the song's lyrics and chords from this content.
+
+HTML CONTENT:
+${html.substring(0, 50000)}
+
+CRITICAL INSTRUCTIONS:
+- Extract the lyrics and chords from the HTML content provided above
+- You MUST provide accurate lyrics and chords exactly as shown in the content
+- DO NOT make up, invent, or hallucinate any lyrics or chords
+- If you cannot find valid lyrics/chords content, respond with: "ERROR: Cannot extract valid song content from this page"
+- Only provide transcriptions from the actual content
+
+Format the output EXACTLY as follows (this is critical):
+
+1. First line: Song title (extract from the page content)
+2. Second line: Artist name (extract from the page content)
+3. Third line: Musical key (single letter A-G, may include # or b, e.g., "C", "D#", "Bb" - infer if not explicitly stated)
+4. Fourth line: Space-separated tags (e.g., "rock upbeat classic" or leave empty)
+5. Fifth line: BLANK LINE (required)
+6. Then the song content with:
+   - Section headers starting with [ like [Verse 1], [Chorus], [Bridge]
+   - Chord lines (only chords, space-separated)
+   - Lyric lines (the words)
+   - Blank lines between sections
+
+Example format:
+Let It Be
+The Beatles
+C
+classic rock ballad
+
+[Verse 1]
+C                G
+When I find myself in times of trouble
+Am              F
+Mother Mary comes to me
+
+IMPORTANT:
+- Make sure chords are aligned above the correct syllables
+- Use standard chord notation (C, Am, F, G7, Dsus4, etc.)
+- Include section headers
+- The key on line 3 should be just one letter with optional # or b
+- DO NOT add any introductory text or explanations
+- Start immediately with the song title
+
+Extract and format the song content now:`
+        } catch (fetchError: any) {
+          res.status(400).json({ error: `Erreur lors de la récupération de l'URL: ${fetchError.message}` })
+          return
+        }
+      } else {
+        // Search mode: search for song by name and artist
+        prompt = `You are a music transcription assistant with web search capabilities. Search the internet to find accurate lyrics and chords for the song "${songName}" by ${artistName}.
 
 CRITICAL INSTRUCTIONS:
 - SEARCH the web for this song on sites like Ultimate Guitar, Chordify, AZChords, or other chord/lyrics sites
@@ -113,6 +189,7 @@ IMPORTANT:
 - Start immediately with the song title
 
 Find and format "${songName}" by ${artistName} now:`
+      }
 
       const perplexity = createPerplexity({ apiKey })
       const result = await generateText({

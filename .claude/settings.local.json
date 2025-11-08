@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npm run typecheck:*)",
       "Bash(npm run typecheck:server:*)",
-      "Bash(npm run typecheck:client:*)"
+      "Bash(npm run typecheck:client:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []
