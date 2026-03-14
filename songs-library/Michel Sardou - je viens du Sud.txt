@@ -1,0 +1,80 @@
+Je viens du Sud
+Michel Sardou
+G
+Variété 70s
+
+# Intro
+| G   G/F#  | G/F  C/E  | G   G/F#  | G/F  C/E  |
+(version Chimène Badi en B)
+
+# Verse 1
+| G            G/F#          Em7         G/D | C      C  E7/G#
+ J'ai dans le coeur, quelque part, de la mélancolie,
+| Am     Am7/G      Am7/F#     C/E      | D    D7
+ Mélange de sang barbare et de vin d'Italie,
+ | G        G/F#     Em7       G/D       | C      C  E7/G#
+ Un mariage à la campagne tiré par deux chevaux,
+| Am        Am7/G       Am7/F#      C/E        | D    D7
+ Un sentier dans la montagne pour aller puiser l'eau.
+
+
+# Verse 2
+ | G          G/F#     Em7         G/D         | C      C
+ J'ai au fond de ma mémoire des lumières d'autrefois,
+| Am          Am7/G            D        C/E       | D    D7
+ Qu'une très vieille femme en noir illuminait pour moi,
+ | G    G/F#          Em7          G/D      | C      C
+ Une maison toute en pierres que la mer a rongée
+| Am       Am7/G      D           C/E          | D    D7
+ Au-dessus d'un cimetière où les croix sont penchées.
+
+
+# Chorus
+D#dim      | Em   Em7/D     C                    | G/D   D7
+Je viens du sud             et par tous les chemins, j'y reviens.
+
+
+# Verse 3 (Modulation B)
+| B           B/A#         G#m7             B/F#     | E     G#7/B#
+ J'ai dans la voix, certains soirs, quelque chose qui crie,
+| C#m    C#m7/B        C#m7/A#      C#m/G#   | F#       F#7
+ Mélange d'un chant barbare et d'un ciel d'Italie,
+| B          B/A#    G#m7         B/F#             | E     G#7/B#
+ Des colères monumentales que les vents m'ont soufflées,
+| C#m        C#m7/B   C#m7/A#    C#m/G#   | F#       F#7
+ Des discours interminables après le déjeuner.
+
+# Chorus
+G°        | G#m   G#m7/F#      E                 | B    F#
+Je viens du sud                 et par tous les chemins, j'y reviens.
+
+# Verse 4 (retour G)
+ | G        G/F#     Em7       G/D       | C      C
+ J'ai dans le coeur, quelque part, de la mélancolie,
+| Am     Am7/G      Am7/F#     C/E      | D    D7
+ L'envie de mettre à l'heure les horloges de ma vie
+ | G        G/F#     Em7       G/D       | C      C
+ Un sentier dans la montagne quand j'aurai besoin d'eau,
+| Am     Am7/G      Am7/F#     C/E      | D    D7
+ Un jardin dans la campagne pour mes jours de repos,
+ | G        G/F#     Em7       G/D       | C      C
+ Une maison toute en pierres que la mer a rongée
+| Am     Am7/G      Am7/F#     C/E      | D    D7
+ Au-dessus d'un cimetière, où mon père est couché.
+
+
+# Chorus
+D#dim      | Em   Em7/D   C                    | G/D   D7
+Je viens du sud             et par tous les chemins, j'y reviens.
+| Em   Em7/D    C                        |  G    D7
+                       et par tous les chemins, j'y reviens.
+
+
+# Outro (Modulation vers :  Eb )
+| Eb   Eb/D   Cm   Eb/Bb   | Ab           C7
+ Ha ...
+| Fm     Fm7/D#      Fm6/D     Fm/C    | Bb
+
+| Eb   Eb/D   Cm   Eb/Bb   | Ab           C7
+
+| Fm     Fm7/D#      Fm6/D     Fm/C    | Bb

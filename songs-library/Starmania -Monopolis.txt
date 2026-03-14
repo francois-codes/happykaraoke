@@ -1,0 +1,103 @@
+Monopolis
+Starmania - Daniel Balavoine
+C
+Variété comédie_musicale 70s
+
+# Intro
+| C  Cmaj7  | C  Cmaj7 |
+
+
+# couplet 1 (Piano solo)
+| C               Cmaj7                  | Am     Am/G
+  De New York à Tokyo, tout est partout pareil
+| Dm/F               Dm7/F                | Gsus4  G7
+  On prend le même métro, vers les mêmes banlieues
+            | G7    2/4
+Tout le monde à la queue leu leu
+
+# couplet 1 (add bass + strings)
+| C               Cmaj7                | Am     Am/G
+  Les néons de la nuit, remplacent le soleil
+| Dm/F               Dm7/F                    | Gsus4  G7
+  Et sur toutes les radios, on danse le même disco
+          | G7  2/4
+Le jour est gris la nuit est bleue
+
+# Pont
+| C                    Esus4     E7
+    Dans les villes de l'an deux mille
+ | Am             D7
+La vie sera bien plus facile
+| G                  | E7         | Am
+    On aura tous un numéro dans le dos
+         Dsus4      | D7 2/4
+Et une étoile sur la peau
+| G                   E7          | Am 2/4
+    On suivra gaiement   le troupeau
+        | Dsus4  D          | G     G7
+Dans les villes de l'an deux mille
+
+# couplet 2 (Piano solo)
+| C              Cmaj7                  | Am    Am/G
+  Mirabel ou Roissy, tout est partout pareil
+| Dm/F               Dm7/F                  |  Gsus4  G7
+  Tout autour de la terre, on prend les mêmes charters
+        | G7  2/4
+Pour aller où le ciel est bleu
+
+#couplet 2 (add bass + strings)
+| C                   Cmaj7               | Am
+    Quand on ne saura plus, où trouver le soleil
+| Dm/F          Dm7/F           | Gsus4  G7
+    Alors on partira pour Mars ou Jupiter
+            | G7   2/4
+Tout le monde à la queue leu leu
+
+# Pont
+| C                    Esus4     E7
+    Dans les villes de l'an deux mille
+ | Am             D7
+La vie sera bien plus facile
+| G                  | E7         | Am
+    On aura tous un numéro dans le dos
+         Dsus4      | D7 2/4
+Et une étoile sur la peau
+| G                   E7          | Am 2/4
+    On suivra gaiement   le troupeau
+        | Dsus4  D          | G     G7
+Dans les villes de l'an deux mille
+
+# Bridge musical
+| C    Cmaj7/B   | Am    Ammaj7
+
+
+# refrain
+     | C  Cmaj7/B
+Monopolis,
+| Am         Ammaj7        | C    Cmaj7/B
+    il n'y aura plus d'étrangers
+| Am        Ammaj7/G#   | F
+    On sera tous des étrangers
+Gsus4           | G  2/4  | C   Cmaj7/B
+    Dans les rues de Monopolis
+| Am           Ammaj7          | C    Cmaj7/B
+    Marcherons-nous main dans la main
+| Am              Ammaj7/G#        | F   2/4
+    Comme en mille neuf cent quatre-vingts
+| Gsus4             G         | C   Cmaj7/B
+    Tous les deux dans Monopolis
+
+| Am             Ammaj7          | C    Cmaj7/B
+    Quand nos enfants auront vingt an
+| Am              Ammaj7/G# | F   2/4
+    Nous on sera d'un autre temps
+| Gsus4          G         | C   Cmaj7/B | Am  Ammaj7
+    Le temps d'avant Monopolis   (thème violoncelle)
+
+# intermède musical (thème violoncelle)
+| C   Cmaj7/B  | Am   Ammaj7   |  C   Cmaj7/B
+
+| Am           Ammaj7/G#    | F  2/4
+    Je me vois assise sur un banc
+| Gsus4             G       | C
+    Seule au milieu de Monopolis

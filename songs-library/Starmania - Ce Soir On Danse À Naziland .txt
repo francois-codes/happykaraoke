@@ -1,0 +1,131 @@
+Ce Soir On Danse À Naziland
+Starmania
+Gm
+Variété comédie_musicale 70s
+
+# Intro (.=108)
+| Gm7   | Eb   | F    | Gm7   |
+
+| Gm7   | Eb   | F    | Gm7   |
+
+
+# Verse 1
+| Gm7                    | Eb
+    Le soleil brille à Naziland
+| F                        | Gm7   Gm9  Gm7
+  Sur les buildings de cent étages
+| Gm7                           | Eb
+  I've got the whole world in my hand
+| F                      | Gm7
+  Au cent vingt-et-unième étage
+
+# Chorus
+  | G      | C/G
+Ce soir on danse
+  | Eb9   | Cm7/Eb
+Ce soir on danse
+  | Cm7sus4/Eb      | Gm   Gm/F  |  Gm/Eb   Gm/D |
+On danse à Naziland
+
+# Verse 2
+| Gm7                          | Eb
+    On vit déjà cent pieds sous terre
+| F                         |Gm7   Gm9  Gm7
+    C'est le retour aux catacombes
+| Gm7                             | Eb
+    Derrière les murs des grandes artères
+| F                                | Gm7
+    L'homme ne voit plus jamais son ombre
+
+| Gm                     | Eb
+    La ville a étendu ses ailes
+| F                         | Gm7   G7sus4  Gm7
+    Sur toute la grandeur du pays
+| Gm7                          | Eb
+    Les néons flashent dans le ciel
+| F                         | Gm7
+    Et le jour ressemble à la nuit
+
+# Chorus
+  | G      | C/G
+Ce soir on danse
+  | Eb9   | Cm7/Eb
+Ce soir on danse
+  | Cm7sus4/Eb      | Gm   Gm/F  |  Gm/Eb   Gm/D |
+On danse à Naziland
+
+# Riffs Guitar
+| Gm7    NC  | D7sus4  D7  2/4  |
+(Riff)         (Ce soir on danse)
+| Gm7    NC  | D7sus4  D7  2/4  |
+(Riff)         (Ce soir on danse)
+
+# Instrumental + strings
+| Gm         | G            | C/G       | Ebmaj7    |
+...
+| Eb         | Ebadd2      |  D7sus4  D7  2/4  |
+                            (Ce soir on danse)
+| Gm         | G            | C/G       | Ebmaj7    |
+...
+| Eb         | Ebadd2      |  D7sus4  D7  2/4  |
+                            (Ce soir on danse)
+| Gm         | G            | C/G       | Ebmaj7    |
+...
+| Eb         | Ebadd2      |  D7sus4  D7  2/4  |
+                            (Ce soir on danse)
+
+# Verse 3 (+ Strings)
+| Gm7                    | Eb
+  Le soleil brille à Naziland
+| F                        | Gm7   Gm9  Gm7
+  Sur les buildings de cent étages
+| Gm7                           | Eb
+  I've got the whole world in my hand
+| F                      | Gm7
+  Au cent vingt-et-unième étage
+
+| Gm7                       | Eb
+  Autour de nous il tombe des bombes
+| F                        | Gm7   Gm9  Gm7
+  Plus besoin de creuser nos tombes
+| Gm7                       | Eb
+  On est tous des morts en vacances
+| F                             | Gm7
+  Mais on s'en fout ce soir on danse
+
+# Chorus
+  | G      | C/G
+Ce soir on danse
+  | Eb9   | Cm7/Eb
+Ce soir on danse
+  | Cm7sus4/Eb      | Gm   Gm/F  |  Gm/Eb   Gm/D |
+On danse à Naziland  (aaaaaaaaaaaaaah)
+| Gm7   | Eb   | F    | Gm7   |
+(Instrumental)
+| Gm7   | Eb   | F    | Gm7   |
+(Instrumental)
+
+# Instrumental refrain + riffs guitar
+| G     | C/G     | Eb9   | Cm7/Eb
+(instumental)
+| Cm7sus4/Eb      | Gm   Gm/F  |  Gm/Eb   Gm/D |
+(instumental)
+| Gm7    NC  | D7sus4  D7  2/4  |
+(Riff)         (Ce soir on danse)
+| Gm7    NC  | D7sus4  D7  2/4  |
+(Riff)         (Ce soir on danse)
+
+# Outro Instrumental Ce soir on danse
+| Gm         | G            | C/G       | Ebmaj7    |
+(instumental)
+| Eb         | Ebadd2       | D7sus4  D7  2/4  |
+...                          (Ce soir on danse)
+| Gm         | G            | C/G       | Ebmaj7    |
+(instumental)
+| Eb         | Ebadd2       | D7sus4  D7  2/4  |
+...                          (Ce soir on danse)
+| Gm7    NC  | D7sus4  D7  2/4  |
+(Riff)         (Ce soir on danse)
+
+| Gm7    NC  | D7sus4  D7  2/4  |
+(Riff)         (Ce soir on danse)

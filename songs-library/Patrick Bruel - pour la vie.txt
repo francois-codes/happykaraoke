@@ -1,0 +1,143 @@
+Pour la vie
+Patrick Bruel
+C
+english disco 80s
+
+[Intro]
+| D    | Bm/D   | G/D   | Asus4/D  A/C#  |
+
+| D    | Bm/D   | G/D   | Asus4/D  A     |
+
+
+[Verse]
+         | D
+On est parti, c'était fin juin
+          | Bm
+S'est embrassé, serré la main
+       | G
+Un pour tous et tous pour un
+        | Asus4             A
+Et puis chacun a pris son train
+
+    | D
+On avait tous aussi peur
+          | Bm
+On s'est juré la main sur l'coeur
+            | G
+Qu'on s'reverrait avant 10 ans
+       | Asus4
+On s'est revu et maint'nant
+
+[Bridge]
+      | F#m
+De temps en temps, on s'invite
+          | Em
+Même si, souvent, on s'évite
+         | G
+On s'dit, bien sûr, j'm'en souviens
+              | D             | Dsus4      D
+Mais on s'rappelle de moins  en moins
+          | Bm
+Ça n'nous a pas rendu amer
+            | Em
+On sait bien qu'on n'peut rien y faire
+
+[Chorus]
+       | D            | Bm
+C'est la vie, c'est la vie
+            | G
+C'est la vie qui nous change
+   Em                    | Asus4             A
+Et qui dérange toutes nos grandes idées sur tout
+
+        | D          | Bm
+C'est la vie, c'est la vie
+            | G
+C'est la vie qui décide
+  Em               
+Et qui nous file des rides
+      | Asus4           A
+Au coin des yeux et du coeur
+
+     | Am
+A quoi ça sert d'aller contre
+      | Em
+On perd son temps
+       | Em7b5
+Et quand on r'garde à nos montres
+     | Asus4         A
+Tout à coup, on comprend
+
+[Verse]
+         | D
+Y'en a qui ont fait des enfants
+      | Bm
+Y'en a d'autres qui ont dit "J'attends"
+   | G
+On a tous aimé des femmes
+       | Asus4
+On s'est tous trouvé du charme
+
+      | D
+On est tous dev'nu quelqu'un
+        | Bm
+Dans son quartier ou plus loin
+         | G
+Bien sûr, on s'est perdu d'vue
+            | Asus4
+Mais on n'appelait pas ça "perdu"
+
+[Bridge]
+       | F#m
+On s'est traité d'tous les noms
+       | Em
+On s'est tombé dans les bras
+   | G
+On a pas osé dire "non"
+         | D                 Dsus4        D
+On a dit "oui" quand fallait pas
+        | Bm
+Ca n'nous a pas empêché
+     | Em
+De continuer à s'aimer
+
+[Chorus]
+      | D          | Bm
+Pour la vie, pour la vie
+          | G
+Pour la vie qui nous change
+ | Em                    | Asus4             A
+Et qui dérange Toutes nos p'tites idées sur tout
+      | D           | Bm
+Pour la vie, pour la vie
+           | G
+Pour la vie qui décide
+          | Em
+Et qui nous file des rides
+     | Asus4             A
+Au coin des yeux et du coeur
+
+     | Am
+Pas besoin de faire semblant
+         | Em
+Ca sert à rien
+         | Em7b5
+Chaque jour qui passe on apprend
+                 | Asus4         A
+Qu'on peut jouer sans être comédien
+
+[Solo + modulation]
+| E    | C#m/E   | A/E   | Bsus4/E  B/D#  |
+
+[Bridge]
+    | Bm
+A quoi ça sert d'aller contre
+       | F#m
+Ca sert à rien
+       | F#m7b5
+Chaque jour qui passe on apprend
+       | Bsus4  B        | ( E ) ->
+Qu'on suit tous    le même chemin
+
+[outro]
+| E    | C#m/E   | A/E   | Bsus4/E  B/D#  |

@@ -1,0 +1,111 @@
+Bohémienne
+Notre Dame de Paris
+Am
+comédie_musicale 90s
+
+# Refrain
+| Am7                | Am7                     | Am7 (2/4)
+  Bohémienne, Nul ne sait le pays d'où je viens
+| F         | G4                     | C
+  Bohémienne, Je suis fille de grands chemins
+| Am        | F
+  Bohémienne, bohémienne
+| G4        Em7           | Am7
+  Qui peut dire où je serai demain
+| F            Am7
+  Bohémienne, bohémienne
+| Dm7     Em7                     |  A    |  A
+  C'est écrit dans les lignes de ma main
+
+# Couplet
+(A)                      | A9
+Ma mère me parlait de l'Espagne
+                   |  A
+Comme si c'était son pays
+(A)                       | D
+Et des brigands dans les montagnes
+(D)                         | Dm
+Dans les montagnes d'Andalousie
+E4                         |  A
+  Dans les montagnes d'Andalousie
+
+(A)                   | A9
+Je n'ai plus ni père ni mère
+                      | A
+J'ai fait de Paris mon pays
+                       | D
+Mais quand j'imagine la mer
+                    | Dm
+Elle m'emmène loin d'ici
+E4                         | A      Bb
+Vers les montagnes d'Andalousie
+
+# Refrain
+| Dm
+Bohémienne
+| Dm                            | Dm7 (2/4)
+    Nul ne sait le pays d'où je viens
+| Bb9
+  Bohémienne
+| C4                          | F9  
+    Je suis fille de grands chemins
+| Dm        | Bb
+  Bohémienne, bohémienne
+| C4         Am               | Dm7
+    Qui peut dire qui j'aimerai demain
+| Bb        | Dm7
+  Bohémienne, bohémienne
+| Gm        Am7                  NC | (Dm)
+    C'est écrit dans les lignes de ma main
+
+# instru
+| Dm    Dm/C    Dm/Bb    Dm/A  |  Dm    Dm/C    Dm/Bb    Dm/A  |
+
+# Couplet
+| Dm      Dm/C     Dm/Bb  Dm/A
+  J'ai passé toute mon enfance
+| Dm          Dm/C         Dm/Bb   Dm/A
+    Pieds nus sur les monts de Provence
+| Dm         Dm/C      Dm/Bb     F
+    Pour les gitans la route est longue
+  | F (1/4)  | A4
+La route est longue
+| Dm       Dm/C    Dm/Bb   Dm/A
+    Je continuerai mon errance
+| Dm     Dm/C      Dm/Bb   Dm/A
+    Au-delà des chemins de France
+| Dm       Dm/C       Dm/Bb     F
+    Je les suivrai au bout du monde
+  | F (1/4)  | A4
+Au bout  du  monde
+
+# Bridge
+  | Gm   C7        | F
+Un fleuve  d'Andalousie
+Bb              | Gm/E
+   Coule dans mon sang
+A7              | D4    D
+  Coule dans mes veines
+ | Gm   C7         | F
+Le ciel   d'Andalousie
+Bb          | Gm/E
+  Vaut-il la peine
+A7          | D4    D   | D  B/D# (2/4)
+Qu'on y revienne
+
+# Refrain
+| Em7             | Em7                      | Em7 (2/4)
+  Bohémienne, nul ne sait le pays d'où je viens
+| C        | D4                          | G
+  Bohémienne,   je suis fille de grands chemins
+| Em        | C
+  Bohémienne, bohémienne
+| D4         Bm               | Em7
+    Qui peut dire ce que sera demain
+
+| C         | Em7
+  Bohémienne,   bohémienne
+| Am        Bm7                     | Em7
+    C'est écrit dans les lignes de ma main
+| Am                    | Bm7         | Em7     | Em7
+    C'est écrit dans les lignes de ma main

@@ -1,0 +1,112 @@
+Le blues du businessman
+Starmania
+Em
+Variété comédie_musicale 70s
+
+[Intro guitar .=137]
+| Em   | Em   |
+
+[Verse 1 + rhodes]
+| Em          A7            | D
+  J’ai du succès dans mes affaires
+     G                  | C
+J'ai du succès dans mes amours
+                      | Bsus4/F#  B7
+Je change souvent de secrétaire
+| Em            A7               | D
+    J'ai mon bureau en haut d'une tour
+         G                 | C
+D'où je vois la ville à l'envers
+                       | Bsus4 B
+D'où je contrôle mon univers
+
+[Verse 1 + bass]
+| Em                A           | D
+    Je passe la moitié de ma vie en l'air
+          G          | C/E
+Entre New-York et Singapour
+                        | Bsus4/E    E7
+Je voyage toujours en première
+| Am7          D          | G
+    J'ai ma résidence secondaire
+              C/E        | F
+Dans tous les Hilton de la terre
+                        | Esus4    E7
+J'peux pas supporter la misère
+
+[Bridge et Vers2 + add drums]
+| Em            Am    Em
+  (Au moins, est-tu heureux ?)
+             | A7b9              D
+J'suis pas heureux mais j'en ai l'air
+        | Gmaj7         C/E
+J'ai perdu le sens de l'humour
+              | C/E              Bsus4/F# | B 2/4
+Depuis que j'ai le sens des affaires
+| Em        A             | D
+   J'ai réussi et j'en suis fier
+             G              | C/E
+Au fond, je n'ai qu'un seul regret
+                               | B7sus4   B7
+J'fais pas ce que j'aurais voulu faire
+
+[Bridge choeur]
+| Em               Am         Em
+  (Qu'est-ce que tu veux, mon vieux ?)
+          | A7b9               D
+(Dans la vie, on fait ce qu'on peut)
+              |  N.C.
+(Pas ce qu'on veut....)
+
+[Chorus]
+                        | D       Dmaj7
+J'aurais voulu être un artiste
+| Gmaj7                     | F#7sus4    F#7
+    Pour pouvoir faire mon numéro
+| F#7                           | Em     Em7
+    Quand l'avion se pose sur la piste
+| A          A/G    | D     Dmaj7
+    À Rotterdam ou à Rio
+| A    A/G    A/F#    A/E     | D     Dmaj7
+  J'aurais voulu être un chanteur
+| Gmaj7                       | F#7sus4    F#7
+    Pour pouvoir crier qui je suis
+| F#7                       | Em     Em7
+    J'aurais voulu être un auteur
+| A              A/G        | D     Dmaj7
+    Pour pouvoir inventer ma vie
+| Gmaj7                     | F#7sus4  F#
+    Pour pouvoir inventer ma vie
+
+| A  N.C.                    | D       Dmaj7
+    J'aurais voulu être un acteur
+| Gmaj7                          | F#7sus4    F#7
+    Pour tous les jours changer de peau
+| F#7                         | Em     Em7
+    Et pour pouvoir me trouver beau, oh, oh
+| A              A/G        | D     Dmaj7
+    Sur un grand écran en couleurs
+| Gmaj7                       | F#sus4  F#
+     Sur un grand écran en couleurs
+
+| F5   N.C.                   | D       Dmaj7
+    J'aurais voulu être un artiste
+| G                         | F#7sus4    F#7
+    Pour avoir le monde à refaire
+| F#7                    | Em     Em7
+    Pour pouvoir être un anarchiste
+| A          A/G           | D     Dmaj7
+    Et vivre comme un millionaire
+| Gmaj7                    | F#sus4  F#
+    Et vivre comme un millionaire
+
+[Outro]
+| A N.C.                     | D       Dmaj7
+    J'aurais voulu être un artiste
+| G             | F#7sus4    F#7
+            Hou,hou,
+| F#7        | Em     Em7
+      Fadeli, fadelo
+| A                              | D     Dmaj7
+    Pour pouvoir dire pourquoi j'existe
+| G     D

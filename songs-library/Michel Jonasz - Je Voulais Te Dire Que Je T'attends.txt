@@ -1,0 +1,105 @@
+Je Voulais Te Dire Que Je T'attends
+Michel Jonasz
+F
+chanson_française variété 00s
+
+# Intro
+| Cm    | Cm    |
+
+# Verse 1
+ | Bb/D   Dm       Bb/D    Dm    | C#dim7
+ Je   mettrai mon coeur dans du papier d'argent,
+ | A        A7     A   A7    | Dm          F/C
+    Mon numéro d'appel aux abonnés absents.
+ | Bb                            | Am
+    Mes chansons d'amour resteront là dans mon piano.
+ | Gm7              C7     | Fmaj7
+   J'aurai jeté la clé du piano dans l'eau.
+
+| F#m7            B9         | F#m7
+  J'irai voir les rois de la brocante :
+             B7                  | E     G#m/D#
+ "Vendez mon coeur trois francs cinquante !"
+           C#m     D#7  | G#m
+ Tu savais si bien l'écouter
+        F#m7        |  B7
+ Que ma vie s'est arrêtée
+ Dm7             | G   Dm7/A   G7/B
+ Quand tu m'as quitté.
+
+
+# Chorus 1
+| C     Cmaj7   C       Cmaj7  | Dm7   Dm6   Dm7   Dm6
+ Je voulais te dire que je  t'attends
+| Dm7  Dm6     Dm7   G7      | C    Cmaj7   C   G/B
+  Et  tant pis si je perds mon temps.
+| Am     Asus2  Am        Asus2         | D7   D6
+ Je t'attends,    je t'attends tout  le  temps
+ D7       | G           B7
+  Sans me décourager pourtant.
+
+| C                             | C#dim7
+  Comme quelqu'un qui n'a plus personne
+ F#9          | Bm7       E7
+  S'endort près de son téléphone,
+ | C   Cmaj7  C       Cmaj7  | Dm7   Dm6
+    Et sourit quand on le   réveille
+            Dm7      G7  | C
+ Mais ce n'était que le  soleil.
+
+
+# Verse 2
+| Bb/D    Dm     Bb/D     Dm         |  C#dim7
+  L'autre jour, j'ai vu   quelqu'un qui te ressemble
+ | A      A7   A    A7        | Dm              F/C
+    Et la rue était comme une photo qui tremble.
+| Bb                            | Am
+  Si c'est toi qui passes le jour où je me promène,
+ | Gm7                 C7           | Fmaj7
+     Si c'est vraiment toi, je vois déjà la scène.
+| F#m7         B7
+ Moi, je te regarde
+| Dm7        G   | Dm7/A    G7/B   (2/4)
+ Et tu me regardes.
+
+# Chorus 1
+| C     Cmaj7   C      Cmaj7   | Dm7   Dm6   Dm7   Dm6
+ Je voulais te dire que je  t'attends
+| Dm7  Dm6     Dm7   G7      | C    Cmaj7   C   G/B
+  Et  tant pis si je perds mon temps.
+ | Am    Asus2  Am        Asus2        | D7   D6
+ Je t'attends, je t'attends tout  le  temps
+D7         |  G              B7
+  Ce soir, demain, n'importe quand.
+
+| C                              | C#dim7
+    Comme quelqu'un qui n'a plus personne
+ F#9          | Bm7       E7
+  S'endort près de son téléphone,
+ | C   Cmaj7  C       Cmaj7 | Dm7   Dm6
+   Et qui te cherche à son réveil,
+              Dm7    G7   (NC)
+ Tout seul au soleil, j'attends...
+
+# Chorus 2
+| E     Emaj7  E       Emaj7  | F#m7   F#m6
+ Je voulais te dire que je   t'attends
+         F#m7       B   | C#m
+ Si tu savais comme je t'attends !
+    C#sus2  C#m    C#sus2    | F#m7   F#m6
+ Je t'attends, je t'attends tout le temps.
+             F#m7   B7
+ Quand seras-tu là ? Je t'attends.
+
+# Chorus 2
+| E     Emaj7  E       Emaj7  | F#m7   F#m6
+ Je voulais te dire que je   t'attends
+         F#m7       B   | C#m
+ Si tu savais comme je t'attends !
+    C#sus2  C#m    C#sus2    | F#m7   F#m6
+ Je t'attends, je t'attends tout le temps.
+               F#m7   | B7
+ Je voulais te dire que je t'attends.
+
+# Ending
+| E    | C    | E    | C    | E

@@ -25,6 +25,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     socket,
     ({ type, value }) => {
       if (scrollMaster) {
+        console.log('scrollMaster', value)
         return
       }
 
@@ -61,6 +62,10 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
         case ScrollEventType.TOP:
           currentScrollRef.current = 0
           return scroller.scrollToTop()
+        case ScrollEventType.NEXT_SECTION:
+          return scroller.nextSection()
+        case ScrollEventType.PREVIOUS_SECTION:
+          return scroller.previousSection()
         case ScrollEventType.POSITION: {
           if (musicienScroll) {
             scroller.stopScrolling()

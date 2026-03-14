@@ -1,0 +1,49 @@
+Vole
+Céline Dion
+E
+Variété 90s
+
+# intro
+| E     | E/C#    | A   B  |
+
+
+# Couplet 1
+| E                 | E
+Vole vole petite aile ma douce, mon hirondelle
+| E/C#                      | E/C#  
+Va t'en loin, va t'en sereine,    qu'ici rien ne te retienne
+| A                       | A
+Rejoins le ciel et l'éther, laisse-nous, laisse la terre
+| A/F#                   | B
+Quitte manteau de misère, change d'univers
+
+
+| E                       | E
+Vole vole petite soeur vole mon ange, ma douleur
+| E/C#                               | E
+    Quitte ton corps et nous laisse qu'enfin ta souffrance cesse
+| A                           | A
+    Va rejoindre l'autre rive celle des fleurs et des rires
+| A/F#                     | B
+Celle que tu voulais tant, ta vie d'enfant
+
+# chorus
+| E                | E                            E/D#
+Vole vole mon amour puisque le notre est trop lourd
+| C#m                    | C#m                      C#m7/B
+Puisque rien ne te soulage vole à ton dernier voyage
+| A                      | A                      A/G#
+Lâche tes heures épuisées vole, tu l'as pas volé
+| F#m                       | B
+Deviens souffle, sois colombe pour t'envoler
+
+# instrumental vibes
+| E        | E      E/D# | E/C#    | E/C#    C#m7/B  |
+
+| A        | A           | B       | B    
+
+# outro
+| E                     | E
+Vole vole petite flamme vole mon ange, mon âme
+| E/C#                   | Amaj7       NC
+Quitte ta peau de misère va retrouver la lumière

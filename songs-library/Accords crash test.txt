@@ -1,0 +1,48 @@
+Accords Crash test
+Crash test
+C
+
+
+# Chorus
+Fdim7      B7b5     G7b9      NC    (NC)   Amsus4  B7sus
+Cette chanson est vraiment pleine d'horribles accords abominables
+E°7    Edim7    Edim   Fm7b5   E7b5    Cø    CdimM7  Cm7-5
+On est pas du tout content quand on doit la jouer (oh non non non )
+Gb9   Cm9     Fm6/D    F6    Bb6
+Oh mais que voilà de jolis accords
+Gaug     G7+5    Caug7    G7#5    BbMaj7   Amaj7  A△  Bbmaj7   F7+
+ILs sont colorés, c'est un régal de tous les instants
+Db7M          DmM7           DmMaj7
+Encore, encore, je veux de ces merveilleux accords
+C-7     Bb-7           C2    C4   B7sus2
+Cette chanson est vraiment pleine d'horribles accords abominables
+C5                 D5
+Et des accords de punk à chien
+Abmaj9       AbM9     AbM9  Gm9b5
+Des nouveaux accords en 9 (parfois tricky)
+Bsus2b5   F#7sus4/B  F#7sus4   Bsus2b5/A
+Rapport à mylène farmer
+Amadd2    Amadd9
+Oh des additions
+
+# Accords à la fin de la ligne
+    Amadd2                      | Amadd9  Am7  | D7/C  D7 |
+Des lignes avec des accords à la fin
+| Cdim7                          | F#m/C# | C#
+        Qu'elles s'arrachent ma vertu
+        | D7      | Gm7   | Gm6   | Gm7  | Gm6
+En chantant jusqu'au bout
+| G     C/G    G   | G  C/G  G  | G   C/G  G
+Et les toits grattent le ciel
+       | Em
+Les eaux des torrents sont violence
+| D           C    | G  C/G  G  | G   C/G  G
+Et les neiges sont éternelles
+
+# Je compte bizarre, j'aime l'asymétrique
+Amadd2   3/8              | Amadd9  Am7 2/4
+Des lignes avec des accords à la fin
+| Am
+    C'est bizarre le C' en début de ligne avec 2 espaces avant
+  | A#dim         B7sus  B7
+Fout le bazar dans la grille (surtout si on transpose)

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
 import { useDispatch, useStore } from '@/store'
+import { sleep } from '@/utils'
+import { fetchSessionConfig, refreshSession } from '@shared/endpoints/session'
 import { fetchUser } from '@shared/endpoints/user'
 import { UserType } from '@shared/types'
-import { fetchSessionConfig, refreshSession } from '@shared/endpoints/session'
-import { useNavigate } from 'react-router-dom'
-import { sleep } from '@/utils'
 import { AxiosError } from 'axios'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export function useScreenInit({ shouldAnimateLoader = true } = {}) {
   const [userInitialized, setUserInitialized] = useState(false)
@@ -28,7 +28,10 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
           const { user } = await fetchUser.call({ id: numberId })
 
           if (user) {
-            dispatch({ isAdmin: user.type === UserType.ADMIN, scrollMaster: true })
+            dispatch({
+              isAdmin: user.type === UserType.ADMIN,
+              scrollMaster: user.type === UserType.ADMIN
+            })
 
             // If admin user is auto-logged in, refresh session to ensure validity
             if (user.type === UserType.ADMIN) {

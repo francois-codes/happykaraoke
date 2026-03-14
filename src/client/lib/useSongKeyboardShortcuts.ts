@@ -116,6 +116,8 @@ export function useSongKeyboardShortcuts({
       disable: () => !isAdmin || searchOpen || transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         scroller.nextSection()
+        // Emit socket event to synchronize with other clients
+        setScroll.call({ type: ScrollEventType.NEXT_SECTION })
       }
     },
     [isAdmin, transpoOpen, searchOpen, scroller, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
@@ -129,6 +131,8 @@ export function useSongKeyboardShortcuts({
       disable: () => !isAdmin || searchOpen || transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
         scroller.previousSection()
+        // Emit socket event to synchronize with other clients
+        setScroll.call({ type: ScrollEventType.PREVIOUS_SECTION })
       }
     },
     [isAdmin, transpoOpen, searchOpen, scroller, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]

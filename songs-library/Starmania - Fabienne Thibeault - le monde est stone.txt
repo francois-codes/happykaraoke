@@ -1,0 +1,80 @@
+Le monde est stone
+Starmania - Fabienne Thibeault
+C
+Variété comédie_musicale 70s
+
+
+[Intro]
+| Fmaj7   | E7    | Dm7   | C   |
+
+| Fmaj7   | E7    | Dm7   | C   |
+
+| Fmaj7   | E7    | C#m   | C   |
+
+| N.C.                    | N.C.
+    J'ai la tête qui éclate, j'voudrais seulement dormir
+| N.C.                      | N.C.
+    M'étendre sur l'asphalte,     et me laisser mourir
+
+
+[Chorus]
+| C    Em/B            | Am    Am7/G
+  Stone,   le monde est stone,
+                | F  Fmaj7              | F/G  G
+Je cherche le soleil,     au milieu de la nuit
+                     | C    Em/B                | Am  Am7/G
+J'sais pas si c'est la terre,   qui tourne à l'envers,
+               | F  Fmaj7                | F/G  G
+Ou bien si c'est moi,   qui m'fais du cinéma,
+                 | Cm
+Qui m'fais mon cinéma
+| Fm     Db     | Csus4  C  Fm      | Fm      Db     |
+(instrumental)
+| Csus4 2/4      | Db  Fm/C             | Bbm7  Eb
+  Je cherche le soleil,    au milieu de ma nuit
+| Dbsus4  Db | G7sus4  G7
+(instrumental)
+
+| C    Em/B            | Am    Am7/G
+  Stone,   le monde est stone,
+| F  Fmaj7  | F/G  G
+(aaaah)
+| C  Em/B  | Am  Am7/G  | F  Fmaj7  | F/G  G
+(aaaah)
+| C  Em/B  | Am  Am7/G  | F  Fmaj7  | Dm/G  G  | Cm
+(aaaah)
+
+[Verse]
+| Fm                   Db      | C7                   Fm
+    J'ai plus envie d'me battre,    j'ai plus envie d'courir,
+| Fm                   Db  | C7                   Db
+    Comme tous ces automates    qui bâtissent des empires,
+| Fm/C               Bbm7  | Bbm7/Ab 2/4             | Dm
+    Que le vent peut détruire,  comme des châteaux de cartes
+| D   Dsus4  D  | Gsus4  G7
+
+[refrain]
+| C    Em/B            | Am    Am7/G
+  Stone,   le monde est stone,
+| F  Fmaj7  | F/G  G
+
+                | C   Em/B                | Am  Am7/G
+Laissez-moi me débattre,   venez pas m'secourir,
+               | F   Fmaj7                      | Gsus4  G7
+Venez plutôt m'abattre,    pour m'empêcher d'souffrir,
+                  | C  Em/B                       | Am  Am7/G
+J'ai la tête qui éclate,    j'voudrais seulement dormir
+                  | F  Fmaj7                 | Gsus4  G7 | C#dim/A  A7
+M'étendre sur l'asphalte,    et me laisser mourir
+
+[refrain modulation + 1 ton]
+                | D   F#m7/C#                | Bm  Bm7/A
+Laissez-moi me débattre,     venez pas m'secourir,
+               | G    Gmaj7                    | Asus4  A7
+Venez plutôt m'abattre,     pour m'empêcher d'souffrir,
+                  | D  F#m7/C#                     | Bm  Bm7/A
+j'ai la tête qui éclate,     j'voudrais seulement dormir
+                  | G  Gmaj7                | Asus4
+M'étendre sur l'asphalte,     et me laisser mourir,
+A7                | D
+  et me laisser mourir

@@ -1,0 +1,109 @@
+C'est dit
+Calogero
+Bm
+10s Variété
+
+
+[Intro]
+| Bm      | Em7     | A7    | Bm    |
+
+| Bm      | F#      | F#7   | Gmaj7 |
+
+| Gmaj7   | Em7     | A7    | Dmaj7 |
+
+| D6      | Gmaj7   | G     | Em7   |
+
+| Em7     | F#      | F#7   |
+
+| Bm      | Bm      | Bm    | Bm    |
+
+
+[Couplet 1]
+| Bm              | Em7
+  Des chansons, des filles
+         | A7             | Bm
+  Beaucoup de verres et de nuits
+| Bm               | F#
+  Telles étaient nos heures
+| F#7              | Gmaj7
+  Telles étaient nos vies
+| Gmaj7   | Em7            | A7          | Dmaj7
+  Futiles adolescents, tout nous était permis
+| D6        | Gmaj7     | G     | Em7
+  Rois de pacotille, princes démunis
+| Em7          | F#        | F#7
+  On n'est riche que de ses amis
+      | Bm   | Bm   | Bm  | Bm  |
+  C'est dit
+
+[Couplet 2]
+| Bm            | Em7
+  Le temps des tempêtes arrive
+| A7                | Bm
+  Avant qu'on l'ait prédit
+| Bm        | F#
+  Amours impossibles
+  | F#7       | Gmaj7
+  Défaites, ironies
+| Gmaj7        | Em7
+  Quand tout s'abîme
+        | A7         | Dmaj7
+  Quand même nos rêves fuient
+  | D6            | Gmaj7 | G         | Em7
+  Il ne reste qu'une île, un port, un parti
+| Em7           | F#        | F#7
+  On n'est riche que de ses amis
+      | Bm  | Bm  | Bm  | Bm
+  C'est dit,                c'est dit
+
+[Piano solo]
+| Bm      | Em7     | A7    | Bm    |
+
+| Bm      | F#      | F#7   | Gmaj7 |
+
+| Gmaj7   | Em7     | A7    | Dmaj7 |
+
+| D6      | Gmaj7   | G     | Em7   |
+
+| Em7     | F#      | F#7   | F#7   | F#7   |
+
+
+[Couplet 3 modulation +1/2 ton]
+| Cm               | Fm7
+  Mais quand tout s'allume
+            | Bb7        | Cm
+  Quand tout, enfin, nous sourit
+| Cm          | G7
+  Gloire, fête, symphonie
+| G7             | Abmaj7
+  Bravos, bijoux, frénésie
+| Abmaj7     | Fm7         | Bb7         | Ebmaj7
+  Quand on me saoule d'imposture ou d'amnésie
+| Eb6        | Abmaj7
+  Honneur et fortune
+      | Ab           | Fm7       | Fm7
+  Qu'en sais-je aujourd'hui?
+| Fm7            | G          | G7    | G7  | G7
+  Je ne suis riche que de mes amis
+      | Cm ->
+  C'est dit
+
+[Piano solo]
+| (Cm)   | Fm7   | Bb7     | Cm      |
+
+| Cm     | G     | G7      | Abmaj7  |
+
+| Abmaj7 | Fm7   | Bb7     | Ebmaj7  |
+
+
+[Outro]
+| Eb6        | Cm
+  Honneur et fortune
+    | Ab            | Fm7
+Qu'en sais-je aujourd'hui?
+  | Fm7          | G         | G7
+Je ne suis riche que de mes amis
+| G7   | G7
+  Mes amis
+    | Cm   | Cm   | Cm   | Cm   | Cm NC
+C'est dit

@@ -1,0 +1,70 @@
+Ouverture
+Starmania
+Eb
+Variété comédie_musicale 70s
+
+# Intro (. = 63)
+| Eb        | Bb    Bb7
+Piano, nappe violon
+| Eb        | Bb    Cm Am7b5 | Gm7 Gm  Gm/F
+...
+| Eb        | Bb    Bb7
+Thème violon
+| Eb        | Bb    Cm Am7b5 | Gm7 Gm/F
+...
+| Eb        | Bb    Bb7
+Thème violon reprise
+| Eb        | Bb    Cm Am7b5 | Gm  Gm/F  Gm/Eb      | Dsus4 D 2/4
+...
+
+
+# r1 x12 (. = 92)
+| 5/4 Gm  Eb  Bb  F  Gm | Gm Eb  Bb  F  Gm  |
+      Riff piano           Riff piano
+| 5/4 Gm  Eb  Bb  F  Gm | Gm Eb  Bb  F  Gm  |
+      + basse/batterie
+| 5/4 Gm  Eb  Bb  F  Gm | Gm Eb  Bb  F  Gm  |
+...
+| 5/4 Gm  Eb  Bb  F  Gm | Gm Eb  Bb  F  Gm  |
+      + doublure violon                (hey !)
+| 5/4 Gm  Eb  Bb  F  Gm | Gm Eb  Bb  F  Gm  |
+                    (hey !)
+| 5/4 Gm  Eb  Bb  F  Gm | Gm Eb  Bb  F  Gm  |
+      + contrechant violon
+
+# 2x r2 + r3 + transition majeur
+| Gm      Eb  Gm    | 2/4 A7  D7  |
+  Riff 2
+| Gm      Eb  Gm    | 2/4 A7  D7  |
+  Riff 2
+| Gm                | Eb  Bb  F Gm |
+  Riff 3
+| G      C/G       | Ebmaj7   Eb   | Eb2 2/4
+  Transition majeur
+| G  G/F  G/Eb  G/D
+...
+
+# 2x r1 + r2 + 2x r3 + transition majeur
+| 5/4 Gm  Eb  Bb  F  Gm | Gm Eb  Bb  F  Gm  |
+      Riff 1
+| Gm      Eb  Gm    | 2/4 A7  D7    |
+      Riff 2
+| Gm                | Eb  Bb  F Gm  |
+      Riff 3
+| Gm                | Eb  Bb  F Gm  |
+      Riff 3
+| G      C/G       | Ebmaj7   Eb   | Eb2 2/4
+  Transition majeur
+| G  G/F  G/Eb  G/D
+...
+
+# 2x r1 + r2 + 2x r3
+| 5/4 Gm  Eb  Bb  F  Gm | Gm Eb  Bb  F  Gm  |
+      Riff 1        (Hey !)
+| Gm      Eb  Gm   | 2/4 A7  D7   |
+Riff 2
+| Gm               | Eb  Bb  F Gm |
+      Riff 3
+| Gm               | Eb  Bb  F Gm |
+      Riff 3
+| C         |

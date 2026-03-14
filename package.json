@@ -19,7 +19,9 @@
     "install:deps:web": "cd node_modules/better-sqlite3 && npx node-gyp rebuild --debug --build-from-source --runtime=node --target=24.11.0",
     "db:migration:generate": "npm exec drizzle-kit generate --out migrations --schema ./src/shared/db/schema.ts",
     "db:migration:run": "npm exec drizzle-kit push",
-    "db:seed": "tsx ./src/shared/db/seed.ts"
+    "db:seed": "tsx ./src/shared/db/seed.ts",
+    "test:invariants": "jest tests/invariants/ || vitest tests/invariants/",
+    "demo:sync": "npm start -- --demo-sync"
   },
   "engines": {
     "node": ">=24.0.0"

@@ -1,0 +1,45 @@
+Petite Musique Terrienne
+Starmania
+C
+Variété comédie_musicale 70s
+
+# Intro
+| C
+
+# couplet 1 (piano + strings)
+| C                       | G    G7
+  Y'a plus d'av'nir sur la terre
+| C                              | G
+  Y'a quelque chose qui tourne pas rond
+Am         D7    | Em  Em7
+Dans l'système solaire
+
+# couplet 2
+| Csus2   C                  | G  G7
+  Y'a-t-il quelqu'un dans l'univers
+| C                            | G
+  Qui puisse répondre à nos questions
+Am   D7   | Em    C      | Bsus4  B
+   A nos prières,   à nos prières
+| Em  Asus4  A7  | Dsus4     D7
+(instrumental)
+
+# Refrain 1 (+ basse)
+| Gm         F#dim
+  Qui nous dira
+| Gm            F#dim
+  Ce qu'on fait là
+       | Gm/Bb
+Dans ce monde
+       A7/C#   D7    | Gm  (2/4)
+Qui ne nous ressemble pas ?
+
+# Refrain 2 (add choir)
+| Gm         F#dim
+  Qui nous dira
+| Gm            F#dim
+  Ce qu'on fait là
+       | Gm/Bb
+Dans ce monde
+       A7/C#   D7    | Gm
+Qui ne nous ressemble pas ?

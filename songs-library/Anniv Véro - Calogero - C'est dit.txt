@@ -1,0 +1,102 @@
+Anniv Véro - C'est dit
+Calogero
+Bm
+10s Variété
+
+
+[Intro]
+| Bm      | Em7     | A7    | Bm    |
+lalalala
+| Bm      | F#      | F#7   | Gmaj7 |
+lalalala
+| Gmaj7   | Em7     | A7    | Dmaj7 |
+lalalala
+| D6      | Gmaj7   | G     | Em7   |
+lalalala
+| Em7     | F#      | F#7   |
+lalalala
+| Bm      | Bm      | Bm    | Bm    |
+
+[Couplet 1]
+| Bm        | Em7
+  De Gif à Paris,
+          | A7         | Bm
+  De Chevry à Charles Divry
+| Bm          | F#
+  Ce fut ton voyage,
+| F#7              | Gmaj7
+   Et c’est là ta vie
+| Gmaj7   | Em7              | A7            | Dmaj7
+  Au lycée Saint Louis avant d’aller voir les ch’tis,
+ | D6     | Gmaj7   | G       | Em7
+Si tu as réussi jusqu’à aujourd’hui
+| Em7          | F#        | F#7
+  C’est entourée de tous tes amis
+      | Bm   | Bm   | Bm  | Bm  |
+  C'est dit
+
+[Couplet 2]
+| Bm            | Em7
+  Un jour tu vis Sam
+        | A7          | Bm
+Et vous avez fait des petits
+| Bm             | F#
+  Alix, Flore, Baptiste,
+| F#7        | Gmaj7
+  La famille aussi,
+| Gmaj7      | Em7
+  C’est avec eux tous
+     | A7            | Dmaj7
+Que tu as vraiment construit
+| D6        | Gmaj7   | G   | Em7
+  Ta vie de maman pour tes 40 ans
+| Em7           | F#      | F#7
+  C’est là que tu les as réunis
+      | Bm  | Bm  | Bm  | Bm
+  C'est dit,
+
+[Piano solo]
+| Bm      | Em7     | A7    | Bm    |
+lalala
+| Bm      | F#      | F#7   | Gmaj7 |
+lalala
+| Gmaj7   | Em7     | A7    | Dmaj7 |
+lalala
+| D6      | Gmaj7   | G     | Em7   |
+lalala
+| Em7     | F#      | F#7   | F#7   | F#7   |
+lalala
+
+[Couplet 3 add drums + modulation +1/2 ton]
+| Cm             | Fm7
+  Tu n’oublies pas le business
+    | Bb7       | Cm
+pour compléter ta vie
+| Cm          | G7
+  Dans les assurances
+| G7             | Abmaj7
+  C’est une vraie tradi,
+| Abmaj7      | Fm7             | Bb7         | Ebmaj7
+    Et pour tes vacances c’est le Pyla que tu choisis,
+| Eb6       | Abmaj7
+  Tu joues du piano
+    | Ab      | Fm7       | Fm7
+  en chantant aussi,
+| Fm7        | G         | G7    | G7  | G7
+  Tu es riche de tous tes amis,
+      | Cm ->
+  C’est nous
+
+[Piano solo]
+| (Cm)   | Fm7   | Bb7     | Cm      |
+la la la
+| Cm     | G     | G7      | Abmaj7  |
+la la la
+| Abmaj7 | Fm7   | Bb7     | Ebmaj7  |
+la la la
+| Eb6    | Cm    | Ab      | Fm7     |
+la la la
+| Fm7    | G     | G7      | G7      |
+la la la
+    | Cm | Cm    | Cm      | Cm      | Cm NC
+C'est dit

@@ -1,0 +1,92 @@
+J'ai demandé à la lune
+Indochine
+Am
+pop 80s
+
+# intro
+| A    E  | F#     | A    E  | F#     |
+
+| A    E  | F#     | A    E  | F#     |
+
+
+# Couplet 1
+| A      E      | F#m
+  J'ai demandé à la lune
+| A      E           | F#m
+  et le soleil ne le sait pas
+| Bm                  | F#m
+  je lui ai montré mes brûlures
+| C#m                    | E
+  et la lune s'est moquée de moi
+         | A     E           | F#m
+et comme le ciel n'avait pas fière allure
+| A         E        |  F#m
+  et que je ne guérissais pas
+| Bm                    |  F#m
+  je me suis dit quelle infortune
+| C#m                   |  E
+  et la lune s'est moquée de moi
+
+# Couplet 2
+| A      E       | F#m
+  J'ai demandé à la lune
+| A      E            | F#m
+  si tu voulais encore de moi
+| Bm                  | F#m
+  elle m'a dit : « j'ai pas l'habitude
+| C#m                   |  E
+  de m'occuper de cas comme ça »
+        |  A     E           |  F#m
+et toi et moi on était tellement sûr
+| A         E        |  F#m
+  et on se disait quelques fois
+| Bm                    | F#m
+  que c'était juste une aventure
+| C#m                  |  E
+  et que ça ne durerait pas
+
+
+# Interlude
+| Dm                         |  Am
+    Je n'ai pas grand chose à te dire
+| Dm                                | Am
+    et pas grand chose pour te faire rire
+| C                          | G
+    car j'imagine toujours le pire
+| C                       | G
+et le meilleur me fait souffrir
+
+
+# intro
+| A    E  | F#     | A    E  | F#     |
+mmmmmm
+| A    E  | F#     | A    E  | F#     |
+mmmmm
+| Bm      | F#m    | C#m     |  E     |
+
+
+# Couplet 3
+| A      E      | F#m
+  J'ai demandé à la lune
+| A      E           | F#m
+  si tu voulais encore de moi
+| Bm                  | F#m
+  elle m'a dit : « j'ai pas l'habitude
+| C#m                   | E
+  de m'occuper de cas comme ça »
+        | A     E           | F#m
+et toi et moi on était tellement sûr
+| A         E        | F#m
+  et on se disait quelques fois
+| Bm                    | F#m
+  que c'était juste une aventure
+| C#m                   | E
+  et que ça ne durerait pas
+
+
+# Outro
+| A  E  | F#m   | A  E  | F#m   |
+
+| A  E  | F#m   | A  E  | F#m   |
+
+| A  E  | F#m   | A  E  | F#m   |s

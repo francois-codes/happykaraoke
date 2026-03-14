@@ -1,0 +1,147 @@
+Banlieue Nord
+Starmania Daniel Balavoine
+E
+Variété comédie_musicale 70s
+
+# Intro
+| E   | A/E  | E   | A/E   |
+
+
+# Verse
+| E                     | A/E
+  J'm'appelle Johnny Rockfort
+| C                          | G
+  Je suis né dans la Banlieue Nord
+               | D
+J'ai grandi sur les trottoirs
+| D                      | E         | E
+    J'ai pas choisi d'être un zonard
+
+| E                  | A/E
+  Ma mère est devenue folle
+| C                         | G
+  Parce que mon père buvait trop
+                 | D
+À quinze ans j'ai quitté l'école
+| D                    | E        | E
+    Et j'ai pris le premier métro
+
+
+# Chorus
+| E             | E
+  Sans foi ni loi,  je veux vivre et mourir
+| G6             | G6
+  Sans feu ni lieu,   je veux pas rentrer dormir
+| F#7/A#
+  Dans ma banlieue
+| B7sus4       B7            | A#dim7
+  J'ai tout cassé avant de partir
+| B7sus4       B7                | A/E
+  J'ai pas d'passé, j'ai pas d'avenir
+
+# Instu
+| E       | E           | G6       | G6         |
+
+| F#7/A#  | B7sus4         B7 |            A#dim7
+                J'ai tout cassé avant de partir
+| B7sus4       B7                | A/E
+  J'ai pas d'passé, j'ai pas d'avenir
+
+# Bridge hors-tempo + choeur
+| C                       | G
+  Y'a plus d'avenir sur la Terre (ooooouh)
+C            B7  | Em  2/4
+Qu'est-c'qu'on va faire? (ooooouh)
+| C                       | G
+  Y'a plus d'avenir sur la Terre (ooooouh)
+C            B7  | E  2/4
+Qu'est-c'qu'on va faire? (ooooouh)
+
+# Verse 2
+| E                | A/E
+  J'ai jamais travaillé
+| C                           | G
+  Mais je me suis bien débrouillé
+                 | D
+Un jour je m'suis retrouvé
+| D           | E
+    À l'Underground Café
+
+| E                       | A/E
+  C'est là que j'ai rencontré
+| C                      | G
+  Tous mes amis d'aujourd'hui
+                | D
+Quand je sais pas où coucher
+| D               | E               | E
+    C'est là qu'je passe mes nuits
+    
+# Chorus
+| E             | E
+  Sans foi ni loi,  je veux vivre et mourir
+| G6             | G6
+  Sans feu ni lieu,   je veux pas rentrer dormir
+| F#7/A#
+  Dans ma banlieue
+| B7sus4       B7            | A#dim7
+  J'ai tout cassé avant de partir
+| B7sus4       B7                | A/E
+  J'ai pas d'passé, j'ai pas d'avenir
+
+# Chorus
+| E             | E
+  Sans foi ni loi,  je veux vivre et mourir
+| G6             | G6
+  Sans feu ni lieu,   je veux pas rentrer dormir
+| F#7/A#
+  Dans ma banlieue
+| B7sus4       B7            | A#dim7
+  J'ai tout cassé avant de partir
+| B7sus4       B7                | A/E
+  J'ai pas d'passé, j'ai pas d'avenir
+
+# Outro
+| A
+    Pas de passé, (pas d'avenir)
+| E/G#
+    Pas de passé, (pas d'avenir)
+| Gdim7
+    Pas de passé, (pas d'avenir)
+| F#m7                    | E   | E 2/4
+    Pas de passé, (pas d'avenir) (riff en 2)
+
+| A
+    Pas de passé, (pas d'avenir)
+| E/G#
+    Pas de passé, (pas d'avenir)
+| Gdim7
+    Pas de passé, (pas d'avenir)
+| F#m7                    | E   | E 4/4
+    Pas de passé, (pas d'avenir) (riff en 4)
+
+| A
+    Pas de passé, (pas d'avenir)
+| E/G#
+    Pas de passé, (pas d'avenir)
+| Gdim7
+    Pas de passé, (pas d'avenir)
+| F#m7                    | E   | E 3/4
+    Pas de passé, (pas d'avenir)) (riff en 3)
+
+| A
+    Pas de passé, (pas d'avenir)
+| E/G#
+    Pas de passé, (pas d'avenir)
+| Gdim7
+    Pas de passé, (pas d'avenir)
+| F#m7                    | E   | E 2/4
+    Pas de passé, (pas d'avenir) (riff en 2)
+
+| A
+    Pas de passé, (pas d'avenir)
+| E/G#
+    Pas de passé, (pas d'avenir)
+| Gdim7
+    Pas de passé, (pas d'avenir)
+| F#m7                    | E   | E
+    Pas de passé, (pas d'avenir) (ralenti)

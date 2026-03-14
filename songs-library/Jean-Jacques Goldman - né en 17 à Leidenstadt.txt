@@ -1,0 +1,81 @@
+né en 17 à Leidenstadt
+Jean-Jacques Goldman
+Ab
+Chanson_française 90s
+
+# intro
+| D   G/B  | A/C#     | D   G/B  | A/C#     |
+
+| Bm7  G   | A    Bm  | G    A   |  G9      |
+
+| G9       |  G9      | G9       |  G9      |
+
+| G    A   | G    A   |  G    A  | G9
+
+
+# couplet 1 (Goldman)
+        | D           A         | Bm      G  A/G  
+Et si j'étais né en 17 à Leidenstadt
+| D                A               | Bm     G  A/G  
+    Sur les ruines d'un champ de bataille
+| D             A           | Bm           G
+    Aurais-je été meilleur ou pire que ces gens
+| D/A            A   |  D7sus4
+    Si j'avais été Allemand ?
+
+| D             A            | Bm    G   A/G
+      Bercé d'humiliation, de haine et d'ignorance
+| D         A           | Bm    G   A/G
+    Nourri de rêves de revanche
+| D            A          | Bm               G
+    Aurais-je été de ces improbables consciences
+| D                   A         |  D4
+    Larmes au milieu d'un torrent
+
+# couplet 2 (Jones)
+| D7sus4 (2/4)  | G             D            |  Em    C  D/C
+    Si j'avais grandi dans les docklands de Belfast
+| G            D        | Em       C  D/C
+    Soldat d'une foi, d'une caste
+| G              D/F#          | Em              C
+    Aurais-je eu la force envers et contre les miens
+| G                 D    | G4
+    De trahir : tendre une main
+
+# couplet 3 (Fredericks)
+          | C                   G       |  Am     F  G/F
+Si j'étais née blanche et riche à Johannesburg
+| C        G          |  Am      F  G/F
+    Entre le pouvoir et la peur
+| C            G               | Am            F
+    Aurais-je entendu ces cris portés par le vent
+| C              G          |  Csus4   | Csus4  
+    Rien ne sera comme avant.
+
+# Refrain
+        | F                Am7             |  Dm        Bb  C/Bb    
+On saura jamais ce qu'on a vraiment dans nos ventres
+| F           Am7     | Dm        Bb  C/Bb
+    Caché derrière nos apparences
+| F             C/E           | Dm                Bb
+    L'âme d'un brave ou d'un complice ou d'un bourreau ?
+| F/C             C      | Dm
+    Ou le pire ou le plus beau.
+   Dm/C    | Bbmaj7         C                | Dm               Bb   
+Serions-nous de ceux qui résistent ou bien les moutons d'un troupeau
+| F/C                 C    | F7sus4    |  F    A  |
+    S'il fallait plus que des mots ?
+
+# Couplet 4 (Goldman)
+ A7 (2/4) | D         A         | Bm      G  A/G  
+  Et si j'étais né en 17 à Leidenstadt
+| D                A             |  Bm       G   A/G
+    Sur les ruines d'un champ de bataille
+| D            A             | Bm           G
+    Aurais-je été meilleur ou pire que ces gens
+| D             A     | Bm
+    Si j'avais été Allemand ?
+              G           | A             Bm            | G
+Et qu'on nous épargne à toi et moi si possible très longtemps
+| D/A             A     | G    A   | G    A   |  G    A  | D
+   D'avoir à choisir un camp

@@ -1,0 +1,134 @@
+Bal de Bamako
+-M-
+C#m
+10s soirée
+
+# intro
+| A  F#m9             | B6  C#m    
+       Au bal de Bamako,       bal de Bamako
+| A  F#m9             | B6  C#m
+       Au bal de Bamako,       j't'ai dans la peau
+
+# couplet 1 (Basse Batterie)
+        | A             F#m                 | B        C   C#m         
+Comme un vertige sur la ville, moi l'homme hibou blanc imbécile
+        | A             F#m9     | B6  C  C#m  
+Dans un boubou pas très agile, plutôt   fragile
+         | A                  F#m           | B        C   C#m      
+J'ai comme les doigts dans la prise, te voir danser m'électrise
+          | A            F#m9         | B6  C  C#m  
+Peut être même que ça m'érotise, que j'idéalise
+
+# couplet 1 (add guitar)
+      | A              F#m9            | B        C   C#m  
+ Malice au Mali des merveilles, le Mali-Dieu créa la flamme
+| A    F#m9        | B        C   C#m  
+            le Mali danse dans mon âme
+
+# Pont :
+    | F#m                               | G#m7         C#m
+Honni soit qui mal y pense, qu'importe la couleur de ta peau
+        | F#m  F#m/E  F#m/D#   F#m/C#          |B         C#m   
+Béni soit qui au Mali danse,          au son des bals de Bamako
+
+# Refrain
+  | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+  | A          F#m  | B   C  C#m    
+Au bal de Bamako,              j't'ai dans la peau
+   | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+   | A          F#m  | B   C  C#m    
+Au bal de Bamako,              j't'ai dans la peau
+
+# Intermède
+| A   F#m        | B   C  C#m   
+         A ye na              an ka barokè
+| A   F#m        | B   C  C#m            
+         A ye na              an ka sumukè
+| A   F#m            | B                    C  C#m  
+        bal de Bamako, bal de Bamako, bal de Bamako
+| A   F#m            | B                    C  C#m  
+        bal de Bamako, bal de Bamako, bal de
+
+# Refrain
+  | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+  | A          F#m  | B   C  C#m    
+Au bal de Bamako,              j't'ai dans la peau
+
+
+# Break parlé :
+          | A               F#m                
+On plane à Bamako en bateau c'est moi le capitaine,
+| B   C       C#m   
+   tu danses pas, sois le croquemitaine
+| A            F#m         
+    La voix arrive par la droite,
+   | B   C    C#m   
+il reste une chance et sois pas maladroite
+
+        | A        F#m                
+Fais-le décalement,   ouais carrément,
+| B                   C  C#m   
+ vire-le, qu'on le fasse légalement
+ | A              F#m                
+   Si t'y penses     c'est que c'est possible,
+        | B            C    C#m   
+Aujourd'hui c'est dimanche, demain aussi
+
+| A      F#m                | B          C  C#m  
+     Respire sans morosité, Dusu kasi ni tòorò si tè
+| A                  F#m  | B                 C         C#m  
+    Si quelqu'un appelle,    dis-lui qu'on se tire à un bal réel
+| A      F#m                  | B          C  C#m  
+             … ton bassin fait l'hélicoptère
+
+# Pont :
+    | F#m                               | G#m7         C#m
+Honni soit qui mal y pense, qu'importe la couleur de ta peau
+        | F#m  F#m/E  F#m/D#   F#m/C#          |B         C#m   
+Béni soit qui au Mali danse,          au son des bals de Bamako
+
+# Refrain
+  | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+  | A          F#m  | B   C  C#m    
+Au bal de Bamako,              j't'ai dans la peau
+   | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+  | F#m  F#m/E  F#m/D#   F#m/C#   |B    C#m   
+Au bal de Bamako,                        j't'ai dans la peau
+
+# Intermède
+      | A   F#m    | B       C  C#m   
+Tolon wulila  yan      tolon wulila yan
+| A   F#m        | B   C  C#m   
+         A ye na      Tu, tu, tu danses, tes pieds, tes pieds ils bougent tout seuls, (an ka barokè)
+| A   F#m    | B  C    C#m   
+              parce que c'est l'amour qui fait ça
+| A   F#m    | B  C    C#m  
+      Tu entends,     tu entends cette guitare ?
+
+# solo guitare
+| A   F#m    | B   C  C#m     
+
+# Refrain
+  | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+  | A          F#m  | B   C  C#m    
+Au bal de Bamako,              j't'ai dans la peau
+   | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+  | F#m  F#m/E  F#m/D#   F#m/C#   |B    C#m   
+Au bal de Bamako,                        j't'ai dans la peau
+
+# Refrain
+  | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+  | A          F#m  | B   C  C#m    
+Au bal de Bamako,              j't'ai dans la peau
+   | A         F#m  | B   C  C#m   
+Au bal de Bamako,             bal de Bamako
+  | F#m  F#m/E  F#m/D#   F#m/C#   |B    C#m   
+Au bal de Bamako,                        j't'ai dans la peau

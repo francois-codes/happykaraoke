@@ -1,0 +1,190 @@
+{
+  "project": {
+    "name": "Personal Karaoke App",
+    "domain": "Live karaoke session management for an admin and multiple viewers.",
+    "stack": {
+      "desktop": "Electron (main + renderer processes)",
+      "frontend": "React SPA (TypeScript, JSX/TSX)",
+      "backend": "Node.js + Express REST API and WebSocket server",
+      "database": "SQLite bundled with the app",
+      "package_manager": "npm"
+    },
+    "history": {
+      "initial_creation_year": 2024,
+      "notes": [
+        "Dependencies and tooling may be outdated and might need upgrades.",
+        "Prefer incremental, well-tested upgrades over big-bang rewrites."
+      ]
+    }
+  },
+  "invariants": {
+    "must_preserve": [
+      "1. **Chord Parsing**: Songs parsed from text files → ALL chords correctly flagged/recognized. Never break the parser; any change must pass 100% existing chord detection.",
+      "2. **Display Consistency**: Lyrics layout identical across admin + all viewers, regardless of screen size. Chord toggle ON/OFF never shifts visible lyrics/sections.",
+      "3. **Scroll Sync Reliability**: Admin scroll/next/prev → instant, reliable follow on ALL viewers. NO STUCK STATE, NO LAG >100ms, NO desync under normal conditions.",
+      "4. **Admin Responsiveness**: Admin navigation (up/down sections) ALWAYS fluid, never blocks or lags."
+    ],
+    "verification": [
+      "Before ANY commit touching these areas: explicitly verify invariants.",
+      "Test matrix: admin scroll → 2+ viewers (desktop/mobile), chord toggle x2.",
+      "If risk detected: STOP + propose mitigation plan."
+    ],
+    "testing": [
+      "Golden test files: maintain `tests/invariants/` with sample songs covering edge cases (complex chords, long lyrics, varying screen sizes).",
+      "Run `npm test invariants` before merging."
+    ]
+  },
+  "workflow": {
+    "planning": [
+      "For any task with 3+ steps, architectural decisions, or upgrades: use Plan Mode (Shift+Tab).",
+      "Create a plan.md in tasks/ with numbered steps, affected files, and verification criteria.",
+      "Get explicit confirmation before executing the plan."
+    ],
+    "task_management": [
+      "Use tasks/todo.md for all multi‑step work: write checklist, mark complete as you progress.",
+      "High‑level summary of changes at each major step.",
+      "Final verification section: 'What I tested and confirmed works'."
+    ],
+    "verification": [
+      "Never mark a task done without proving it works: run the app, smoke test core flows (start session, song change, scroll sync, viewer connection).",
+      "Ask yourself: 'Would a senior engineer approve this?' before presenting.",
+      "Diff behavior when relevant (e.g. before/after scroll sync)."
+    ],
+    "karaoke_specific": [
+      "Core flows: parse sample song → admin scroll 10 lines → toggle chords → verify viewers match exactly.",
+      "Edge cases: mobile viewport, network hiccup, rapid section jumps."
+    ],
+    "self_improvement": [
+      "After any user correction: summarize the mistake pattern and propose a rule update.",
+      "Append to .cursor/lessons.md with format: 'Mistake → Prevention Rule → Example'.",
+      "Review lessons.md at session start for this project."
+    ],
+    "elegance": [
+      "For non‑trivial refactors: pause and consider 'Is there a more elegant/simple way?'.",
+      "Skip for obvious fixes; focus on minimal impact and root causes over hacks."
+    ],
+    "subagents": [
+      "For complex tasks: delegate to specialists (@frontend-specialist, etc.) to keep main context clean.",
+      "Run subagents in parallel when possible (research + implement).",
+      "Main agent: collate results, verify integration."
+    ]
+  },
+  "architecture": {
+    "electron": {
+      "main_process": "Responsible for app lifecycle, windows, IPC, and starting the HTTP/WebSocket server.",
+      "renderer": "Admin UI for session control plus any in-app viewer surfaces.",
+      "security": [
+        "Prefer contextIsolation enabled and Node.js integration disabled in renderer when possible.",
+        "Use a minimal, well-typed preload layer for IPC instead of exposing Node APIs directly."
+      ]
+    },
+    "server": {
+      "http_api": "Express routes for songs, sessions, and settings backed by SQLite.",
+      "realtime": "WebSocket channels for song changes, settings updates, and synchronized scroll position."
+    },
+    "frontend": {
+      "admin_ui": "React views for song list, active song, scroll controls, and settings.",
+      "viewer_ui": "React views optimized for lyrics-only and chords-for-musicians modes."
+    },
+    "data_model": [
+      "Song meta title, artist, structure (verses/choruses), display order.",
+      "Lyrics and chords: per-line text, optional chords, and layout info.",
+      "Timing/scroll: state required to keep all clients in sync with admin scroll."
+    ],
+    "song_parsing": [
+      "Text‑file format → parse structure, lyrics lines, embedded chords (e.g. [G], [Am]).",
+      "Output: typed Song model with sections, lines, chord positions → 100% accuracy required."
+    ],
+    "display_sync": [
+      "CSS/layout: responsive but fixed line heights/positions across devices.",
+      "Chord toggle: overlay only, never shifts baseline lyrics."
+    ],
+    "scroll_engine": [
+      "Admin → WS broadcast position/section → viewers jump to exact match.",
+      "Fallback: timestamp‑based sync if WS drops."
+    ]
+  },
+  "goals": {
+    "short_term": [
+      "Understand the existing architecture and data flow end to end.",
+      "Identify and safely modernize outdated dependencies or APIs.",
+      "Fix bugs and implement new features around session control and sync."
+    ],
+    "long_term": [
+      "Keep the codebase maintainable and easy to reason about.",
+      "Preserve existing user-visible behavior during refactors and upgrades."
+    ]
+  },
+  "typescript": {
+    "strictness": [
+      "Assume `strict: true` and related flags are enabled in tsconfig.",
+      "Absolutely do not introduce `any` types. If you must fall back, prefer `unknown` and narrow explicitly.",
+      "Do not use `// @ts-ignore` or `// @ts-expect-error` without a clear, short comment.",
+      "Explicitly type function parameters and return types in new or modified code."
+    ],
+    "types": [
+      "Prefer type aliases and interfaces over enums; use string unions for finite sets.",
+      "Use discriminated unions and exhaustive switch checks for important state machines (e.g. playback state).",
+      "Keep shared types in a clear location (e.g. `src/types` or `types.ts`) and reuse them across frontend/backend where appropriate."
+    ]
+  },
+  "code_style": {
+    "general": [
+      "Favor small, focused functions and components.",
+      "Optimize for clarity and explicitness over clever abstractions.",
+      "Use early returns to reduce nesting.",
+      "Keep imports clean and remove unused code where safe."
+    ],
+    "react": [
+      "Use functional components and hooks only.",
+      "Keep components focused on UI; extract complex logic into hooks or pure helpers.",
+      "Avoid prop drilling when it harms clarity; use context sparingly and intentionally.",
+      "Maintain accessibility basics (labels, roles, appropriate semantics) when touching UI."
+    ],
+    "node_express": [
+      "Keep route handlers thin; move business logic into separate modules.",
+      "Use async/await consistently; avoid mixing callbacks and promises.",
+      "Validate input at the boundaries of the system where practical."
+    ],
+    "sqlite": [
+      "Use parameterized queries and avoid string concatenation.",
+      "Keep schema definitions and migrations (if any) in an obvious, central place.",
+      "Be mindful of potentially blocking operations on the main thread."
+    ]
+  },
+  "maintenance": {
+    "dependencies": [
+      "When updating dependencies, prefer small, stepwise upgrades and read release notes for breaking changes.",
+      "After any major dependency or Electron upgrade, run the app and smoke test core flows (start session, change song, scroll sync, viewer connection).",
+      "Surface any TODOs or follow-up items for manual testing or cleanup."
+    ],
+    "refactors": [
+      "Preserve behavior unless explicitly asked to change it.",
+      "Before large refactors, summarize the affected modules and the proposed change in a few bullet points.",
+      "If uncertainty is high, propose a plan and ask for confirmation."
+    ]
+  },
+  "assistant_behavior": {
+    "understanding_first": [
+      "When asked to work on a feature, first identify and summarize the key files and data flow involved.",
+      "Call out any inconsistencies you see between frontend, backend, and DB schemas."
+    ],
+    "editing": [
+      "Avoid large cross-cutting changes unless requested.",
+      "Update or add tests when altering behavior; at minimum, suggest where tests should live.",
+      "Do not change build or Electron packaging config unless the task is explicitly about that."
+    ],
+    "communication": [
+      "Ask clarifying questions instead of guessing when requirements are ambiguous.",
+      "For non-trivial changes, briefly explain rationale and alternatives considered.",
+      "If a change would weaken type safety, propose a more strongly-typed alternative."
+    ],
+    "side_project": [
+      "Assume heavy AI iteration: prioritize velocity + safety over perfection.",
+      "Propose 80/20 solutions first; perfectionism only when requested.",
+      "Batch small wins: 'fixed scroll lag + typed WS payloads + minor UI polish'.",
+      "End sessions with 'Next 3 high‑impact tasks' list.",
+      "Track velocity: 'Changes made | Time saved | Manual work avoided'."
+    ]
+  }
+}

@@ -1,0 +1,92 @@
+La chanson de Ziggy
+Starmania - Daniel Balavoine
+Cm
+Variété comédie_musicale 70s
+
+# Intro
+| Cm7   F7 | Cm7  F7
+
+# couplet 1
+| Cm7  F7                 | Bbmaj7
+  Moi     j'étais un fils à maman,
+ Ebmaj7              |  Dsus4   D
+    tous les soirs en m'endormant
+          Gsus4             | G7  2/4
+Elle me disait quand tu s'ras grand
+| Cm7            F7
+  Tu dans'ras le Prince Charmant,
+| Bbmaj7             Ebmaj7
+    Dans La Belle au Bois Dormant
+| Dsus4        D                  |  Gm  Eb/Bb  | A7/C#  D7
+      Dans La Belle au Bois Dormant
+
+# Groove  .=154
+| Gm                Eb/Bb
+  Tous les sam'dis après-midi,
+| A7/C#             D7
+    Pendant que les gars du quartier
+| Gm                      Eb/Bb
+  Jouaient au football ou au hockey,
+| A7/C#               D7
+    moi j'prenais des cours de ballet
+| C#dim      D7#5               | Gm  Eb/Bb  | A7/C#  D
+  C'est pour ça qu'j'avais pas d'amis
+
+# Pont
+| Eb          Bb            |  F
+  A quinze ans ma mère m'a donné,
+| Eb       Bb         | F
+    En cadeau d'anniversaire
+| Eb            Bb      D7/F# 7/8 | Gm
+  Tout Tchaikowsky dans   un    coffret,
+| Eb          Bb           | Ebmaj7
+  moi j'ai couru chez le disquaire
+      | Dsus4 D7/F#          | Gm  Eb/Bb | A7/C#  D
+Le lendemain       pour l'échanger
+
+# couplet 2 (slow)
+| Cm7           F7               | Bb
+  C'est ce jour-là que j'ai rencontré,
+        Ebmaj7         | Dsus4     D
+ le premier amour de ma vie
+         Gsus4       | G7  2/4
+Il s'appelait David Bowie,
+|  Cm7                F
+  Sa musique a changé ma vie
+| Bbmaj7                  Ebmaj7
+      Moi j'ai changé mon nom pour lui,
+| Dsus4              D
+    j'ai changé mon nom pour lui
+| Gm  Eb/Bb | A7/C#  D     | Gm  Eb/Bb | A7/C#  D
+      (Ziggy)       (Ziggy)
+
+| Gm                Eb/Bb
+    Je suis parti de chez ma mère,
+| A7/C#            D
+    Je suis revenu voir le disquaire
+| Gm                Eb/Bb
+    Il m'a engagé comme vendeur,
+| A7/C#                D
+    Mais maint'nant je sais c'que j'veux faire
+        | C#dim   Dsus4         D
+Maint'nant        j'veux être un danseur,
+| Gm  Eb/Bb | A7/C#  D
+                    j'veux être un danseur
+
+# refrain
+| Gm  Eb/Bb  | A7/C#  D
+                    J'veux être un danseur de rock,
+| Gm  Eb/Bb  | A7/C#  D
+                    J'veux être un danseur de rock
+| Gm  Eb/Bb  | A7/C#  D
+                    Le premier danseur-rock au monde,
+| Gm  Eb/Bb  | A7/C#  D
+                    J'veux être un danseur de rock
+
+# Instrumental (solo sax)
+| Gm  Eb/Bb  | A7/C#  D
+
+# coda instrumental off tempo
+| Ebmaj7  Eb  |  Bb  Bb7     | Cm      F7  | Bb Ebmaj7
+
+| D7/F#   Gm  | D7/F#  Gm  D7/F#  | Gm

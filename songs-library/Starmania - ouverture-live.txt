@@ -1,0 +1,51 @@
+Ouverture
+Starmania Live
+Eb
+Variété comédie_musicale 70s
+
+# Intro (. = 63)
+| Eb        | Bb    Bb7
+Thème violon
+| Eb        | Bb    Cm Am7b5 | Gm7 Gm/F
+...
+| Eb        | Bb    Bb7
+Thème violon reprise
+| Eb        | Bb    Cm Am7b5 | Gm  Gm/F  Gm/Eb      | Dsus4 D 2/4
+...
+
+
+# Riff 1 (. = 92)
+| Gm 1/4 | Eb  Bb  F  Gm | Gm 1/4 | Eb  Bb  F  Gm  |
+Riff 1 anacrouse piano x2
+
+| Gm 1/4 | Eb  Bb  F  Gm | Gm 1/4 | Eb  Bb  F  Gm  |
+Riff 1 + basse/batterie anacrouse piano x4
+| Gm 1/4 | Eb  Bb  F  Gm | Gm 1/4 | Eb  Bb  F  Gm  |
+
+
+| Gm 1/4 | Eb  Bb  F  Gm | Gm 1/4 | Eb  Bb  F  Gm  |
+Riff 1               (hey !)                  (hey !)
+| Gm 1/4 | Eb  Bb  F  Gm | Gm 1/4 | Eb  Bb  F  Gm  |
+Riff 1               (hey !)                  (hey !)
+| Gm 1/4 | Eb  Bb  F  Gm | Gm 1/4 | Eb  Bb  F  Gm  |
+Riff 1 + chant violon (hey !)                 (hey !)
+
+# Riff 2 + riff 3
+| Gm      Eb  Gm    | 2/4 A7  D7  | Gm      Eb  Gm | 2/4 A7  D7  |
+Riff 2 x2
+| Gm               | Eb  Bb  F Gm |
+Riff 3
+
+# Transition majeur
+| G      C/G       | Ebmaj7   Eb   | Eb7 2/4
+...
+| G  G/F  G/Eb  G/D
+...
+
+# Riffs
+| Gm 1/4 | Eb  Bb  F  Gm | Gm 1/4 | Eb  Bb  F  Gm  |
+Riff 1 anacrouse x2  (hey !)                  (hey !)
+| Gm      Eb  Gm    | 2/4 A7  D7
+Riff 2
+| Gm               | Eb  Bb  F Gm | Gm               | Eb  Bb  F Gm |
+Riff 3 x2

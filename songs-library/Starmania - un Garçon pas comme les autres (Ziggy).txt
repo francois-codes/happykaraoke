@@ -1,0 +1,84 @@
+Ziggy, un garçon pas comme les autres
+Starmania
+G
+Variété comédie_musicale 70s
+
+# Intro (guitar)
+| Gmaj7   | Gmaj7   | 
+
+
+# Chorus 1 (guitar)
+| Gmaj7             | G
+  Ziggy il s'appelle Ziggy
+            | D      D7
+Je suis folle de lui
+          | Em                 A7
+C'est un garçon pas comme les autres
+          | D                    G
+Mais moi je l'aime c'est pas d'ma faute
+| A#dim       Bm  | A#dim F#7b9  Bm  F# | Bm  2/4
+  Même si je sais qu'il ne m'aimera jamais
+
+# Chorus 2 (+bass +keys)
+| Gmaj7             | G
+  Ziggy il s'appelle Ziggy
+            | D       D7
+Je suis folle de lui
+          | Em              A
+La première fois que je l'ai vu
+              | D               G
+J'me suis j'tée sur lui dans la rue
+| A#dim              Bm | A#dim   F#    Bm  F# | Bm 2/4
+  J'lui ai seulement dit, que j'avais envie de lui
+
+# Bridge 1
+| G                 B7/F#
+  Il était quatre heures du matin
+| Em7                   A7
+  J'étais seule et j'avais besoin
+| D                  D7/C
+  De parler à quelqu'un
+| G                 B7/F#
+  Il m'a dit viens prendre un café
+| Em7               A7
+  Et on s'est raconté nos vies
+| D                D7/C      D7#5
+  On a ri on a pleuré, Oui  mais...
+
+# Chorus 3
+| Gmaj7             | G
+  Ziggy il s'appelle Ziggy
+               | D   D7
+C'est mon seul ami
+          | Em7                 A7
+Dans sa tête il y a que d'la musique
+           | D                   G
+Il vend des disques dans une boutique
+| A#dim            Bm | A#dim   F#7b9   Bm F# | Bm
+  On dirait qu'il vit   dans une autre  galaxie
+
+# Bridge 2 (add drums)
+| G                 B7/F#
+  Tous les soirs il m'emmène danser
+| Em                    A7
+  Dans des endroits très très gais
+| D                  D/C
+  Où il a des tas d'amis
+| G               B7
+  Oui je sais il aime les garçons
+| Em                  A7
+  Je devrais me faire une raison
+| D                D7/C  D7#5
+  Essayer de l'oublier, Mais
+
+# Chorus 4 (no drums)
+| Gmaj7             | G
+  Ziggy il s'appelle Ziggy
+            | D    D/C
+Je suis folle de lui
+          | Em                 A7
+C'est un garçon pas comme les autres
+            | D                    G
+Mais moi je l'aime c'est pas d'ma faute
+| A#dim       Bm | A#dim    F#7b9  Bm  F# | Bm
+  Même si je sais  qu'il ne  m'aimera jamais

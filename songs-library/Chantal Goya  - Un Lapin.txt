@@ -1,0 +1,140 @@
+Un lapin a tué un chasseur
+Chantal Goya
+A
+chanson_française
+
+[Intro]
+| A  A  D  E
+
+A  A  D  E  A
+
+
+[Verse 1]
+| A             Bm7    E
+  Dans la forêt de l'automne
+| F#m          C#
+  Ce matin est arrivée
+| F#m       D
+  Une chose que personne
+| Bm7          E7
+  N'aurait pu imaginer
+
+| A            Bm7    E
+  Au bois de Morte Fontaine
+| F#m          C#
+  Où vont à morte saison
+| F#m                D
+  Tous les chasseurs de la plaine
+| Bm          E
+  C'est une révolution, car...
+
+
+[Chorus]
+| A     F#m7   Bm   E
+  Ce matin     un lapin
+| A    F#m    Bm    E
+  A tué un chasseur
+| A      F#m   Bm  C#
+  C'était un lapin qui
+| F#m          B   E
+  C'était un lapin qui
+
+| A     F#m Bm   E
+  Ce matin  un lapin
+| A    F#m    Bm    E
+  A tué un chasseur
+| A      F#m   Bm  E
+  C'était un lapin qui
+| E7         A
+  Avait un fusil
+
+
+[Verse 2]
+| A               Bm7   E
+  Ils crièrent à l'injustice
+| F#m              C#
+  Ils crièrent à l'assassin
+| F#m         D
+  Comme si c'était justice
+| Bm7               E7
+  Quand ils tuaient le lapin
+
+| A              Bm7  E
+  Et puis devant la mitraille
+| F#m           C#
+  Venue de tous les fourrés
+| F#m         D
+  Abandonnant la bataille
+| Bm               E
+  Les chasseurs se sont sauvés, car
+
+
+[Chorus]
+| A     F#m Bm   E
+  Ce matin  un lapin
+| A    F#m    Bm    E
+  A tué un chasseur
+| A      F#m   Bm  C#
+  C'était un lapin qui
+| F#m          B   E
+  C'était un lapin qui
+
+| A     F#m Bm   E
+  Ce matin  un lapin
+| A    F#m    Bm    E
+  A tué un chasseur
+| A      F#m   Bm  E
+  C'était un lapin qui
+| E7         A     F    (key change)
+  Avait un fusil
+
+
+[Verse 3 Modulation]
+| Bb               Cm7        F
+  Bien sûr ce n'est qu'une histoire
+| Gm            D
+  Inventée pour la chanson
+| Gm                 D#
+  Mais chantons-leur cette histoire
+| Cm7                 F7
+  Quand les chasseurs reviendront !
+
+| Bb                 Cm7   F
+  Et s'ils se mettent en colère
+| Gm          D
+  Appuyés sur leurs fusils
+| Gm               D#
+  Tout ce que nous pouvons faire
+| Cm              F
+  C'est de s'en moquer ainsi :
+
+
+[Chorus]
+| Bb   Gm   Cm   F
+  Ce matin  un lapin
+| Bb    Gm    Cm    F
+  A tué un chasseur
+| Bb      Gm   Cm  D
+  C'était un lapin qui
+| Gm           C   F
+  C'était un lapin qui
+
+| Bb   Gm   Cm   F
+  Ce matin  un lapin
+| Bb    Gm    Cm   F
+  A tué un chasseur
+| Bb      Gm   Cm  F
+  C'était un lapin qui
+| F7         Bb
+  Avait un fusil
+
+
+[Outro]
+| Bb   Gm   Cm   F
+  Ce matin  un lapin
+| Bb    Gm    Cm   F
+  A tué un chasseur
+| Bb      Gm   Cm  F
+  C'était un lapin qui
+| F7         Bb
+  Avait un fusil
