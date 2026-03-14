@@ -186,5 +186,40 @@
       "End sessions with 'Next 3 high‑impact tasks' list.",
       "Track velocity: 'Changes made | Time saved | Manual work avoided'."
     ]
+  },
+  "invariants_critical_paths": [
+    "src/shared/lib/song/song.ts",
+    "src/shared/lib/song/chord.ts",
+    "src/shared/lib/transpose/**",
+    "src/shared/endpoints/song.ts",
+    "src/shared/endpoints/scroll.ts",
+    "src/shared/messages/scroll.ts",
+    "src/client/components/SongComponents/**",
+    "src/client/lib/useAutoScroller.ts",
+    "src/client/lib/useSongScroll.ts",
+    "src/client/lib/useSongKeyboardShortcuts.ts"
+  ],
+  "typescript_rules": {
+    "disallow_any_in": [
+      "src/shared/types/**",
+      "src/shared/messages/**",
+      "src/shared/endpoints/**",
+      "src/shared/lib/song/**",
+      "src/shared/lib/transpose/**",
+      "src/client/lib/useAutoScroller.ts",
+      "src/client/lib/useSongScroll.ts"
+    ]
+  },
+  "testing_conventions": {
+    "invariants": {
+      "directory": "tests/invariants",
+      "script": "npm run test:invariants",
+      "covers": [
+        "song parsing (chords/lyrics)",
+        "display layout stability",
+        "scroll sync admin→viewers",
+        "admin responsiveness baseline"
+      ]
+    }
   }
 }

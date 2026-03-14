@@ -30,6 +30,7 @@ appliesTo: ['always']
    - Run `npm run dev` or `npm start`
    - Smoke test: admin session → song change → scroll sync → viewer connection
    - Typecheck: `npm run typecheck`
+   - For changes touching chords, display, or scroll: run `npm run test:invariants` (once available) and follow the manual checks in `INVARIANTS.md`.
 
 4. **Self‑review**: "Would a senior engineer approve? Is there a simpler way?"
 

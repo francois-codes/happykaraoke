@@ -4,6 +4,69 @@
 
 This project is a reboot of the HappiKaraoke app. The original app had great features, but the stack was getting old, and I figured I could try to update it with a more modern approach.
 
+## Quick Start
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   npm run install:deps:electron
+   ```
+
+2. Run the app in Electron dev mode:
+
+   ```bash
+   npm run dev
+   ```
+
+3. Add songs:
+
+   - Put `.txt` files following [`SONG_FORMAT.md`](./SONG_FORMAT.md) in your songs folder.
+   - Use the **Settings → Songs folder** action in the app to point to that folder.
+
+4. Join from other devices:
+
+   - From the admin app, open the **QR code** panel.
+   - Scan the QR code or type the URL on any device on the same network.
+   - You’ll see the current song, chords (if enabled), and synchronized scroll.
+
+## Karaoke Invariants
+
+These are the **four golden invariants** for HappiKaraoke. Any change touching these must keep behavior identical unless explicitly intended:
+
+1. **Chord parsing**
+
+   Songs parsed from text files → **all chords correctly flagged/recognized**.
+
+   - Parser: `src/shared/lib/song/song.ts`
+   - Chord model: `src/shared/lib/song/chord.ts`
+   - Format reference: [`SONG_FORMAT.md`](./SONG_FORMAT.md)
+   - Stress test song: `songs-library/Accords crash text.txt`
+
+2. **Display consistency**
+
+   Lyrics layout must be **identical** across admin and all viewers, regardless of screen size. Toggling chords ON/OFF **never shifts** visible lyrics/sections.
+
+   - Rendering pipeline: `src/client/components/SongComponents/SongComponent.tsx`
+   - Chord/lyrics fusion: `ChordAndLyrics` / `SongLine` / `SongWrapper`
+
+3. **Scroll sync reliability**
+
+   Admin scroll/next/prev should result in **instant, reliable follow** on all viewers. No stuck state, no desync under normal LAN conditions.
+
+   - Control surface: `src/client/lib/useSongKeyboardShortcuts.ts`
+   - HTTP bridge: `src/shared/endpoints/scroll.ts`
+   - WS + client engine: `src/shared/messages/scroll.ts`, `src/client/lib/useSongScroll.ts`, `src/client/lib/useAutoScroller.ts`
+
+4. **Admin responsiveness**
+
+   Admin navigation (keyboard shortcuts, queue changes, scroll) must remain **fluid**, with no noticeable UI jank or input lag.
+
+When working on these areas, prefer:
+
+- Manual multi-device smoke tests (admin + at least one guest device).
+- Running `npm run test:invariants` once `tests/invariants` has been populated.
+
 ## Features
 
 #### Original features:

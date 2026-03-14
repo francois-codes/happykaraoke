@@ -25,7 +25,7 @@ Root cause: Why
 Prevention: New rule
 Example: ❌ bad → ✅ good
 
-4. **Suggest `.cursorrules` update** if pattern‑worthy.
+4. **Suggest `.cursorrules` update** if pattern‑worthy, especially for mistakes affecting core invariants (chords, display, scroll, admin responsiveness).
 
 ## Example
 Mistake #1: Used  any  in WebSocket handler

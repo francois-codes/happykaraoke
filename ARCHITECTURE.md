@@ -120,6 +120,29 @@ karaoke/
 
 ## Architecture Overview
 
+### Scroll Sync Overview
+
+The scroll engine is split into three layers:
+
+1. **Admin controls (client-only)**
+   - Implemented in `src/client/lib/useSongKeyboardShortcuts.ts`.
+   - Maps keyboard events (space, arrows, `$`, section jumps) to:
+     - Local calls on the auto-scroller (`useAutoScroller`).
+     - Typed HTTP calls to `/scroll` via `setScroll` (`@shared/endpoints/scroll`).
+
+2. **Server bridge (HTTP → WebSocket)**
+   - `setScroll` in `src/shared/endpoints/scroll.ts` receives `{ type: ScrollEventType; value?: number }`.
+   - Immediately broadcasts `scrollChanged` via `@shared/messages/scroll`.
+   - No scroll state is stored server-side; the latest intent is pushed to all connected clients.
+
+3. **Viewer synchronization (clients)**
+   - `useSongScroll` (`src/client/lib/useSongScroll.ts`) subscribes to `scrollChanged`:
+     - Non-master clients apply every event to `useAutoScroller`.
+     - The current scroll master ignores inbound scroll events while it owns scroll, and publishes normalized `POSITION` updates on scroll end.
+   - `useAutoScroller` (`src/client/lib/useAutoScroller.ts`) uses `requestAnimationFrame` to smoothly advance `scrollTop` and move between song sections.
+
+This structure helps maintain **admin responsiveness** (local scroll updates happen immediately) while keeping all viewers synchronized via a single, typed scroll event channel. See [`INVARIANTS.md`](./INVARIANTS.md) for concrete test procedures around scroll sync and admin responsiveness.
+
 ### System Architecture Diagram
 
 ```
