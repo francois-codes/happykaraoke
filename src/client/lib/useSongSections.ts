@@ -32,22 +32,45 @@ export function useSongSections() {
     const blocks = resolveBlocks()
 
     if (sectionsRef.current === null) {
-      sectionsRef.current = Array.from(document.querySelectorAll('.song-section')).flatMap(
-        (child) => {
-          if (child instanceof HTMLElement) {
-            const closestBlock = findPreviousBlock(blocks, child.offsetTop)
-
-            if (closestBlock.index === -1) {
-              return child.offsetTop
-            }
-            return closestBlock.value
-          }
-          return []
-        }
+      const headingNodes = Array.from(document.querySelectorAll('.song-section')).filter(
+        (child): child is HTMLElement => child instanceof HTMLElement
       )
+
+      if (headingNodes.length === 0) {
+        const scrollContainer = document.getElementById('scroll-container')
+
+        if (scrollContainer instanceof HTMLElement) {
+          const { scrollHeight, clientHeight } = scrollContainer
+          const maxScrollable = Math.max(0, scrollHeight - clientHeight)
+          const pageSize = clientHeight > 0 ? clientHeight * 0.8 : window.innerHeight * 0.8
+          const sections: number[] = []
+
+          if (pageSize > 0) {
+            for (let position = 0; position <= maxScrollable; position += pageSize) {
+              sections.push(position)
+            }
+          }
+
+          sectionsRef.current = sections.length > 0 ? sections : [0]
+        } else {
+          sectionsRef.current = [0]
+        }
+      } else {
+        const sections = headingNodes.flatMap((child) => {
+          const closestBlock = findPreviousBlock(blocks, child.offsetTop)
+
+          if (closestBlock.index === -1) {
+            return child.offsetTop
+          }
+
+          return closestBlock.value
+        })
+
+        sectionsRef.current = sections.length > 0 ? sections : [0]
+      }
     }
 
-    return sectionsRef.current
+    return sectionsRef.current ?? [0]
   }
 
   function resolveBlocks() {
@@ -63,6 +86,9 @@ export function useSongSections() {
 
   function getClosestSection(scrollPosition: number) {
     const sections = resolveSections()
+    if (!sections.length) {
+      return 0
+    }
     const closestIndex = sections.reduce((closest, current, index) => {
       const currentDiff = Math.abs(current - scrollPosition)
       const closestDiff = Math.abs(sections[closest] - scrollPosition)
@@ -75,6 +101,10 @@ export function useSongSections() {
   function findLastVisibleSection(scrollPosition: number) {
     const viewportBottom = scrollPosition + window.innerHeight - 200
     const sections = resolveSections()
+
+    if (!sections.length) {
+      return 0
+    }
 
     // Filter sections that are above the bottom of the viewport
     const visibleSections = sections.filter((pos) => pos <= viewportBottom)

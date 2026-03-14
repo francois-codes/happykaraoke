@@ -2,16 +2,12 @@ import { useScrollContext } from '@/contexts/scroll'
 import { useAutoScroller } from '@/lib/useAutoScroller'
 import { useStore } from '@/store'
 import { socket } from '@/utils/socket'
+import { sessionLogger } from '@shared/lib/sessionLogger'
 import { setScroll } from '@shared/endpoints/scroll'
 import { scrollChanged } from '@shared/messages/scroll'
 import { ScrollEventType } from '@shared/types/scroll'
 import { useCallback, useEffect, useRef } from 'react'
 import { useSongSections } from './useSongSections'
-
-const getLineHeight = () => {
-  const { innerHeight, innerWidth } = window
-  return Math.min(innerHeight, innerWidth)
-}
 
 export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const { scrollMaster, currentSong, musicienScroll } = useStore()
@@ -19,32 +15,41 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const targetLineRef = useRef<HTMLDivElement | null>(null)
 
   const currentScrollRef = useRef<number | null>(0)
+  const lastEmitRef = useRef<number>(0)
   const { resolveSections } = useSongSections()
 
   scrollChanged.client.useMessage(
     socket,
     ({ type, value }) => {
       if (scrollMaster) {
-        console.log('scrollMaster', value)
+        sessionLogger.info('scroll:changed ignored on scroll master', { value })
         return
       }
 
-      const top = Number(value)
-      const scrollTarget = top * getLineHeight()
+      const fraction = Number(value)
+      if (Number.isNaN(fraction)) {
+        return
+      }
+
+      const scrollContainer = scrollContainerRef.current
+      if (!scrollContainer) {
+        return
+      }
+
+      const maxScrollable = Math.max(
+        1,
+        scrollContainer.scrollHeight - scrollContainer.clientHeight
+      )
+      const scrollTarget = fraction * maxScrollable
 
       if (
         targetLineRef.current &&
         type === ScrollEventType.POSITION &&
         currentScrollRef.current !== null
       ) {
-        const scrollContainer = scrollContainerRef.current
-        if (scrollContainer) {
-          const containerRect = scrollContainer.getBoundingClientRect()
-          // Calculate where the line should be relative to the viewport
-          // by adding the container's top offset and the relative scroll position
-          const linePosition = containerRect.top + scrollTarget - currentScrollRef.current
-          targetLineRef.current.style.top = `${linePosition}px`
-        }
+        const containerRect = scrollContainer.getBoundingClientRect()
+        const linePosition = containerRect.top + scrollTarget - currentScrollRef.current
+        targetLineRef.current.style.top = `${linePosition}px`
       }
 
       switch (type) {
@@ -81,44 +86,79 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
                   return scrollTarget >= section && scrollTarget < nextSection
                 }) ?? sections[0]
 
-              currentScrollRef.current = targetSection
-              scroller.scrollTo(targetSection)
-              return
+              if (typeof targetSection === 'number' && !Number.isNaN(targetSection)) {
+                currentScrollRef.current = targetSection
+                scroller.scrollTo(targetSection, 'instant')
+                return
+              }
             }
 
             if (scrollTarget > currentScroll) return
           }
 
           currentScrollRef.current = scrollTarget
-
-          if (!Number.isNaN(top)) {
-            return scroller.scrollTo(scrollTarget)
-          }
+          return scroller.scrollTo(scrollTarget, 'instant')
         }
       }
     },
     [scroller, scrollMaster, musicienScroll]
   )
 
-  const followScroll = useCallback(() => {
-    const scrollTarget = Number(scrollContainerRef.current?.scrollTop)
+  const emitScrollPosition = useCallback(() => {
+    const scrollContainer = scrollContainerRef.current
 
-    if (!Number.isNaN(scrollTarget)) {
-      setScroll.call({
-        type: ScrollEventType.POSITION,
-        value: scrollTarget / getLineHeight()
-      })
+    if (!scrollContainer) {
+      return
     }
-  }, [])
+
+    const { scrollTop, scrollHeight, clientHeight } = scrollContainer
+    const maxScrollable = Math.max(1, scrollHeight - clientHeight)
+    const fraction = Math.min(1, Math.max(0, scrollTop / maxScrollable))
+
+    const now = performance.now()
+    if (now - lastEmitRef.current < 70) {
+      return
+    }
+
+    lastEmitRef.current = now
+
+    sessionLogger.info('scroll:position:emit', {
+      fraction
+    })
+
+    setScroll.call({
+      type: ScrollEventType.POSITION,
+      value: fraction
+    })
+  }, [scrollContainerRef])
 
   useEffect(() => {
     if (!scrollMaster) return
-    scrollContainerRef.current?.addEventListener('scrollend', followScroll)
+    const scrollContainer = scrollContainerRef.current
+    if (!scrollContainer) return
+
+    let frameId: number | null = null
+
+    const handleScroll = () => {
+      if (frameId !== null) {
+        return
+      }
+
+      frameId = window.requestAnimationFrame(() => {
+        frameId = null
+        emitScrollPosition()
+      })
+    }
+
+    scrollContainer.addEventListener('scroll', handleScroll)
 
     return () => {
-      scrollContainerRef.current?.removeEventListener('scrollend', followScroll)
+      scrollContainer.removeEventListener('scroll', handleScroll)
+      if (frameId !== null) {
+        window.cancelAnimationFrame(frameId)
+      }
     }
-  }, [followScroll, scroller, scrollMaster])
+  }, [emitScrollPosition, scrollMaster])
 
   useEffect(() => {
     if (currentSong) {

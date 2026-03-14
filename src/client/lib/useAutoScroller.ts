@@ -15,6 +15,13 @@ export const useAutoScroller = () => {
   const sectionsRef = useRef<Nullable<number[]>>(null)
   const sectionIndexRef = useRef(0)
   const { resolveSections } = useSongSections()
+  const pageSize = useCallback(() => {
+    if (scrollContainerRef.current) {
+      return scrollContainerRef.current.clientHeight || window.innerHeight
+    }
+
+    return window.innerHeight
+  }, [scrollContainerRef])
 
   const scrollStep = useCallback(() => {
     if (scrollContainerRef.current) {
@@ -26,7 +33,8 @@ export const useAutoScroller = () => {
         return
       }
 
-      const nextSection = resolveSections()[sectionIndexRef.current + 1]
+      const sections = resolveSections()
+      const nextSection = sections[sectionIndexRef.current + 1]
 
       if (nextSection && top >= nextSection) {
         sectionIndexRef.current += 1
@@ -67,35 +75,75 @@ export const useAutoScroller = () => {
     scrollSpeedRef.current = Math.max(scrollSpeedRef.current - decrement, 0.1) // Ensures speed doesn't go below 1
   }
 
-  const scrollTo = (top: number) => {
+  const scrollTo = (top: number, behavior: 'instant' | 'smooth' = 'smooth') => {
     scrollPosition.current = top
     if (animationFrameRef.current) {
       scrollContainerRef.current!.scrollTop = top
     } else {
-      scrollContainerRef.current?.scrollTo({ top, behavior: 'smooth' })
+      scrollContainerRef.current?.scrollTo({
+        top,
+        behavior: behavior === 'smooth' ? 'smooth' : 'auto'
+      })
     }
   }
 
   const scrollToTop = useCallback(() => {
     stopScrolling()
-    scrollTo(0)
+    scrollTo(0, 'instant')
     sectionIndexRef.current = 0
     if (animationFrameRef.current) startScrolling()
   }, [startScrolling, stopScrolling])
 
   const nextSection = useCallback(() => {
     const sections = resolveSections()
+    const container = scrollContainerRef.current
 
-    if (sections && sectionIndexRef.current < sections.length - 1) {
-      sectionIndexRef.current += 1
-      if (sections?.[sectionIndexRef.current]) {
-        scrollTo(sections[sectionIndexRef.current])
-      }
+    if (!container) {
+      return
     }
-  }, [])
+
+    if (!sections || sections.length === 0) {
+      const target = container.scrollTop + pageSize() * 0.8
+      scrollTo(target, 'instant')
+      return
+    }
+
+    const lastIndex = sections.length - 1
+
+    if (sectionIndexRef.current < 0) {
+      sectionIndexRef.current = 0
+    } else if (sectionIndexRef.current > lastIndex) {
+      sectionIndexRef.current = lastIndex
+    }
+
+    if (sectionIndexRef.current < lastIndex) {
+      sectionIndexRef.current += 1
+      const next = sections[sectionIndexRef.current]
+      scrollTo(next ?? 0, 'instant')
+    }
+  }, [pageSize, resolveSections, scrollContainerRef, scrollTo])
 
   const previousSection = useCallback(() => {
     const sections = resolveSections()
+    const container = scrollContainerRef.current
+
+    if (!container) {
+      return
+    }
+
+    if (!sections || sections.length === 0) {
+      const target = container.scrollTop - pageSize() * 0.8
+      scrollTo(Math.max(0, target), 'instant')
+      return
+    }
+
+    const lastIndex = sections.length - 1
+
+    if (sectionIndexRef.current < 0) {
+      sectionIndexRef.current = 0
+    } else if (sectionIndexRef.current > lastIndex) {
+      sectionIndexRef.current = lastIndex
+    }
     // when going to the previous section,
     // if the current scroll is less than 5px of
     // the position of the current index,
@@ -103,19 +151,18 @@ export const useAutoScroller = () => {
     // otherwise, we go to the top of the current section
     if (
       sections &&
-      sectionIndexRef.current >= 0 &&
-      sections?.[sectionIndexRef.current] !== undefined &&
-      scrollContainerRef.current?.scrollTop !== undefined
+      sections[sectionIndexRef.current] !== undefined &&
+      container.scrollTop !== undefined
     ) {
       if (
         sectionIndexRef.current > 0 &&
-        scrollContainerRef.current?.scrollTop <= sections[sectionIndexRef.current] + 30
+        container.scrollTop <= sections[sectionIndexRef.current] + 30
       ) {
         sectionIndexRef.current -= 1
       }
-      scrollTo(sections[sectionIndexRef.current])
+      scrollTo(sections[sectionIndexRef.current] ?? 0, 'instant')
     }
-  }, [])
+  }, [pageSize, resolveSections, scrollContainerRef, scrollTo])
 
   useEffect(() => {
     if (animationFrameRef.current) {
@@ -130,6 +177,7 @@ export const useAutoScroller = () => {
 
   useEffect(() => {
     sectionsRef.current = null
+    sectionIndexRef.current = 0
   }, [currentSong])
 
   return {
