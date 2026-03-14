@@ -89,7 +89,9 @@ Admin scroll/next/prev → **instant, reliable follow** on all viewers. No stuck
 - Keyboard control: `src/client/lib/useSongKeyboardShortcuts.ts`
 - Auto-scroller: `src/client/lib/useAutoScroller.ts`
 - Scroll sync engine: `src/client/lib/useSongScroll.ts`
+- Section detection (and fallbacks for songs without headers): `src/client/lib/useSongSections.ts`
 - Scroll endpoint/messages: `src/shared/endpoints/scroll.ts`, `src/shared/messages/scroll.ts`, `src/shared/types/scroll.ts`
+- Automated tests: `tests/invariants/scroll.spec.ts`, `tests/invariants/sections.spec.ts`
 
 **Manual test procedure**
 
@@ -146,7 +148,7 @@ If you suspect regressions, profile the admin window using the Chromium dev tool
 
 ## Running Invariant Tests
 
-Once `tests/invariants/` is populated, you can run:
+Scroll and section invariants are covered by `tests/invariants/scroll.spec.ts` and `tests/invariants/sections.spec.ts`. Run:
 
 ```bash
 npm run test:invariants

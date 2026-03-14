@@ -2,14 +2,15 @@
 
 1. **Add automated invariant tests**
 
-   - Create `tests/invariants/chords.spec.ts` and `tests/invariants/scroll.spec.ts`.
+   - Create `tests/invariants/chords.spec.ts` (chord parsing not yet automated).
+   - **Done:** `tests/invariants/scroll.spec.ts` and `tests/invariants/sections.spec.ts` cover scroll fraction consistency and section fallbacks.
    - Cover chord parsing for `songs-library/Accords crash text.txt` and at least one complex real song.
-   - Cover scroll sync for start/stop, position jumps, and section navigation.
+   - Scroll sync for start/stop, position jumps, and section navigation is covered by the new scroll/sections specs.
 
 2. **Instrument scroll performance**
 
-   - Add lightweight logging or profiling hooks around `useAutoScroller` and `useSongScroll`.
-   - Capture basic metrics (for example, average RAF loop interval, scroll latency) during development to spot regressions in admin responsiveness.
+   - **Done:** `sessionLogger` (`src/shared/lib/sessionLogger.ts`) and scroll position logging in `useSongScroll` capture scroll/section events; use `sessionLogger.export()` for debugging. Optional: add in-app “Export session logs” to dump these.
+   - Optional: capture basic metrics (e.g. average RAF loop interval, scroll latency) during development to spot regressions in admin responsiveness.
 
 3. **Harden chord parser edge cases**
 

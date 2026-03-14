@@ -323,7 +323,7 @@ Socket.io emit: scroll:changed
   ↓
 Guests receive event (admin ignores)
   ↓
-Guest clients smooth scroll to position
+Guest clients apply position instantly (value = 0–1 fraction of scrollable height)
 ```
 
 ### Transposition

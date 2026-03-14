@@ -100,8 +100,9 @@
       "Chord toggle: overlay only, never shifts baseline lyrics."
     ],
     "scroll_engine": [
-      "Admin → WS broadcast position/section → viewers jump to exact match.",
-      "Fallback: timestamp‑based sync if WS drops."
+      "Admin → WS broadcast position (0–1 fraction) and section events → viewers apply instantly (no smooth scroll for remote sync).",
+      "Scroll master emits throttled POSITION; section nav uses useSongSections (with fallbacks for songs without headers).",
+      "Session log capture: sessionLogger in src/shared/lib/sessionLogger.ts for debugging."
     ]
   },
   "goals": {
@@ -197,6 +198,7 @@
     "src/client/components/SongComponents/**",
     "src/client/lib/useAutoScroller.ts",
     "src/client/lib/useSongScroll.ts",
+    "src/client/lib/useSongSections.ts",
     "src/client/lib/useSongKeyboardShortcuts.ts"
   ],
   "typescript_rules": {

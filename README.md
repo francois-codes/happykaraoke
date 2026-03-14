@@ -56,7 +56,8 @@ These are the **four golden invariants** for HappiKaraoke. Any change touching t
 
    - Control surface: `src/client/lib/useSongKeyboardShortcuts.ts`
    - HTTP bridge: `src/shared/endpoints/scroll.ts`
-   - WS + client engine: `src/shared/messages/scroll.ts`, `src/client/lib/useSongScroll.ts`, `src/client/lib/useAutoScroller.ts`
+   - WS + client engine: `src/shared/messages/scroll.ts`, `src/client/lib/useSongScroll.ts`, `src/client/lib/useAutoScroller.ts`, `src/client/lib/useSongSections.ts`
+   - Automated tests: `tests/invariants/scroll.spec.ts`, `tests/invariants/sections.spec.ts`
 
 4. **Admin responsiveness**
 
@@ -65,7 +66,7 @@ These are the **four golden invariants** for HappiKaraoke. Any change touching t
 When working on these areas, prefer:
 
 - Manual multi-device smoke tests (admin + at least one guest device).
-- Running `npm run test:invariants` once `tests/invariants` has been populated.
+- Running `npm run test:invariants` (scroll and section invariants are covered in `tests/invariants/scroll.spec.ts` and `tests/invariants/sections.spec.ts`).
 
 ## Features
 
@@ -87,7 +88,7 @@ When working on these areas, prefer:
 #### Upcoming features:
 
 - sessions are named
-- proper sessions logs
+- proper sessions logs (in-app export; `sessionLogger` in `src/shared/lib/sessionLogger.ts` already captures scroll/section events for debugging)
 - smoother auto scrolling and jumping between sessions
 - ability for users to request songs
 - ability for admins to queue songs

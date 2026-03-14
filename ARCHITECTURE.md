@@ -137,9 +137,9 @@ The scroll engine is split into three layers:
 
 3. **Viewer synchronization (clients)**
    - `useSongScroll` (`src/client/lib/useSongScroll.ts`) subscribes to `scrollChanged`:
-     - Non-master clients apply every event to `useAutoScroller`.
-     - The current scroll master ignores inbound scroll events while it owns scroll, and publishes normalized `POSITION` updates on scroll end.
-   - `useAutoScroller` (`src/client/lib/useAutoScroller.ts`) uses `requestAnimationFrame` to smoothly advance `scrollTop` and move between song sections.
+     - Non-master clients apply every event to `useAutoScroller` (remote POSITION and section jumps use instant scroll, not smooth, to avoid lag).
+     - The scroll master ignores inbound scroll events and publishes **throttled** `POSITION` updates while scrolling; `value` is a **content-relative fraction** (0–1) so all viewports stay aligned.
+   - `useAutoScroller` (`src/client/lib/useAutoScroller.ts`) uses `requestAnimationFrame` to advance `scrollTop` during auto-scroll and moves between song sections; `useSongSections` provides section offsets and fallbacks for songs without section headers (page-style next/prev).
 
 This structure helps maintain **admin responsiveness** (local scroll updates happen immediately) while keeping all viewers synchronized via a single, typed scroll event channel. See [`INVARIANTS.md`](./INVARIANTS.md) for concrete test procedures around scroll sync and admin responsiveness.
 
@@ -283,7 +283,7 @@ Admin (Electron App)
           │
           ├─► useSongScroll hook handles event
           │
-          └─► Smooth scroll to position 1234
+          └─► Instant scroll to position (fraction-based)
 ```
 
 #### 4. Transposition
