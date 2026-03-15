@@ -1,0 +1,32 @@
+[package]
+name = "happikaraoke"
+version = "2.10.0"
+description = "HappiKaraoke - Tauri + Rust backend"
+authors = ["Francois Roland <francois.roland@gmail.com>"]
+license = "ISC"
+repository = "git@github.com:francois-codes/happi-karaoke-2.git"
+rust-version = "1.70"
+edition = "2021"
+
+[lib]
+name = "happikaraoke_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"
+tauri-plugin-fs = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+axum = { version = "0.7", features = ["json", "ws"] }
+tower-http = { version = "0.5", features = ["cors", "fs"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+notify = "6"
+notify-debouncer-mini = "0.4"
+futures-util = "0.3"
+local-ip-address = "0.6"
+reqwest = { version = "0.12", features = ["json"] }

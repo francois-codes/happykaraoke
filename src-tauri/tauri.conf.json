@@ -1,0 +1,59 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "HappiKaraoke",
+  "version": "2.10.0",
+  "identifier": "com.happikaraoke2.app",
+  "build": {
+    "beforeDevCommand": "npm run build:client && npx vite",
+    "devUrl": "http://localhost:5173",
+    "beforeBuildCommand": "npm run build:client",
+    "frontendDist": "../out/client"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "HappiKaraoke",
+        "width": 820,
+        "height": 1120
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": ["icons/icon.png"],
+    "macOS": {
+      "minimumSystemVersion": "10.15",
+      "entitlements": "Entitlements.plist",
+      "dmg": {
+        "background": "background.png",
+        "windowSize": { "width": 660, "height": 477 },
+        "appPosition": { "x": 184, "y": 155 },
+        "applicationFolderPosition": { "x": 480, "y": 155 }
+      },
+      "files": {
+        "Resources/Lisez-moi.txt": "../assets/CHEATSHEET.md",
+        "Resources/post-install.command": "../assets/post-install.command",
+        "Resources/Entitlements.plist": "Entitlements.plist",
+        "Resources/fix-network-permissions.command": "../assets/fix-network-permissions.command"
+      }
+    },
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    },
+    "android": {
+      "minSdkVersion": 21
+    },
+    "category": "Utility",
+    "shortDescription": "Karaoke app",
+    "longDescription": "HappiKaraoke - Karaoke session and song management",
+    "publisher": "Francois Roland",
+    "resources": ["../resources/db.sqlite", "../out/client/"]
+  },
+  "plugins": {}
+}

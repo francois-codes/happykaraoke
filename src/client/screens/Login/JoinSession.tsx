@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { flushSync } from 'react-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import {
@@ -48,7 +49,10 @@ export const JoinSession = () => {
     try {
       const { user } = await joinSession.call({ userName, adminPassword })
       window.localStorage.setItem('userId', `${user.id}`)
-      dispatch({ isAdmin: user.type === UserType.ADMIN })
+      const isAdmin = user.type === UserType.ADMIN
+      flushSync(() => {
+        dispatch({ isAdmin, scrollMaster: isAdmin })
+      })
       navigate('/session')
     } catch (e) {
       if (e instanceof AxiosError) {

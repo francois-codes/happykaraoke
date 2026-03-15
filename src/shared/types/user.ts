@@ -1,6 +1,6 @@
 export enum UserType {
-  ADMIN = 'admin',
-  GUEST = 'guest'
+  ADMIN = 'ADMIN',
+  GUEST = 'GUEST'
 }
 
 export interface User {

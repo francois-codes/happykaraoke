@@ -46,3 +46,10 @@ declare interface Window {
     openDialog: () => Promise<string>
   }
 }
+
+declare module '@tauri-apps/plugin-dialog' {
+  export function open(options: {
+    directory?: boolean
+    multiple?: boolean
+  }): Promise<string | string[] | null>
+}

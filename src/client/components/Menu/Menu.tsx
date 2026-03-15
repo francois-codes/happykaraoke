@@ -1,4 +1,5 @@
 import image from '@/assets/live-band-logo.png'
+import { isTauri } from '@/lib/tauriEnv'
 import { useSong } from '@/lib/useSong'
 import { useStore } from '@/store'
 import { FC } from 'react'
@@ -28,7 +29,7 @@ export const Menu: FC = () => {
         </h1>
       </div>
       <div className="flex items-center align-center gap-1 md:gap-4 lg-gap:8">
-        {isAdmin && !!window.electron && <SessionQueueButton />}
+        {isAdmin && (!!window.electron || isTauri) && <SessionQueueButton />}
         {isAdmin && <Transpose />}
         {!isAdmin && <Suggestion />}
         <QrCode />

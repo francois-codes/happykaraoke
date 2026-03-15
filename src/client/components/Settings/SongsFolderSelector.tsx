@@ -3,6 +3,16 @@ import { Input } from '../ui/input'
 import { setSongsFolder } from '@shared/endpoints/session'
 import { useDispatch, useStore } from '@/store'
 import { Modal } from '../Modal'
+import { isTauri } from '@/lib/tauriEnv'
+
+async function openFolderDialog(): Promise<string | null> {
+  if (isTauri) {
+    const { open } = await import('@tauri-apps/plugin-dialog')
+    const selected = await open({ directory: true, multiple: false })
+    return typeof selected === 'string' ? selected : null
+  }
+  return window.electron?.openDialog() ?? null
+}
 
 export function SongsFolderSelector() {
   const { songsFolder, songsFolderOpen } = useStore()
@@ -22,7 +32,7 @@ export function SongsFolderSelector() {
         {
           label: 'Ouvrir',
           async onClick() {
-            const folder = await window.electron?.openDialog()
+            const folder = await openFolderDialog()
             if (!folder) return
             await setSongsFolder.call({ folder })
             dispatch({ currentSong: null, songsFolder: folder })

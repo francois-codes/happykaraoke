@@ -1,5 +1,9 @@
 # Tauri vs Electron for HappiKaraoke
 
+**Decision (this branch):** Full Tauri migration completed. The desktop app uses Tauri 2 + Rust backend (Axum, rusqlite, WebSocket, notify). Electron is no longer the default: `npm run dev` and `npm run build` use Tauri. Legacy Electron build is still available as `npm run build:electron` (requires main/preload; see `src/server/main.ts`).
+
+---
+
 ## Current Architecture (Critical Context)
 
 HappiKaraoke is **not** a simple "web UI + native shell" app. It's a **full-stack Node.js application** that Electron hosts:

@@ -2,15 +2,19 @@
   "name": "happikaraoke",
   "version": "2.10.0",
   "description": "Reboot of the happikaraoke app",
-  "main": "out/server/main.js",
   "author": "Francois Roland <francois.roland@gmail.com>",
   "scripts": {
-    "dev": "NODE_ENV=development tsx esbuild.dev.config.ts",
+    "dev": "tauri dev",
+    "dev:electron": "NODE_ENV=development tsx esbuild.dev.config.ts",
+    "tauri": "tauri",
     "build:client": "vite build",
+    "build": "npm run build:client && tauri build",
+    "build:dmg": "npm run build:client && tauri build --bundles dmg",
+    "bundle": "npm run build:client && tauri build --bundles dmg && ./scripts/resign-and-repack-dmg.sh",
+    "resign:macos": "./scripts/resign-and-repack-dmg.sh",
     "build:server": "tsx esbuild.config.ts",
     "build:electron": "electron-builder build --config electron-builder.yml",
-    "prebuild": "npm run clean && cp assets/CHEATSHEET.md README.TXT && npm run install:deps:electron",
-    "build": "npm run build:client && npm run build:server && npm run build:electron",
+    "prebuild:electron": "npm run clean && cp assets/CHEATSHEET.md README.TXT && npm run install:deps:electron",
     "typecheck:client": "tsc -p tsconfig.web.json --noEmit",
     "typecheck:server": "tsc -p tsconfig.node.json --noEmit",
     "typecheck": "npm run typecheck:client && npm run typecheck:server",
@@ -27,7 +31,9 @@
     "node": ">=24.0.0"
   },
   "overrides": {
-    "node-abi": ">=3.71.0"
+    "node-abi": ">=3.71.0",
+    "react": "$react",
+    "react-dom": "$react-dom"
   },
   "repository": {
     "type": "git",
@@ -80,7 +86,10 @@
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^10.0.0",
     "vite-express": "^0.17.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-dialog": "^2",
+    "@tauri-apps/plugin-fs": "^2"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
@@ -110,6 +119,7 @@
     "tsx": "^4.15.4",
     "typescript": "^5.4.5",
     "vite": "^6.0.0",
-    "vite-plugin-node-polyfills": "^0.22.0"
+    "vite-plugin-node-polyfills": "^0.22.0",
+    "@tauri-apps/cli": "^2"
   }
 }

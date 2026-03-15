@@ -5,3 +5,6 @@ out
 *.log*
 README.TXT
 *.tsbuildinfo
+
+# Tauri / Rust
+src-tauri/target

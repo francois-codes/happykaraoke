@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import { flushSync } from 'react-dom'
 
 import {
   Form,
@@ -47,13 +48,20 @@ export const CreateSession = () => {
     try {
       const { user } = await loginUser.call({ password, sessionName: 'session' })
       window.localStorage.setItem('userId', `${user.id}`)
-      dispatch({ isAdmin: user.type === UserType.ADMIN })
+      const isAdmin = user.type === UserType.ADMIN
+      flushSync(() => {
+        dispatch({ isAdmin, scrollMaster: isAdmin })
+      })
       navigate('/session')
     } catch (e) {
       if (e instanceof AxiosError) {
         if (e.response?.status === 401) {
           setFormError('Mot de passe invalide')
+        } else if (e.code === 'ERR_NETWORK' || !e.response) {
+          setFormError('Impossible de contacter le serveur. Vérifiez que l’app est bien ouverte.')
         }
+      } else {
+        setFormError('Une erreur est survenue.')
       }
     } finally {
       setIsLoading(false)
