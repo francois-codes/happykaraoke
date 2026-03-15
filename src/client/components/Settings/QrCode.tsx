@@ -1,14 +1,15 @@
+import { KEYS } from '@/lib/consts'
+import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { useDispatch, useStore } from '@/store'
-import { Button } from '../ui/button'
 import { IoQrCodeOutline } from 'react-icons/io5'
 import QRCode from 'react-qr-code'
 import { Link } from 'react-router-dom'
-import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
-import { KEYS } from '@/lib/consts'
 import { Modal } from '../Modal'
+import { Button } from '../ui/button'
 
 export function QrCode() {
-  const { hostUrl, qrCodeOpen, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
+  const { hostUrl, qrCodeOpen, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } =
+    useStore()
   const dispatch = useDispatch()
 
   function setOpen(open: boolean) {
@@ -17,7 +18,7 @@ export function QrCode() {
 
   useKeyboardShortcut(
     {
-      key: [KEYS.g],
+      key: [KEYS.q],
       preventDefault: true,
       disable: () => searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {

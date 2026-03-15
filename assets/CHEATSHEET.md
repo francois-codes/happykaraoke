@@ -6,7 +6,7 @@ As a rule of thumb, all shortcuts are desactivated when the search is open
 ## Guests shortcuts
 
 - `S` : opens the settings panel
-- `G` : Opens the modal showing the QR code
+- `Q` : Opens the modal showing the QR code
 - `A` : toggles chords on & off
 - `D` : toggles dark mode on & off
 

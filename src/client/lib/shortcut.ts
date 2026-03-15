@@ -29,7 +29,10 @@ class Shortcut implements IShortcut {
   }
 
   private modifiersMatch(event: KeyboardEvent): boolean {
-    if (this.modifiers.length === 0) return true;
+    if (this.modifiers.length === 0) {
+      // Bare key shortcut: must not have any modifiers (avoids triggering on Cmd+Q etc.)
+      return !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey;
+    }
 
     return this.modifiers.every(
       (modifier) =>
