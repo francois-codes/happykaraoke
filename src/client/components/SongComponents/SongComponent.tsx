@@ -109,9 +109,12 @@ export const SongComponent = () => {
     [song, reload]
   )
 
-  const parsedSongLines = useMemo(() => {
+  type ParsedLine =
+    | { type: LineType; content: string }
+    | { type: LineType.ChordsAndLyrics; content: (string | { index: number; content: string })[] }
+  const parsedSongLines = useMemo((): ParsedLine[] => {
     if (!song) return []
-    const result: typeof song.lines = []
+    const result: ParsedLine[] = []
     let nextIndexSplit
 
     song.lines.forEach((line, index) => {

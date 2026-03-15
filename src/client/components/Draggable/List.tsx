@@ -6,14 +6,14 @@ import {
   useSensor,
   useSensors
 } from '@dnd-kit/core'
-import { Ref, forwardRef, useImperativeHandle, useMemo, useState } from 'react'
+import { type ReactElement, Ref, forwardRef, useImperativeHandle, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { DraggableItem, ItemType } from './Item'
 import { SortableContext, arrayMove } from '@dnd-kit/sortable'
 import { reorderQueue } from '@shared/endpoints/queue'
 
 interface Props {
-  emptyState: JSX.Element
+  emptyState: ReactElement
   onItemClick: (args: { item: ItemType; action: string }) => void
   refresh: () => void
 }

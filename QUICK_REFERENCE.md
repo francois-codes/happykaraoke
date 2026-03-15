@@ -208,9 +208,9 @@ npm run db:migration:run
 
 ## 📦 Tech Stack
 
-**Frontend**: React 18 + TypeScript + TailwindCSS + Vite
+**Frontend**: React 19 + TypeScript + TailwindCSS + Vite 6
 **Backend**: Node.js + Express + Socket.io
-**Desktop**: Electron 30
+**Desktop**: Electron 33
 **Database**: SQLite + Drizzle ORM
 **Build**: esbuild (server) + Vite (client) + electron-builder
 

@@ -308,9 +308,9 @@ Use QUICK_REFERENCE.md "Finding Things" section:
 ## 📦 Dependencies to Know
 
 ### Must Not Change
-- **Electron 30.1.0** - SQLite binary built for this version
+- **Electron 33.4.x** - SQLite binary built for this version
 - **Node.js 20+** - Required engine
-- **React 18** - Current version
+- **React 19** - Current version
 
 ### Can Add Carefully
 - UI components (must be compatible with TailwindCSS + Radix)

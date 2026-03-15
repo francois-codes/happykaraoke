@@ -7,7 +7,7 @@
 **Multi-device karaoke app:** Electron app on laptop → Express server on LAN → Guests join via browser → Real-time sync via Socket.io
 
 **Version:** 2.6.1
-**Tech:** Electron 30 + React 18 + Express + Socket.io + SQLite + TypeScript
+**Tech:** Electron 33 + React 19 + Vite 6 + Express + Socket.io + SQLite + TypeScript
 **Pattern:** Shared TypeScript code for type-safe client-server contracts
 
 ---
@@ -179,9 +179,9 @@ Render (src/client/components/SongComponents/)
 
 ## 📦 Tech Stack Summary
 
-**Frontend:** React 18 + TypeScript + TailwindCSS + Vite + Radix UI
+**Frontend:** React 19 + TypeScript + TailwindCSS + Vite 6 + Radix UI
 **Backend:** Node.js 20+ + Express + Socket.io
-**Desktop:** Electron 30
+**Desktop:** Electron 33
 **Database:** SQLite + Drizzle ORM
 **Build:** esbuild (server) + Vite (client) + electron-builder
 

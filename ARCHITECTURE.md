@@ -33,7 +33,7 @@ HappiKaraoke v2 is an Electron-based desktop application for hosting live karaok
 
 ### Frontend (Client)
 
-- **Framework**: React 18.3.1 with TypeScript 5.4.5
+- **Framework**: React 19 with TypeScript 5.4.5
 - **Routing**: React Router v6
 - **Styling**: TailwindCSS with Radix UI components (shadcn/ui)
 - **Build Tool**: Vite (dev server + bundler)
@@ -42,7 +42,7 @@ HappiKaraoke v2 is an Electron-based desktop application for hosting live karaok
 
 ### Backend (Server)
 
-- **Runtime**: Node.js 20+ (Electron 30.1.0)
+- **Runtime**: Node.js 20+ (Electron 33.4.x)
 - **Web Server**: Express.js
 - **Real-time**: Socket.io
 - **Database**: SQLite 3 (better-sqlite3)
@@ -51,7 +51,7 @@ HappiKaraoke v2 is an Electron-based desktop application for hosting live karaok
 
 ### Desktop Integration
 
-- **Framework**: Electron 30.1.0
+- **Framework**: Electron 33.4.x
 - **Packaging**: electron-builder
 - **Platforms**: Windows (NSIS), macOS (DMG), Linux (AppImage/snap/deb)
 
