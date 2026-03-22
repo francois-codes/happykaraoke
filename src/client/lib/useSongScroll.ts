@@ -2,9 +2,9 @@ import { useScrollContext } from '@/contexts/scroll'
 import { useAutoScroller } from '@/lib/useAutoScroller'
 import { useStore } from '@/store'
 import { socket } from '@/utils/socket'
-import { sessionLogger } from '@shared/lib/sessionLogger'
 import { setScroll } from '@shared/endpoints/scroll'
 import { scrollChanged } from '@shared/messages/scroll'
+import { scrollDiagnosticLog } from '@shared/lib/scrollDiagnosticLog'
 import { ScrollEventType } from '@shared/types/scroll'
 import { useCallback, useEffect, useRef } from 'react'
 import { useSongSections } from './useSongSections'
@@ -18,38 +18,101 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const lastEmitRef = useRef<number>(0)
   const { resolveSections } = useSongSections()
 
+  useEffect(() => {
+    scrollDiagnosticLog.setActiveSong(currentSong ?? null)
+  }, [currentSong])
+
   scrollChanged.client.useMessage(
     socket,
     ({ type, value }) => {
       if (scrollMaster) {
-        sessionLogger.info('scroll:changed ignored on scroll master', { value })
-        return
-      }
-
-      const fraction = Number(value)
-      if (Number.isNaN(fraction)) {
+        scrollDiagnosticLog.info('scroll:changed ignored on scroll master', {
+          category: 'scroll',
+          value,
+          type
+        })
         return
       }
 
       const scrollContainer = scrollContainerRef.current
+
+      if (type === ScrollEventType.POSITION) {
+        const fraction = Number(value)
+        if (Number.isNaN(fraction)) {
+          scrollDiagnosticLog.warn('scroll:changed invalid fraction', {
+            category: 'scroll',
+            value,
+            type
+          })
+          return
+        }
+
+        if (!scrollContainer) {
+          scrollDiagnosticLog.warn('scroll:position no container', { category: 'scroll' })
+          return
+        }
+
+        const maxScrollable = Math.max(
+          1,
+          scrollContainer.scrollHeight - scrollContainer.clientHeight
+        )
+        const scrollTarget = fraction * maxScrollable
+
+        if (targetLineRef.current && currentScrollRef.current !== null) {
+          const containerRect = scrollContainer.getBoundingClientRect()
+          const linePosition = containerRect.top + scrollTarget - currentScrollRef.current
+          targetLineRef.current.style.top = `${linePosition}px`
+        }
+
+        if (musicienScroll) {
+          scroller.stopScrolling()
+          const currentScroll = currentScrollRef.current ?? 0
+          const threshold = window.innerHeight * 0.35
+
+          if (scrollTarget > currentScroll && scrollTarget - currentScroll > threshold) {
+            const sections = resolveSections() ?? []
+            const targetSection =
+              sections.find((section, index) => {
+                const nextSection = sections[index + 1] ?? Infinity
+                return scrollTarget >= section && scrollTarget < nextSection
+              }) ?? sections[0]
+
+            if (typeof targetSection === 'number' && !Number.isNaN(targetSection)) {
+              currentScrollRef.current = targetSection
+              scroller.scrollTo(targetSection, 'instant')
+              return
+            }
+          }
+
+          if (scrollTarget > currentScroll) return
+        }
+
+        currentScrollRef.current = scrollTarget
+        return scroller.scrollTo(scrollTarget, 'instant')
+      }
+
       if (!scrollContainer) {
+        if (type === ScrollEventType.NEXT_SECTION || type === ScrollEventType.PREVIOUS_SECTION) {
+          scrollDiagnosticLog.warn('scroll:changed no container for section navigation', {
+            category: 'scroll',
+            type
+          })
+        }
         return
       }
 
-      const maxScrollable = Math.max(
-        1,
-        scrollContainer.scrollHeight - scrollContainer.clientHeight
-      )
-      const scrollTarget = fraction * maxScrollable
-
-      if (
-        targetLineRef.current &&
-        type === ScrollEventType.POSITION &&
-        currentScrollRef.current !== null
-      ) {
-        const containerRect = scrollContainer.getBoundingClientRect()
-        const linePosition = containerRect.top + scrollTarget - currentScrollRef.current
-        targetLineRef.current.style.top = `${linePosition}px`
+      const logFollowerSection = (action: 'NEXT_SECTION' | 'PREVIOUS_SECTION') => {
+        const sections = resolveSections() ?? []
+        const top = scrollContainer.scrollTop
+        scrollDiagnosticLog.info(`follower ${action}`, {
+          category: 'scroll',
+          sectionCount: sections.length,
+          scrollTop: top,
+          nearestSectionIndex: sections.findIndex((y, i) => {
+            const nextY = sections[i + 1] ?? Infinity
+            return top >= y && top < nextY
+          })
+        })
       }
 
       switch (type) {
@@ -68,40 +131,16 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
           currentScrollRef.current = 0
           return scroller.scrollToTop()
         case ScrollEventType.NEXT_SECTION:
+          logFollowerSection('NEXT_SECTION')
           return scroller.nextSection()
         case ScrollEventType.PREVIOUS_SECTION:
+          logFollowerSection('PREVIOUS_SECTION')
           return scroller.previousSection()
-        case ScrollEventType.POSITION: {
-          if (musicienScroll) {
-            scroller.stopScrolling()
-            const currentScroll = currentScrollRef.current ?? 0
-            const threshold = window.innerHeight * 0.35
-
-            // For forward scrolling, use section-based approach
-            if (scrollTarget > currentScroll && scrollTarget - currentScroll > threshold) {
-              const sections = resolveSections() ?? []
-              const targetSection =
-                sections.find((section, index) => {
-                  const nextSection = sections[index + 1] ?? Infinity
-                  return scrollTarget >= section && scrollTarget < nextSection
-                }) ?? sections[0]
-
-              if (typeof targetSection === 'number' && !Number.isNaN(targetSection)) {
-                currentScrollRef.current = targetSection
-                scroller.scrollTo(targetSection, 'instant')
-                return
-              }
-            }
-
-            if (scrollTarget > currentScroll) return
-          }
-
-          currentScrollRef.current = scrollTarget
-          return scroller.scrollTo(scrollTarget, 'instant')
-        }
+        default:
+          return
       }
     },
-    [scroller, scrollMaster, musicienScroll]
+    [scroller, scrollMaster, musicienScroll, resolveSections]
   )
 
   const emitScrollPosition = useCallback(() => {
@@ -122,14 +161,22 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
 
     lastEmitRef.current = now
 
-    sessionLogger.info('scroll:position:emit', {
+    scrollDiagnosticLog.info('scroll:position:emit', {
+      category: 'scroll',
       fraction
     })
 
-    setScroll.call({
-      type: ScrollEventType.POSITION,
-      value: fraction
-    })
+    void setScroll
+      .call({
+        type: ScrollEventType.POSITION,
+        value: fraction
+      })
+      .catch((e: unknown) => {
+        scrollDiagnosticLog.error('setScroll position emit failed', {
+          category: 'scroll',
+          message: e instanceof Error ? e.message : String(e)
+        })
+      })
   }, [scrollContainerRef])
 
   useEffect(() => {
@@ -162,10 +209,13 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
 
   useEffect(() => {
     if (currentSong) {
+      scrollDiagnosticLog.info('song changed (scroll reset)', {
+        category: 'scroll'
+      })
       currentScrollRef.current = 0
       scroller.scrollToTop()
     }
-  }, [currentSong])
+  }, [currentSong, scroller])
 
   useEffect(() => {
     if (!musicienScroll) return

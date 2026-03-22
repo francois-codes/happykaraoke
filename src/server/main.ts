@@ -1,5 +1,6 @@
-import { app, BrowserWindow, dialog, ipcMain } from 'electron'
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
+import { mkdir, writeFile } from 'fs/promises'
 import { startServer } from './server'
 import { join } from 'path'
 import { config } from '@shared/config'
@@ -53,6 +54,21 @@ app.whenReady().then(async () => {
     })
 
     return filePaths[0]
+  })
+
+  ipcMain.handle('scroll-diagnostic-log:write', async (_, content: string) => {
+    const dir = join(app.getPath('userData'), 'debug-logs')
+    await mkdir(dir, { recursive: true })
+    const name = `scroll-diagnostic-${new Date().toISOString().replace(/[:.]/g, '-')}.json`
+    const fullPath = join(dir, name)
+    await writeFile(fullPath, content, 'utf8')
+    return { path: fullPath, name }
+  })
+
+  ipcMain.handle('scroll-diagnostic-log:reveal', async () => {
+    const dir = join(app.getPath('userData'), 'debug-logs')
+    await mkdir(dir, { recursive: true })
+    await shell.openPath(dir)
   })
 
   // Default open or close DevTools by F12 in development

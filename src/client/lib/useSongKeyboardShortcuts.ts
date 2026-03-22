@@ -3,7 +3,18 @@ import { useAutoScroller } from '@/lib/useAutoScroller'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { useDispatch, useStore } from '@/store'
 import { setScroll } from '@shared/endpoints/scroll'
+import { scrollDiagnosticLog } from '@shared/lib/scrollDiagnosticLog'
 import { ScrollEventType } from '@shared/types/scroll'
+
+function emitSetScroll(payload: { type: ScrollEventType; value?: number }) {
+  void setScroll.call(payload).catch((e: unknown) => {
+    scrollDiagnosticLog.error('setScroll failed', {
+      category: 'scroll',
+      type: payload.type,
+      message: e instanceof Error ? e.message : String(e)
+    })
+  })
+}
 
 export function useSongKeyboardShortcuts({
   scroller,
@@ -54,7 +65,7 @@ export function useSongKeyboardShortcuts({
       handler: () => {
         scroller.toggleScrolling()
 
-        setScroll.call({
+        emitSetScroll({
           type: ScrollEventType.TOGGLE
         })
       }
@@ -70,7 +81,7 @@ export function useSongKeyboardShortcuts({
       preventDefault: true,
       handler: () => {
         scroller.increaseScrollSpeed()
-        setScroll.call({ type: ScrollEventType.FASTER })
+        emitSetScroll({ type: ScrollEventType.FASTER })
       }
     },
     [scroller, isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
@@ -84,7 +95,7 @@ export function useSongKeyboardShortcuts({
       preventDefault: true,
       handler: () => {
         scroller.decreaseScrollSpeed()
-        setScroll.call({ type: ScrollEventType.SLOWER })
+        emitSetScroll({ type: ScrollEventType.SLOWER })
       }
     },
     [scroller, isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
@@ -102,7 +113,7 @@ export function useSongKeyboardShortcuts({
         scroller.stopScrolling()
 
         scroller.scrollToTop()
-        setScroll.call({ type: ScrollEventType.TOP })
+        emitSetScroll({ type: ScrollEventType.TOP })
       }
     },
     [scroller, isAdmin, searchOpen, transpoOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
@@ -117,7 +128,7 @@ export function useSongKeyboardShortcuts({
       handler: () => {
         scroller.nextSection()
         // Emit socket event to synchronize with other clients
-        setScroll.call({ type: ScrollEventType.NEXT_SECTION })
+        emitSetScroll({ type: ScrollEventType.NEXT_SECTION })
       }
     },
     [isAdmin, transpoOpen, searchOpen, scroller, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
@@ -132,7 +143,7 @@ export function useSongKeyboardShortcuts({
       handler: () => {
         scroller.previousSection()
         // Emit socket event to synchronize with other clients
-        setScroll.call({ type: ScrollEventType.PREVIOUS_SECTION })
+        emitSetScroll({ type: ScrollEventType.PREVIOUS_SECTION })
       }
     },
     [isAdmin, transpoOpen, searchOpen, scroller, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]

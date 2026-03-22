@@ -44,5 +44,7 @@ declare type ValueOf<T> = T[keyof T]
 declare interface Window {
   electron?: {
     openDialog: () => Promise<string>
+    writeScrollDiagnosticLog: (content: string) => Promise<{ path: string; name: string }>
+    revealScrollDiagnosticLogs: () => Promise<void>
   }
 }

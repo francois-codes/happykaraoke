@@ -1,6 +1,7 @@
 'use client'
 import { useScrollContext } from '@/contexts/scroll'
 import { useStore } from '@/store'
+import { scrollDiagnosticLog } from '@shared/lib/scrollDiagnosticLog'
 import { useCallback, useEffect, useRef } from 'react'
 import { useSongSections } from './useSongSections'
 
@@ -99,16 +100,32 @@ export const useAutoScroller = () => {
     const container = scrollContainerRef.current
 
     if (!container) {
+      scrollDiagnosticLog.warn('nextSection: no scroll container', { category: 'scroll' })
       return
     }
 
+    const scrollTopBefore = container.scrollTop
+
     if (!sections || sections.length === 0) {
+      scrollDiagnosticLog.warn('nextSection: empty sections, using page fallback', {
+        category: 'scroll',
+        scrollTopBefore
+      })
       const target = container.scrollTop + pageSize() * 0.8
       scrollTo(target, 'instant')
       return
     }
 
     const lastIndex = sections.length - 1
+    const indexBefore = sectionIndexRef.current
+
+    if (sectionIndexRef.current < 0 || sectionIndexRef.current > lastIndex) {
+      scrollDiagnosticLog.warn('nextSection: section index out of range before clamp', {
+        category: 'scroll',
+        indexBefore,
+        lastIndex
+      })
+    }
 
     if (sectionIndexRef.current < 0) {
       sectionIndexRef.current = 0
@@ -121,6 +138,16 @@ export const useAutoScroller = () => {
       const next = sections[sectionIndexRef.current]
       scrollTo(next ?? 0, 'instant')
     }
+
+    scrollDiagnosticLog.info('nextSection', {
+      category: 'scroll',
+      sectionCount: sections.length,
+      indexBefore,
+      indexAfter: sectionIndexRef.current,
+      scrollTopBefore,
+      scrollTopAfter: container.scrollTop,
+      atLastSection: indexBefore >= lastIndex
+    })
   }, [pageSize, resolveSections, scrollContainerRef, scrollTo])
 
   const previousSection = useCallback(() => {
@@ -128,16 +155,32 @@ export const useAutoScroller = () => {
     const container = scrollContainerRef.current
 
     if (!container) {
+      scrollDiagnosticLog.warn('previousSection: no scroll container', { category: 'scroll' })
       return
     }
 
+    const scrollTopBefore = container.scrollTop
+
     if (!sections || sections.length === 0) {
+      scrollDiagnosticLog.warn('previousSection: empty sections, using page fallback', {
+        category: 'scroll',
+        scrollTopBefore
+      })
       const target = container.scrollTop - pageSize() * 0.8
       scrollTo(Math.max(0, target), 'instant')
       return
     }
 
     const lastIndex = sections.length - 1
+    const indexBefore = sectionIndexRef.current
+
+    if (sectionIndexRef.current < 0 || sectionIndexRef.current > lastIndex) {
+      scrollDiagnosticLog.warn('previousSection: section index out of range before clamp', {
+        category: 'scroll',
+        indexBefore,
+        lastIndex
+      })
+    }
 
     if (sectionIndexRef.current < 0) {
       sectionIndexRef.current = 0
@@ -162,6 +205,15 @@ export const useAutoScroller = () => {
       }
       scrollTo(sections[sectionIndexRef.current] ?? 0, 'instant')
     }
+
+    scrollDiagnosticLog.info('previousSection', {
+      category: 'scroll',
+      sectionCount: sections.length,
+      indexBefore,
+      indexAfter: sectionIndexRef.current,
+      scrollTopBefore,
+      scrollTopAfter: container.scrollTop
+    })
   }, [pageSize, resolveSections, scrollContainerRef, scrollTo])
 
   useEffect(() => {
