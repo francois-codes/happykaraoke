@@ -15,7 +15,7 @@ export const useAutoScroller = () => {
   const animationFrameRef = useRef<Nullable<number>>(null)
   const sectionsRef = useRef<Nullable<number[]>>(null)
   const sectionIndexRef = useRef(0)
-  const { resolveSections } = useSongSections()
+  const { resolveSections, getScrollTopForSectionStart } = useSongSections()
   const pageSize = useCallback(() => {
     if (scrollContainerRef.current) {
       return scrollContainerRef.current.clientHeight || window.innerHeight
@@ -135,8 +135,17 @@ export const useAutoScroller = () => {
 
     if (sectionIndexRef.current < lastIndex) {
       sectionIndexRef.current += 1
-      const next = sections[sectionIndexRef.current]
-      scrollTo(next ?? 0, 'instant')
+      const target = getScrollTopForSectionStart(sectionIndexRef.current, container)
+      scrollTo(target, 'instant')
+    } else {
+      scrollDiagnosticLog.warn('nextSection: at last section', {
+        category: 'scroll',
+        sectionCount: sections.length,
+        indexBefore,
+        indexAfter: sectionIndexRef.current,
+        scrollTopBefore,
+        scrollTopAfter: container.scrollTop
+      })
     }
 
     scrollDiagnosticLog.info('nextSection', {
@@ -148,7 +157,7 @@ export const useAutoScroller = () => {
       scrollTopAfter: container.scrollTop,
       atLastSection: indexBefore >= lastIndex
     })
-  }, [pageSize, resolveSections, scrollContainerRef, scrollTo])
+  }, [getScrollTopForSectionStart, pageSize, resolveSections, scrollContainerRef, scrollTo])
 
   const previousSection = useCallback(() => {
     const sections = resolveSections()
@@ -198,12 +207,13 @@ export const useAutoScroller = () => {
       container.scrollTop !== undefined
     ) {
       if (
-        sectionIndexRef.current > 0 &&
+        sectionIndexRef.current > 1 &&
         container.scrollTop <= sections[sectionIndexRef.current] + 30
       ) {
         sectionIndexRef.current -= 1
       }
-      scrollTo(sections[sectionIndexRef.current] ?? 0, 'instant')
+      const target = getScrollTopForSectionStart(sectionIndexRef.current, container)
+      scrollTo(target, 'instant')
     }
 
     scrollDiagnosticLog.info('previousSection', {
@@ -214,7 +224,7 @@ export const useAutoScroller = () => {
       scrollTopBefore,
       scrollTopAfter: container.scrollTop
     })
-  }, [pageSize, resolveSections, scrollContainerRef, scrollTo])
+  }, [getScrollTopForSectionStart, pageSize, resolveSections, scrollContainerRef, scrollTo])
 
   useEffect(() => {
     if (animationFrameRef.current) {
