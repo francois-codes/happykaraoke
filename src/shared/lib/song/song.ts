@@ -123,11 +123,17 @@ export class Song {
   }
 
   private isChordLine(line: string) {
-    const words = line.replace('_', '|').replace(/\(|\)/g, '').split(' ').filter(Boolean)
+    const forTokens = line.replace('_', '|').replace(/\(|\)/g, '')
+    const words = forTokens.split(/\s+/).filter(Boolean)
+    if (words.length === 0) return false
 
-
-
-    return words.every((word) => Chord.CHORD_REGEX.test(word) || Chord.CHORD_STARTERS.some((str) => line.trim().startsWith(str)) || isSeparator(word) || isSignature(word))
+    return words.every(
+      (word) =>
+        Chord.CHORD_REGEX.test(word) ||
+        Chord.CHORD_STARTERS.some((str) => line.trim().startsWith(str)) ||
+        isSeparator(word) ||
+        isSignature(word)
+    )
   }
 }
 

@@ -12,28 +12,36 @@ import { EmptySong } from './EmptySong'
 import { SongLine } from './SongLine'
 import { SongWrapper } from './SongWrapper'
 
-function stringToIndexedObjects(str) {
+function stringToIndexedObjects(str: string) {
   const result: { index: number; content: string }[] = []
   let currentWord = ''
   let startIndex = -1
 
   for (let i = 0; i < str.length; i++) {
-    if (str[i] !== ' ' && str[i] !== '_') {
+    const c = str[i]
+    if (c === '_') {
+      if (currentWord !== '') {
+        result.push({
+          index: startIndex,
+          content: currentWord
+        })
+        currentWord = ''
+      }
+      startIndex = i + 1
+    } else if (/\s/.test(c)) {
+      if (currentWord !== '') {
+        result.push({
+          index: startIndex,
+          content: currentWord
+        })
+        currentWord = ''
+        startIndex = -1
+      }
+    } else {
       if (startIndex === -1) {
         startIndex = i
       }
-      currentWord += str[i]
-    } else if (currentWord !== '') {
-      result.push({
-        index: startIndex,
-        content: currentWord
-      })
-      currentWord = ''
-      startIndex = -1
-    }
-
-    if (str[i] === '_') {
-      startIndex = i + 1
+      currentWord += c
     }
   }
 
