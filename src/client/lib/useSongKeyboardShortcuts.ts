@@ -6,6 +6,11 @@ import { setScroll } from '@shared/endpoints/scroll'
 import { scrollDiagnosticLog } from '@shared/lib/scrollDiagnosticLog'
 import { ScrollEventType } from '@shared/types/scroll'
 
+/**
+ * Scroll master applies keyboard-driven scroll locally and broadcasts; other admins only broadcast
+ * and rely on `scroll:changed` so the master (who ignores echoes) stays in sync and we avoid
+ * double-applying TOGGLE when `scrollMaster` is false on the driver.
+ */
 function emitSetScroll(payload: { type: ScrollEventType; value?: number }) {
   void setScroll.call(payload).catch((e: unknown) => {
     scrollDiagnosticLog.error('setScroll failed', {
@@ -23,7 +28,16 @@ export function useSongKeyboardShortcuts({
   scroller: ReturnType<typeof useAutoScroller>
   reload: () => void
 }) {
-  const { isAdmin, searchOpen, transpoOpen, chordsEnabled, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
+  const {
+    isAdmin,
+    scrollMaster,
+    searchOpen,
+    transpoOpen,
+    chordsEnabled,
+    aiSearchOpen,
+    aiPreviewOpen,
+    openAIKeyModalOpen
+  } = useStore()
   const dispatch = useDispatch()
 
   // cmd + ctrl + r => reload song
@@ -63,14 +77,16 @@ export function useSongKeyboardShortcuts({
         return !isAdmin || searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen
       },
       handler: () => {
-        scroller.toggleScrolling()
+        if (scrollMaster === true) {
+          scroller.toggleScrolling()
+        }
 
         emitSetScroll({
           type: ScrollEventType.TOGGLE
         })
       }
     },
-    [scroller, isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
+    [scroller, isAdmin, scrollMaster, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // right => increase scroll speed (admin only)
@@ -80,11 +96,13 @@ export function useSongKeyboardShortcuts({
       disable: () => !isAdmin || searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       preventDefault: true,
       handler: () => {
-        scroller.increaseScrollSpeed()
+        if (scrollMaster === true) {
+          scroller.increaseScrollSpeed()
+        }
         emitSetScroll({ type: ScrollEventType.FASTER })
       }
     },
-    [scroller, isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
+    [scroller, isAdmin, scrollMaster, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // left => decrease scroll speed (admin only)
@@ -94,11 +112,13 @@ export function useSongKeyboardShortcuts({
       disable: () => !isAdmin || searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       preventDefault: true,
       handler: () => {
-        scroller.decreaseScrollSpeed()
+        if (scrollMaster === true) {
+          scroller.decreaseScrollSpeed()
+        }
         emitSetScroll({ type: ScrollEventType.SLOWER })
       }
     },
-    [scroller, isAdmin, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
+    [scroller, isAdmin, scrollMaster, searchOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // $ => scroll to top (admin only)
@@ -110,13 +130,14 @@ export function useSongKeyboardShortcuts({
       },
       handler: (event) => {
         event.preventDefault()
-        scroller.stopScrolling()
-
-        scroller.scrollToTop()
+        if (scrollMaster === true) {
+          scroller.stopScrolling()
+          scroller.scrollToTop()
+        }
         emitSetScroll({ type: ScrollEventType.TOP })
       }
     },
-    [scroller, isAdmin, searchOpen, transpoOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
+    [scroller, isAdmin, scrollMaster, searchOpen, transpoOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // down => scroll to next section (admin only)
@@ -126,12 +147,13 @@ export function useSongKeyboardShortcuts({
       preventDefault: true,
       disable: () => !isAdmin || searchOpen || transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
-        scroller.nextSection()
-        // Emit socket event to synchronize with other clients
+        if (scrollMaster === true) {
+          scroller.nextSection()
+        }
         emitSetScroll({ type: ScrollEventType.NEXT_SECTION })
       }
     },
-    [isAdmin, transpoOpen, searchOpen, scroller, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
+    [isAdmin, transpoOpen, searchOpen, scroller, scrollMaster, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // up => scroll to previous section (admin only)
@@ -141,12 +163,13 @@ export function useSongKeyboardShortcuts({
       preventDefault: true,
       disable: () => !isAdmin || searchOpen || transpoOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen,
       handler: () => {
-        scroller.previousSection()
-        // Emit socket event to synchronize with other clients
+        if (scrollMaster === true) {
+          scroller.previousSection()
+        }
         emitSetScroll({ type: ScrollEventType.PREVIOUS_SECTION })
       }
     },
-    [isAdmin, transpoOpen, searchOpen, scroller, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
+    [isAdmin, transpoOpen, searchOpen, scroller, scrollMaster, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
   // c => toggle chords
