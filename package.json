@@ -1,6 +1,6 @@
 {
   "name": "happikaraoke",
-  "version": "2.10.0",
+  "version": "2.10.1",
   "description": "Reboot of the happikaraoke app",
   "main": "out/server/main.js",
   "author": "Francois Roland <francois.roland@gmail.com>",
