@@ -16,6 +16,7 @@ import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from '@/store'
+import { fetchSessionConfig } from '@shared/endpoints/session'
 import { loginUser } from '@shared/endpoints/user'
 import { UserType } from '@shared/types'
 import { AxiosError } from 'axios'
@@ -47,7 +48,21 @@ export const CreateSession = () => {
     try {
       const { user } = await loginUser.call({ password, sessionName: 'session' })
       window.localStorage.setItem('userId', `${user.id}`)
-      dispatch({ isAdmin: user.type === UserType.ADMIN })
+      const isAdmin = user.type === UserType.ADMIN
+      try {
+        const cfg = await fetchSessionConfig.call()
+        const sc = cfg.scrollControl ?? null
+        dispatch({
+          isAdmin,
+          scrollControl: sc,
+          scrollMaster: isAdmin && sc?.activeScrollMasterUserId === user.id,
+          currentSong: cfg.currentSong,
+          songsFolder: cfg.songsFolder,
+          hostUrl: cfg.hostUrl ?? ''
+        })
+      } catch {
+        dispatch({ isAdmin, scrollControl: null, scrollMaster: false })
+      }
       navigate('/session')
     } catch (e) {
       if (e instanceof AxiosError) {

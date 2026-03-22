@@ -1,15 +1,21 @@
 import { config } from '@shared/config'
 import { queue, session, sessionLog, user } from '@shared/db/schema'
 import { differenceInMinutes, formatISO } from 'date-fns'
-import { and, count, desc, eq, inArray } from 'drizzle-orm'
+import { and, asc, count, desc, eq, inArray } from 'drizzle-orm'
 import { UserType } from '@shared/types'
 
 import ip from 'ip'
+export interface ScrollControlSnapshot {
+  primaryAdminUserId: number | null
+  activeScrollMasterUserId: number | null
+}
+
 export interface SessionConfig {
   currentSong?: string
   transpo: number
   songsFolder: string
   hostUrl: string
+  scrollControl?: ScrollControlSnapshot | null
 }
 
 export interface Session {
@@ -281,4 +287,173 @@ export async function deleteSessionLog(sessionId: number) {
   ])
 
   return result
+}
+
+type ScrollControlRow = {
+  activeScrollMasterUserId: number | null
+  /** When true, do not auto-assign scroll master for a sole admin (user released explicitly). */
+  soloExplicitRelease: boolean
+}
+
+const scrollControlBySessionId = new Map<number, ScrollControlRow>()
+
+function getScrollControlRow(sessionId: number): ScrollControlRow {
+  let row = scrollControlBySessionId.get(sessionId)
+  if (!row) {
+    row = {
+      activeScrollMasterUserId: null,
+      soloExplicitRelease: false
+    }
+    scrollControlBySessionId.set(sessionId, row)
+  }
+  return row
+}
+
+export async function countAdminsForSession(sessionId: number): Promise<number> {
+  const { db } = await import('@shared/db')
+
+  const [r] = await db
+    .select({ n: count(user.id) })
+    .from(user)
+    .where(and(eq(user.sessionId, sessionId), eq(user.type, UserType.ADMIN)))
+
+  return Number(r?.n ?? 0)
+}
+
+/** Lowest admin id in the session (fallback when no scroll host is set). */
+export async function getMinAdminUserIdForSession(sessionId: number): Promise<number | null> {
+  const { db } = await import('@shared/db')
+
+  const [first] = await db
+    .select({ id: user.id })
+    .from(user)
+    .where(and(eq(user.sessionId, sessionId), eq(user.type, UserType.ADMIN)))
+    .orderBy(asc(user.id))
+    .limit(1)
+
+  return first?.id ?? null
+}
+
+/**
+ * Admin who may take/revoke scroll without a request: the host set on /login, else lowest admin id.
+ */
+export async function getScrollAuthorityUserId(sessionId: number): Promise<number | null> {
+  const { db } = await import('@shared/db')
+
+  const [sess] = await db
+    .select({ host: session.scrollHostUserId })
+    .from(session)
+    .where(eq(session.id, sessionId))
+    .limit(1)
+
+  const hostId = sess?.host
+  if (hostId != null) {
+    const [hostAdmin] = await db
+      .select({ id: user.id })
+      .from(user)
+      .where(
+        and(eq(user.id, hostId), eq(user.sessionId, sessionId), eq(user.type, UserType.ADMIN))
+      )
+      .limit(1)
+
+    if (hostAdmin) {
+      return hostAdmin.id
+    }
+  }
+
+  return getMinAdminUserIdForSession(sessionId)
+}
+
+/** First /login admin for this session becomes scroll host; join-route admins never call this. */
+export async function setScrollHostUserIdIfUnset(sessionId: number, adminUserId: number) {
+  const { db } = await import('@shared/db')
+
+  const [row] = await db
+    .select({ host: session.scrollHostUserId })
+    .from(session)
+    .where(eq(session.id, sessionId))
+    .limit(1)
+
+  if (row?.host != null) {
+    return
+  }
+
+  await db
+    .update(session)
+    .set({ scrollHostUserId: adminUserId })
+    .where(eq(session.id, sessionId))
+}
+
+export async function getScrollControlSnapshot(sessionId: number): Promise<ScrollControlSnapshot> {
+  const authority = await getScrollAuthorityUserId(sessionId)
+  const adminCount = await countAdminsForSession(sessionId)
+  const row = getScrollControlRow(sessionId)
+
+  if (
+    !row.soloExplicitRelease &&
+    row.activeScrollMasterUserId === null &&
+    authority !== null &&
+    adminCount >= 1
+  ) {
+    row.activeScrollMasterUserId = authority
+  }
+
+  return {
+    primaryAdminUserId: authority,
+    activeScrollMasterUserId: row.activeScrollMasterUserId
+  }
+}
+
+type ScrollMutationError = { ok: false; status: number; message: string }
+type ScrollMutationOk = { ok: true; snapshot: ScrollControlSnapshot }
+
+type RequireSessionOk = { ok: true; sessionId: number }
+
+async function requireAdminInOpenSession(
+  callerUserId: number
+): Promise<RequireSessionOk | ScrollMutationError> {
+  const current = await getCurrentSession()
+  if (!current) {
+    return { ok: false, status: 400, message: 'No open session' }
+  }
+
+  const { getUser } = await import('@shared/lib/users')
+  const u = await getUser(callerUserId)
+
+  if (!u || u.type !== UserType.ADMIN || u.sessionId !== current.id) {
+    return { ok: false, status: 403, message: 'Not an admin in this session' }
+  }
+
+  return { ok: true, sessionId: current.id }
+}
+
+export async function scrollControlTake(callerUserId: number): Promise<ScrollMutationOk | ScrollMutationError> {
+  const auth = await requireAdminInOpenSession(callerUserId)
+  if (!auth.ok) {
+    return auth
+  }
+
+  const row = getScrollControlRow(auth.sessionId)
+  row.activeScrollMasterUserId = callerUserId
+  row.soloExplicitRelease = false
+
+  return { ok: true, snapshot: await getScrollControlSnapshot(auth.sessionId) }
+}
+
+export async function scrollControlRelease(callerUserId: number): Promise<ScrollMutationOk | ScrollMutationError> {
+  const auth = await requireAdminInOpenSession(callerUserId)
+  if (!auth.ok) {
+    return auth
+  }
+
+  const row = getScrollControlRow(auth.sessionId)
+  if (row.activeScrollMasterUserId !== callerUserId) {
+    return { ok: false, status: 403, message: 'Only the active scroll master can release' }
+  }
+
+  const authority = await getScrollAuthorityUserId(auth.sessionId)
+  row.activeScrollMasterUserId = null
+  row.soloExplicitRelease = callerUserId === authority
+
+  return { ok: true, snapshot: await getScrollControlSnapshot(auth.sessionId) }
 }

@@ -31,7 +31,7 @@ export function createEndpoint<Payload, ResponsePayload>({
   function register(app: Express) {
     app[method](url, handler)
   }
-  async function call(payload?: Payload) {
+  async function call(payload?: Payload): Promise<ResponsePayload> {
     const { data } = await axios<ResponsePayload>({
       method,
       url,

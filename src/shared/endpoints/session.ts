@@ -1,13 +1,24 @@
 import { type SessionLog } from '@shared/db/schema'
-import { Session, SessionConfig, SessionWithCount, getSessionConfig, setSessionConfig } from '@shared/lib/session'
+import {
+  Session,
+  SessionConfig,
+  SessionWithCount,
+  getCurrentSession,
+  getScrollControlSnapshot,
+  getSessionConfig,
+  setSessionConfig
+} from '@shared/lib/session'
 import { socketEmitter } from '@shared/server/socketEmitter'
 import { createEndpoint } from '@shared/types/endpoints'
 
 export const fetchSessionConfig = createEndpoint<unknown, SessionConfig>({
   method: 'get',
   url: '/fetch-session',
-  handler: (_, res) => {
-    res.status(200).json(getSessionConfig())
+  handler: async (_, res) => {
+    const base = getSessionConfig()
+    const current = await getCurrentSession()
+    const scrollControl = current ? await getScrollControlSnapshot(current.id) : null
+    res.status(200).json({ ...base, scrollControl })
   }
 })
 

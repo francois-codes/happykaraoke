@@ -1,9 +1,11 @@
 import { Dispatch, FC, PropsWithChildren, createContext, useContext, useReducer } from 'react'
+import type { ScrollControlSnapshot } from '@shared/lib/session'
 
 interface Store {
   currentSong?: string | null
   isAdmin?: boolean
   scrollMaster?: boolean
+  scrollControl?: ScrollControlSnapshot | null
   songKey?: string
   chordsEnabled: boolean
   transpo: number

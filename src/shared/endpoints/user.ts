@@ -1,5 +1,11 @@
 import { config } from '@shared/config'
-import { startSessionIfNeeded } from '@shared/lib/session'
+import {
+  checkAndRefreshSession,
+  countAdminsForSession,
+  getCurrentSession,
+  setScrollHostUserIdIfUnset,
+  startSessionIfNeeded
+} from '@shared/lib/session'
 import { createUser, getUser } from '@shared/lib/users'
 import { UserLoginPayload, UserLoginResponse } from '@shared/schemas/users'
 import { UserType } from '@shared/types'
@@ -20,6 +26,11 @@ export const loginUser = createEndpoint<UserLoginPayload, UserLoginResponse>({
 
     const user = await createUser('admin', UserType.ADMIN)
 
+    const current = await getCurrentSession()
+    if (current) {
+      await setScrollHostUserIdIfUnset(current.id, user.id)
+    }
+
     res.status(200).json({ user })
   }
 })
@@ -38,8 +49,11 @@ export const fetchUser = createEndpoint<{ id: number }, UserLoginResponse>({
 
     // If admin user, ensure a valid session exists
     if (user.type === UserType.ADMIN) {
-      const { checkAndRefreshSession } = await import('@shared/lib/session')
       await checkAndRefreshSession()
+      const open = await getCurrentSession()
+      if (open && (await countAdminsForSession(open.id)) === 1) {
+        await setScrollHostUserIdIfUnset(open.id, user.id)
+      }
     }
 
     res.status(200).json({ user })

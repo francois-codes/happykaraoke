@@ -1,4 +1,4 @@
-import { useDispatch, useStore } from '@/store'
+import { useDispatch } from '@/store'
 import { sleep } from '@/utils'
 import { fetchSessionConfig, refreshSession } from '@shared/endpoints/session'
 import { fetchUser } from '@shared/endpoints/user'
@@ -15,60 +15,68 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
   const navigate = useNavigate()
 
   const dispatch = useDispatch()
-  const store = useStore()
 
   const location = window.location.pathname
 
-  async function initUser() {
-    if (typeof store.isAdmin === 'undefined' && !userInitialized) {
-      try {
-        const id = window.localStorage.getItem('userId')
-        if (id) {
-          const numberId = Number(id)
-          const { user } = await fetchUser.call({ id: numberId })
+  async function bootstrap() {
+    if (userInitialized) {
+      return
+    }
 
-          if (user) {
-            dispatch({
-              isAdmin: user.type === UserType.ADMIN,
-              scrollMaster: user.type === UserType.ADMIN
-            })
+    let sessionCfg: Awaited<ReturnType<typeof fetchSessionConfig.call>> | null = null
+    try {
+      sessionCfg = await fetchSessionConfig.call()
+      if (sessionCfg) {
+        dispatch({
+          currentSong: sessionCfg.currentSong,
+          songsFolder: sessionCfg.songsFolder,
+          hostUrl: sessionCfg.hostUrl ?? '',
+          scrollControl: sessionCfg.scrollControl ?? null
+        })
+      }
+    } catch {
+      //
+    }
 
-            // If admin user is auto-logged in, refresh session to ensure validity
-            if (user.type === UserType.ADMIN) {
-              await refreshSession.call()
-            }
+    try {
+      const id = window.localStorage.getItem('userId')
+      if (id) {
+        const numberId = Number(id)
+        const { user } = await fetchUser.call({ id: numberId })
 
-            if (location === '/' || location === '/join' || location === '/new') {
-              setRedirectTarget('/session')
-            }
+        if (user) {
+          const isAdmin = user.type === UserType.ADMIN
+          const sc = sessionCfg?.scrollControl ?? null
+
+          dispatch({
+            isAdmin,
+            scrollControl: sc,
+            scrollMaster: isAdmin && sc?.activeScrollMasterUserId === user.id
+          })
+
+          if (user.type === UserType.ADMIN) {
+            await refreshSession.call()
           }
-        } else {
-          if (location === '/session') {
-            throw new Error('no user')
+
+          if (location === '/' || location === '/join' || location === '/new') {
+            setRedirectTarget('/session')
           }
         }
-      } catch (e) {
-        const errorCode = e instanceof AxiosError ? e.response?.status : null
-        if (errorCode === 404) {
-          navigate(location)
-        } else {
-          navigate('/')
+      } else {
+        if (location === '/session') {
+          throw new Error('no user')
         }
       }
+    } catch (e) {
+      const errorCode = e instanceof AxiosError ? e.response?.status : null
+      if (errorCode === 404) {
+        navigate(location)
+      } else {
+        navigate('/')
+      }
     }
+
     setUserInitialized(true)
-  }
-
-  async function initSession() {
-    if (!store.currentSong && !sessionInitialized) {
-      try {
-        const { currentSong, songsFolder, hostUrl } = await fetchSessionConfig.call()
-        dispatch({ currentSong, songsFolder, hostUrl })
-      } catch {
-        //
-      }
-    }
-
     setSessionInitialized(true)
   }
 
@@ -81,7 +89,7 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
   }
 
   useEffect(() => {
-    Promise.all([initUser(), initSession(), loader()])
+    Promise.all([bootstrap(), loader()])
   }, [])
 
   const initialized = userInitialized && sessionInitialized && loaderInitialized

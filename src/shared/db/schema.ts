@@ -21,7 +21,9 @@ export type UserInsert = InferInsertModel<typeof user>
 export const session = sqliteTable('session', {
   id: integer('id').primaryKey(),
   sessionDate: text('sessionDate').notNull(),
-  closed: integer('closed').$type<0 | 1>().notNull().default(0)
+  closed: integer('closed').$type<0 | 1>().notNull().default(0),
+  /** Admin who opened the session via /login; join-route admins are never the host. */
+  scrollHostUserId: integer('scrollHostUserId')
 })
 
 export type SessionType = InferSelectModel<typeof session>
