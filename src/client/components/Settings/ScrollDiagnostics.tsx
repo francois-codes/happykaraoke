@@ -3,6 +3,7 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { useToast } from '@/components/ui/use-toast'
 import { useStore } from '@/store'
+import { ToggleDebugScrollAnchors } from './ToggleDebugScrollAnchors'
 import {
   readScrollDiagnosticsEnabled,
   readScrollDiagnosticsVerbose,
@@ -100,6 +101,7 @@ export function ScrollDiagnostics() {
           Enregistre avertissements et erreurs de défilement pour le débogage.
         </p>
       </div>
+      <ToggleDebugScrollAnchors />
       <div className="flex items-center space-x-2">
         <Switch
           id="scroll-diag-enabled"
