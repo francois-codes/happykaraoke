@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -25,7 +24,6 @@
     --input: 20 5.9% 90%;
     --ring: 24.6 95% 53.1%;
     --radius: 0.5rem;
-
   }
 
   .dark {
@@ -35,7 +33,7 @@
     --card-foreground: 60 9.1% 97.8%;
     --popover: 20 14.3% 4.1%;
     --popover-foreground: 60 9.1% 97.8%;
-    --primary: 	180 21% 62%;
+    --primary: 180 21% 62%;
     --primary-foreground: 60 9.1% 97.8%;
     --secondary: 12 6.5% 15.1%;
     --secondary-foreground: 60 9.1% 97.8%;
@@ -50,7 +48,6 @@
     --ring: 20.5 90.2% 48.2%;
   }
 }
-
 
 @layer base {
   * {
@@ -67,8 +64,8 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 * {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .song-content {
@@ -122,6 +119,16 @@
   font-size: 2.5vmin;
   line-height: 8vmin;
   white-space: pre-wrap;
+}
+
+/*
+ * When chords are off: slightly larger body type + tighter tracking so line length
+ * stays close to the chord layout (same vmin line-heights / block structure).
+ */
+#song-lines.song-lines--lyrics-only .chords-and-lyrics,
+#song-lines.song-lines--lyrics-only .responsive-font {
+  font-size: 2.95vmin;
+  letter-spacing: -0.06em;
 }
 
 .chord-card {
