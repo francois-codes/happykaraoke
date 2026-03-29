@@ -122,12 +122,25 @@
 }
 
 /*
- * When chords are off: slightly larger body type + tighter tracking so line length
- * stays close to the chord layout (same vmin line-heights / block structure).
+ * Chords on: narrow the column so wrap density matches lyrics-only at a larger font.
+ * Same monospace size as lyrics (2.5vmin); lyrics-only uses 3.5vmin → width ratio 2.5/3.5 = 5/7,
+ * so reserve 2/7 of the row as empty space on the right (margin-right).
+ */
+#song-lines.song-lines--chords-on {
+  width: calc(100% * 11 / 14);
+  margin-left: 0;
+  align-self: flex-start;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+ * When chords are off: full width + larger type; line-heights unchanged elsewhere.
+ * Tighter tracking offsets monospace widening slightly vs chord mode at 2.5vmin.
  */
 #song-lines.song-lines--lyrics-only .chords-and-lyrics,
 #song-lines.song-lines--lyrics-only .responsive-font {
-  font-size: 2.95vmin;
+  font-size: 3.5vmin;
   letter-spacing: -0.06em;
 }
 

@@ -10,8 +10,8 @@ export const SongWrapper: FC<PropsWithChildren> = ({ children }) => {
     <div
       id="song-lines"
       className={cn(
-        'relative flex flex-col justify-start w-full song-content max-w-100',
-        !chordsEnabled && 'song-lines--lyrics-only'
+        'relative flex flex-col justify-start song-content max-w-100',
+        chordsEnabled ? 'song-lines--chords-on' : 'song-lines--lyrics-only w-full'
       )}
     >
       <SectionScrollDebugMarkers />
