@@ -18,7 +18,16 @@ const MUSICIAN_TRIGGER_VH = 0.55
 const SECTION_JUMP_DURATION_MS = 170
 
 export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
-  const { scrollMaster, currentSong, musicienScroll, scrollSnapshot } = useStore()
+  const {
+    scrollMaster,
+    currentSong,
+    musicienScroll,
+    scrollSnapshot,
+    searchOpen,
+    aiSearchOpen,
+    aiPreviewOpen,
+    openAIKeyModalOpen
+  } = useStore()
   const scrollContainerRef = useScrollContext()
   const {
     resolveAnchors,
@@ -194,6 +203,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (!scrollMaster) return
+      if (searchOpen || aiSearchOpen || aiPreviewOpen || openAIKeyModalOpen) return
       if (event.key === 'ArrowDown') {
         event.preventDefault()
         sectionJumpDeltaRef.current += 1
@@ -212,7 +222,14 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [flushJumpQueue, scrollMaster])
+  }, [
+    aiPreviewOpen,
+    aiSearchOpen,
+    flushJumpQueue,
+    openAIKeyModalOpen,
+    scrollMaster,
+    searchOpen
+  ])
 
   const applyFollowerSnapshot = useCallback((snapshot: ScrollSnapshot) => {
     if (scrollMaster) return
