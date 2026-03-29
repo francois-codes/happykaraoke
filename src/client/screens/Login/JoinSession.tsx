@@ -1,6 +1,4 @@
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as z from 'zod'
+import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
@@ -12,16 +10,18 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { PasswordInput } from '@/components/ui/password-input'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useCallback, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
 
-import { useNavigate } from 'react-router'
 import { useDispatch } from '@/store'
 import { fetchSessionConfig } from '@shared/endpoints/session'
 import { joinSession } from '@shared/endpoints/user'
 import { UserType } from '@shared/types'
-import { Link } from 'react-router-dom'
 import { AxiosError } from 'axios'
+import { useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const formSchema = z.object({
   userName: z.string().min(1),
@@ -35,6 +35,7 @@ export const JoinSession = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const [formError, setFormError] = useState('')
+  const [showPasswordInput, setShowPasswordInput] = useState(false)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -83,7 +84,6 @@ export const JoinSession = () => {
     <div className="min-w-96">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-
           <FormField
             control={form.control}
             name="userName"
@@ -98,20 +98,22 @@ export const JoinSession = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="adminPassword"
-            render={({ field }) => (
-              <FormItem className="mb-4">
-                <FormLabel>Taper le mot de passe pour joindre en admin</FormLabel>
-                <FormControl>
-                  <PasswordInput {...field} />
-                </FormControl>
-                <FormDescription>(Si vous savez, vous savez)</FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+          {showPasswordInput && (
+            <FormField
+              control={form.control}
+              name="adminPassword"
+              render={({ field }) => (
+                <FormItem className="mb-4">
+                  <FormLabel>Taper le mot de passe pour joindre en admin</FormLabel>
+                  <FormControl>
+                    <PasswordInput {...field} />
+                  </FormControl>
+                  <FormDescription>(Si vous savez, vous savez)</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
           {formError && <p className="text-destructive">{formError}</p>}
           <Button type="submit" className="w-full" disabled={isLoading}>
@@ -122,6 +124,17 @@ export const JoinSession = () => {
       <div className="pt-8 w-full text-center">
         <Link to="/new" className="text-sm text-slate-500">
           Ouvrir une session
+        </Link>
+      </div>
+      <div className="pt-8 w-full text-center">
+        <Link
+          to="#"
+          onClick={() => {
+            setShowPasswordInput(true)
+          }}
+          className="text-sm text-slate-500"
+        >
+          Rejoindre en admin
         </Link>
       </div>
     </div>
