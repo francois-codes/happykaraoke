@@ -48,7 +48,18 @@ export class Song {
   }
 
   private parseLines(lines: string[]): SongLine[] {
-    const songLines = lines.map((line) => {
+    const collapsed: string[] = []
+    for (const line of lines) {
+      if (line === '') {
+        if (collapsed.length === 0 || collapsed[collapsed.length - 1] !== '') {
+          collapsed.push('')
+        }
+      } else {
+        collapsed.push(line)
+      }
+    }
+
+    const songLines = collapsed.map((line) => {
       if (line === '') {
         return {
           type: LineType.break,
@@ -119,7 +130,20 @@ export class Song {
       return line
     })
 
-    return parsedLines
+    return parsedLines.map((line, index, arr) => {
+      if (line.type !== LineType.break) return line
+      const prev = arr[index - 1]
+      const next = arr[index + 1]
+      // Blank before #/[ header: section heading already provides a scroll target.
+      if (next?.type === LineType.Section) {
+        return { ...line, type: LineType.visualBreak }
+      }
+      // Blank after section title, before first chord row (e.g. Intro → gap → pickup chords).
+      if (prev?.type === LineType.Section && next?.type === LineType.Chords) {
+        return { ...line, type: LineType.visualBreak }
+      }
+      return line
+    })
   }
 
   private isChordLine(line: string) {

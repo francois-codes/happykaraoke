@@ -103,6 +103,30 @@ function contentRowAnchorTop(row: HTMLElement): number {
   return row.classList.contains('block') ? blockAnchorContentTop(row) : row.offsetTop
 }
 
+/**
+ * Max scrollTop before the chord layer is clipped off the top of the scroll container.
+ * Used when bottom-aligning the last row before a section heading.
+ */
+function maxScrollTopToKeepChordsVisible(lastRow: HTMLElement, songLines: HTMLElement): number | null {
+  if (lastRow.classList.contains('block') && lastRow.querySelector('.chords-and-lyrics')) {
+    return blockAnchorContentTop(lastRow)
+  }
+  const rows = collectScrollContextRowElements(songLines)
+  const idx = rows.indexOf(lastRow)
+  if (
+    idx > 0 &&
+    lastRow.matches('pre.line') &&
+    lastRow.classList.contains('responsive-font') &&
+    !lastRow.closest('.block')
+  ) {
+    const prev = rows[idx - 1]
+    if (prev.matches('pre.line') && prev.classList.contains('chord-height')) {
+      return prev.offsetTop
+    }
+  }
+  return null
+}
+
 function findPreviousBlockElement(blocks: HTMLElement[], scrollPosition: number): HTMLElement | null {
   let best: HTMLElement | null = null
   let bestTop = -1
@@ -328,7 +352,10 @@ export function useSongSections() {
     }
     const lastRow = findLastContentRowBefore(heading.offsetTop, songLines)
     if (!lastRow) return clampScrollTop(container, anchor.scrollTop)
-    const candidate = lastRow.offsetTop + lastRow.offsetHeight - container.clientHeight + SECTION_SCROLL_BOTTOM_PADDING
+    const naive =
+      lastRow.offsetTop + lastRow.offsetHeight - container.clientHeight + SECTION_SCROLL_BOTTOM_PADDING
+    const chordCeiling = maxScrollTopToKeepChordsVisible(lastRow, songLines)
+    const candidate = chordCeiling !== null ? Math.min(naive, chordCeiling) : naive
     const prev = sectionAnchors[k - 1]
     const scrollTopMin = prev && prev.scrollTop < anchor.scrollTop ? prev.scrollTop : 0
     const raw = Math.min(anchor.scrollTop, Math.max(scrollTopMin, candidate))

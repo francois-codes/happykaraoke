@@ -12,6 +12,8 @@ export enum LineType {
   Chords = 'chords',
   Section = 'section',
   Spacer = 'spacer',
+  /** Same vertical space as `break` but not a scroll anchor (gaps around section headers). */
+  visualBreak = 'visualBreak',
   break = 'break',
   Tab = 'tab',
   ChordsAndLyrics = 'chordsAndLyrics'

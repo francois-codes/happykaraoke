@@ -22,6 +22,9 @@ export const SongLine: FC<ParsedLine> = ({ type, content }) => {
     case LineType.break:
       return <BreakLine />
 
+    case LineType.visualBreak:
+      return <div className="line-break" aria-hidden />
+
     case LineType.Chords:
       return <ChordLine content={content as string} />
 
