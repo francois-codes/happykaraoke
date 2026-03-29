@@ -6,13 +6,14 @@ import { useDispatch, useStore } from '@/store'
 import { IoSettingsOutline } from 'react-icons/io5'
 import { FlexModal } from '../Flex/FlexModal'
 import { ToggleChords } from '../Settings/ToggleChords'
-import { ToggleDebugScrollAnchors } from '../Settings/ToggleDebugScrollAnchors'
 import { ToggleDarkMode } from '../Settings/ToggleDarkMode'
+import { ToggleDebugScrollAnchors } from '../Settings/ToggleDebugScrollAnchors'
 import { Button } from '../ui/button'
 import { AddSongWithAIButton } from './AddSongWithAIButton'
 import { AISongPreviewModal } from './AISongPreviewModal'
 import { AISongSearchModal } from './AISongSearchModal'
 import { CloseSession } from './CloseSession'
+import { Logout } from './Logout'
 import { OpenAIKeyButton } from './OpenAIKeyButton'
 import { OpenAIKeyModal } from './OpenAIKeyModal'
 import { ScrollDiagnostics } from './ScrollDiagnostics'
@@ -103,6 +104,7 @@ export function SettingsPanel() {
               {isAdmin && <ToggleDebugScrollAnchors />}
               {isAdmin && <ScrollDiagnostics />}
               {isAdmin && <CloseSession />}
+              <Logout />
             </div>
           </div>
         </div>
