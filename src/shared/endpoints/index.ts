@@ -1,6 +1,6 @@
 import { addToQueue, clearQueue, getQueue, removeFromQueue, reorderQueue } from './queue'
 import { releaseScrollMaster, takeScrollMaster } from './scrollControl'
-import { setScroll } from './scroll'
+import { setScrollSnapshot } from './scroll'
 import { closeSession, deleteSessionLog, fetchAllSessions, fetchSessionConfig, fetchSessionLog, refreshSession, setSongsFolder } from './session'
 import { changeSong, getCSVData, getSong, getSongsList, setTranspo } from './song'
 import { fetchUser, joinSession, loginUser } from './user'
@@ -15,7 +15,7 @@ export const endpoints = [
   getCSVData,
   changeSong,
   setTranspo,
-  setScroll,
+  setScrollSnapshot,
   takeScrollMaster,
   releaseScrollMaster,
   fetchSessionConfig,

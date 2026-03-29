@@ -6,6 +6,7 @@ import { useDispatch, useStore } from '@/store'
 import { IoSettingsOutline } from 'react-icons/io5'
 import { FlexModal } from '../Flex/FlexModal'
 import { ToggleChords } from '../Settings/ToggleChords'
+import { ToggleDebugScrollAnchors } from '../Settings/ToggleDebugScrollAnchors'
 import { ToggleDarkMode } from '../Settings/ToggleDarkMode'
 import { Button } from '../ui/button'
 import { AddSongWithAIButton } from './AddSongWithAIButton'
@@ -99,6 +100,7 @@ export function SettingsPanel() {
               {isAdmin && <AddSongWithAIButton />}
               {isAdmin && <SessionLogs />}
               {isAdmin && <FlexModal />}
+              {isAdmin && <ToggleDebugScrollAnchors />}
               {isAdmin && <ScrollDiagnostics />}
               {isAdmin && <CloseSession />}
             </div>

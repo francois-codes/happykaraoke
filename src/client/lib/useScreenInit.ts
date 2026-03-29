@@ -31,7 +31,8 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
           currentSong: sessionCfg.currentSong,
           songsFolder: sessionCfg.songsFolder,
           hostUrl: sessionCfg.hostUrl ?? '',
-          scrollControl: sessionCfg.scrollControl ?? null
+          scrollControl: sessionCfg.scrollControl ?? null,
+          scrollSnapshot: sessionCfg.scrollSnapshot ?? null
         })
       }
     } catch {
@@ -51,6 +52,7 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
           dispatch({
             isAdmin,
             scrollControl: sc,
+            scrollSnapshot: sessionCfg?.scrollSnapshot ?? null,
             scrollMaster: isAdmin && sc?.activeScrollMasterUserId === user.id
           })
 

@@ -9,7 +9,7 @@ export const ChordLine: FC<SongLineProps> = ({ content }) => {
   const className = hasPrefix ? '-ml-4' : ''
   const { chordsEnabled } = useStore()
 
-  if (!chordsEnabled) return <div className="line-chords-collapsed" />
+  if (!chordsEnabled) return <div className="line-chords-collapsed" aria-hidden />
 
   return (
     <pre className={`line flex items-center chord-height ${className}`}>

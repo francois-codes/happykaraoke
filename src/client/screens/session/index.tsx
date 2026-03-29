@@ -23,7 +23,7 @@ export function SessionScreen() {
         <div
           ref={scrollRef}
           id="scroll-container"
-          className="w-full relative h-[calc(100vh-124px)] px-4 md:px-8 py-8  overflow-scroll"
+          className="w-full relative h-[calc(100vh-124px)] overflow-scroll px-4 pb-8 pt-0 md:px-8"
         >
           <ScrollProvider scrollRef={scrollRef}>
             <SongComponent />

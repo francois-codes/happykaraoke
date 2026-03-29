@@ -91,11 +91,12 @@ export const SongComponent = () => {
   const scroller = useAutoScroller()
   const reloadKey = useRef(0)
 
-  useSongScroll(scroller)
+  const { flushMasterScrollSnapshot } = useSongScroll(scroller)
 
   useSongKeyboardShortcuts({
     scroller,
-    reload
+    reload,
+    flushMasterScrollSnapshot
   })
 
   songChanged.client.useMessage(socket, (payload) => {

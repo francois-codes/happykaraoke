@@ -1,11 +1,14 @@
+import { readDebugScrollAnchorsEnabled } from '@/lib/debugSettings'
 import { Dispatch, FC, PropsWithChildren, createContext, useContext, useReducer } from 'react'
 import type { ScrollControlSnapshot } from '@shared/lib/session'
+import type { ScrollSnapshot } from '@shared/types/scroll'
 
 interface Store {
   currentSong?: string | null
   isAdmin?: boolean
   scrollMaster?: boolean
   scrollControl?: ScrollControlSnapshot | null
+  scrollSnapshot?: ScrollSnapshot | null
   songKey?: string
   chordsEnabled: boolean
   transpo: number
@@ -23,6 +26,8 @@ interface Store {
   aiSearchOpen: boolean
   aiPreviewOpen: boolean
   openAIKeyModalOpen: boolean
+  /** Admin-only: overlay section/break scroll anchors (persisted in localStorage). */
+  debugScrollAnchors: boolean
 }
 
 const initialStore: Store = {
@@ -40,7 +45,8 @@ const initialStore: Store = {
   musicienScroll: false,
   aiSearchOpen: false,
   aiPreviewOpen: false,
-  openAIKeyModalOpen: false
+  openAIKeyModalOpen: false,
+  debugScrollAnchors: readDebugScrollAnchorsEnabled()
 }
 
 const StoreContext = createContext<Store>(initialStore)

@@ -1,15 +1,19 @@
-import { scrollChanged } from '@shared/messages/scroll'
+import { scrollSnapshotChanged } from '@shared/messages/scroll'
+import { upsertScrollSnapshot } from '@shared/lib/session'
 import { createEndpoint } from '@shared/types/endpoints'
-import { ScrollEventType } from '@shared/types/scroll'
+import type { ScrollSnapshot, ScrollSnapshotInput } from '@shared/types/scroll'
 
-type ScrollChangePayload = { type: ScrollEventType; value?: number }
-
-export const setScroll = createEndpoint<ScrollChangePayload, unknown>({
+export const setScrollSnapshot = createEndpoint<ScrollSnapshotInput, ScrollSnapshot | { message: string }>({
   method: 'post',
-  url: '/scroll',
+  url: '/scroll-snapshot',
   handler: async (req, res) => {
-    const { type, value } = req.body
-    scrollChanged.server.emit({ type, value })
-    res.sendStatus(200)
+    const result = await upsertScrollSnapshot(req.body)
+    if (!result.ok) {
+      res.status(result.status).json({ message: result.message })
+      return
+    }
+
+    scrollSnapshotChanged.server.emit(result.snapshot)
+    res.status(200).json(result.snapshot)
   }
 })

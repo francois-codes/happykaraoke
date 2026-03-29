@@ -5,6 +5,7 @@ import {
   SessionWithCount,
   getCurrentSession,
   getScrollControlSnapshot,
+  getScrollSnapshot,
   getSessionConfig,
   setSessionConfig
 } from '@shared/lib/session'
@@ -18,7 +19,8 @@ export const fetchSessionConfig = createEndpoint<unknown, SessionConfig>({
     const base = getSessionConfig()
     const current = await getCurrentSession()
     const scrollControl = current ? await getScrollControlSnapshot(current.id) : null
-    res.status(200).json({ ...base, scrollControl })
+    const scrollSnapshot = current ? await getScrollSnapshot(current.id) : null
+    res.status(200).json({ ...base, scrollControl, scrollSnapshot })
   }
 })
 

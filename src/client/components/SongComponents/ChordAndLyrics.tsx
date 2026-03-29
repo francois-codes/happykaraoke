@@ -55,7 +55,7 @@ export function ChordsAndLyrics({
 
   return (
     <div className="block">
-      <div className={`chords-and-lyrics ${chordsEnabled ? '' : 'lyrics-only-font'}`}>
+      <div className="chords-and-lyrics">
         {content.map((inner, index) =>
           typeof inner === 'string' ? (
             <Fragment key={index}>{inner}</Fragment>

@@ -3,6 +3,7 @@ import { queue, session, sessionLog, user } from '@shared/db/schema'
 import { differenceInMinutes, formatISO } from 'date-fns'
 import { and, asc, count, desc, eq, inArray } from 'drizzle-orm'
 import { UserType } from '@shared/types'
+import type { ScrollSnapshot, ScrollSnapshotInput } from '@shared/types/scroll'
 
 import ip from 'ip'
 export interface ScrollControlSnapshot {
@@ -16,6 +17,7 @@ export interface SessionConfig {
   songsFolder: string
   hostUrl: string
   scrollControl?: ScrollControlSnapshot | null
+  scrollSnapshot?: ScrollSnapshot | null
 }
 
 export interface Session {
@@ -295,7 +297,13 @@ type ScrollControlRow = {
   soloExplicitRelease: boolean
 }
 
+type ScrollSnapshotRow = {
+  seq: number
+  snapshot: ScrollSnapshot | null
+}
+
 const scrollControlBySessionId = new Map<number, ScrollControlRow>()
+const scrollSnapshotBySessionId = new Map<number, ScrollSnapshotRow>()
 
 function getScrollControlRow(sessionId: number): ScrollControlRow {
   let row = scrollControlBySessionId.get(sessionId)
@@ -305,6 +313,18 @@ function getScrollControlRow(sessionId: number): ScrollControlRow {
       soloExplicitRelease: false
     }
     scrollControlBySessionId.set(sessionId, row)
+  }
+  return row
+}
+
+function getScrollSnapshotRow(sessionId: number): ScrollSnapshotRow {
+  let row = scrollSnapshotBySessionId.get(sessionId)
+  if (!row) {
+    row = {
+      seq: 0,
+      snapshot: null
+    }
+    scrollSnapshotBySessionId.set(sessionId, row)
   }
   return row
 }
@@ -456,4 +476,42 @@ export async function scrollControlRelease(callerUserId: number): Promise<Scroll
   row.soloExplicitRelease = callerUserId === authority
 
   return { ok: true, snapshot: await getScrollControlSnapshot(auth.sessionId) }
+}
+
+export async function getScrollSnapshot(sessionId: number): Promise<ScrollSnapshot | null> {
+  const row = getScrollSnapshotRow(sessionId)
+  return row.snapshot
+}
+
+type ScrollSnapshotMutationError = { ok: false; status: number; message: string }
+type ScrollSnapshotMutationOk = { ok: true; snapshot: ScrollSnapshot }
+
+export async function upsertScrollSnapshot(
+  payload: ScrollSnapshotInput
+): Promise<ScrollSnapshotMutationOk | ScrollSnapshotMutationError> {
+  const auth = await requireAdminInOpenSession(payload.userId)
+  if (!auth.ok) {
+    return auth
+  }
+
+  const control = await getScrollControlSnapshot(auth.sessionId)
+  if (control.activeScrollMasterUserId !== payload.userId) {
+    return { ok: false, status: 403, message: 'Only active scroll master can publish snapshot' }
+  }
+
+  const row = getScrollSnapshotRow(auth.sessionId)
+  row.seq += 1
+  const snapshot: ScrollSnapshot = {
+    masterUserId: payload.userId,
+    songId: payload.songId,
+    masterScrollTop: payload.masterScrollTop,
+    anchorId: payload.anchorId,
+    offsetPxFromAnchor: payload.offsetPxFromAnchor,
+    autoScroll: payload.autoScroll,
+    seq: row.seq,
+    emittedAt: Date.now()
+  }
+  row.snapshot = snapshot
+
+  return { ok: true, snapshot }
 }

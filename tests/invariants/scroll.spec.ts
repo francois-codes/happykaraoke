@@ -1,37 +1,41 @@
 import { describe, expect, it } from 'vitest'
 
-const computeScrollFraction = (scrollTop: number, scrollHeight: number, clientHeight: number) => {
-  const maxScrollable = Math.max(1, scrollHeight - clientHeight)
-  const raw = scrollTop / maxScrollable
-  return Math.min(1, Math.max(0, raw))
+const toTopFromAnchor = (anchorTop: number, offset: number, maxScrollable: number) => {
+  return Math.max(0, Math.min(anchorTop + offset, maxScrollable))
 }
 
-const computeScrollTarget = (fraction: number, scrollHeight: number, clientHeight: number) => {
-  const maxScrollable = Math.max(1, scrollHeight - clientHeight)
-  return fraction * maxScrollable
+const shouldApply = (incomingSeq: number, lastSeq: number) => incomingSeq > lastSeq
+
+const musicianShouldStep = (targetTop: number, currentTop: number, viewportHeight: number) => {
+  if (targetTop < currentTop) return true
+  const threshold = viewportHeight * 0.55
+  return targetTop - currentTop >= threshold
 }
 
 describe('scroll invariants', () => {
-  it('produces consistent fractions across different viewport sizes', () => {
-    const scrollHeight = 4000
-
-    const adminFraction = computeScrollFraction(1000, scrollHeight, 800)
-    const viewerFraction = computeScrollFraction(1000, scrollHeight, 600)
-
-    expect(adminFraction).toBeCloseTo(viewerFraction, 5)
+  it('reconstructs clamped target from anchor + offset', () => {
+    const maxScrollable = 2400
+    expect(toTopFromAnchor(320, 80, maxScrollable)).toBe(400)
+    expect(toTopFromAnchor(2300, 300, maxScrollable)).toBe(2400)
+    expect(toTopFromAnchor(100, -250, maxScrollable)).toBe(0)
   })
 
-  it('reconstructs equivalent targets from the same fraction', () => {
-    const scrollHeight = 4000
-    const fraction = 0.5
+  it('clamps master scrollTop to follower max scroll', () => {
+    const maxScroll = 500
+    expect(Math.max(0, Math.min(1200, maxScroll))).toBe(500)
+    expect(Math.max(0, Math.min(-10, maxScroll))).toBe(0)
+  })
 
-    const adminTarget = computeScrollTarget(fraction, scrollHeight, 800)
-    const viewerTarget = computeScrollTarget(fraction, scrollHeight, 600)
+  it('applies only monotonic snapshot sequences', () => {
+    expect(shouldApply(11, 10)).toBe(true)
+    expect(shouldApply(10, 10)).toBe(false)
+    expect(shouldApply(9, 10)).toBe(false)
+  })
 
-    const adminMax = Math.max(1, scrollHeight - 800)
-    const viewerMax = Math.max(1, scrollHeight - 600)
-
-    expect(adminTarget / adminMax).toBeCloseTo(viewerTarget / viewerMax, 5)
+  it('musician mode steps only on threshold crossing when moving down', () => {
+    expect(musicianShouldStep(1100, 1000, 900)).toBe(false)
+    expect(musicianShouldStep(1600, 1000, 900)).toBe(true)
+    expect(musicianShouldStep(800, 1000, 900)).toBe(true)
   })
 })
 

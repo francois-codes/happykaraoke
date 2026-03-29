@@ -16,6 +16,8 @@ const buildFallbackSections = (scrollHeight: number, clientHeight: number) => {
   return sections.length > 0 ? sections : [0]
 }
 
+const makeAnchorId = (type: 'section' | 'break' | 'synthetic', index: number) => `${type}:${index}`
+
 describe('section invariants', () => {
   it('creates at least one fallback section for heading-less songs', () => {
     const sections = buildFallbackSections(2000, 800)
@@ -28,6 +30,11 @@ describe('section invariants', () => {
     for (let i = 1; i < sections.length; i += 1) {
       expect(sections[i]).toBeGreaterThanOrEqual(sections[i - 1])
     }
+  })
+
+  it('builds layout-independent anchor ids from type and index', () => {
+    expect(makeAnchorId('section', 2)).toBe('section:2')
+    expect(makeAnchorId('break', 0)).toBe('break:0')
   })
 })
 

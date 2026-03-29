@@ -3,19 +3,24 @@ import { useScrollContext } from '@/contexts/scroll'
 import { useStore } from '@/store'
 import { scrollDiagnosticLog } from '@shared/lib/scrollDiagnosticLog'
 import { useCallback, useEffect, useRef } from 'react'
-import { useSongSections } from './useSongSections'
+import { getSectionIndexAtScrollTop, useSongSections } from './useSongSections'
 
-const SCROLL_INCREMENT = 0.1
+const SPEED_INCREMENT = 12
 
 export const useAutoScroller = () => {
   const { currentSong } = useStore()
   const scrollContainerRef = useScrollContext()
-  const scrollSpeedRef = useRef(0.05)
+  const scrollSpeedRef = useRef(36)
   const scrollPosition = useRef(0)
+  /** False as soon as stopScrolling runs — prevents scrollStep from queueing another frame after stop. */
+  const autoScrollActiveRef = useRef(false)
   const animationFrameRef = useRef<Nullable<number>>(null)
-  const sectionsRef = useRef<Nullable<number[]>>(null)
   const sectionIndexRef = useRef(0)
+  const lastStepAtRef = useRef<number>(0)
   const { resolveSections, getScrollTopForSectionStart } = useSongSections()
+  const resolveSectionsRef = useRef(resolveSections)
+  resolveSectionsRef.current = resolveSections
+
   const pageSize = useCallback(() => {
     if (scrollContainerRef.current) {
       return scrollContainerRef.current.clientHeight || window.innerHeight
@@ -24,17 +29,33 @@ export const useAutoScroller = () => {
     return window.innerHeight
   }, [scrollContainerRef])
 
-  const scrollStep = useCallback(() => {
-    if (scrollContainerRef.current) {
+  const stopScrolling = useCallback(() => {
+    autoScrollActiveRef.current = false
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current)
+      animationFrameRef.current = null
+    }
+    lastStepAtRef.current = 0
+  }, [])
+
+  const scrollStep = useCallback(
+    (now: number) => {
+      if (!autoScrollActiveRef.current || !scrollContainerRef.current) {
+        animationFrameRef.current = null
+        return
+      }
+      const previousStepAt = lastStepAtRef.current || now
+      const dtMs = Math.min(80, Math.max(0, now - previousStepAt))
+      lastStepAtRef.current = now
       const position = scrollPosition.current ?? scrollContainerRef.current.scrollTop ?? 0
-      const top = position + (scrollSpeedRef.current ?? 0.1)
+      const top = position + scrollSpeedRef.current * (dtMs / 1000)
 
       if (top >= scrollContainerRef.current.scrollHeight - window.innerHeight - 200) {
         stopScrolling()
         return
       }
 
-      const sections = resolveSections()
+      const sections = resolveSectionsRef.current()
       const nextSection = sections[sectionIndexRef.current + 1]
 
       if (nextSection && top >= nextSection) {
@@ -42,44 +63,46 @@ export const useAutoScroller = () => {
       }
 
       scrollPosition.current = top
-      scrollContainerRef.current!.scrollTop = top
-      animationFrameRef.current = requestAnimationFrame(scrollStep)
-    }
-  }, [])
+      scrollContainerRef.current.scrollTop = top
+      if (autoScrollActiveRef.current) {
+        animationFrameRef.current = requestAnimationFrame(scrollStep)
+      } else {
+        animationFrameRef.current = null
+      }
+    },
+    [stopScrolling]
+  )
 
   const startScrolling = useCallback(() => {
-    if (animationFrameRef.current) return // prevent multiple animations
+    if (animationFrameRef.current !== null) return // prevent multiple animations
 
+    autoScrollActiveRef.current = true
+    lastStepAtRef.current = performance.now()
     animationFrameRef.current = requestAnimationFrame(scrollStep)
   }, [scrollStep])
 
-  const stopScrolling = useCallback(() => {
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current)
-      animationFrameRef.current = null
-    }
-  }, [])
-
   const toggleScrolling = useCallback(() => {
-    if (animationFrameRef.current) {
+    if (animationFrameRef.current !== null) {
       stopScrolling()
     } else {
       startScrolling()
     }
-  }, [])
+  }, [startScrolling, stopScrolling])
 
-  const increaseScrollSpeed = (increment = SCROLL_INCREMENT) => {
+  const increaseScrollSpeed = (increment = SPEED_INCREMENT) => {
     scrollSpeedRef.current += increment
   }
 
-  const decreaseScrollSpeed = (decrement = SCROLL_INCREMENT) => {
-    scrollSpeedRef.current = Math.max(scrollSpeedRef.current - decrement, 0.1) // Ensures speed doesn't go below 1
+  const decreaseScrollSpeed = (decrement = SPEED_INCREMENT) => {
+    scrollSpeedRef.current = Math.max(scrollSpeedRef.current - decrement, 6)
   }
 
   const scrollTo = (top: number, behavior: 'instant' | 'smooth' = 'smooth') => {
     scrollPosition.current = top
-    if (animationFrameRef.current) {
+    if (animationFrameRef.current !== null) {
       scrollContainerRef.current!.scrollTop = top
+      // Avoid a large dt after remote snap — next scrollStep integrates from “now”.
+      lastStepAtRef.current = performance.now()
     } else {
       scrollContainerRef.current?.scrollTo({
         top,
@@ -92,8 +115,7 @@ export const useAutoScroller = () => {
     stopScrolling()
     scrollTo(0, 'instant')
     sectionIndexRef.current = 0
-    if (animationFrameRef.current) startScrolling()
-  }, [startScrolling, stopScrolling])
+  }, [stopScrolling])
 
   const nextSection = useCallback(() => {
     const sections = resolveSections()
@@ -238,9 +260,28 @@ export const useAutoScroller = () => {
   }, [stopScrolling])
 
   useEffect(() => {
-    sectionsRef.current = null
     sectionIndexRef.current = 0
   }, [currentSong])
+
+  useEffect(() => {
+    const container = scrollContainerRef.current
+    if (!container) {
+      return
+    }
+
+    const onScroll = () => {
+      if (animationFrameRef.current !== null) {
+        return
+      }
+      const sections = resolveSections()
+      const top = container.scrollTop
+      sectionIndexRef.current = getSectionIndexAtScrollTop(top, sections)
+      scrollPosition.current = top
+    }
+
+    container.addEventListener('scroll', onScroll, { passive: true })
+    return () => container.removeEventListener('scroll', onScroll)
+  }, [resolveSections, scrollContainerRef])
 
   return {
     toggleScrolling,
@@ -248,6 +289,11 @@ export const useAutoScroller = () => {
     stopScrolling,
     increaseScrollSpeed,
     decreaseScrollSpeed,
+    setSpeed: (speedPxPerSecond: number) => {
+      scrollSpeedRef.current = Math.max(6, speedPxPerSecond)
+    },
+    getSpeed: () => scrollSpeedRef.current,
+    isRunning: () => animationFrameRef.current !== null,
     nextSection,
     previousSection,
     scrollToTop,

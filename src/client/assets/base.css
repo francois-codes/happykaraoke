@@ -92,15 +92,22 @@
   height: 4vmin;
 }
 
+/* Empty break rows in song body (not section headers); same height with or without chords. */
+.song-break-line {
+  height: 4vmin;
+  min-height: 4vmin;
+}
+
+/* Reserves the same vertical slot as .chord-height when chord lines are hidden. */
+.line-chords-collapsed {
+  height: 4vmin;
+  min-height: 4vmin;
+  width: 100%;
+}
+
 .responsive-font {
   font-size: 2.5vmin;
   line-height: 4vmin;
-}
-
-.lyrics-only-font {
-  white-space: pre-wrap;
-  font-size: 3.8vmin;
-  line-height: 8vmin;
 }
 
 .chord-font {
@@ -115,11 +122,6 @@
   font-size: 2.5vmin;
   line-height: 8vmin;
   white-space: pre-wrap;
-}
-
-.chords-and-lyrics.lyrics-only-font {
-  font-size: 3.8vmin;
-  line-height: 8vmin;
 }
 
 .chord-card {
