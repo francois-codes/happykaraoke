@@ -130,7 +130,7 @@ export class Song {
       return line
     })
 
-    return parsedLines.map((line, index, arr) => {
+    const withVisualBreaks = parsedLines.map((line, index, arr) => {
       if (line.type !== LineType.break) return line
       const prev = arr[index - 1]
       const next = arr[index + 1]
@@ -144,6 +144,8 @@ export class Song {
       }
       return line
     })
+
+    return withVisualBreaks
   }
 
   private isChordLine(line: string) {

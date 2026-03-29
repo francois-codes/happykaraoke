@@ -82,6 +82,33 @@ function findLastContentRowBefore(top: number, songLines: HTMLElement): HTMLElem
   })
 }
 
+/**
+ * Row used for section scroll + debug Y: the last content row before the heading, but if that row is an
+ * empty-lyrics spacer (`spacer-with-chords`, "(...)"), use the row above — same as aligning to chords above a lyric line.
+ */
+function findSectionScrollAlignmentRow(heading: HTMLElement, songLines: HTMLElement): HTMLElement {
+  const rows = collectScrollContextRowElements(songLines)
+  const before = rows.filter((el) => el.offsetTop < heading.offsetTop)
+  if (before.length === 0) return heading
+
+  let lastRow = before.reduce((best, el) => {
+    const eb = el.offsetTop + el.offsetHeight
+    const bb = best.offsetTop + best.offsetHeight
+    if (eb > bb) return el
+    if (eb < bb) return best
+    return el.offsetTop >= best.offsetTop ? el : best
+  })
+
+  if (lastRow.classList.contains('spacer-with-chords')) {
+    const i = rows.indexOf(lastRow)
+    if (i > 0) {
+      lastRow = rows[i - 1]
+    }
+  }
+
+  return lastRow
+}
+
 /** `.chord-card` uses `position: relative; bottom: 3.5vmin` so chords paint above `.block` layout top; offsetTop alone clips them when scrolling. */
 function blockAnchorContentTop(block: HTMLElement): number {
   let y = block.offsetTop
@@ -108,16 +135,25 @@ function contentRowAnchorTop(row: HTMLElement): number {
  * Used when bottom-aligning the last row before a section heading.
  */
 function maxScrollTopToKeepChordsVisible(lastRow: HTMLElement, songLines: HTMLElement): number | null {
-  if (lastRow.classList.contains('block') && lastRow.querySelector('.chords-and-lyrics')) {
-    return blockAnchorContentTop(lastRow)
-  }
   const rows = collectScrollContextRowElements(songLines)
-  const idx = rows.indexOf(lastRow)
+  let row = lastRow
+  if (row.classList.contains('spacer-with-chords')) {
+    const i = rows.indexOf(row)
+    if (i > 0) {
+      row = rows[i - 1]
+    } else {
+      return null
+    }
+  }
+  if (row.classList.contains('block') && row.querySelector('.chords-and-lyrics')) {
+    return blockAnchorContentTop(row)
+  }
+  const idx = rows.indexOf(row)
   if (
     idx > 0 &&
-    lastRow.matches('pre.line') &&
-    lastRow.classList.contains('responsive-font') &&
-    !lastRow.closest('.block')
+    row.matches('pre.line') &&
+    row.classList.contains('responsive-font') &&
+    !row.closest('.block')
   ) {
     const prev = rows[idx - 1]
     if (prev.matches('pre.line') && prev.classList.contains('chord-height')) {
@@ -125,19 +161,6 @@ function maxScrollTopToKeepChordsVisible(lastRow: HTMLElement, songLines: HTMLEl
     }
   }
   return null
-}
-
-function findPreviousBlockElement(blocks: HTMLElement[], scrollPosition: number): HTMLElement | null {
-  let best: HTMLElement | null = null
-  let bestTop = -1
-  for (const el of blocks) {
-    const t = el.offsetTop
-    if (t < scrollPosition && t > bestTop) {
-      bestTop = t
-      best = el
-    }
-  }
-  return best
 }
 
 function clampScrollTop(container: HTMLElement, top: number): number {
@@ -184,9 +207,6 @@ export function getSectionLayoutDebug(): SectionLayoutDebugRow[] {
   const songLines = document.getElementById('song-lines')
   const scrollContainer = document.getElementById('scroll-container')
   if (!(songLines instanceof HTMLElement) || !(scrollContainer instanceof HTMLElement)) return []
-  const blockEls = Array.from(document.querySelectorAll('.block')).filter(
-    (el): el is HTMLElement => el instanceof HTMLElement
-  )
   const headingNodes = Array.from(document.querySelectorAll('.song-section')).filter(
     (child): child is HTMLElement => child instanceof HTMLElement
   )
@@ -194,8 +214,8 @@ export function getSectionLayoutDebug(): SectionLayoutDebugRow[] {
     return [{ index: 0, title: 'synthetic(0)', alignedScrollY: 0, headingOffsetTop: 0, synthetic: true }]
   }
   return headingNodes.map((child, index) => {
-    const block = findPreviousBlockElement(blockEls, child.offsetTop)
-    const aligned = block ? blockAnchorContentTop(block) : child.offsetTop
+    const alignRow = findSectionScrollAlignmentRow(child, songLines)
+    const aligned = contentRowAnchorTop(alignRow)
     return {
       index,
       title: child.textContent?.trim() ?? `#${index}`,
@@ -242,10 +262,6 @@ export function useSongSections() {
       return sharedAnchorCache
     }
 
-    const blockEls = Array.from(document.querySelectorAll('.block')).filter(
-      (el): el is HTMLElement => el instanceof HTMLElement
-    )
-
     const sectionNodes = Array.from(document.querySelectorAll('.song-section')).filter(
       (el): el is HTMLElement => el instanceof HTMLElement
     )
@@ -256,11 +272,9 @@ export function useSongSections() {
     const anchors: ScrollAnchor[] = []
 
     sectionNodes.forEach((node, index) => {
-      const block = findPreviousBlockElement(blockEls, node.offsetTop)
-      const aligned = block ? blockAnchorContentTop(block) : node.offsetTop
-      const contentTopInSongLines = Math.round(
-        block ? blockContentTopInSongLines(block, songLines) : offsetTopInSongLines(node, songLines)
-      )
+      const alignRow = findSectionScrollAlignmentRow(node, songLines)
+      const aligned = contentRowAnchorTop(alignRow)
+      const contentTopInSongLines = Math.round(rowContentTopInSongLines(alignRow, songLines))
       anchors.push({
         id: makeAnchorId('section', index),
         type: 'section',
