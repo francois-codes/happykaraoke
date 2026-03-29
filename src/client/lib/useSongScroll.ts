@@ -232,7 +232,18 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   ])
 
   const applyFollowerSnapshot = useCallback((snapshot: ScrollSnapshot) => {
-    if (scrollMaster) return
+    // Ignore only our own snapshot while we are scroll master (broadcast echo). Do not use
+    // `scrollMaster` alone: when another admin takes master, the snapshot may arrive before
+    // React flips `scrollMaster` to false — we must still apply their snapshot.
+    const rawId = window.localStorage.getItem('userId')
+    const myId = rawId ? Number(rawId) : NaN
+    if (
+      scrollMaster === true &&
+      Number.isFinite(myId) &&
+      snapshot.masterUserId === myId
+    ) {
+      return
+    }
     if (!currentSong || snapshot.songId !== currentSong) return
     if (snapshot.seq <= lastAppliedSeqRef.current) return
     lastAppliedSeqRef.current = snapshot.seq
@@ -298,10 +309,19 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     applyFollowerSnapshot
   ])
 
+  const applyFollowerSnapshotRef = useRef(applyFollowerSnapshot)
+  applyFollowerSnapshotRef.current = applyFollowerSnapshot
+  const scrollMasterForStoreSyncRef = useRef(scrollMaster)
+  scrollMasterForStoreSyncRef.current = scrollMaster
+
+  // Only re-apply when `scrollSnapshot` in the store changes (e.g. session init). Do not
+  // depend on `scrollMaster` or `applyFollowerSnapshot` identity — demoting scroll master
+  // would re-run with stale init snapshot and overwrite live socket state.
   useEffect(() => {
-    if (!scrollSnapshot || scrollMaster) return
-    applyFollowerSnapshot(scrollSnapshot)
-  }, [applyFollowerSnapshot, scrollMaster, scrollSnapshot])
+    if (!scrollSnapshot) return
+    if (scrollMasterForStoreSyncRef.current) return
+    applyFollowerSnapshotRef.current(scrollSnapshot)
+  }, [scrollSnapshot])
 
   useEffect(() => {
     if (!scrollMaster) return
