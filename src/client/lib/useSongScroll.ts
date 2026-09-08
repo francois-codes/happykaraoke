@@ -17,7 +17,7 @@ const MASTER_EMIT_MIN_MS_MANUAL = 45
 const MASTER_EMIT_MIN_MS_AUTOSCROLL = 22
 const MUSICIAN_TRIGGER_VH = 0.55
 
-export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
+export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>, renderedSongId?: string) {
   const {
     scrollMaster,
     currentSong,
@@ -268,7 +268,10 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       typeof snapshot.masterScrollTop === 'number' && Number.isFinite(snapshot.masterScrollTop)
         ? snapshot.masterScrollTop
         : null
-    const targetTop = Math.max(0, Math.min(fromAnchor ?? fromMaster ?? 0, maxScroll))
+    // The first section can sit below the top; an explicit zero must stay at zero on every layout.
+    const targetTop = fromMaster === 0
+      ? 0
+      : Math.max(0, Math.min(fromAnchor ?? fromMaster ?? 0, maxScroll))
 
     if (snapshot.transition === 'section') {
       animator.cancel()
@@ -349,15 +352,28 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const scrollMasterForStoreSyncRef = useRef(scrollMaster)
   scrollMasterForStoreSyncRef.current = scrollMaster
 
-  // Only re-apply when `scrollSnapshot` in the store changes (e.g. session init). Do not
+  useEffect(() => {
+    if (!currentSong) return
+    logicalAnchorIndexRef.current = 0
+    lastPublishedAnchorIdRef.current = null
+    musicianMasterScrollTopRef.current = null
+    setScrollDebugLogicalAnchorIndex(0)
+    // Every screen resets locally, even when nobody is broadcasting scroll updates.
+    scrollerRef.current.scrollToTop()
+    if (scrollMasterRef.current) {
+      emitSnapshotRef.current()
+    }
+  }, [currentSong])
+
+  // Restore the initial snapshot once its song content is rendered. Do not
   // depend on `scrollMaster` or `applyFollowerSnapshot` identity — demoting scroll master
   // would re-run with stale init snapshot and overwrite live socket state.
   useEffect(() => {
-    if (!scrollSnapshot) return
+    if (!scrollSnapshot || renderedSongId !== scrollSnapshot.songId) return
     if (scrollMasterForStoreSyncRef.current) return
     // Joining/reconnecting restores state directly; a stored jump is not a new navigation event.
     applyFollowerSnapshotRef.current({ ...scrollSnapshot, transition: undefined })
-  }, [scrollSnapshot])
+  }, [scrollSnapshot, renderedSongId])
 
   useEffect(() => {
     if (!scrollMaster) return
@@ -377,17 +393,6 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       if (frameId !== null) cancelAnimationFrame(frameId)
     }
   }, [emitSnapshot, scrollContainerRef, scrollMaster])
-
-  useEffect(() => {
-    if (!currentSong) return
-    logicalAnchorIndexRef.current = 0
-    lastPublishedAnchorIdRef.current = null
-    setScrollDebugLogicalAnchorIndex(0)
-    if (scrollMasterRef.current) {
-      scrollerRef.current.scrollToTop()
-      emitSnapshotRef.current()
-    }
-  }, [currentSong])
 
   useEffect(() => {
     if (!scrollMaster) return

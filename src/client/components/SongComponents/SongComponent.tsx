@@ -91,7 +91,7 @@ export const SongComponent = () => {
   const scroller = useAutoScroller()
   const reloadKey = useRef(0)
 
-  const { flushMasterScrollSnapshot } = useSongScroll(scroller)
+  const { flushMasterScrollSnapshot } = useSongScroll(scroller, song?.filename)
 
   useSongKeyboardShortcuts({
     scroller,

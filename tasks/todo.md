@@ -1,5 +1,13 @@
 # Session usability fixes
 
+## Follow-up: reset everyone when changing songs
+
+- [x] Reproduce retained scroll positions in Electron with scroll master disabled (900 px retained).
+- [x] Reset each screen on song changes and stop previous scrolling. Preserve explicit zero in follower anchor mapping; wait for rendered lyrics before restoring saved positions when joining.
+- [x] Verify normal and musician followers, master enabled/disabled, and mid-song joining; run typechecks/regressions and commit.
+
+Review: full Electron smoke flow passes with two songs, master disabled, musician mode, active auto-scroll, and follower reload. Explicit master position zero now stays zero instead of mapping to the first section at 33 px. Client/server typechecks and all 16 regression tests pass. The smoke app uses port 18081 and disposable data so the running app on 8081 is unaffected.
+
 ## Follow-up: diagnostics off by default
 
 - [x] Reset scroll markers, diagnostic logging, and verbose logging when opening the session screen, including old saved enabled preferences.

@@ -28,6 +28,7 @@ const sections = Array.from({ length: 12 }, (_, i) =>
   `# Section ${i + 1}\n` + Array.from({ length: 12 }, (_, j) => `C       G       Am\nSing this line ${j + 1} in section ${i + 1}`).join('\n')
 ).join('\n\n')
 writeFileSync(join(fixture, 'songs/Smoke Song.txt'), `Smoke Song\nTest Artist\nC\ntest\n\n${sections}`)
+writeFileSync(join(fixture, 'songs/Second Song.txt'), `Second Song\nTest Artist\nC\ntest\n\n${sections.replaceAll('Section', 'Verse')}`)
 process.chdir(fixture)
 require(join(root, 'out/server/main.js'))
 
@@ -130,7 +131,7 @@ async function run() {
 
   const follower = new BrowserWindow({ width: 820, height: 1120, show: true,
     webPreferences: { partition: 'smoke-follower', backgroundThrottling: false } })
-  await follower.loadURL('http://localhost:8081/join')
+  await follower.loadURL('http://localhost:18081/join')
   await waitFor(follower, `!!document.querySelector('input[name="userName"]')`)
   await fill(follower, 'input[name="userName"]', 'iPad musician')
   await clickText(follower, 'Rejoindre la session')
@@ -208,6 +209,69 @@ async function run() {
   await key(admin, 'Escape')
   console.log('PASS changing musician preference during a host transition')
 
+  async function displaySong(title, lastSection) {
+    await evaluate(admin, `document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }))`)
+    await waitFor(admin, `!!document.querySelector('[cmdk-item]')`)
+    await clickText(admin, `Test Artist - ${title}`)
+    await clickText(admin, 'Lancer la chanson (⏎)')
+    for (const win of [admin, follower]) {
+      await waitFor(win, `document.getElementById('song-lines')?.innerText.includes(${JSON.stringify(lastSection)})`)
+    }
+  }
+  async function assertEveryoneAtTop(description) {
+    for (const win of [admin, follower]) {
+      const samples = await recordScroll(win, 350)
+      if (samples.some(top => top > 1)) {
+        console.log('Song reset failure:', win === admin ? 'host' : 'follower', samples,
+          await evaluate(win, `fetch('/fetch-session').then(response => response.json()).then(config => config.scrollSnapshot)`))
+      }
+      assert.ok(samples.every(top => top <= 1), `${description}: expected top, got ${samples.at(-1)}`)
+    }
+    console.log(`PASS ${description}`)
+  }
+
+  await openSettings(admin)
+  await evaluate(admin, `document.getElementById('scroll-master').click()`)
+  await waitFor(admin, `document.getElementById('scroll-master').getAttribute('aria-checked') === 'false'`)
+  await key(admin, 'Escape')
+  for (const win of [admin, follower]) {
+    await evaluate(win, `document.getElementById('scroll-container').scrollTop = 900`)
+    await waitFor(win, `document.getElementById('scroll-container').scrollTop >= 899`)
+  }
+  await displaySong('Second Song', 'Verse 12')
+  await assertEveryoneAtTop('song change resets everyone with scroll master disabled')
+
+  await openSettings(follower)
+  await evaluate(follower, `[...document.querySelectorAll('label')].find(el => el.textContent === 'Scroll musicien').parentElement.querySelector('button').click()`)
+  await key(follower, 'Escape')
+  for (const win of [admin, follower]) {
+    await evaluate(win, `document.getElementById('scroll-container').scrollTop = 1100`)
+  }
+  await displaySong('Smoke Song', 'Section 12')
+  await assertEveryoneAtTop('song change resets musician followers without a scroll master')
+
+  await openSettings(follower)
+  await evaluate(follower, `[...document.querySelectorAll('label')].find(el => el.textContent === 'Scroll musicien').parentElement.querySelector('button').click()`)
+  await key(follower, 'Escape')
+  await openSettings(admin)
+  await evaluate(admin, `document.getElementById('scroll-master').click()`)
+  await waitFor(admin, `document.getElementById('scroll-master').getAttribute('aria-checked') === 'true'`)
+  await key(admin, 'Escape')
+  await key(admin, 'Down')
+  await delay(250)
+  await key(admin, 'Space')
+  await displaySong('Second Song', 'Verse 12')
+  await assertEveryoneAtTop('song change stops auto-scroll and resets host and follower')
+
+  await key(admin, 'Down')
+  await delay(300)
+  const beforeReload = await evaluate(follower, `document.getElementById('scroll-container').scrollTop`)
+  assert.ok(beforeReload > 100)
+  follower.webContents.reload()
+  await waitFor(follower, `document.getElementById('song-lines')?.innerText.includes('Verse 12')`)
+  await waitFor(follower, `Math.abs(document.getElementById('scroll-container').scrollTop - ${beforeReload}) <= 2`)
+  console.log('PASS reopening mid-song restores the master position')
+
   await openSettings(admin)
   await waitFor(admin, `document.body.innerText.includes('Logs de session')`)
   await clickText(admin, 'Logs de session')
@@ -268,7 +332,7 @@ async function run() {
   console.log('Electron smoke fixture:', fixture)
 }
 
-const timeout = setTimeout(() => { console.error('Electron smoke timed out'); app.exit(1) }, 60000)
+const timeout = setTimeout(() => { console.error('Electron smoke timed out'); app.exit(1) }, 90000)
 run().then(() => {
   clearTimeout(timeout)
   db.close()
