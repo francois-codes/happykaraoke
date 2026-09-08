@@ -173,6 +173,18 @@ async function run() {
 
   mkdirSync(join(root, 'out/electron-smoke'), { recursive: true })
   writeFileSync(join(root, 'out/electron-smoke/admin.png'), (await admin.webContents.capturePage()).toPNG())
+
+  const closingSession = db.prepare('SELECT id FROM session WHERE closed = 0').get()
+  await key(admin, 's')
+  await waitFor(admin, `document.body.innerText.includes('Terminer la session')`)
+  await clickText(admin, 'Terminer la session')
+  await waitFor(admin, `document.body.innerText.includes('Oui, fermer')`)
+  await clickText(admin, 'Oui, fermer')
+  await waitFor(admin, `location.pathname === '/'`)
+  assert.equal(db.prepare('SELECT id FROM session WHERE id = ?').get(closingSession.id), undefined)
+  assert.equal(db.prepare('SELECT count(*) AS n FROM session_log WHERE sessionId = ?').get(closingSession.id).n, 0)
+  assert.equal(db.prepare('SELECT count(*) AS n FROM session WHERE closed = 1').get().n, 2)
+  console.log('PASS Electron close button deletes the short session and preserves older history')
   console.log('Electron smoke fixture:', fixture)
 }
 

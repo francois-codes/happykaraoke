@@ -1,7 +1,7 @@
 import { config } from '@shared/config'
 import { queue, session, sessionLog, user } from '@shared/db/schema'
 import { differenceInMinutes, formatISO } from 'date-fns'
-import { and, asc, count, desc, eq, inArray } from 'drizzle-orm'
+import { and, asc, count, desc, eq, inArray, lt, ne } from 'drizzle-orm'
 import { UserType } from '@shared/types'
 import type { ScrollSnapshot, ScrollSnapshotInput } from '@shared/types/scroll'
 import { scrollControlState } from '@shared/messages/scroll'
@@ -82,54 +82,60 @@ export async function getCurrentSession() {
 export async function closeSession() {
   const { db } = await import('@shared/db')
 
-  const result = await db
-    .update(session)
-    .set({ closed: 1 })
-    .where(eq(session.closed, 0))
-    .returning({ id: session.id })
+  const result = db.transaction((tx) => {
+    const closed = tx.update(session)
+      .set({ closed: 1 })
+      .where(eq(session.closed, 0))
+      .returning({ id: session.id })
+      .all()
+    if (closed.length === 0) return closed
 
-  const closedSessionIds = result.map(({ id }) => id)
+    const closedIds = closed.map(({ id }) => id)
+    // Queue rows reference both sessions and users, so remove them first.
+    tx.delete(queue).where(inArray(queue.sessionId, closedIds)).run()
+    tx.delete(user).where(and(
+      inArray(user.sessionId, closedIds), eq(user.type, UserType.GUEST)
+    )).run()
 
-  // Delete guest users and queue items, but keep admin users
-  await Promise.all([
-    db.delete(user).where(
-      and(
-        inArray(user.sessionId, closedSessionIds),
-        eq(user.type, UserType.GUEST)
-      )
-    ),
-    db.delete(queue).where(inArray(queue.sessionId, closedSessionIds))
-  ])
+    const shortSessionIds = tx.select({ id: session.id })
+      .from(session)
+      .leftJoin(sessionLog, eq(session.id, sessionLog.sessionId))
+      .where(inArray(session.id, closedIds))
+      .groupBy(session.id)
+      .having(lt(count(sessionLog.id), 5))
+      .all()
+      .map(({ id }) => id)
+
+    if (shortSessionIds.length > 0) {
+      tx.delete(sessionLog).where(inArray(sessionLog.sessionId, shortSessionIds)).run()
+      tx.delete(session).where(inArray(session.id, shortSessionIds)).run()
+    }
+    return closed
+  })
+
+  // Deleted SQLite IDs can be reused; a new session must never inherit old scroll state.
+  for (const { id } of result) {
+    scrollControlBySessionId.delete(id)
+    scrollSnapshotBySessionId.delete(id)
+  }
 
   return result
 }
 
 /**
- * Updates all admin users from closed sessions to point to the current open session
+ * Updates admin users from closed or pruned sessions to the current open session.
  * This ensures admin users persist across session refreshes
  */
 async function updateAdminUsersToCurrentSession(currentSessionId: number) {
   const { db } = await import('@shared/db')
 
-  // Get all closed session IDs
-  const closedSessions = await db
-    .select({ id: session.id })
-    .from(session)
-    .where(eq(session.closed, 1))
-
-  if (closedSessions.length === 0) {
-    return
-  }
-
-  const closedSessionIds = closedSessions.map(({ id }) => id)
-
-  // Update admin users from closed sessions to point to current session
+  // Admin identities survive closure, including when their old session was deleted.
   await db
     .update(user)
     .set({ sessionId: currentSessionId })
     .where(
       and(
-        inArray(user.sessionId, closedSessionIds),
+        ne(user.sessionId, currentSessionId),
         eq(user.type, UserType.ADMIN)
       )
     )
