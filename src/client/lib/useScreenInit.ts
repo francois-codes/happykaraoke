@@ -1,4 +1,5 @@
 import { useDispatch } from '@/store'
+import { resetScrollDebugSettings } from '@/lib/debugSettings'
 import { sleep } from '@/utils'
 import { fetchSessionConfig, refreshSession } from '@shared/endpoints/session'
 import { fetchUser } from '@shared/endpoints/user'
@@ -22,6 +23,9 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
     if (userInitialized) {
       return
     }
+
+    resetScrollDebugSettings()
+    dispatch({ debugScrollAnchors: false })
 
     let sessionCfg: Awaited<ReturnType<typeof fetchSessionConfig.call>> | null = null
     try {

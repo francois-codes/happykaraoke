@@ -1,7 +1,7 @@
 import { useToast } from '@/components/ui/use-toast'
 import { useStore } from '@/store'
 import { closeSession } from '@shared/endpoints/session'
-import { scrollDiagnosticLog } from '@shared/lib/scrollDiagnosticLog'
+import { readScrollDiagnosticsEnabled, scrollDiagnosticLog } from '@shared/lib/scrollDiagnosticLog'
 import { useNavigate } from 'react-router-dom'
 import packageJson from '../../../../package.json'
 import { ButtonWithConfirmAction } from '../ButtonWithConfirmAction'
@@ -13,6 +13,10 @@ export function CloseSession() {
 
   async function endSession() {
     await closeSession.call()
+    if (!readScrollDiagnosticsEnabled()) {
+      navigate('/')
+      return
+    }
     try {
       const text = scrollDiagnosticLog.serializeJson(
         {

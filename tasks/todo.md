@@ -1,5 +1,13 @@
 # Session usability fixes
 
+## Follow-up: diagnostics off by default
+
+- [x] Reset scroll markers, diagnostic logging, and verbose logging when opening the session screen, including old saved enabled preferences.
+- [x] Make an absent logging preference mean disabled; honor the disabled setting for console output and automatic diagnostic-file export.
+- [x] Verify defaults, manual opt-in, and reopening in regression tests and actual Electron windows; commit the focused fix.
+
+Verification: 16 regression tests pass; client/server typechecks and client build pass. The full Electron smoke flow passes with legacy enabled preferences preloaded, manual toggles, a window reload, and no diagnostic file written at closure while disabled.
+
 ## Plan
 
 Implement and commit each fix in order, as authorized. Test the actual Electron app via `npm run dev`; do not launch a browser. Preserve the pre-existing database change and exclude unrelated lessons from fix commits.

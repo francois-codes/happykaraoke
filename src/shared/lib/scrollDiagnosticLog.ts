@@ -32,7 +32,7 @@ function safeLocalStorageSet(key: string, value: string): void {
 
 export function readScrollDiagnosticsEnabled(): boolean {
   const v = safeLocalStorageGet(SCROLL_DIAG_ENABLED_KEY)
-  return v === null || v === 'true'
+  return v === 'true'
 }
 
 export function setScrollDiagnosticsEnabled(enabled: boolean): void {
@@ -102,6 +102,7 @@ class ScrollDiagnosticLog {
 
   private push(level: ScrollDiagnosticLevel, message: string, context?: Record<string, unknown>) {
     if (!this.shouldRecord(level)) return
+    console.log(level, message, context)
 
     const entry: ScrollDiagnosticEntry = {
       level,
@@ -118,17 +119,14 @@ class ScrollDiagnosticLog {
   }
 
   info(message: string, context?: Record<string, unknown>) {
-    console.log('info', message, context)
     this.push('info', message, context)
   }
 
   warn(message: string, context?: Record<string, unknown>) {
-    console.log('warn', message, context)
     this.push('warn', message, context)
   }
 
   error(message: string, context?: Record<string, unknown>) {
-    console.log('error', message, context)
     this.push('error', message, context)
   }
 

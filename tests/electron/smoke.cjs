@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const { mkdtempSync, mkdirSync, writeFileSync } = require('node:fs')
+const { existsSync, mkdtempSync, mkdirSync, writeFileSync } = require('node:fs')
 const { tmpdir } = require('node:os')
 const { join } = require('node:path')
 const assert = require('node:assert/strict')
@@ -96,6 +96,11 @@ async function run() {
     if (level >= 3) console.error('Renderer:', message)
   })
   await waitFor(admin, `!!document.querySelector('a[href="/new"]')`)
+  await evaluate(admin, `(() => {
+    localStorage.setItem('karaoke:debugScrollAnchors', '1');
+    localStorage.setItem('happikaraoke.scrollDiagnostics.enabled', 'true');
+    localStorage.setItem('happikaraoke.scrollDiagnostics.verbose', 'true');
+  })()`)
   await clickText(admin, 'Ouvrir une session')
   await waitFor(admin, `!!document.querySelector('input[name="password"]')`)
   await fill(admin, 'input[name="password"]', 'Ab=G#')
@@ -108,6 +113,19 @@ async function run() {
   await waitFor(admin, `!!document.getElementById('scroll-master')`)
   assert.equal(await evaluate(admin, `document.getElementById('scroll-master').getAttribute('aria-checked')`), 'true')
   console.log('PASS Electron session creation enables scroll master')
+  const diagnosticSwitches = ['debug-scroll-anchors', 'scroll-diag-enabled', 'scroll-diag-verbose']
+  for (const id of diagnosticSwitches) {
+    assert.equal(await evaluate(admin, `document.getElementById(${JSON.stringify(id)}).getAttribute('aria-checked')`), 'false')
+    await evaluate(admin, `document.getElementById(${JSON.stringify(id)}).click()`)
+    await waitFor(admin, `document.getElementById(${JSON.stringify(id)}).getAttribute('aria-checked') === 'true'`)
+  }
+  admin.webContents.reload()
+  await waitFor(admin, `!!document.getElementById('scroll-container') && document.body.innerText.includes('Section 12')`)
+  await openSettings(admin)
+  for (const id of diagnosticSwitches) {
+    assert.equal(await evaluate(admin, `document.getElementById(${JSON.stringify(id)}).getAttribute('aria-checked')`), 'false')
+  }
+  console.log('PASS Electron diagnostics start off despite saved preferences, support opt-in, and reset on reopening')
   await key(admin, 'Escape')
 
   const follower = new BrowserWindow({ width: 820, height: 1120, show: true,
@@ -244,6 +262,8 @@ async function run() {
   assert.equal(db.prepare('SELECT id FROM session WHERE id = ?').get(closingSession.id), undefined)
   assert.equal(db.prepare('SELECT count(*) AS n FROM session_log WHERE sessionId = ?').get(closingSession.id).n, 0)
   assert.equal(db.prepare('SELECT count(*) AS n FROM session WHERE closed = 1').get().n, 2)
+  assert.equal(existsSync(join(fixture, 'electron-data/debug-logs')), false,
+    'closing with diagnostics disabled does not export a debug file')
   console.log('PASS Electron close button deletes the short session and preserves older history')
   console.log('Electron smoke fixture:', fixture)
 }
