@@ -161,6 +161,16 @@ async function run() {
   await key(admin, 'Space')
   console.log('PASS auto-scroll resumes without snapping backwards')
 
+  await key(admin, 's')
+  await waitFor(admin, `document.body.innerText.includes('Logs de session')`)
+  await clickText(admin, 'Logs de session')
+  await waitFor(admin, `document.body.innerText.includes('Date: 2026-02-01')`)
+  assert.deepEqual(await evaluate(admin, `[...document.querySelectorAll('p')].map(el => el.textContent).filter(text => text.startsWith('Date:'))`),
+    ['Date: 2026-02-01', 'Date: 2026-01-01'])
+  console.log('PASS Electron session history is newest first')
+  await key(admin, 'Escape')
+  await key(admin, 'Escape')
+
   mkdirSync(join(root, 'out/electron-smoke'), { recursive: true })
   writeFileSync(join(root, 'out/electron-smoke/admin.png'), (await admin.webContents.capturePage()).toPNG())
   console.log('Electron smoke fixture:', fixture)

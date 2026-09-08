@@ -5,7 +5,7 @@ import { once } from 'node:events'
 import type { AddressInfo } from 'node:net'
 import { sqlite } from '../support/database'
 import {
-  getCurrentSession, getScrollControlSnapshot, scrollControlRelease,
+  getAllSessions, getCurrentSession, getScrollControlSnapshot, scrollControlRelease,
   startSessionIfNeeded
 } from '@shared/lib/session'
 import { loginUser } from '@shared/endpoints/user'
@@ -69,4 +69,16 @@ test('another login does not steal ownership or undo the creator’s explicit re
   assert.equal((await scrollControlRelease(user.id)).ok, true)
   await login()
   assert.equal((await getScrollControlSnapshot(session.id)).activeScrollMasterUserId, null)
+})
+
+test('session history lists newest dates first with newest IDs breaking ties', async () => {
+  const dates = ['2026-03-01T12:00:00Z', '2026-01-01T12:00:00Z', '2026-03-01T12:00:00Z']
+  for (const [index, date] of dates.entries()) {
+    const id = baselineId + index + 1
+    sqlite.prepare('INSERT INTO session (id, sessionDate, closed) VALUES (?, ?, 1)').run(id, date)
+    sqlite.prepare('INSERT INTO session_log (song, timestamp, sessionId) VALUES (?, ?, ?)')
+      .run('A song', date, id)
+  }
+  assert.deepEqual((await getAllSessions()).map(({ id }) => id),
+    [baselineId + 3, baselineId + 1, baselineId + 2])
 })

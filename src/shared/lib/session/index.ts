@@ -242,6 +242,7 @@ export async function getAllSessions(): Promise<SessionWithCount[]> {
     .where(eq(session.closed, 1))
     .innerJoin(sessionLog, eq(session.id, sessionLog.sessionId))
     .groupBy(session.id)
+    .orderBy(desc(session.sessionDate), desc(session.id))
 
   return result
 }
