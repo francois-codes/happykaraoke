@@ -8,6 +8,7 @@ import { scrollDiagnosticLog } from '@shared/lib/scrollDiagnosticLog'
 import type { ScrollSnapshot } from '@shared/types/scroll'
 import { useCallback, useEffect, useRef } from 'react'
 import { setScrollDebugLogicalAnchorIndex } from './scrollLogicalAnchorDebugSync'
+import { createScrollAnimator } from './scrollAnimation'
 import { useSongSections } from './useSongSections'
 
 /** Throttle when host is not auto-scrolling (manual wheel / sections). */
@@ -15,7 +16,6 @@ const MASTER_EMIT_MIN_MS_MANUAL = 45
 /** Tighter while host RAF runs so followers can correct often and stay smooth. */
 const MASTER_EMIT_MIN_MS_AUTOSCROLL = 22
 const MUSICIAN_TRIGGER_VH = 0.55
-const SECTION_JUMP_DURATION_MS = 170
 
 export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const {
@@ -29,6 +29,18 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     openAIKeyModalOpen
   } = useStore()
   const scrollContainerRef = useScrollContext()
+  const scrollerRef = useRef(scroller)
+  scrollerRef.current = scroller
+  const musicianScrollRef = useRef(musicienScroll)
+  musicianScrollRef.current = musicienScroll
+  const animatorRef = useRef<ReturnType<typeof createScrollAnimator> | null>(null)
+  if (animatorRef.current === null) {
+    animatorRef.current = createScrollAnimator(
+      () => scrollContainerRef.current?.scrollTop ?? 0,
+      (top) => scrollerRef.current.scrollTo(top, 'instant')
+    )
+  }
+  const animator = animatorRef.current
   const {
     resolveAnchors,
     getAnchorAtScrollTop,
@@ -40,7 +52,8 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const lastPublishedAnchorIdRef = useRef<string | null>(null)
   const lastAppliedSeqRef = useRef(0)
   const sectionJumpDeltaRef = useRef(0)
-  const sectionJumpRafRef = useRef<number | null>(null)
+  const sectionJumpQueueRafRef = useRef<number | null>(null)
+  const pendingFollowerSnapshotRef = useRef<ScrollSnapshot | null>(null)
   const sectionJumpPendingRef = useRef(false)
   /** True while section jump animation runs — blocks emitSnapshot spam and stale scroll-based anchor reads. */
   const jumpAnimatingRef = useRef(false)
@@ -53,8 +66,8 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   const scrollMasterRef = useRef(false)
   scrollMasterRef.current = scrollMaster === true
 
-  const emitSnapshot = useCallback(() => {
-    if (jumpAnimatingRef.current) return
+  const emitSnapshot = useCallback((jump?: { top: number; anchorIndex: number; running: boolean }) => {
+    if (jumpAnimatingRef.current && !jump) return
     if (!scrollMaster || !currentSong) return
     const raw = window.localStorage.getItem('userId')
     const myId = raw ? Number(raw) : NaN
@@ -64,8 +77,8 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     if (!container) return
 
     const anchors = resolveAnchors()
-    const top = container.scrollTop
-    let anchor = anchors[logicalAnchorIndexRef.current]
+    const top = jump?.top ?? container.scrollTop
+    let anchor = anchors[jump?.anchorIndex ?? logicalAnchorIndexRef.current]
     if (
       !anchor ||
       logicalAnchorIndexRef.current < 0 ||
@@ -84,7 +97,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     const now = performance.now()
     const bypassThrottle = anchor.id !== lastPublishedAnchorIdRef.current
     const minEmitMs = scroller.isRunning() ? MASTER_EMIT_MIN_MS_AUTOSCROLL : MASTER_EMIT_MIN_MS_MANUAL
-    if (!bypassThrottle && now - lastEmitRef.current < minEmitMs) return
+    if (!jump && !bypassThrottle && now - lastEmitRef.current < minEmitMs) return
     lastEmitRef.current = now
     lastPublishedAnchorIdRef.current = anchor.id
 
@@ -96,9 +109,10 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       anchorId: anchor.id,
       offsetPxFromAnchor,
       autoScroll: {
-        running: scroller.isRunning(),
+        running: jump?.running ?? scroller.isRunning(),
         speedPxPerSecond: scroller.getSpeed()
-      }
+      },
+      ...(jump ? { transition: 'section' as const } : {})
     }).catch((e: unknown) => {
       scrollDiagnosticLog.error('setScrollSnapshot failed', {
         category: 'scroll',
@@ -111,44 +125,27 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     (targetTop: number, targetIndex: number, onDone?: () => void) => {
       const container = scrollContainerRef.current
       if (!container) return
-      if (sectionJumpRafRef.current !== null) {
-        cancelAnimationFrame(sectionJumpRafRef.current)
-      }
       jumpAnimatingRef.current = true
       const wasRunning = scroller.isRunning()
+      // Publish the destination before moving so followers start their transition immediately.
+      emitSnapshot({ top: Math.round(targetTop), anchorIndex: targetIndex, running: wasRunning })
       if (wasRunning) {
         scroller.stopScrolling()
       }
-      const startTop = container.scrollTop
-      const snappedTarget = Math.round(targetTop)
-      const startAt = performance.now()
-
-      const step = () => {
-        const c = scrollContainerRef.current
-        if (!c) return
-        const t = Math.min(1, (performance.now() - startAt) / SECTION_JUMP_DURATION_MS)
-        const eased = 1 - Math.pow(1 - t, 3)
-        if (t < 1) {
-          c.scrollTop = startTop + (snappedTarget - startTop) * eased
-          sectionJumpRafRef.current = requestAnimationFrame(step)
-        } else {
-          c.scrollTop = snappedTarget
-          logicalAnchorIndexRef.current = targetIndex
-          sectionJumpRafRef.current = null
-          jumpAnimatingRef.current = false
-          if (wasRunning) {
-            scroller.startScrolling()
-          }
-          onDone?.()
+      animator.animateTo(Math.round(targetTop), () => {
+        logicalAnchorIndexRef.current = targetIndex
+        jumpAnimatingRef.current = false
+        if (wasRunning) {
+          scroller.startScrolling()
         }
-      }
-
-      sectionJumpRafRef.current = requestAnimationFrame(step)
+        onDone?.()
+      })
     },
-    [scrollContainerRef, scroller]
+    [animator, emitSnapshot, scrollContainerRef, scroller]
   )
 
   const flushJumpQueue = useCallback(() => {
+    sectionJumpQueueRafRef.current = null
     if (jumpAnimatingRef.current) {
       return
     }
@@ -195,7 +192,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       emitSnapshot()
       if (sectionJumpDeltaRef.current !== 0) {
         sectionJumpPendingRef.current = true
-        void requestAnimationFrame(flushJumpQueue)
+        sectionJumpQueueRafRef.current = requestAnimationFrame(flushJumpQueue)
       }
     })
   }, [animateJumpToAnchor, emitSnapshot, resolveAnchors, scrollContainerRef, scrollMaster])
@@ -209,14 +206,14 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
         sectionJumpDeltaRef.current += 1
         if (!sectionJumpPendingRef.current) {
           sectionJumpPendingRef.current = true
-          void requestAnimationFrame(flushJumpQueue)
+          sectionJumpQueueRafRef.current = requestAnimationFrame(flushJumpQueue)
         }
       } else if (event.key === 'ArrowUp') {
         event.preventDefault()
         sectionJumpDeltaRef.current -= 1
         if (!sectionJumpPendingRef.current) {
           sectionJumpPendingRef.current = true
-          void requestAnimationFrame(flushJumpQueue)
+          sectionJumpQueueRafRef.current = requestAnimationFrame(flushJumpQueue)
         }
       }
     }
@@ -245,7 +242,18 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       return
     }
     if (!currentSong || snapshot.songId !== currentSong) return
-    if (snapshot.seq <= lastAppliedSeqRef.current) return
+    if (snapshot.seq <= Math.max(lastAppliedSeqRef.current, pendingFollowerSnapshotRef.current?.seq ?? 0)) return
+    if (scrollMaster === true && snapshot.masterUserId !== myId) {
+      animator.cancel()
+      jumpAnimatingRef.current = false
+      sectionJumpDeltaRef.current = 0
+      sectionJumpPendingRef.current = false
+    }
+    // Frequent auto-scroll updates must not restart an in-flight transition every frame.
+    if (animator.isAnimating() && snapshot.transition !== 'section') {
+      pendingFollowerSnapshotRef.current = snapshot
+      return
+    }
     lastAppliedSeqRef.current = snapshot.seq
 
     const container = scrollContainerRef.current
@@ -262,6 +270,25 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
         : null
     const targetTop = Math.max(0, Math.min(fromAnchor ?? fromMaster ?? 0, maxScroll))
 
+    if (snapshot.transition === 'section') {
+      animator.cancel()
+      pendingFollowerSnapshotRef.current = null
+    }
+
+    const animateFollowerTo = (top: number): void => {
+      pendingFollowerSnapshotRef.current = null
+      scroller.stopScrolling()
+      animator.animateTo(top, () => {
+        const pending = pendingFollowerSnapshotRef.current
+        pendingFollowerSnapshotRef.current = null
+        if (pending) {
+          applyFollowerSnapshotRef.current(pending)
+        } else if (snapshot.autoScroll.running && !musicianScrollRef.current) {
+          scrollerRef.current.startScrolling()
+        }
+      })
+    }
+
     if (musicienScroll) {
       musicianMasterScrollTopRef.current = fromMaster ?? targetTop
       queueMicrotask(() => {
@@ -270,18 +297,23 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       scroller.stopScrolling()
       const currentTop = container.scrollTop
       const threshold = window.innerHeight * MUSICIAN_TRIGGER_VH
-      if (targetTop < currentTop) {
-        scroller.scrollTo(targetTop, 'instant')
+      if (targetTop < currentTop - 1) {
+        animateFollowerTo(targetTop)
         return
       }
       if (targetTop - currentTop >= threshold) {
         const stepAnchor = getAnchorAtScrollTop(targetTop)
-        scroller.scrollTo(stepAnchor.scrollTop, 'instant')
+        animateFollowerTo(stepAnchor.scrollTop)
       }
       return
     }
 
     scroller.setSpeed(snapshot.autoScroll.speedPxPerSecond)
+
+    if (snapshot.transition === 'section') {
+      animateFollowerTo(targetTop)
+      return
+    }
 
     if (!snapshot.autoScroll.running) {
       scroller.stopScrolling()
@@ -295,6 +327,7 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
       scroller.startScrolling()
     }
   }, [
+    animator,
     currentSong,
     getAnchorAtScrollTop,
     getAnchorById,
@@ -311,6 +344,8 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
 
   const applyFollowerSnapshotRef = useRef(applyFollowerSnapshot)
   applyFollowerSnapshotRef.current = applyFollowerSnapshot
+  const emitSnapshotRef = useRef(emitSnapshot)
+  emitSnapshotRef.current = emitSnapshot
   const scrollMasterForStoreSyncRef = useRef(scrollMaster)
   scrollMasterForStoreSyncRef.current = scrollMaster
 
@@ -320,7 +355,8 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
   useEffect(() => {
     if (!scrollSnapshot) return
     if (scrollMasterForStoreSyncRef.current) return
-    applyFollowerSnapshotRef.current(scrollSnapshot)
+    // Joining/reconnecting restores state directly; a stored jump is not a new navigation event.
+    applyFollowerSnapshotRef.current({ ...scrollSnapshot, transition: undefined })
   }, [scrollSnapshot])
 
   useEffect(() => {
@@ -347,16 +383,16 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
     logicalAnchorIndexRef.current = 0
     lastPublishedAnchorIdRef.current = null
     setScrollDebugLogicalAnchorIndex(0)
-    if (scrollMaster) {
-      scroller.scrollToTop()
-      emitSnapshot()
+    if (scrollMasterRef.current) {
+      scrollerRef.current.scrollToTop()
+      emitSnapshotRef.current()
     }
-  }, [currentSong, emitSnapshot, scrollMaster, scroller])
+  }, [currentSong])
 
   useEffect(() => {
     if (!scrollMaster) return
-    emitSnapshot()
-  }, [emitSnapshot, scrollMaster])
+    emitSnapshotRef.current()
+  }, [scrollMaster])
 
   useEffect(() => {
     if (!musicienScroll) {
@@ -484,11 +520,17 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>) {
 
   useEffect(() => {
     return () => {
-      if (sectionJumpRafRef.current !== null) {
-        cancelAnimationFrame(sectionJumpRafRef.current)
+      animator.cancel()
+      if (sectionJumpQueueRafRef.current !== null) {
+        cancelAnimationFrame(sectionJumpQueueRafRef.current)
+        sectionJumpQueueRafRef.current = null
       }
+      jumpAnimatingRef.current = false
+      pendingFollowerSnapshotRef.current = null
+      sectionJumpDeltaRef.current = 0
+      sectionJumpPendingRef.current = false
     }
-  }, [])
+  }, [animator, currentSong, scrollMaster])
 
   // Trigger anchor cache refresh side-effects.
   useEffect(() => {

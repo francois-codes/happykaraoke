@@ -13,6 +13,8 @@ export interface ScrollSnapshot {
   anchorId: string
   offsetPxFromAnchor: number
   autoScroll: ScrollAutoState
+  /** Explicit section navigation; ordinary position corrections remain immediate. */
+  transition?: 'section'
   seq: number
   emittedAt: number
 }
@@ -24,4 +26,5 @@ export interface ScrollSnapshotInput {
   anchorId: string
   offsetPxFromAnchor: number
   autoScroll: ScrollAutoState
+  transition?: 'section'
 }

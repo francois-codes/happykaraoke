@@ -519,6 +519,7 @@ export async function upsertScrollSnapshot(
     anchorId: payload.anchorId,
     offsetPxFromAnchor: payload.offsetPxFromAnchor,
     autoScroll: payload.autoScroll,
+    ...(payload.transition === 'section' ? { transition: 'section' as const } : {}),
     seq: row.seq,
     emittedAt: Date.now()
   }

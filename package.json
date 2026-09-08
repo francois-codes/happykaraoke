@@ -22,6 +22,7 @@
     "db:seed": "tsx ./src/shared/db/seed.ts",
     "test:invariants": "jest tests/invariants/ || vitest tests/invariants/",
     "test:regression": "node scripts/run-regression-tests.mjs",
+    "test:electron": "npm run build:client && node scripts/run-electron-smoke.mjs",
     "demo:sync": "npm start -- --demo-sync"
   },
   "engines": {
