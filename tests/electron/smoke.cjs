@@ -42,11 +42,26 @@ async function waitFor(win, expression, timeout = 15000) {
   throw new Error(`Timed out: ${expression}; screen: ${await evaluate(win, 'document.body.innerText.slice(0, 1500)')}`)
 }
 async function key(win, keyCode) {
+  if (keyCode !== 'Escape') await evaluate(win, 'document.activeElement?.blur()')
   win.webContents.sendInputEvent({ type: 'keyDown', keyCode })
   win.webContents.sendInputEvent({ type: 'keyUp', keyCode })
   await delay(80)
+  await settleDialogs(win)
+}
+async function settleDialogs(win) {
+  await evaluate(win, `new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))`)
+  await evaluate(win, `Promise.all(document.getAnimations().filter(animation =>
+    animation.effect?.getComputedTiming().endTime < 1000
+  ).map(animation => animation.finished.catch(() => {})))`)
+}
+async function openSettings(win) {
+  if (!await evaluate(win, `document.body.innerText.includes('Scroll musicien')`)) {
+    await key(win, 's')
+  }
+  await waitFor(win, `document.body.innerText.includes('Scroll musicien')`)
 }
 async function clickText(win, text) {
+  await settleDialogs(win)
   await evaluate(win, `(() => {
     const el = [...document.querySelectorAll('button,a,[cmdk-item]')].find(el => el.textContent.trim() === ${JSON.stringify(text)});
     if (!el) throw new Error('Missing control: ' + ${JSON.stringify(text)});
@@ -89,7 +104,7 @@ async function run() {
   await clickText(admin, 'Test Artist - Smoke Song')
   await clickText(admin, 'Lancer la chanson (⏎)')
   await waitFor(admin, `!!document.getElementById('scroll-container') && document.body.innerText.includes('Section 12')`)
-  await key(admin, 's')
+  await openSettings(admin)
   await waitFor(admin, `!!document.getElementById('scroll-master')`)
   assert.equal(await evaluate(admin, `document.getElementById('scroll-master').getAttribute('aria-checked')`), 'true')
   console.log('PASS Electron session creation enables scroll master')
@@ -131,14 +146,14 @@ async function run() {
     return samples
   }
   await assertAnimatedJump('Up', 'reverse section transition')
-  await key(follower, 's')
+  await openSettings(follower)
   await waitFor(follower, `document.body.innerText.includes('Scroll musicien')`)
   await evaluate(follower, `[...document.querySelectorAll('label')].find(el => el.textContent === 'Scroll musicien').parentElement.querySelector('button').click()`)
   await key(follower, 'Escape')
   await assertAnimatedJump('Down', 'musician forward step')
   await assertAnimatedJump('Up', 'musician backward step')
 
-  await key(follower, 's')
+  await openSettings(follower)
   await waitFor(follower, `document.body.innerText.includes('Scroll musicien')`)
   await evaluate(follower, `[...document.querySelectorAll('label')].find(el => el.textContent === 'Scroll musicien').parentElement.querySelector('button').click()`)
   await key(follower, 'Escape')
@@ -161,7 +176,21 @@ async function run() {
   await key(admin, 'Space')
   console.log('PASS auto-scroll resumes without snapping backwards')
 
-  await key(admin, 's')
+  await openSettings(admin)
+  await waitFor(admin, `document.body.innerText.includes('Scroll musicien')`)
+  const modeJump = recordScroll(admin, 650)
+  await evaluate(admin, `(() => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    setTimeout(() => [...document.querySelectorAll('label')].find(el => el.textContent === 'Scroll musicien').parentElement.querySelector('button').click(), 50);
+  })()`)
+  const modeSamples = await modeJump
+  assert.ok(Math.abs(modeSamples.at(-1) - await evaluate(follower, `document.getElementById('scroll-container').scrollTop`)) <= 2,
+    'changing musician preference during a host transition keeps viewers aligned')
+  await evaluate(admin, `[...document.querySelectorAll('label')].find(el => el.textContent === 'Scroll musicien').parentElement.querySelector('button').click()`)
+  await key(admin, 'Escape')
+  console.log('PASS changing musician preference during a host transition')
+
+  await openSettings(admin)
   await waitFor(admin, `document.body.innerText.includes('Logs de session')`)
   await clickText(admin, 'Logs de session')
   await waitFor(admin, `document.body.innerText.includes('Date: 2026-02-01')`)
@@ -174,8 +203,39 @@ async function run() {
   mkdirSync(join(root, 'out/electron-smoke'), { recursive: true })
   writeFileSync(join(root, 'out/electron-smoke/admin.png'), (await admin.webContents.capturePage()).toPNG())
 
+  await key(admin, 'd')
+  await waitFor(admin, `document.documentElement.classList.contains('dark')`)
+  await key(admin, 'q')
+  await waitFor(admin, `document.body.innerText.includes('Rejoindre la session') && !!document.querySelector('[role="dialog"] svg[height="256"]')`)
+  writeFileSync(join(root, 'out/electron-smoke/qr-dark.png'), (await admin.webContents.capturePage()).toPNG())
+  const quietZone = await evaluate(admin, `(() => {
+    const svg = document.querySelector('[role="dialog"] svg[height="256"]');
+    const style = getComputedStyle(svg.parentElement);
+    return { background: style.backgroundColor, padding: parseFloat(style.paddingLeft),
+      moduleSize: svg.getBoundingClientRect().width / svg.viewBox.baseVal.width,
+      colors: [...svg.querySelectorAll('path')].map(path => path.getAttribute('fill')) };
+  })()`)
+  assert.equal(quietZone.background, 'rgb(255, 255, 255)')
+  assert.ok(quietZone.padding >= quietZone.moduleSize * 4, 'white quiet zone spans at least four QR modules')
+  assert.deepEqual(quietZone.colors.map(color => color.toLowerCase()).sort(), ['#000000', '#ffffff'])
+  admin.setSize(380, 850)
+  await delay(100)
+  assert.ok(await evaluate(admin, `(() => {
+    const box = document.querySelector('[role="dialog"] svg[height="256"]').parentElement.getBoundingClientRect();
+    return box.left >= 0 && box.right <= innerWidth;
+  })()`), 'QR fits a narrow Electron window')
+  writeFileSync(join(root, 'out/electron-smoke/qr-dark-narrow.png'), (await admin.webContents.capturePage()).toPNG())
+  await key(admin, 'Escape')
+  await key(admin, 'd')
+  await key(admin, 'q')
+  await waitFor(admin, `!!document.querySelector('[role="dialog"] svg[height="256"]')`)
+  assert.equal(await evaluate(admin, `getComputedStyle(document.querySelector('[role="dialog"] svg[height="256"]').parentElement).backgroundColor`), 'rgb(255, 255, 255)')
+  await key(admin, 'Escape')
+  admin.setSize(820, 1120)
+  console.log('PASS Electron QR quiet zone in dark/light themes and a narrow window')
+
   const closingSession = db.prepare('SELECT id FROM session WHERE closed = 0').get()
-  await key(admin, 's')
+  await openSettings(admin)
   await waitFor(admin, `document.body.innerText.includes('Terminer la session')`)
   await clickText(admin, 'Terminer la session')
   await waitFor(admin, `document.body.innerText.includes('Oui, fermer')`)

@@ -43,7 +43,14 @@ export function QrCode() {
       desc="Flashez le code ci-dessous pour rejoindre la session sur un autre appareil"
     >
       <div className="gap-4 flex flex-col items-center p-4">
-        <QRCode value={linkUrl} style={{ margin: '0 auto' }} />
+        <div className="w-full max-w-[352px] bg-white p-12">
+          <QRCode
+            value={linkUrl}
+            bgColor="#FFFFFF"
+            fgColor="#000000"
+            style={{ display: 'block', height: 'auto', width: '100%' }}
+          />
+        </div>
         <Link target="_blank" to={linkUrl}>
           {linkUrl}
         </Link>
