@@ -47,18 +47,19 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
 
         if (user) {
           const isAdmin = user.type === UserType.ADMIN
+          if (isAdmin) {
+            await refreshSession.call()
+            sessionCfg = await fetchSessionConfig.call()
+          }
           const sc = sessionCfg?.scrollControl ?? null
 
           dispatch({
             isAdmin,
+            currentSong: sessionCfg?.currentSong,
             scrollControl: sc,
             scrollSnapshot: sessionCfg?.scrollSnapshot ?? null,
             scrollMaster: isAdmin && sc?.activeScrollMasterUserId === user.id
           })
-
-          if (user.type === UserType.ADMIN) {
-            await refreshSession.call()
-          }
 
           if (location === '/' || location === '/join' || location === '/new') {
             setRedirectTarget('/session')

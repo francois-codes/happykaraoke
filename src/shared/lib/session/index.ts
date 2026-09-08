@@ -4,6 +4,7 @@ import { differenceInMinutes, formatISO } from 'date-fns'
 import { and, asc, count, desc, eq, inArray } from 'drizzle-orm'
 import { UserType } from '@shared/types'
 import type { ScrollSnapshot, ScrollSnapshotInput } from '@shared/types/scroll'
+import { scrollControlState } from '@shared/messages/scroll'
 
 import ip from 'ip'
 export interface ScrollControlSnapshot {
@@ -402,6 +403,16 @@ export async function setScrollHostUserIdIfUnset(sessionId: number, adminUserId:
     .update(session)
     .set({ scrollHostUserId: adminUserId })
     .where(eq(session.id, sessionId))
+
+  // A session refresh may have selected a migrated admin as the fallback already.
+  // The creator becomes master when the host is first registered.
+  const control = getScrollControlRow(sessionId)
+  control.activeScrollMasterUserId = adminUserId
+  control.soloExplicitRelease = false
+  scrollControlState.server.emit({
+    primaryAdminUserId: adminUserId,
+    activeScrollMasterUserId: adminUserId
+  })
 }
 
 export async function getScrollControlSnapshot(sessionId: number): Promise<ScrollControlSnapshot> {
