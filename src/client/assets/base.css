@@ -77,6 +77,39 @@
   line-height: 2.2em;
 }
 
+/*
+ * Section colour families (chords mode only). Same colour for a family in every song.
+ * Painted with background + box-shadow and an absolute overlay (SectionColorBars),
+ * never with padding/margins, so toggling chords cannot move any line.
+ */
+.song-section[data-section-kind='intro'],
+.song-section[data-section-kind='outro'],
+.section-color-bar[data-section-kind='intro'],
+.section-color-bar[data-section-kind='outro'] { --section-color: #888780; }
+.song-section[data-section-kind='verse'],
+.section-color-bar[data-section-kind='verse'] { --section-color: #378add; }
+.song-section[data-section-kind='prechorus'],
+.section-color-bar[data-section-kind='prechorus'] { --section-color: #7f77dd; }
+.song-section[data-section-kind='chorus'],
+.section-color-bar[data-section-kind='chorus'] { --section-color: #639922; }
+.song-section[data-section-kind='bridge'],
+.section-color-bar[data-section-kind='bridge'] { --section-color: #ba7517; }
+.song-section[data-section-kind='solo'],
+.section-color-bar[data-section-kind='solo'] { --section-color: #d4537e; }
+
+#song-lines.song-lines--chords-on .song-section[data-section-kind] > strong {
+  background: color-mix(in srgb, var(--section-color) 24%, transparent);
+  box-shadow: 0 0 0 0.25em color-mix(in srgb, var(--section-color) 24%, transparent);
+  border-radius: 0.15em;
+}
+
+.section-color-bar {
+  position: absolute;
+  width: 4px;
+  background: var(--section-color);
+  pointer-events: none;
+}
+
 .chord-height {
   height: 4vmin;
 }
