@@ -17,6 +17,33 @@ Choix : ⌘K (recherche) et ⌘O (dossier des chansons) étaient pris ; ⌘Y, �
 - `npm run test:electron` : 19 étapes PASS, dont 2 nouvelles : ⌘Y recouvre l'invité (image chargée, plein écran) mais pas l'admin, qui voit le bandeau ; l'invité qui recharge la page retrouve la couverture ; ⌘U passe à l'image 2, ⌘U à nouveau la retire ; ⌘I sans 3e image affiche une erreur à l'admin et ne recouvre personne ; Échap retire ; ⌘Y sur un invité ne fait rien ; `images` absent de la liste des chansons. Captures : `out/electron-smoke/cover-admin.png`, `cover-follower.png`.
 - Non testé : tes vraies images Dropbox sur de vrais téléphones / la TV (format, poids ~1 Mo par image sur le Wi-Fi).
 
+# Préférence ♯ / ♭ (touche B) — PLAN validé, pas encore implémenté
+
+Objectif : comme sur Ultimate Guitar, l'admin choisit l'écriture des altérations pour tout le monde. La touche `B` fait tourner : **Bémols ♭** → **Dièses ♯** → **Auto** (comportement actuel). **Le mode revient en Auto dès qu'on change de morceau ou de transposition** (demande de Louis : une nouvelle tonalité doit repartir de l'écriture par défaut). Il revient aussi en Auto au redémarrage de l'appli.
+
+Faits vérifiés : tous les accords passent par `ChordLabel` (`Chord.tsx`) → `transposeChord(songKey, transpo, label)`. Sans transposition, l'accord est affiché tel qu'écrit dans le fichier ; en transposant, ♯/♭ dépend de la tonalité d'arrivée (`tonality.ts`). La transposition est diffusée à tous via `setTranspo` + message `transpo:changed`.
+
+Branche : `feat/accidental-preference`, à créer depuis `main` au moment de l'implémentation.
+
+## Étapes
+
+- [ ] 1. `src/shared/lib/transpose/tonality.ts` : `type AccidentalMode = 'auto' | 'flat' | 'sharp'` et 4e paramètre optionnel de `transposeChord` (défaut `'auto'`). **En `'auto'`, le code actuel est exécuté tel quel** (aucun changement de comportement). En `'flat'`/`'sharp'` : fondamentale et basse réécrites avec l'altération choisie, y compris sans transposition et sans tonalité connue. Pas de `Cb`, `Fb`, `E#`, `B#` ; les notes naturelles ne bougent pas.
+- [ ] 2. Test de régression sur **tous les accords de `songs-library`** : en `auto`, résultat identique à aujourd'hui pour chaque transposition (−11…+11) ; en `flat`/`sharp`, même hauteur que `auto`, aucune altération opposée, et même nombre de caractères (la mise en page ne peut pas bouger).
+- [ ] 3. État partagé : `accidentalMode` dans la config de session (serveur) et le store (client) ; endpoint `setAccidentalMode` + message socket `accidental:changed` (calqués sur la transposition) ; lu au chargement via `fetchSessionConfig` pour les invités qui arrivent en cours de route. **Retour en Auto côté serveur** dans `changeSong` et `setTranspo` (avec diffusion du message), pour que tous les écrans repassent en Auto en même temps.
+- [ ] 4. `ChordLabel` passe `accidentalMode` à `transposeChord`.
+- [ ] 5. Touche `B` (admin, désactivée quand une fenêtre est ouverte) + court message « Bémols ♭ / Dièses ♯ / Auto » ; mode affiché dans la fenêtre de transposition (`T`). `assets/CHEATSHEET.md` mis à jour.
+
+## Risques (chemins critiques : `transpose/**`, `SongComponents/**`)
+
+- Parsing des accords (invariant 1) : `chord.ts` et `note.ts` ne changent pas ; le test couvre tout le répertoire.
+- Affichage identique partout / pas de décalage (invariant 2) : même longueur garantie par le test, et vérifiée dans Electron (positions des lignes avant/après `B`, admin et invité).
+- Scroll (invariant 3) : non touché ; le changement de mode ne doit pas déplacer le scroll (vérifié dans Electron).
+
+## What I tested (à remplir)
+
+- `npm run typecheck`, `npm run test:regression` (nouveau test sur tout le répertoire).
+- `npm run test:electron` : `B` sur l'admin → l'invité affiche `Bb` au lieu de `A#` puis `A#` au lieu de `Bb`, puis Auto ; après un changement de morceau et après une transposition, admin et invité sont revenus en Auto ; positions des lignes et scroll inchangés ; `B` sur un invité sans effet ; un invité qui rejoint après reçoit le mode.
+
 # Fix : scroll master perdu après avoir quitté et relancé l'appli
 
 Cause : chaque `/login` crée un compte admin, jamais supprimé, et tous sont rattachés à chaque nouvelle session (base réelle : 17 admins). Après une relance, si la session a expiré, la session de remplacement n'a pas d'hôte : `/user` ne le fixait que s'il n'y avait qu'un seul admin, ce qui n'arrive plus. Le scroll revenait donc par défaut au plus petit id (admin n° 1, compte périmé). Session ouverte réelle : `scrollHostUserId` vide.
