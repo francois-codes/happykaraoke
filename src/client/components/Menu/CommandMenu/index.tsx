@@ -13,6 +13,7 @@ import { KEYS } from '@/lib/consts'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { useDispatch, useStore } from '@/store'
 import { socket } from '@/utils/socket'
+import { fetchGridFlags } from '@shared/endpoints/gridFlags'
 import { addToQueue, getQueue } from '@shared/endpoints/queue'
 import { changeSong, getSongsList } from '@shared/endpoints/song'
 import { searchSong } from '@shared/lib/data/songs'
@@ -29,6 +30,8 @@ export function CommandMenu() {
   const [allSongs, setAllSongs] = useState<Songs>([])
   const [availableSuggestions, setAvailableSuggestions] = useState(3)
   const [selectedSong, setSelectedSong] = useState<Nullable<Song>>(null)
+  /** Titles flagged with P (admin only), shown with a ⚠ marker. */
+  const [flaggedTitles, setFlaggedTitles] = useState<Set<string>>(new Set())
 
   const { currentSong, songsFolder, suggestionOpen, isAdmin, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen } = useStore()
   const dispatch = useDispatch()
@@ -56,6 +59,14 @@ export function CommandMenu() {
       setOpen(true)
     }
   }, [currentSong, songsFolder])
+
+  useEffect(() => {
+    if (!open || !isAdmin) return
+    fetchGridFlags
+      .call()
+      .then((flags) => setFlaggedTitles(new Set(flags.map((flag) => flag.title.normalize('NFC').toLowerCase()))))
+      .catch(() => setFlaggedTitles(new Set()))
+  }, [open, isAdmin])
 
   useEffect(() => {
     dispatch({ searchOpen: open })
@@ -167,6 +178,11 @@ export function CommandMenu() {
               value={song.filename}
             >
               {song.author} - {song.title}
+              {flaggedTitles.has(song.filename.normalize('NFC').toLowerCase()) && (
+                <span className="ml-2 text-amber-600" title="Grille à corriger" aria-label="Grille à corriger" data-grid-flagged>
+                  ⚠
+                </span>
+              )}
             </CommandItem>
           ))}
         <CommandEmpty>Pas de résultats</CommandEmpty>

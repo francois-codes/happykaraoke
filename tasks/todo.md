@@ -1,3 +1,45 @@
+# Grilles à corriger (touche P) — implémenté
+
+Objectif : pendant qu'il joue, l'admin appuie sur `P` pour marquer la chanson en cours comme « grille à corriger ». La liste est visible dans l'app (Réglages) et dans l'éditeur de grilles (Claude-grilles). Dès que le fichier de la grille est modifié, la chanson sort de la liste.
+
+Faits vérifiés : l'app et l'éditeur travaillent sur le même dossier (`Dropbox/…/KARAOKE_sn/03-HappiKaraoke songs`). L'éditeur est un petit serveur Python (`editeur/serveur.py`, port 8777) qui écrit directement les `.txt`. L'app surveille déjà ce dossier (`src/shared/lib/data/watcher.ts`).
+
+## Choix : un fichier partagé dans le dossier des chansons
+
+`03-HappiKaraoke songs/.grilles-a-corriger.json`, une entrée par chanson :
+`{ file, title, markedAt, sections: [{ name, markedAt }], hash, note? }` (`hash` = SHA-1 du contenu du `.txt` au moment de la marque).
+
+- Pourquoi pas SQLite : l'éditeur (Python, autre projet) doit lire la liste sans que l'app tourne ; le fichier voyage avec les grilles via Dropbox. Pas de migration.
+- **Un seul écrivain : l'app.** L'éditeur ne fait que lire. Pas de conflit d'écriture.
+- « Corrigée » = le contenu actuel du `.txt` n'a plus le même SHA-1 que `hash`. Une synchro qui touche le fichier sans le changer ne retire rien.
+
+## Étapes côté app (branche `feat/grid-flags`)
+
+- [x] 1. `src/shared/lib/data/gridFlags.ts` : lire / écrire le JSON (écriture atomique : fichier temporaire puis renommage), ajouter une marque (fusion si la chanson est déjà marquée), retirer, purger les entrées dont le hash ne correspond plus. Types en interfaces, pas de `any`.
+- [x] 2. Endpoints via `createEndpoint` (`src/shared/endpoints/gridFlags.ts`, exportés dans `index.ts`) : `flagCurrentSong` (admin seulement, contrôlé côté serveur), `fetchGridFlags`, `unflagSong`, `setGridFlagNote`.
+- [x] 3. Purge : dans `watcher.ts`, à chaque changement d'un `.txt` marqué ; et au démarrage du serveur (grilles modifiées pendant que l'app était fermée).
+- [x] 4. Exclure le JSON de la liste des chansons (`songs.ts` charge tout le dossier, il faut l'ignorer).
+- [x] 5. Touche `P` (admin seulement, désactivée quand une fenêtre est ouverte), via `useKeyboardShortcut` : enregistre la chanson et la section affichée (même calcul que la navigation ↑/↓, `useSongSections`). Petit message « Grille marquée · Refrain 2 » ; un 2e appui dans les 5 s annule.
+- [x] 6. Réglages → « Grilles à corriger » (modèle de `SessionLogs`) : chanson, date, sections, note modifiable, boutons « Ouvrir » et « Retirer ». Petit ⚠ devant les chansons marquées dans la recherche `Cmd + K`.
+- [x] 7. Mettre à jour `assets/CHEATSHEET.md` (tous les raccourcis, y compris `P`).
+
+## Étape côté éditeur (Claude-grilles, autre dossier, en lecture seule)
+
+- [x] 8. `serveur.py` : `GET /api/a-corriger` lit le JSON, garde les entrées dont le SHA-1 du fichier correspond encore, renvoie la liste. `index.html` : un filtre / une section « À corriger » (comme le top 100 prioritaires), avec les sections et la note. Aucune écriture du JSON par l'éditeur. Sauvegarde de `serveur.py` et `index.html` avant modification.
+
+## Risques
+
+- Scroll / affichage : on ne touche ni au rendu des chansons ni au scroll ; la touche `P` ne fait que lire la section courante.
+- Dossier de chansons inaccessible (Dropbox hors ligne) : la marque échoue avec un message, rien ne plante.
+- Encodage des noms (accents NFC/NFD sur macOS) : comparer les noms normalisés NFC, comme le fait déjà l'éditeur.
+
+## What I tested
+
+- `npm run typecheck` : OK. `npm run build:client` : OK (le hash utilise un import par défaut de `crypto`, car le code partagé est aussi empaqueté pour le navigateur ; la config de build n'est pas modifiée).
+- `npm run test:regression` : 22/22, dont 6 nouveaux tests `grid-flags` (ajout, fusion des sections, annulation, purge par hash, fichier touché sans changement conservé, nouvelle marque après modification, noms accentués NFD, note, retrait, fichier JSON corrompu, chanson inconnue).
+- `npm run test:electron` : tout passe, avec une nouvelle étape : `P` sur l'invité ne marque rien ; `P` sur l'admin enregistre la chanson et la section affichée (« Verse 3 ») ; un 2e `P` annule ; la liste « Grilles à corriger » s'affiche dans les Réglages ; modifier le `.txt` retire la marque du fichier partagé ; le JSON n'apparaît pas dans la liste des chansons. Capture : `out/electron-smoke/grid-flags.png`.
+- Éditeur (copie isolée dans le scratchpad, port 8799, sur des marques écrites par le module de l'app) : `/api/a-corriger` renvoie les 2 grilles marquées (dont un nom accentué stocké en NFD) ; après `/api/enregistrer`, la grille corrigée n'est plus renvoyée et l'éditeur n'a pas écrit dans le JSON ; la case « à corriger (marquées pendant le jeu) » affiche la grille restante avec section et note. Sauvegarde des fichiers d'origine : `Claude-grilles/sauvegardes-editeur/avant-a-corriger-2026-11-08/`.
+- Non testé : la marque pendant une vraie session sur ton dossier Dropbox, et le ⚠ dans la recherche `Cmd + K` (vérifié seulement par le typecheck).
 # Couleurs de sections (mode accords) — implémenté
 
 Objectif : quand les accords sont affichés, chaque type de section a toujours la même couleur (barre à gauche + titre teinté). En paroles seules, rien ne change par rapport à aujourd'hui.
