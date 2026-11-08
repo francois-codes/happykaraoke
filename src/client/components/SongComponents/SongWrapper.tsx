@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils'
 import { useStore } from '@/store'
 import { FC, PropsWithChildren } from 'react'
+import { SectionColorBars } from './SectionColorBars'
 import { SectionScrollDebugMarkers } from './SectionScrollDebugMarkers'
 
 export const SongWrapper: FC<PropsWithChildren> = ({ children }) => {
@@ -14,9 +15,10 @@ export const SongWrapper: FC<PropsWithChildren> = ({ children }) => {
         chordsEnabled ? 'song-lines--chords-on' : 'song-lines--lyrics-only w-full'
       )}
     >
+      <SectionColorBars />
       <SectionScrollDebugMarkers />
       {children}
-      <div className="h-[100vh]" aria-hidden />
+      <div className="h-[100vh]" data-song-end aria-hidden />
     </div>
   )
 }

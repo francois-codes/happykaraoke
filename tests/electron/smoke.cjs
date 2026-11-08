@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron')
-const { existsSync, mkdtempSync, mkdirSync, writeFileSync } = require('node:fs')
+const { copyFileSync, existsSync, mkdtempSync, mkdirSync, writeFileSync } = require('node:fs')
 const { tmpdir } = require('node:os')
 const { join } = require('node:path')
 const assert = require('node:assert/strict')
@@ -29,6 +29,19 @@ const sections = Array.from({ length: 12 }, (_, i) =>
 ).join('\n\n')
 writeFileSync(join(fixture, 'songs/Smoke Song.txt'), `Smoke Song\nTest Artist\nC\ntest\n\n${sections}`)
 writeFileSync(join(fixture, 'songs/Second Song.txt'), `Second Song\nTest Artist\nC\ntest\n\n${sections.replaceAll('Section', 'Verse')}`)
+const stanza = (n) => Array.from({ length: 3 }, (_, j) => `C       G       Am\nColour line ${j + 1} of block ${n}`).join('\n')
+writeFileSync(join(fixture, 'songs/Colour Song.txt'), `Colour Song\nTest Artist\nC\ntest\n\n` + [
+  `# Intro\n| C | G | Am | F |`,
+  `# Couplet 1\n${stanza(1)}\n\n${stanza(2)}`,
+  `# Pre-Chorus\n${stanza(3)}`,
+  `[Refrain]\n${stanza(4)}`,
+  `# Mystery part\n${stanza(5)}`,
+  `# Pont\n${stanza(6)}`,
+  `# Solo\n| C | G | Am | F |`,
+  `# Outro\n${stanza(7)}`
+].join('\n\n'))
+const realSong = join(root, 'songs-library/David Bowie - Space Oddity.txt')
+if (existsSync(realSong)) copyFileSync(realSong, join(fixture, 'songs/David Bowie - Space Oddity.txt'))
 process.chdir(fixture)
 require(join(root, 'out/server/main.js'))
 
@@ -212,7 +225,7 @@ async function run() {
   async function displaySong(title, lastSection) {
     await evaluate(admin, `document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }))`)
     await waitFor(admin, `!!document.querySelector('[cmdk-item]')`)
-    await clickText(admin, `Test Artist - ${title}`)
+    await clickText(admin, title.includes(' - ') ? title : `Test Artist - ${title}`)
     await clickText(admin, 'Lancer la chanson (⏎)')
     for (const win of [admin, follower]) {
       await waitFor(win, `document.getElementById('song-lines')?.innerText.includes(${JSON.stringify(lastSection)})`)
@@ -293,6 +306,59 @@ async function run() {
   await key(admin, 'Escape')
 
   mkdirSync(join(root, 'out/electron-smoke'), { recursive: true })
+  await displaySong('Colour Song', 'Mystery part')
+  const readBars = (win) => evaluate(win, `new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => {
+    const scroller = document.getElementById('scroll-container').getBoundingClientRect();
+    resolve([...document.querySelectorAll('.section-color-bar')].map(bar => {
+      const box = bar.getBoundingClientRect();
+      return { kind: bar.dataset.sectionKind, color: getComputedStyle(bar).backgroundColor,
+        height: Math.round(box.height), visible: box.left >= scroller.left && box.width > 0 };
+    }));
+  })))`)
+  const rowLayout = (win) => evaluate(win, `[...document.getElementById('song-lines').children]
+    .filter(el => !el.querySelector('.section-color-bar') && !el.classList.contains('section-color-bar'))
+    .map(el => { const r = el.getBoundingClientRect(); return [Math.round(r.top * 10), Math.round(r.left * 10), Math.round(r.width * 10), Math.round(r.height * 10)].join(',') })`)
+  const expectedKinds = ['intro', 'verse', 'prechorus', 'chorus', 'bridge', 'solo', 'outro']
+  for (const win of [admin, follower]) {
+    const bars = await readBars(win)
+    assert.deepEqual(bars.map(bar => bar.kind), expectedKinds, 'one bar per known section; unknown title gets none')
+    assert.ok(bars.every(bar => bar.visible && bar.height > 0), 'bars are visible inside the scroll area')
+    assert.equal(new Set(bars.filter(bar => bar.kind !== 'intro' && bar.kind !== 'outro').map(bar => bar.color)).size, 5,
+      'each family has its own colour')
+    const verse = bars.find(bar => bar.kind === 'verse')
+    const prechorus = bars.find(bar => bar.kind === 'prechorus')
+    assert.ok(verse.height > prechorus.height * 1.5, 'an untitled stanza continues the current section bar')
+    assert.notEqual(await evaluate(win, `getComputedStyle(document.querySelector('.song-section[data-section-kind="chorus"] strong')).backgroundColor`),
+      'rgba(0, 0, 0, 0)', 'section title is tinted in chords mode')
+    const before = await rowLayout(win)
+    await evaluate(win, `(() => { const style = document.createElement('style'); style.id = 'no-colours';
+      style.textContent = '.section-color-bar{display:none!important} .song-section strong{background:none!important;box-shadow:none!important}';
+      document.head.append(style) })()`)
+    assert.deepEqual(await rowLayout(win), before, 'section colours do not move any line')
+    await evaluate(win, `document.getElementById('no-colours').remove()`)
+  }
+  writeFileSync(join(root, 'out/electron-smoke/section-colours-admin.png'), (await admin.webContents.capturePage()).toPNG())
+  writeFileSync(join(root, 'out/electron-smoke/section-colours-follower.png'), (await follower.webContents.capturePage()).toPNG())
+  const chordsOnTop = await evaluate(admin, `document.getElementById('scroll-container').scrollTop`)
+  await key(admin, 'a')
+  await waitFor(admin, `document.getElementById('song-lines').classList.contains('song-lines--lyrics-only')`)
+  assert.equal((await readBars(admin)).length, 0, 'no bars in lyrics-only mode')
+  assert.equal(await evaluate(admin, `getComputedStyle(document.querySelector('.song-section[data-section-kind="chorus"] strong')).backgroundColor`),
+    'rgba(0, 0, 0, 0)', 'no title tint in lyrics-only mode')
+  assert.equal((await readBars(follower)).length, 7, 'chord display is per device: follower keeps its colours')
+  writeFileSync(join(root, 'out/electron-smoke/section-colours-lyrics-only.png'), (await admin.webContents.capturePage()).toPNG())
+  await key(admin, 'a')
+  await waitFor(admin, `document.getElementById('song-lines').classList.contains('song-lines--chords-on')`)
+  assert.ok(Math.abs(await evaluate(admin, `document.getElementById('scroll-container').scrollTop`) - chordsOnTop) <= 2)
+  await key(admin, 'd')
+  await waitFor(admin, `document.documentElement.classList.contains('dark')`)
+  writeFileSync(join(root, 'out/electron-smoke/section-colours-dark.png'), (await admin.webContents.capturePage()).toPNG())
+  await key(admin, 'd')
+  if (existsSync(realSong)) {
+    await displaySong('David Bowie - Space Oddity', 'Fmaj7')
+    writeFileSync(join(root, 'out/electron-smoke/section-colours-space-oddity.png'), (await admin.webContents.capturePage()).toPNG())
+  }
+  console.log('PASS section colours: chords mode only, per family, no layout change, admin and follower')
   writeFileSync(join(root, 'out/electron-smoke/admin.png'), (await admin.webContents.capturePage()).toPNG())
 
   await key(admin, 'd')
@@ -342,7 +408,7 @@ async function run() {
   console.log('Electron smoke fixture:', fixture)
 }
 
-const timeout = setTimeout(() => { console.error('Electron smoke timed out'); app.exit(1) }, 90000)
+const timeout = setTimeout(() => { console.error('Electron smoke timed out'); app.exit(1) }, 150000)
 run().then(() => {
   clearTimeout(timeout)
   db.close()
