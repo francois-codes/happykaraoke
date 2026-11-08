@@ -1,7 +1,6 @@
 import { config } from '@shared/config'
 import {
   checkAndRefreshSession,
-  countAdminsForSession,
   getCurrentSession,
   setScrollHostUserIdIfUnset,
   startSessionIfNeeded
@@ -51,7 +50,11 @@ export const fetchUser = createEndpoint<{ id: number }, UserLoginResponse>({
     if (user.type === UserType.ADMIN) {
       await checkAndRefreshSession()
       const open = await getCurrentSession()
-      if (open && (await countAdminsForSession(open.id)) === 1) {
+      // An admin resuming after a relaunch claims a session that has no scroll host yet
+      // (e.g. a replacement session after the timeout). Admin accounts from past logins are
+      // migrated to every new session, so "only one admin" is never true in practice and
+      // the fallback (lowest admin id) would hand scroll control to a stale account.
+      if (open) {
         await setScrollHostUserIdIfUnset(open.id, user.id)
       }
     }

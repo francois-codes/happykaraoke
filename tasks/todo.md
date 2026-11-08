@@ -1,3 +1,15 @@
+# Fix : scroll master perdu après avoir quitté et relancé l'appli
+
+Cause : chaque `/login` crée un compte admin, jamais supprimé, et tous sont rattachés à chaque nouvelle session (base réelle : 17 admins). Après une relance, si la session a expiré, la session de remplacement n'a pas d'hôte : `/user` ne le fixait que s'il n'y avait qu'un seul admin, ce qui n'arrive plus. Le scroll revenait donc par défaut au plus petit id (admin n° 1, compte périmé). Session ouverte réelle : `scrollHostUserId` vide.
+
+- [x] `/user` (admin qui reprend sa connexion au lancement) : devient hôte de la session si elle n'en a pas encore, quel que soit le nombre d'admins. Une session qui a déjà un hôte n'est pas modifiée (le test « another login does not steal ownership » reste valable).
+
+## What I tested
+
+- Nouveau test de régression : 3 comptes admin, session de remplacement sans hôte → le scroll va à l'admin 1 ; l'admin 3 reprend via `/user` → hôte et scroll master ; un autre admin qui reprend ensuite ne le récupère pas. Échoue sans la correction, passe avec.
+- `npm run typecheck` OK, `npm run test:regression` 17/17, `npm run test:electron` : 16 étapes PASS.
+- Non testé : une vraie relance de l'appli packagée sur ta base (nécessite un nouveau build).
+
 # Session usability fixes
 
 ## Follow-up: reset everyone when changing songs
