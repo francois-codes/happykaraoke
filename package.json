@@ -78,7 +78,6 @@
     "react-router-dom": "^6.23.1",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
-    "sqlite3": "^5.1.7",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^10.0.0",
