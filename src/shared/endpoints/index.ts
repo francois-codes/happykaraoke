@@ -5,6 +5,7 @@ import { closeSession, deleteSessionLog, fetchAllSessions, fetchSessionConfig, f
 import { changeSong, getCSVData, getSong, getSongsList, setTranspo } from './song'
 import { fetchUser, joinSession, loginUser } from './user'
 import { generateSong, getOpenAIKey, saveSong, setOpenAIKey } from './ai'
+import { fetchGridFlags, flagSong, setGridFlagNoteEndpoint, undoFlagSong, unflagSong } from './gridFlags'
 
 export const endpoints = [
   loginUser,
@@ -33,5 +34,10 @@ export const endpoints = [
   setOpenAIKey,
   getOpenAIKey,
   generateSong,
-  saveSong
+  saveSong,
+  flagSong,
+  undoFlagSong,
+  unflagSong,
+  setGridFlagNoteEndpoint,
+  fetchGridFlags
 ]

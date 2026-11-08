@@ -12,6 +12,7 @@ import { AddSongWithAIButton } from './AddSongWithAIButton'
 import { AISongPreviewModal } from './AISongPreviewModal'
 import { AISongSearchModal } from './AISongSearchModal'
 import { CloseSession } from './CloseSession'
+import { GridFlagsList } from './GridFlagsList'
 import { Logout } from './Logout'
 import { OpenAIKeyButton } from './OpenAIKeyButton'
 import { OpenAIKeyModal } from './OpenAIKeyModal'
@@ -99,6 +100,7 @@ export function SettingsPanel() {
               {isAdmin && <OpenAIKeyButton />}
               {isAdmin && <AddSongWithAIButton />}
               {isAdmin && <SessionLogs />}
+              {isAdmin && <GridFlagsList />}
               {isAdmin && <FlexModal />}
               {isAdmin && <ScrollDiagnostics />}
               {isAdmin && <CloseSession />}
