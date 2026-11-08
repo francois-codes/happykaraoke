@@ -9,7 +9,7 @@ import {
   startSessionIfNeeded, closeSession, getScrollSnapshot, upsertScrollSnapshot,
   checkAndRefreshSession
 } from '@shared/lib/session'
-import { loginUser } from '@shared/endpoints/user'
+import { fetchUser, loginUser } from '@shared/endpoints/user'
 import { config } from '@shared/config'
 import { socketEmitter } from '@shared/server/socketEmitter'
 
@@ -58,6 +58,37 @@ test('the creator takes default scroll ownership from a migrated fallback admin'
   } finally {
     socketEmitter.off('socket:emit', listener)
   }
+})
+
+async function resumeAdmin(id: number) {
+  const app = express()
+  app.use(express.json())
+  fetchUser.register(app)
+  const server = app.listen(0, '127.0.0.1')
+  await once(server, 'listening')
+  try {
+    const response = await fetch(`http://127.0.0.1:${(server.address() as AddressInfo).port}/user?id=${id}`)
+    assert.equal(response.status, 200)
+  } finally {
+    server.closeAllConnections()
+    await new Promise<void>((resolve) => server.close(() => resolve()))
+  }
+}
+
+test('an admin resuming after a relaunch reclaims scroll control from stale admin accounts', async () => {
+  // Every past /login left an admin account; all are migrated into each new session.
+  for (const id of [1, 2, 3]) {
+    sqlite.prepare('INSERT INTO user (id, name, type, sessionId) VALUES (?, ?, ?, ?)').run(id, 'admin', 'admin', baselineId)
+  }
+  // Replacement session (e.g. after the timeout) with no scroll host: the lowest stale id wins by default.
+  const session = await startSessionIfNeeded()
+  assert.equal((await getScrollControlSnapshot(session.id)).activeScrollMasterUserId, 1)
+  // The relaunched app restores its saved admin (id 3) through /user.
+  await resumeAdmin(3)
+  assert.deepEqual(await getScrollControlSnapshot(session.id), { primaryAdminUserId: 3, activeScrollMasterUserId: 3 })
+  // Another admin resuming later does not take it back.
+  await resumeAdmin(2)
+  assert.equal((await getScrollControlSnapshot(session.id)).activeScrollMasterUserId, 3)
 })
 
 test('another login does not steal ownership or undo the creator’s explicit release', async () => {
