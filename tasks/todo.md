@@ -40,6 +40,35 @@ Faits vérifiés : l'app et l'éditeur travaillent sur le même dossier (`Dropbo
 - `npm run test:electron` : tout passe, avec une nouvelle étape : `P` sur l'invité ne marque rien ; `P` sur l'admin enregistre la chanson et la section affichée (« Verse 3 ») ; un 2e `P` annule ; la liste « Grilles à corriger » s'affiche dans les Réglages ; modifier le `.txt` retire la marque du fichier partagé ; le JSON n'apparaît pas dans la liste des chansons. Capture : `out/electron-smoke/grid-flags.png`.
 - Éditeur (copie isolée dans le scratchpad, port 8799, sur des marques écrites par le module de l'app) : `/api/a-corriger` renvoie les 2 grilles marquées (dont un nom accentué stocké en NFD) ; après `/api/enregistrer`, la grille corrigée n'est plus renvoyée et l'éditeur n'a pas écrit dans le JSON ; la case « à corriger (marquées pendant le jeu) » affiche la grille restante avec section et note. Sauvegarde des fichiers d'origine : `Claude-grilles/sauvegardes-editeur/avant-a-corriger-2026-11-08/`.
 - Non testé : la marque pendant une vraie session sur ton dossier Dropbox, et le ⚠ dans la recherche `Cmd + K` (vérifié seulement par le typecheck).
+# Couleurs de sections (mode accords) — implémenté
+
+Objectif : quand les accords sont affichés, chaque type de section a toujours la même couleur (barre à gauche + titre teinté). En paroles seules, rien ne change par rapport à aujourd'hui.
+
+Palette : intro/outro gris · couplet/verse bleu · pré-… (pre-chorus, pre-verse) violet · refrain/chorus vert · pont/bridge orange · solo/instrumental/interlude rose · nom inconnu → pas de couleur.
+
+Principe de sécurité : **aucune modification du DOM des lignes ni de la mise en page**. Les barres sont dessinées dans une couche superposée en position absolue (comme `SectionScrollDebugMarkers`), le titre est teinté via `background` + `box-shadow` (pas de padding). Donc ni le scroll, ni l'alignement accords/paroles, ni la bascule accords ne peuvent bouger.
+
+Branche : `feat/section-colors` depuis `fix/session-usability` (on garde `resources/db.sqlite` hors commit).
+
+- [x] 1. `src/client/lib/sectionKind.ts` : fonction pure `getSectionKind(title: string): SectionKind | null` (union de chaînes `'intro' | 'verse' | 'prechorus' | 'chorus' | 'bridge' | 'solo' | 'outro'`), insensible à la casse, aux accents, aux numéros, `#` et `[ ]`. Couleurs en variables CSS dans `base.css` (une valeur qui marche en thème clair et sombre).
+- [x] 2. Test de régression `tests/regression/section-kind.test.ts` : les titres réels du répertoire (Couplet 1, # Verse 2, [Chorus], Pre-Chorus, Pré-refrain, Pont, Bridge, Instrumental, Interlude, Solo, Intro, Outro, titre vide, titre inconnu).
+- [x] 3. `Section.tsx` : ajoute `data-section-kind` sur le `h3.song-section` (classe et texte inchangés, car `useSongSections` les lit). Style du titre appliqué seulement sous `.song-lines--chords-on`.
+- [x] 4. `SectionColorBars.tsx` dans `SongWrapper` : couche `absolute`, `pointer-events: none`, `aria-hidden`, rendue seulement si `chordsEnabled`. Mesure les `.song-section` ayant un type et trace une barre de 4 px de chaque titre jusqu'au titre suivant (les titres vides créés entre deux strophes prolongent la section en cours). Recalcul avec `ResizeObserver` sur `#song-lines` (police, fenêtre, transposition, rechargement du fichier).
+- [x] 5. Barre placée à 10 px à gauche du texte, dans la marge existante : visible et non coupée dans Electron (vérifié par le test).
+
+Risques et parades :
+- Scroll / sections (invariant 3) : on ne touche ni à `useSongSections`, ni à `useAutoScroller`, ni à la structure des lignes ; la couche est hors flux.
+- Affichage identique admin/invités (invariant 2) : même rendu partout, couleurs calculées depuis le texte du fichier, pas de réglage serveur.
+- Bascule accords sans décalage : la couche disparaît, le titre perd sa teinte, aucune dimension ne change. Vérifié par capture avant/après bascule (positions des lignes identiques au pixel).
+- Fluidité admin (invariant 4) : mesure regroupée dans un `requestAnimationFrame`, uniquement au redimensionnement, pas au scroll.
+
+## What I tested
+
+- `npm run typecheck` : OK (client + serveur).
+- `npm run test:regression` : 17/17, dont le nouveau test `section-kind` (titres réels du répertoire). Sur les 14 745 titres de sections de `songs-library`, 97,3 % reçoivent une couleur ; le reste (« A », « Day », noms de personnages…) reste neutre.
+- `npm run test:electron` : tout passe, avec une nouvelle étape « section colours » sur admin + invité : une barre par section connue, aucune pour un titre inconnu, strophe sans titre rattachée à la section en cours, 5 couleurs distinctes, titre teinté ; positions de toutes les lignes identiques avec ou sans couleurs ; en paroles seules ni barre ni teinte, et l'invité garde ses couleurs (réglage par appareil) ; la bascule accords ne change pas le scroll. Captures : `out/electron-smoke/section-colours-*.png` (admin, follower, lyrics-only, dark, space-oddity).
+- Tout le reste du smoke test (transitions de sections, scroll musicien, auto-scroll, changement de chanson, reprise en cours de chanson) passe toujours.
+- Non vérifié à la main : navigateur d'un vrai téléphone invité.
 
 # Session usability fixes
 
