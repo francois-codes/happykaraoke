@@ -29,6 +29,12 @@ const sections = Array.from({ length: 12 }, (_, i) =>
 ).join('\n\n')
 writeFileSync(join(fixture, 'songs/Smoke Song.txt'), `Smoke Song\nTest Artist\nC\ntest\n\n${sections}`)
 writeFileSync(join(fixture, 'songs/Second Song.txt'), `Second Song\nTest Artist\nC\ntest\n\n${sections.replaceAll('Section', 'Verse')}`)
+// Cover images: 1x1 PNGs, listed in Finder order (b-red, Image 2 green); a text file is ignored.
+mkdirSync(join(fixture, 'songs/images'))
+const png = (hex) => Buffer.from(hex, 'hex')
+writeFileSync(join(fixture, 'songs/images/b-red.png'), png('89504e470d0a1a0a0000000d4948445200000001000000010802000000907753de0000000c49444154789c63b82327070002f2011973440bcb0000000049454e44ae426082'))
+writeFileSync(join(fixture, 'songs/images/Image 2.png'), png('89504e470d0a1a0a0000000d4948445200000001000000010802000000907753de0000000c49444154789c63905b60030001da00fb5c11a2170000000049454e44ae426082'))
+writeFileSync(join(fixture, 'songs/images/notes.txt'), 'not an image')
 const stanza = (n) => Array.from({ length: 3 }, (_, j) => `C       G       Am\nColour line ${j + 1} of block ${n}`).join('\n')
 writeFileSync(join(fixture, 'songs/Colour Song.txt'), `Colour Song\nTest Artist\nC\ntest\n\n` + [
   `# Intro\n| C | G | Am | F |`,
@@ -305,6 +311,46 @@ async function run() {
   await key(admin, 'Escape')
   await key(admin, 'Escape')
 
+  // Cover images: ⌘Y / ⌘U / ⌘I cover every guest screen with image 1 / 2 / 3; admins only see a banner.
+  async function metaKey(win, keyCode) {
+    await evaluate(win, 'document.activeElement?.blur()')
+    win.webContents.sendInputEvent({ type: 'keyDown', keyCode, modifiers: ['meta'] })
+    win.webContents.sendInputEvent({ type: 'keyUp', keyCode, modifiers: ['meta'] })
+    await delay(120)
+  }
+  const coverSrc = (win) => evaluate(win, `document.querySelector('[data-cover-overlay] img')?.getAttribute('src') ?? null`)
+  await metaKey(admin, 'y')
+  await waitFor(follower, `document.querySelector('[data-cover-overlay] img')?.complete && document.querySelector('[data-cover-overlay] img').naturalWidth === 1`)
+  assert.match(await coverSrc(follower), /index=1/)
+  assert.equal(await evaluate(admin, `!!document.querySelector('[data-cover-overlay]')`), false, 'the admin is never covered')
+  await waitFor(admin, `document.querySelector('[data-cover-admin-banner]')?.textContent.startsWith('Couverture 1')`)
+  assert.equal(await evaluate(follower, `(() => { const r = document.querySelector('[data-cover-overlay]').getBoundingClientRect(); return r.width === innerWidth && r.height === innerHeight })()`), true,
+    'the cover fills the guest window')
+  writeFileSync(join(root, 'out/electron-smoke/cover-follower.png'), (await follower.webContents.capturePage()).toPNG())
+  writeFileSync(join(root, 'out/electron-smoke/cover-admin.png'), (await admin.webContents.capturePage()).toPNG())
+  follower.webContents.reload()
+  await waitFor(follower, `document.querySelector('[data-cover-overlay] img')?.getAttribute('src')?.includes('index=1')`)
+  console.log('PASS cover: guest covered (also after joining again), admin sees a banner')
+  await metaKey(admin, 'u')
+  await waitFor(follower, `document.querySelector('[data-cover-overlay] img')?.getAttribute('src')?.includes('index=2')`)
+  await metaKey(admin, 'u')
+  await waitFor(follower, `!document.querySelector('[data-cover-overlay]')`)
+  await waitFor(admin, `!document.querySelector('[data-cover-admin-banner]')`)
+  await metaKey(admin, 'i')
+  await waitFor(admin, `document.querySelector('[data-cover-admin-banner]')?.textContent.includes("Pas d'image n°3")`)
+  await delay(200)
+  assert.equal(await evaluate(follower, `!!document.querySelector('[data-cover-overlay]')`), false, 'a missing image covers nobody')
+  await metaKey(admin, 'y')
+  await waitFor(follower, `!!document.querySelector('[data-cover-overlay]')`)
+  await key(admin, 'Escape')
+  await waitFor(follower, `!document.querySelector('[data-cover-overlay]')`)
+  await metaKey(follower, 'y')
+  await delay(300)
+  assert.equal(await evaluate(follower, `!!document.querySelector('[data-cover-overlay]')`), false, 'guests cannot show a cover')
+  assert.equal(await evaluate(admin, `document.querySelector('[data-cover-admin-banner]')?.textContent.startsWith('Couverture') ?? false`), false)
+  assert.ok(!(await evaluate(admin, `fetch('/songs').then(r => r.json()).then(d => d.songs.some(s => s.filename === 'images'))`)),
+    'the images folder is not listed as a song')
+  console.log('PASS cover: ⌘U switches, same key or Escape removes, missing image refused, guest keys ignored')
   // "Grilles à corriger": P flags the current song (admin only), a second P within 5 s undoes,
   // and editing the grid file removes it from the list.
   const flagsPath = join(fixture, 'songs/.grilles-a-corriger.json')

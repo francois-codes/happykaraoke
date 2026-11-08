@@ -1,3 +1,4 @@
+import { CoverLayer } from '@/components/Cover/CoverLayer'
 import { GridFlagShortcut } from '@/components/GridFlags/GridFlagShortcut'
 import { CommandMenu } from '@/components/Menu/CommandMenu'
 import { Menu } from '@/components/Menu/Menu'
@@ -21,6 +22,7 @@ export function SessionScreen() {
       <Menu />
       <main className="flex min-h-screen flex-col items-start justify-between mt-16">
         <CommandMenu />
+        <CoverLayer />
         {isAdmin && <GridFlagShortcut />}
         <div
           ref={scrollRef}

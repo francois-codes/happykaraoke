@@ -1,3 +1,22 @@
+# Images de couverture (⌘Y / ⌘U / ⌘I) — implémenté
+
+Objectif : l'admin recouvre l'écran de tous les invités avec une image du dossier `<dossier des chansons>/images` (ordre alphabétique du Finder). ⌘Y = 1re image, ⌘U = 2e, ⌘I = 3e ; le même raccourci ou Échap la retire ; un autre raccourci passe à l'autre image. Les admins ne sont jamais recouverts : ils voient un bandeau « Couverture n affichée aux invités ». Image entière sur fond noir (bandes noires si le format diffère).
+
+Choix : ⌘K (recherche) et ⌘O (dossier des chansons) étaient pris ; ⌘Y, ⌘U, ⌘I sont libres dans l'appli et dans le menu Electron par défaut.
+
+- [x] `src/shared/lib/data/coverImages.ts` : liste des images (jpg, jpeg, png, webp, gif ; fichiers cachés et autres ignorés), tri « Finder » (`localeCompare` fr, insensible à la casse, nombres naturels), image n → état `{ index, file, version }` (version = date du fichier, pour que le navigateur recharge une image remplacée).
+- [x] État `cover` dans la config de session (donc renvoyé par `fetchSessionConfig` aux invités qui arrivent en cours de route) ; message socket `cover:changed`.
+- [x] Endpoints : `POST /cover` (admin vérifié côté serveur, `requireAdminInOpenSession` exporté ; 404 « Pas d'image n°3… » si l'image n'existe pas) et `GET /cover-image?index=n` (sert le fichier).
+- [x] Le dossier `images` n'apparaît plus comme une chanson.
+- [x] `CoverLayer` (écran de session) : raccourcis admin, couverture plein écran (z-index au-dessus de tout) pour les invités, bandeau pour l'admin. Échap ne retire la couverture que si aucune fenêtre (recherche, transposition, QR, IA) n'est ouverte.
+- [x] `assets/CHEATSHEET.md` : ⌘Y / ⌘U / ⌘I et Échap ajoutés (après fusion de « grilles à corriger » dans `main`).
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm test` (comme la CI) : invariants Vitest 7/7, régression 19/19 dont 2 nouveaux tests (ordre Finder, fichiers non-images ignorés, nombres naturels, image manquante, dossier absent).
+- `npm run test:electron` : 19 étapes PASS, dont 2 nouvelles : ⌘Y recouvre l'invité (image chargée, plein écran) mais pas l'admin, qui voit le bandeau ; l'invité qui recharge la page retrouve la couverture ; ⌘U passe à l'image 2, ⌘U à nouveau la retire ; ⌘I sans 3e image affiche une erreur à l'admin et ne recouvre personne ; Échap retire ; ⌘Y sur un invité ne fait rien ; `images` absent de la liste des chansons. Captures : `out/electron-smoke/cover-admin.png`, `cover-follower.png`.
+- Non testé : tes vraies images Dropbox sur de vrais téléphones / la TV (format, poids ~1 Mo par image sur le Wi-Fi).
+
 # Préférence ♯ / ♭ (touche B) — PLAN validé, pas encore implémenté
 
 Objectif : comme sur Ultimate Guitar, l'admin choisit l'écriture des altérations pour tout le monde. La touche `B` fait tourner : **Bémols ♭** → **Dièses ♯** → **Auto** (comportement actuel). **Le mode revient en Auto dès qu'on change de morceau ou de transposition** (demande de Louis : une nouvelle tonalité doit repartir de l'écriture par défaut). Il revient aussi en Auto au redémarrage de l'appli.

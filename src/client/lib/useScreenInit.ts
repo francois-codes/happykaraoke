@@ -36,7 +36,8 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
           songsFolder: sessionCfg.songsFolder,
           hostUrl: sessionCfg.hostUrl ?? '',
           scrollControl: sessionCfg.scrollControl ?? null,
-          scrollSnapshot: sessionCfg.scrollSnapshot ?? null
+          scrollSnapshot: sessionCfg.scrollSnapshot ?? null,
+          cover: sessionCfg.cover ?? null
         })
       }
     } catch {

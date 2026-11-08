@@ -4,6 +4,7 @@ import { differenceInMinutes, formatISO } from 'date-fns'
 import { and, asc, count, desc, eq, inArray, lt, ne } from 'drizzle-orm'
 import { UserType } from '@shared/types'
 import type { ScrollSnapshot, ScrollSnapshotInput } from '@shared/types/scroll'
+import type { CoverState } from '@shared/types/cover'
 import { scrollControlState } from '@shared/messages/scroll'
 
 import ip from 'ip'
@@ -19,6 +20,8 @@ export interface SessionConfig {
   hostUrl: string
   scrollControl?: ScrollControlSnapshot | null
   scrollSnapshot?: ScrollSnapshot | null
+  /** Cover image currently shown to guests (null = none). */
+  cover?: CoverState | null
 }
 
 export interface Session {

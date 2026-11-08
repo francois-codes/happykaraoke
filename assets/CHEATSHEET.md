@@ -33,6 +33,11 @@ Grids to fix:
 - `P` : flags the current song's grid as "à corriger", with the section being played. Press `P` again within 5 seconds to undo.
   The list is in Settings → "Grilles à corriger" (and in the grid editor). A song leaves the list as soon as its grid file is edited.
 
+Cover images (guests only, admins see a banner):
+
+- `cmd + Y` | `cmd + U` | `cmd + I` : covers every guest screen with the 1st | 2nd | 3rd image of the `images` folder inside the songs folder (Finder alphabetical order)
+- same shortcut again or `escape` : removes the cover; another shortcut switches image
+
 Transpose:
 
 - `T` : opens the transpose modal, preselected with the key currently used (defaults to the original song key)
