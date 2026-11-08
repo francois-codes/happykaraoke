@@ -56,7 +56,7 @@ Agents in `.claude/agents/` (frontend-specialist, backend-sync, electron-package
 
 ## Git workflow
 
-- Remote: Bitbucket `git@bitbucket.org:froland-demo/happikaraoke.git`. **Base branch: `fix/session-usability`** (not `main`; ignore `tauri-reafactor`).
-- Branch from the base: `feat/<topic>`, `fix/<topic>`, `chore/<topic>`, `docs/<topic>`.
-- Conventional commits with gitmoji: `feat: ✨ …`, `fix: 🐛 …`, `chore: 🔧 …`, `docs: 📝 …`, `refactor: ♻️ …`, `test: ✅ …`.
-- Push with `git push -u origin <branch>` (ask first), then open the PR in the Bitbucket web UI towards `fix/session-usability`: `https://bitbucket.org/froland-demo/happikaraoke/pull-requests/new?source=<branch>&dest=fix/session-usability`. No `gh` (this is not GitHub).
+- Remote: GitHub `git@github.com:francois-codes/happykaraoke.git` (SSH; public repo). **Base branch: `main`** (ignore `tauri-reafactor`). The old Bitbucket remote (`froland-demo/happikaraoke`) is no longer used.
+- Branch from `main`: `feat/<topic>`, `fix/<topic>`, `chore/<topic>`, `docs/<topic>`.
+- Conventional commits with gitmoji: `feat: ✨ …`, `fix: 🐛 …`, `chore: 🔧 …`, `docs: 📝 …`, `refactor: ♻️ …`, `test: ✅ …`. semantic-release builds the DMG from `main` (GitHub Actions), so commit types matter.
+- Push with `git push -u origin <branch>` (ask first), then open the PR towards `main`: `gh pr create --base main` when `gh` is authenticated, otherwise the link `https://github.com/francois-codes/happykaraoke/compare/main...<branch>?expand=1`.
