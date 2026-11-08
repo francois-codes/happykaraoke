@@ -1,5 +1,6 @@
 import { sessionLog } from '@shared/db/schema'
 import { readdirSync } from 'fs'
+import { GRID_FLAGS_FILES } from './gridFlagsFile'
 import { Search } from '../search'
 import { getSessionConfig } from '../session'
 import { Song } from '../song/song'
@@ -12,7 +13,7 @@ const getSongFiles = () => {
   }
 }
 
-const EXCLUDED_FILES = ['.DS_Store', '_old', '.', '..', 'Icon']
+const EXCLUDED_FILES = ['.DS_Store', '_old', '.', '..', 'Icon', ...GRID_FLAGS_FILES]
 
 export function getAllSongs(opts: { withKey?: boolean } = { withKey: false }) {
   return getSongFiles()

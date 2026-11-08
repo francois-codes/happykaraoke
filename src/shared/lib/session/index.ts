@@ -447,7 +447,7 @@ type ScrollMutationOk = { ok: true; snapshot: ScrollControlSnapshot }
 
 type RequireSessionOk = { ok: true; sessionId: number }
 
-async function requireAdminInOpenSession(
+export async function requireAdminInOpenSession(
   callerUserId: number
 ): Promise<RequireSessionOk | ScrollMutationError> {
   const current = await getCurrentSession()

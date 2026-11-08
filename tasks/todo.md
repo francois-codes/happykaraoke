@@ -9,6 +9,77 @@ Cause : chaque `/login` crée un compte admin, jamais supprimé, et tous sont ra
 - Nouveau test de régression : 3 comptes admin, session de remplacement sans hôte → le scroll va à l'admin 1 ; l'admin 3 reprend via `/user` → hôte et scroll master ; un autre admin qui reprend ensuite ne le récupère pas. Échoue sans la correction, passe avec.
 - `npm run typecheck` OK, `npm run test:regression` 17/17, `npm run test:electron` : 16 étapes PASS.
 - Non testé : une vraie relance de l'appli packagée sur ta base (nécessite un nouveau build).
+# Grilles à corriger (touche P) — implémenté
+
+Objectif : pendant qu'il joue, l'admin appuie sur `P` pour marquer la chanson en cours comme « grille à corriger ». La liste est visible dans l'app (Réglages) et dans l'éditeur de grilles (Claude-grilles). Dès que le fichier de la grille est modifié, la chanson sort de la liste.
+
+Faits vérifiés : l'app et l'éditeur travaillent sur le même dossier (`Dropbox/…/KARAOKE_sn/03-HappiKaraoke songs`). L'éditeur est un petit serveur Python (`editeur/serveur.py`, port 8777) qui écrit directement les `.txt`. L'app surveille déjà ce dossier (`src/shared/lib/data/watcher.ts`).
+
+## Choix : un fichier partagé dans le dossier des chansons
+
+`03-HappiKaraoke songs/.grilles-a-corriger.json`, une entrée par chanson :
+`{ file, title, markedAt, sections: [{ name, markedAt }], hash, note? }` (`hash` = SHA-1 du contenu du `.txt` au moment de la marque).
+
+- Pourquoi pas SQLite : l'éditeur (Python, autre projet) doit lire la liste sans que l'app tourne ; le fichier voyage avec les grilles via Dropbox. Pas de migration.
+- **Un seul écrivain : l'app.** L'éditeur ne fait que lire. Pas de conflit d'écriture.
+- « Corrigée » = le contenu actuel du `.txt` n'a plus le même SHA-1 que `hash`. Une synchro qui touche le fichier sans le changer ne retire rien.
+
+## Étapes côté app (branche `feat/grid-flags`)
+
+- [x] 1. `src/shared/lib/data/gridFlags.ts` : lire / écrire le JSON (écriture atomique : fichier temporaire puis renommage), ajouter une marque (fusion si la chanson est déjà marquée), retirer, purger les entrées dont le hash ne correspond plus. Types en interfaces, pas de `any`.
+- [x] 2. Endpoints via `createEndpoint` (`src/shared/endpoints/gridFlags.ts`, exportés dans `index.ts`) : `flagCurrentSong` (admin seulement, contrôlé côté serveur), `fetchGridFlags`, `unflagSong`, `setGridFlagNote`.
+- [x] 3. Purge : dans `watcher.ts`, à chaque changement d'un `.txt` marqué ; et au démarrage du serveur (grilles modifiées pendant que l'app était fermée).
+- [x] 4. Exclure le JSON de la liste des chansons (`songs.ts` charge tout le dossier, il faut l'ignorer).
+- [x] 5. Touche `P` (admin seulement, désactivée quand une fenêtre est ouverte), via `useKeyboardShortcut` : enregistre la chanson et la section affichée (même calcul que la navigation ↑/↓, `useSongSections`). Petit message « Grille marquée · Refrain 2 » ; un 2e appui dans les 5 s annule.
+- [x] 6. Réglages → « Grilles à corriger » (modèle de `SessionLogs`) : chanson, date, sections, note modifiable, boutons « Ouvrir » et « Retirer ». Petit ⚠ devant les chansons marquées dans la recherche `Cmd + K`.
+- [x] 7. Mettre à jour `assets/CHEATSHEET.md` (tous les raccourcis, y compris `P`).
+
+## Étape côté éditeur (Claude-grilles, autre dossier, en lecture seule)
+
+- [x] 8. `serveur.py` : `GET /api/a-corriger` lit le JSON, garde les entrées dont le SHA-1 du fichier correspond encore, renvoie la liste. `index.html` : un filtre / une section « À corriger » (comme le top 100 prioritaires), avec les sections et la note. Aucune écriture du JSON par l'éditeur. Sauvegarde de `serveur.py` et `index.html` avant modification.
+
+## Risques
+
+- Scroll / affichage : on ne touche ni au rendu des chansons ni au scroll ; la touche `P` ne fait que lire la section courante.
+- Dossier de chansons inaccessible (Dropbox hors ligne) : la marque échoue avec un message, rien ne plante.
+- Encodage des noms (accents NFC/NFD sur macOS) : comparer les noms normalisés NFC, comme le fait déjà l'éditeur.
+
+## What I tested
+
+- `npm run typecheck` : OK. `npm run build:client` : OK (le hash utilise un import par défaut de `crypto`, car le code partagé est aussi empaqueté pour le navigateur ; la config de build n'est pas modifiée).
+- `npm run test:regression` : 22/22, dont 6 nouveaux tests `grid-flags` (ajout, fusion des sections, annulation, purge par hash, fichier touché sans changement conservé, nouvelle marque après modification, noms accentués NFD, note, retrait, fichier JSON corrompu, chanson inconnue).
+- `npm run test:electron` : tout passe, avec une nouvelle étape : `P` sur l'invité ne marque rien ; `P` sur l'admin enregistre la chanson et la section affichée (« Verse 3 ») ; un 2e `P` annule ; la liste « Grilles à corriger » s'affiche dans les Réglages ; modifier le `.txt` retire la marque du fichier partagé ; le JSON n'apparaît pas dans la liste des chansons. Capture : `out/electron-smoke/grid-flags.png`.
+- Éditeur (copie isolée dans le scratchpad, port 8799, sur des marques écrites par le module de l'app) : `/api/a-corriger` renvoie les 2 grilles marquées (dont un nom accentué stocké en NFD) ; après `/api/enregistrer`, la grille corrigée n'est plus renvoyée et l'éditeur n'a pas écrit dans le JSON ; la case « à corriger (marquées pendant le jeu) » affiche la grille restante avec section et note. Sauvegarde des fichiers d'origine : `Claude-grilles/sauvegardes-editeur/avant-a-corriger-2026-11-08/`.
+- Non testé : la marque pendant une vraie session sur ton dossier Dropbox, et le ⚠ dans la recherche `Cmd + K` (vérifié seulement par le typecheck).
+# Couleurs de sections (mode accords) — implémenté
+
+Objectif : quand les accords sont affichés, chaque type de section a toujours la même couleur (barre à gauche + titre teinté). En paroles seules, rien ne change par rapport à aujourd'hui.
+
+Palette : intro/outro gris · couplet/verse bleu · pré-… (pre-chorus, pre-verse) violet · refrain/chorus vert · pont/bridge orange · solo/instrumental/interlude rose · nom inconnu → pas de couleur.
+
+Principe de sécurité : **aucune modification du DOM des lignes ni de la mise en page**. Les barres sont dessinées dans une couche superposée en position absolue (comme `SectionScrollDebugMarkers`), le titre est teinté via `background` + `box-shadow` (pas de padding). Donc ni le scroll, ni l'alignement accords/paroles, ni la bascule accords ne peuvent bouger.
+
+Branche : `feat/section-colors` depuis `fix/session-usability` (on garde `resources/db.sqlite` hors commit).
+
+- [x] 1. `src/client/lib/sectionKind.ts` : fonction pure `getSectionKind(title: string): SectionKind | null` (union de chaînes `'intro' | 'verse' | 'prechorus' | 'chorus' | 'bridge' | 'solo' | 'outro'`), insensible à la casse, aux accents, aux numéros, `#` et `[ ]`. Couleurs en variables CSS dans `base.css` (une valeur qui marche en thème clair et sombre).
+- [x] 2. Test de régression `tests/regression/section-kind.test.ts` : les titres réels du répertoire (Couplet 1, # Verse 2, [Chorus], Pre-Chorus, Pré-refrain, Pont, Bridge, Instrumental, Interlude, Solo, Intro, Outro, titre vide, titre inconnu).
+- [x] 3. `Section.tsx` : ajoute `data-section-kind` sur le `h3.song-section` (classe et texte inchangés, car `useSongSections` les lit). Style du titre appliqué seulement sous `.song-lines--chords-on`.
+- [x] 4. `SectionColorBars.tsx` dans `SongWrapper` : couche `absolute`, `pointer-events: none`, `aria-hidden`, rendue seulement si `chordsEnabled`. Mesure les `.song-section` ayant un type et trace une barre de 4 px de chaque titre jusqu'au titre suivant (les titres vides créés entre deux strophes prolongent la section en cours). Recalcul avec `ResizeObserver` sur `#song-lines` (police, fenêtre, transposition, rechargement du fichier).
+- [x] 5. Barre placée à 10 px à gauche du texte, dans la marge existante : visible et non coupée dans Electron (vérifié par le test).
+
+Risques et parades :
+- Scroll / sections (invariant 3) : on ne touche ni à `useSongSections`, ni à `useAutoScroller`, ni à la structure des lignes ; la couche est hors flux.
+- Affichage identique admin/invités (invariant 2) : même rendu partout, couleurs calculées depuis le texte du fichier, pas de réglage serveur.
+- Bascule accords sans décalage : la couche disparaît, le titre perd sa teinte, aucune dimension ne change. Vérifié par capture avant/après bascule (positions des lignes identiques au pixel).
+- Fluidité admin (invariant 4) : mesure regroupée dans un `requestAnimationFrame`, uniquement au redimensionnement, pas au scroll.
+
+## What I tested
+
+- `npm run typecheck` : OK (client + serveur).
+- `npm run test:regression` : 17/17, dont le nouveau test `section-kind` (titres réels du répertoire). Sur les 14 745 titres de sections de `songs-library`, 97,3 % reçoivent une couleur ; le reste (« A », « Day », noms de personnages…) reste neutre.
+- `npm run test:electron` : tout passe, avec une nouvelle étape « section colours » sur admin + invité : une barre par section connue, aucune pour un titre inconnu, strophe sans titre rattachée à la section en cours, 5 couleurs distinctes, titre teinté ; positions de toutes les lignes identiques avec ou sans couleurs ; en paroles seules ni barre ni teinte, et l'invité garde ses couleurs (réglage par appareil) ; la bascule accords ne change pas le scroll. Captures : `out/electron-smoke/section-colours-*.png` (admin, follower, lyrics-only, dark, space-oddity).
+- Tout le reste du smoke test (transitions de sections, scroll musicien, auto-scroll, changement de chanson, reprise en cours de chanson) passe toujours.
+- Non vérifié à la main : navigateur d'un vrai téléphone invité.
 
 # Session usability fixes
 
