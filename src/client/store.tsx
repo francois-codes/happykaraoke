@@ -2,6 +2,7 @@ import { readDebugScrollAnchorsEnabled } from '@/lib/debugSettings'
 import { Dispatch, FC, PropsWithChildren, createContext, useContext, useReducer } from 'react'
 import type { ScrollControlSnapshot } from '@shared/lib/session'
 import type { ScrollSnapshot } from '@shared/types/scroll'
+import type { CoverState } from '@shared/types/cover'
 
 interface Store {
   currentSong?: string | null
@@ -28,6 +29,8 @@ interface Store {
   openAIKeyModalOpen: boolean
   /** Admin-only: overlay section/break scroll anchors (persisted in localStorage). */
   debugScrollAnchors: boolean
+  /** Cover image shown over guest screens (⌘Y / ⌘U / ⌘I on the admin). */
+  cover: CoverState | null
 }
 
 const initialStore: Store = {
@@ -46,7 +49,8 @@ const initialStore: Store = {
   aiSearchOpen: false,
   aiPreviewOpen: false,
   openAIKeyModalOpen: false,
-  debugScrollAnchors: readDebugScrollAnchorsEnabled()
+  debugScrollAnchors: readDebugScrollAnchorsEnabled(),
+  cover: null
 }
 
 const StoreContext = createContext<Store>(initialStore)

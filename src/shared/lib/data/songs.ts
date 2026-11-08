@@ -12,7 +12,8 @@ const getSongFiles = () => {
   }
 }
 
-const EXCLUDED_FILES = ['.DS_Store', '_old', '.', '..', 'Icon']
+// `images` holds the cover images (see coverImages.ts), not songs.
+const EXCLUDED_FILES = ['.DS_Store', '_old', '.', '..', 'Icon', 'images']
 
 export function getAllSongs(opts: { withKey?: boolean } = { withKey: false }) {
   return getSongFiles()
