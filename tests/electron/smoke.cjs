@@ -18,9 +18,9 @@ for (const { sql } of source.prepare("SELECT sql FROM sqlite_master WHERE type='
 }
 source.close()
 db.prepare('INSERT INTO config (key, value) VALUES (?, ?)').run('song_folder', join(fixture, 'songs'))
-for (const [id, date] of [[1, '2026-01-01T12:00:00Z'], [2, '2026-02-01T12:00:00Z']]) {
+for (const [id, date, songs] of [[1, '2026-01-01T12:00:00Z', 6], [2, '2026-02-01T12:00:00Z', 6], [3, '2026-03-01T12:00:00Z', 3]]) {
   db.prepare('INSERT INTO session (id, sessionDate, closed) VALUES (?, ?, 1)').run(id, date)
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < songs; i++) {
     db.prepare('INSERT INTO session_log (song, timestamp, sessionId) VALUES (?, ?, ?)').run(`Song ${i}`, date, id)
   }
 }
@@ -290,8 +290,18 @@ async function run() {
   await clickText(admin, 'Logs de session')
   await waitFor(admin, `document.body.innerText.includes('Date: 2026-02-01')`)
   assert.deepEqual(await evaluate(admin, `[...document.querySelectorAll('p')].map(el => el.textContent).filter(text => text.startsWith('Date:'))`),
-    ['Date: 2026-02-01', 'Date: 2026-01-01'])
-  console.log('PASS Electron session history is newest first')
+    ['Date: 2026-02-01', 'Date: 2026-01-01'], 'sessions with fewer than 5 songs are hidden')
+  const trash = await evaluate(admin, `(() => {
+    const button = document.querySelector('[aria-label="Supprimer les logs de cette session"]');
+    const download = button.previousElementSibling;
+    return { trash: getComputedStyle(button).backgroundColor, download: getComputedStyle(download).backgroundColor };
+  })()`)
+  const [r, g, b] = trash.trash.match(/\d+/g).map(Number)
+  assert.ok(Math.max(r, g, b) - Math.min(r, g, b) <= 12, `delete button is grey, got ${trash.trash}`)
+  assert.notEqual(trash.trash, trash.download, 'delete button differs from download button')
+  mkdirSync(join(root, 'out/electron-smoke'), { recursive: true })
+  writeFileSync(join(root, 'out/electron-smoke/session-logs.png'), (await admin.webContents.capturePage()).toPNG())
+  console.log('PASS Electron session history is newest first, hides short sessions, grey delete button')
   await key(admin, 'Escape')
   await key(admin, 'Escape')
 
@@ -391,7 +401,7 @@ async function run() {
   await waitFor(admin, `location.pathname === '/'`)
   assert.equal(db.prepare('SELECT id FROM session WHERE id = ?').get(closingSession.id), undefined)
   assert.equal(db.prepare('SELECT count(*) AS n FROM session_log WHERE sessionId = ?').get(closingSession.id).n, 0)
-  assert.equal(db.prepare('SELECT count(*) AS n FROM session WHERE closed = 1').get().n, 2)
+  assert.equal(db.prepare('SELECT count(*) AS n FROM session WHERE closed = 1').get().n, 3)
   assert.equal(existsSync(join(fixture, 'electron-data/debug-logs')), false,
     'closing with diagnostics disabled does not export a debug file')
   console.log('PASS Electron close button deletes the short session and preserves older history')

@@ -7,6 +7,13 @@ import type { SessionWithCount } from '@shared/lib/session'
 import { Modal } from '../Modal'
 import { IoDownloadOutline, IoTrashBinOutline } from 'react-icons/io5'
 
+/** Sessions with fewer songs are hidden from the logs list (same threshold as short-session cleanup on close). */
+const MIN_SONGS_TO_LIST = 5
+
+function keepListedSessions(sessions: SessionWithCount[]): SessionWithCount[] {
+  return sessions.filter((session) => session.songCount >= MIN_SONGS_TO_LIST)
+}
+
 export function SessionLogs() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -16,7 +23,7 @@ export function SessionLogs() {
     setOpen(open)
     setLoading(true)
     fetchAllSessions.call().then((result) => {
-      setSessions(result)
+      setSessions(keepListedSessions(result))
       setLoading(false)
     })
   }
@@ -59,11 +66,13 @@ export function SessionLogs() {
               </Button>
               <Button
                 size="sm"
+                aria-label="Supprimer les logs de cette session"
+                className="bg-stone-400 text-white hover:bg-stone-500 dark:bg-stone-600 dark:hover:bg-stone-500"
                 onClick={async () => {
                   if (!confirm('Tu es sur ? tu ne pourras pas récupérer les logs de cette session.')) return
                   await deleteSessionLog.call({ sessionId: session.id })
                   const logs = await fetchAllSessions.call()
-                  setSessions(logs)
+                  setSessions(keepListedSessions(logs))
                 }}
               >
                 <IoTrashBinOutline size={16} />
