@@ -1,33 +1,46 @@
 # Cheat sheet
 
 This document lists the keyboard shortcuts usable in the app.
-As a rule of thumb, all shortcuts are desactivated when the search is open
+As a rule of thumb, all shortcuts are deactivated when the search or an AI dialog is open.
 
-## Guests shortcuts
+## Everyone (admin and guests)
 
-- `S` : opens the settings panel
-- `Q` : Opens the modal showing the QR code
-- `A` : toggles chords on & off
+- `S` : opens | closes the settings panel
+- `Q` : opens the modal showing the QR code
+- `A` : toggles chords on & off (on this device only)
 - `D` : toggles dark mode on & off
+- `cmd + ctrl + R` : reloads the song to reflect changes to the song file
+- `cmd + O` : changes the songs folder
 
 ## Admin shortcuts
 
-General shortcuts:
+Search and queue:
 
-- `cmd + K` or `@` : opens the search bar
-- `T`: opens the transpose modal
+- `cmd + K` (or `ctrl + K`) or `@` : opens the search bar
+- `enter` : plays the selected song
+- `cmd + enter` : adds the selected song to the queue
+- `ctrl + N` : plays the next song in the queue
 
-Transpose modal:
-When the transpose modal opens, it is preselected with the key currently used (defaults to the original song key).
+Song screen (needs "Scroll master" enabled in the settings):
 
-- `O`: sets the original song key
-- `up | down | left | right`: moves the cursor to select the required key
-- `enter`: transposes to the selected key
+- `space` : starts | stops auto scrolling
+- `up | down` : previous | next section, followed by every guest
+- `left | right` : scrolls slower | faster
+- `$` : scrolls back to top & stops scrolling
 
-Song screen:
+Grids to fix:
 
-- `space`: starts | stops auto scrolling
-- `up | down`: scrolls to previous | next section in the song
-- `left | right`: scrolls slower | faster
-- `$`: scrolls back to top & stops scrolling
-- `cmd + ctrl + R`: reloads to song to reflect changes to the song file
+- `P` : flags the current song's grid as "à corriger", with the section being played. Press `P` again within 5 seconds to undo.
+  The list is in Settings → "Grilles à corriger" (and in the grid editor). A song leaves the list as soon as its grid file is edited.
+
+Cover images (guests only, admins see a banner):
+
+- `cmd + Y` | `cmd + U` | `cmd + I` : covers every guest screen with the 1st | 2nd | 3rd image of the `images` folder inside the songs folder (Finder alphabetical order)
+- same shortcut again or `escape` : removes the cover; another shortcut switches image
+
+Transpose:
+
+- `T` : opens the transpose modal, preselected with the key currently used (defaults to the original song key)
+- `up | down | left | right` : moves the cursor to select the required key
+- `O` : sets the original song key
+- `enter` : transposes to the selected key
