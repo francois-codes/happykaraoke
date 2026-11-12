@@ -1,3 +1,4 @@
+import { SettingEmoji } from '../Settings/SettingEmoji'
 import image from '@/assets/le_champion.webp'
 import { useStore } from '@/store'
 import { getCSVData, getSongsList } from '@shared/endpoints/song'
@@ -51,7 +52,7 @@ export function FlexModal() {
   return (
     <Modal
       title={`${allSongs.length} chansons dispo !`}
-      trigger={<Button variant="outline">Stats</Button>}
+      trigger={<Button variant="outline"><SettingEmoji emoji="📊" />Stats</Button>}
       desc="\o/"
       open={isOpen}
       modalSize="w-[60vw]"

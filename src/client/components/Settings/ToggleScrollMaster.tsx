@@ -1,3 +1,4 @@
+import { SettingEmoji } from './SettingEmoji'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { useDispatch, useStore } from '@/store'
@@ -41,6 +42,7 @@ export const ToggleScrollMaster: FC = () => {
   return (
     <div className="flex items-center space-x-2">
       <Switch id="scroll-master" checked={scrollMaster} onClick={() => toggleScrollMaster()} />
+      <SettingEmoji emoji="👑" />
       <Label htmlFor="scroll-master">Scroll master</Label>
     </div>
   )
