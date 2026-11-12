@@ -1,3 +1,4 @@
+import { SettingEmoji } from './SettingEmoji'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { useDispatch, useStore } from '@/store'
@@ -14,7 +15,8 @@ export const ToggleDrummerMode: FC = () => {
   return (
     <div className="flex items-center space-x-2">
       <Switch id="airplane-mode" checked={drummerMode} onClick={toggleDrummerMode} />
-      <Label htmlFor="airplane-mode">Mode Batteur 🥁</Label>
+      <SettingEmoji emoji="🥁" />
+      <Label htmlFor="airplane-mode">Mode Batteur</Label>
     </div>
   )
 }

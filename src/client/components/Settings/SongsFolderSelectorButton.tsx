@@ -1,3 +1,4 @@
+import { SettingEmoji } from './SettingEmoji'
 import { Button } from '../ui/button'
 import { useDispatch, useStore } from '@/store'
 
@@ -12,6 +13,7 @@ export function SongsFolderSelectorButton() {
       }}
       variant="outline"
     >
+      <SettingEmoji emoji="📁" />
       Modifier le dossier source
     </Button>
   )

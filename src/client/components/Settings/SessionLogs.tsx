@@ -1,3 +1,4 @@
+import { SettingEmoji } from './SettingEmoji'
 import { useState } from 'react'
 import { Button } from '../ui/button'
 import { deleteSessionLog, fetchAllSessions, fetchSessionLog } from '@shared/endpoints/session'
@@ -39,8 +40,8 @@ export function SessionLogs() {
     <Modal
       open={open}
       onOpenChange={onOpenChange}
-      trigger={<Button variant="outline">Logs de session</Button>}
-      title="Logs de session"
+      trigger={<Button variant="outline"><SettingEmoji emoji="📋" />Historique des sessions</Button>}
+      title="Historique des sessions"
       desc="Affiche les logs pour une session"
     >
       <div className="gap-4 flex flex-col items-center p-4">

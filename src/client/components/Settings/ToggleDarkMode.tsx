@@ -1,3 +1,4 @@
+import { SettingEmoji } from './SettingEmoji'
 import { FC } from 'react'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
@@ -9,7 +10,8 @@ export const ToggleDarkMode: FC<Props> = ({ theme, toggleTheme }) => {
   return (
     <div className="flex items-center space-x-2">
       <Switch id="airplane-mode" checked={theme === 'dark'} onClick={toggleTheme} />
-      <Label htmlFor="airplane-mode">Dark mode</Label>
+      <SettingEmoji emoji="🌙" />
+      <Label htmlFor="airplane-mode">Mode sombre</Label>
     </div>
   )
 }
