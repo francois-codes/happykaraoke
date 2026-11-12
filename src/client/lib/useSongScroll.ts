@@ -9,7 +9,8 @@ import type { ScrollSnapshot } from '@shared/types/scroll'
 import { useCallback, useEffect, useRef } from 'react'
 import { setScrollDebugLogicalAnchorIndex } from './scrollLogicalAnchorDebugSync'
 import { createScrollAnimator } from './scrollAnimation'
-import { useSongSections } from './useSongSections'
+import { readSectionJump, SECTION_JUMP_EVENT } from './sectionJump'
+import { sectionAnchorId, useSongSections } from './useSongSections'
 
 /** Throttle when host is not auto-scrolling (manual wheel / sections). */
 const MASTER_EMIT_MIN_MS_MANUAL = 45
@@ -227,6 +228,27 @@ export function useSongScroll(scroller: ReturnType<typeof useAutoScroller>, rend
     scrollMaster,
     searchOpen
   ])
+
+  // Structure bar: the scroll master taps a section → same jump as ↑ / ↓ (animation + snapshot to followers).
+  useEffect(() => {
+    const onSectionJump = (event: Event): void => {
+      if (!scrollMaster) return
+      if (jumpAnimatingRef.current) return
+      const request = readSectionJump(event)
+      if (!request) return
+      const anchors = resolveAnchors()
+      const targetIndex = anchors.findIndex((a) => a.id === sectionAnchorId(request.headingIndex))
+      const target = anchors[targetIndex]
+      if (!target) return
+      sectionJumpDeltaRef.current = 0
+      animateJumpToAnchor(target.scrollTop, targetIndex, () => {
+        lastEmitRef.current = 0
+        emitSnapshot()
+      })
+    }
+    window.addEventListener(SECTION_JUMP_EVENT, onSectionJump)
+    return () => window.removeEventListener(SECTION_JUMP_EVENT, onSectionJump)
+  }, [animateJumpToAnchor, emitSnapshot, resolveAnchors, scrollMaster])
 
   const applyFollowerSnapshot = useCallback((snapshot: ScrollSnapshot) => {
     // Ignore only our own snapshot while we are scroll master (broadcast echo). Do not use

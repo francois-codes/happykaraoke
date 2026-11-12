@@ -1,4 +1,5 @@
 import { readDebugScrollAnchorsEnabled } from '@/lib/debugSettings'
+import { readStructureBarEnabled } from '@/lib/structureBarSettings'
 import { Dispatch, FC, PropsWithChildren, createContext, useContext, useReducer } from 'react'
 import type { ScrollControlSnapshot } from '@shared/lib/session'
 import type { ScrollSnapshot } from '@shared/types/scroll'
@@ -31,6 +32,8 @@ interface Store {
   debugScrollAnchors: boolean
   /** Cover image shown over guest screens (⌘Y / ⌘U / ⌘I on the admin). */
   cover: CoverState | null
+  /** Structure bar on the right of the song (per device, persisted in localStorage). */
+  structureBar: boolean
 }
 
 const initialStore: Store = {
@@ -50,7 +53,8 @@ const initialStore: Store = {
   aiPreviewOpen: false,
   openAIKeyModalOpen: false,
   debugScrollAnchors: readDebugScrollAnchorsEnabled(),
-  cover: null
+  cover: null,
+  structureBar: readStructureBarEnabled()
 }
 
 const StoreContext = createContext<Store>(initialStore)

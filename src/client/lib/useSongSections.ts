@@ -203,6 +203,11 @@ function makeAnchorId(type: ScrollAnchorType, index: number): string {
   return `${type}:${index}`
 }
 
+/** Anchor id of the n-th `.song-section` heading (used by the structure bar's section jumps). */
+export function sectionAnchorId(headingIndex: number): string {
+  return makeAnchorId('section', headingIndex)
+}
+
 export function getSectionLayoutDebug(): SectionLayoutDebugRow[] {
   const songLines = document.getElementById('song-lines')
   const scrollContainer = document.getElementById('scroll-container')

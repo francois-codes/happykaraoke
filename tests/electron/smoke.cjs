@@ -441,6 +441,42 @@ async function run() {
     writeFileSync(join(root, 'out/electron-smoke/section-colours-space-oddity.png'), (await admin.webContents.capturePage()).toPNG())
   }
   console.log('PASS section colours: chords mode only, per family, no layout change, admin and follower')
+
+  // Structure bar: one segment per titled section, a frame for the visible part, tap-to-jump for the scroll master only.
+  await displaySong('Colour Song', 'Mystery part')
+  const titledCount = await evaluate(admin, `[...document.querySelectorAll('#song-lines > .song-section')].filter(h => h.textContent.trim()).length`)
+  const readStructure = (win) => evaluate(win, `new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => {
+    const bar = document.querySelector('[data-structure-bar]');
+    const view = document.querySelector('[data-structure-bar-view]');
+    resolve(bar ? { segments: bar.querySelectorAll('[data-structure-segment]').length, buttons: bar.querySelectorAll('button').length,
+      viewHeight: Math.round(view.getBoundingClientRect().height) } : null);
+  })))`)
+  if (await evaluate(admin, `document.getElementById('scroll-master').getAttribute('aria-checked')`) !== 'true') {
+    await evaluate(admin, `document.getElementById('scroll-master').click()`)
+    await waitFor(admin, `document.getElementById('scroll-master').getAttribute('aria-checked') === 'true'`)
+  }
+  const adminBar = await readStructure(admin)
+  const followerBar = await readStructure(follower)
+  assert.ok(adminBar && followerBar, 'structure bar shown on admin and follower')
+  assert.equal(adminBar.segments, titledCount, 'one segment per titled section')
+  assert.equal(followerBar.segments, titledCount)
+  assert.equal(adminBar.buttons, titledCount, 'the scroll master can jump to any section')
+  assert.equal(followerBar.buttons, 0, 'followers only see the bar')
+  assert.ok(adminBar.viewHeight > 0, 'the visible part is framed')
+  const followerBefore = await evaluate(follower, `document.getElementById('scroll-container').scrollTop`)
+  await evaluate(admin, `[...document.querySelectorAll('[data-structure-bar] button')].at(-1).click()`)
+  await waitFor(follower, `document.getElementById('scroll-container').scrollTop > ${followerBefore} + 50`)
+  await waitFor(admin, `document.querySelector('[data-structure-segment][data-current]')?.dataset.structureSegment === 'Outro'`)
+  writeFileSync(join(root, 'out/electron-smoke/structure-bar-admin.png'), (await admin.webContents.capturePage()).toPNG())
+  writeFileSync(join(root, 'out/electron-smoke/structure-bar-follower.png'), (await follower.webContents.capturePage()).toPNG())
+  await openSettings(follower)
+  await evaluate(follower, `document.getElementById('structure-bar').click()`)
+  await waitFor(follower, `!document.querySelector('[data-structure-bar]')`)
+  assert.ok(await evaluate(admin, `!!document.querySelector('[data-structure-bar]')`), 'hiding the bar is per device')
+  await evaluate(follower, `document.getElementById('structure-bar').click()`)
+  await waitFor(follower, `!!document.querySelector('[data-structure-bar]')`)
+  await key(follower, 'Escape')
+  console.log('PASS structure bar: segments, visible frame, master jump followed by guests, per-device toggle')
   writeFileSync(join(root, 'out/electron-smoke/admin.png'), (await admin.webContents.capturePage()).toPNG())
 
   await key(admin, 'd')

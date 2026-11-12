@@ -1,3 +1,18 @@
+# Barre de structure à droite du morceau — implémenté
+
+Objectif (demande de Louis, maquette A validée) : savoir où on en est dans la structure, avec les couleurs des parties, et avoir un « ascenseur » qu'on n'a pas.
+
+- [x] `StructureBar` (écran de session, par-dessus le bord droit de la zone de défilement, hors du contenu : ne décale aucune ligne ni aucune ancre de défilement) : un segment par partie titrée, longueur réelle, couleurs de `.section-color-bar` (famille inconnue en gris clair), repères courts (Intro, C1, PR, R, Pont, Solo, Outro ; cachés sur petit écran et sous 13 px), cadre = partie visible, partie en cours en gras.
+- [x] Partie en cours = dernière ancre de section atteinte (`useSongSections`), comme ↑ / ↓ : l'appli garde la dernière ligne de la partie précédente en haut, donc la règle « tiers de l'écran » se trompait.
+- [x] Scroll master : un toucher sur un segment saute à la partie par le même chemin que ↑ / ↓ (`animateJumpToAnchor` + instantané `transition: 'section'` aux invités), via l'événement `karaoke:section-jump` (`lib/sectionJump.ts`). Les autres (invités, admin non master) voient la barre sans pouvoir toucher.
+- [x] Réglage « Barre de structure » (par appareil, `localStorage` `karaoke:structureBar`, activé par défaut).
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm run test:regression` 26/26.
+- `npm run test:electron` : toutes les étapes PASS, dont la nouvelle « structure bar » : un segment par partie titrée chez l'admin et l'invité, boutons seulement chez le scroll master, cadre visible, toucher sur « Outro » chez l'admin → l'invité suit et la barre met « Outro » en gras, réglage masque la barre chez l'invité seulement. Captures : `out/electron-smoke/structure-bar-admin.png`, `structure-bar-follower.png`.
+- Non testé : vrais téléphones / iPad (largeur, toucher), longue chanson réelle avec beaucoup de parties.
+
 # Images de couverture (⌘Y / ⌘U / ⌘I) — implémenté
 
 Objectif : l'admin recouvre l'écran de tous les invités avec une image du dossier `<dossier des chansons>/images` (ordre alphabétique du Finder). ⌘Y = 1re image, ⌘U = 2e, ⌘I = 3e ; le même raccourci ou Échap la retire ; un autre raccourci passe à l'autre image. Les admins ne sont jamais recouverts : ils voient un bandeau « Couverture n affichée aux invités ». Image entière sur fond noir (bandes noires si le format diffère).
