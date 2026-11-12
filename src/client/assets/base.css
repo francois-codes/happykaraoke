@@ -82,20 +82,30 @@
  * Painted with background + box-shadow and an absolute overlay (SectionColorBars),
  * never with padding/margins, so toggling chords cannot move any line.
  */
+:root {
+  /* One vivid colour per family, shared by the left bars, the title tint and the structure bar. */
+  --section-intro: #8a8f98;
+  --section-verse: #1e88e5;
+  --section-prechorus: #8e44ec;
+  --section-chorus: #e5383b;
+  --section-bridge: #ff8c00;
+  --section-solo: #f2b705;
+  --section-unknown: #b7bcc4;
+}
 .song-section[data-section-kind='intro'],
 .song-section[data-section-kind='outro'],
 .section-color-bar[data-section-kind='intro'],
-.section-color-bar[data-section-kind='outro'] { --section-color: #888780; }
+.section-color-bar[data-section-kind='outro'] { --section-color: var(--section-intro); }
 .song-section[data-section-kind='verse'],
-.section-color-bar[data-section-kind='verse'] { --section-color: #378add; }
+.section-color-bar[data-section-kind='verse'] { --section-color: var(--section-verse); }
 .song-section[data-section-kind='prechorus'],
-.section-color-bar[data-section-kind='prechorus'] { --section-color: #7f77dd; }
+.section-color-bar[data-section-kind='prechorus'] { --section-color: var(--section-prechorus); }
 .song-section[data-section-kind='chorus'],
-.section-color-bar[data-section-kind='chorus'] { --section-color: #639922; }
+.section-color-bar[data-section-kind='chorus'] { --section-color: var(--section-chorus); }
 .song-section[data-section-kind='bridge'],
-.section-color-bar[data-section-kind='bridge'] { --section-color: #ba7517; }
+.section-color-bar[data-section-kind='bridge'] { --section-color: var(--section-bridge); }
 .song-section[data-section-kind='solo'],
-.section-color-bar[data-section-kind='solo'] { --section-color: #d4537e; }
+.section-color-bar[data-section-kind='solo'] { --section-color: var(--section-solo); }
 
 #song-lines.song-lines--chords-on .song-section[data-section-kind] > strong {
   background: color-mix(in srgb, var(--section-color) 24%, transparent);

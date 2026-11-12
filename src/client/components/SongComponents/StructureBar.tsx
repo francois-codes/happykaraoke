@@ -4,19 +4,19 @@ import { sectionAnchorId, type ScrollAnchor, useSongSections } from '@/lib/useSo
 import { useStore } from '@/store'
 import { type ReactElement, useLayoutEffect, useRef, useState } from 'react'
 
-/** Same colour families as `.section-color-bar` in base.css. */
+/** Same colour families as the left bars and title tints (CSS variables in base.css). */
 const KIND_COLORS: Record<SectionKind, string> = {
-  intro: '#888780',
-  outro: '#888780',
-  verse: '#378add',
-  prechorus: '#7f77dd',
-  chorus: '#639922',
-  bridge: '#ba7517',
-  solo: '#d4537e'
+  intro: 'var(--section-intro)',
+  outro: 'var(--section-intro)',
+  verse: 'var(--section-verse)',
+  prechorus: 'var(--section-prechorus)',
+  chorus: 'var(--section-chorus)',
+  bridge: 'var(--section-bridge)',
+  solo: 'var(--section-solo)'
 }
-const UNKNOWN_COLOR = '#a8a29e'
+const UNKNOWN_COLOR = 'var(--section-unknown)'
 /** Below this height (px) a segment's label is hidden, so labels never overlap. */
-const MIN_LABEL_PX = 13
+const MIN_LABEL_PX = 15
 
 interface StructureSegment {
   /** Index among all `.song-section` headings (matches the `section:<n>` scroll anchor). */
@@ -168,11 +168,11 @@ export function StructureBar(): ReactElement | null {
   return (
     <div
       ref={barRef}
-      className="pointer-events-none absolute bottom-3 right-1 top-3 z-10 w-12"
+      className="pointer-events-none absolute bottom-3 right-2 top-3 z-10 w-16"
       data-structure-bar
       aria-hidden={!canJump}
     >
-      <div className="absolute inset-y-0 right-0 w-[7px] rounded-sm bg-stone-500/15" />
+      <div className="absolute inset-y-0 right-0 w-4 rounded bg-stone-500/15" />
       {view.segments.map((segment) => {
         const isCurrent = segment.headingIndex === view.current
         const showLabel = segment.height * barPx >= MIN_LABEL_PX
@@ -185,14 +185,14 @@ export function StructureBar(): ReactElement | null {
             style={{ top: pct(segment.top), height: pct(segment.height) }}
           >
             <div
-              className="absolute inset-y-px right-0 w-[7px] rounded-sm"
-              style={{ background: segment.color, opacity: isCurrent ? 1 : 0.75 }}
+              className="absolute inset-y-px right-0 w-4 rounded"
+              style={{ background: segment.color, opacity: isCurrent ? 1 : 0.85 }}
             />
             {showLabel && (
               <span
                 className={
-                  'absolute right-[13px] top-0 hidden whitespace-nowrap text-[10px] leading-none md:block ' +
-                  (isCurrent ? 'font-semibold text-stone-900 dark:text-stone-100' : 'text-stone-500 dark:text-stone-400')
+                  'absolute right-[22px] top-0.5 hidden whitespace-nowrap text-xs leading-none md:block ' +
+                  (isCurrent ? 'font-bold text-stone-900 dark:text-stone-50' : 'text-stone-500 dark:text-stone-400')
                 }
               >
                 {segment.label}
@@ -201,7 +201,7 @@ export function StructureBar(): ReactElement | null {
             {canJump && (
               <button
                 type="button"
-                className="pointer-events-auto absolute inset-y-0 right-0 w-6 cursor-pointer"
+                className="pointer-events-auto absolute inset-y-0 right-0 w-10 cursor-pointer"
                 title={`Aller à : ${segment.title}`}
                 aria-label={`Aller à : ${segment.title}`}
                 onClick={() => requestSectionJump(segment.headingIndex)}
@@ -211,8 +211,8 @@ export function StructureBar(): ReactElement | null {
         )
       })}
       <div
-        className="absolute right-[-3px] w-[13px] rounded border-[1.5px] border-stone-800 dark:border-stone-200"
-        style={{ top: pct(view.viewTop), height: `max(6px, ${pct(view.viewHeight)})` }}
+        className="absolute right-[-4px] w-6 rounded-md border-[3px] border-stone-900 dark:border-stone-50"
+        style={{ top: pct(view.viewTop), height: `max(10px, ${pct(view.viewHeight)})` }}
         data-structure-bar-view
       />
     </div>
