@@ -131,26 +131,38 @@ export function StructureBar(): ReactElement | null {
       return
     }
     const container = document.getElementById('scroll-container')
-    const songLines = document.getElementById('song-lines')
-    if (!(container instanceof HTMLElement) || !(songLines instanceof HTMLElement)) return
+    if (!(container instanceof HTMLElement)) return
+    // The song lines may not be rendered yet when the song changes (or may be replaced): look them up on
+    // every measure and re-observe the current element, instead of giving up when they are missing.
+    let observedSongLines: HTMLElement | null = null
+    const resizeObserver = new ResizeObserver(() => schedule())
 
-    const schedule = (): void => {
+    function schedule(): void {
       if (rafRef.current != null) return
       rafRef.current = requestAnimationFrame(() => {
         rafRef.current = null
+        const songLines = document.getElementById('song-lines')
+        if (!(songLines instanceof HTMLElement) || !container) {
+          setView(EMPTY_VIEW)
+          return
+        }
+        if (songLines !== observedSongLines) {
+          if (observedSongLines) resizeObserver.unobserve(observedSongLines)
+          resizeObserver.observe(songLines)
+          observedSongLines = songLines
+        }
         setView(measure(container, songLines, resolveAnchorsRef.current()))
-        setBarPx(barRef.current?.clientHeight ?? 0)
+        // The bar spans the scroll area minus its top-3 / bottom-3 insets (it may not be mounted yet).
+        setBarPx(barRef.current?.clientHeight ?? Math.max(0, container.clientHeight - 24))
       })
     }
 
     schedule()
     container.addEventListener('scroll', schedule, { passive: true })
     window.addEventListener('resize', schedule)
-    const resizeObserver = new ResizeObserver(schedule)
-    resizeObserver.observe(songLines)
     resizeObserver.observe(container)
     const mutationObserver = new MutationObserver(schedule)
-    mutationObserver.observe(songLines, { childList: true })
+    mutationObserver.observe(container, { childList: true, subtree: true })
     return () => {
       container.removeEventListener('scroll', schedule)
       window.removeEventListener('resize', schedule)

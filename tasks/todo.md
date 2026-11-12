@@ -7,6 +7,7 @@ Objectif (demande de Louis, maquette A validée) : savoir où on en est dans la 
 - [x] Scroll master : un toucher sur un segment saute à la partie par le même chemin que ↑ / ↓ (`animateJumpToAnchor` + instantané `transition: 'section'` aux invités), via l'événement `karaoke:section-jump` (`lib/sectionJump.ts`). Les autres (invités, admin non master) voient la barre sans pouvoir toucher.
 - [x] Réglage « Barre de structure » (par appareil, `localStorage` `karaoke:structureBar`, activé par défaut).
 - [x] Retour de Louis : barre trop fine → bande de 16 px, repères en 12 px, cadre de 3 px. Palette plus vive, refrains en **rouge**, partagée par les barres de gauche, le fond des titres et la barre de structure (variables `--section-*` dans `base.css`) : intro/outro gris, couplet bleu, pré-refrain violet, refrain rouge, pont orange, solo/interlude jaune.
+- [x] Bug signalé par Louis : la barre n'apparaissait qu'après avoir désactivé / réactivé le réglage. Cause : à l'ouverture d'un morceau, `#song-lines` n'était pas encore rendu, la barre abandonnait sans plus jamais réessayer. Elle cherche maintenant les paroles à chaque mesure et observe la zone de défilement. Test Electron ajouté (recharger un invité sur un morceau en cours → barre visible) : échoue avec l'ancien code, passe avec le nouveau.
 
 ## What I tested
 

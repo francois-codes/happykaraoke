@@ -476,7 +476,11 @@ async function run() {
   await evaluate(follower, `document.getElementById('structure-bar').click()`)
   await waitFor(follower, `!!document.querySelector('[data-structure-bar]')`)
   await key(follower, 'Escape')
-  console.log('PASS structure bar: segments, visible frame, master jump followed by guests, per-device toggle')
+  // Opening the app on a song that is already playing: the bar must appear by itself (it used to give up
+  // when the lyrics were not rendered yet, until the setting was toggled).
+  follower.webContents.reload()
+  await waitFor(follower, `document.querySelectorAll('[data-structure-segment]').length === ${titledCount}`)
+  console.log('PASS structure bar: segments, visible frame, master jump followed by guests, per-device toggle, shown after reload')
   writeFileSync(join(root, 'out/electron-smoke/admin.png'), (await admin.webContents.capturePage()).toPNG())
 
   await key(admin, 'd')
