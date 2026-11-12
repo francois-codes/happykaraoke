@@ -1,6 +1,6 @@
+import { SettingEmoji } from './SettingEmoji'
 import { Button } from '../ui/button'
 import { useDispatch } from '@/store'
-import { IoColorWandOutline } from 'react-icons/io5'
 
 export function AddSongWithAIButton() {
   const dispatch = useDispatch()
@@ -12,7 +12,7 @@ export function AddSongWithAIButton() {
       }}
       variant="outline"
     >
-      <IoColorWandOutline className="mr-2" />
+      <SettingEmoji emoji="✨" />
       Ajouter une chanson avec IA
     </Button>
   )

@@ -83,7 +83,7 @@ async function openSettings(win) {
 async function clickText(win, text) {
   await settleDialogs(win)
   await evaluate(win, `(() => {
-    const el = [...document.querySelectorAll('button,a,[cmdk-item]')].find(el => el.textContent.trim() === ${JSON.stringify(text)});
+    const el = [...document.querySelectorAll('button,a,[cmdk-item]')].find(el => el.textContent.replace(/^[^\\p{L}\\p{N}]+/u, '').trim() === ${JSON.stringify(text)});   // ignore a leading emoji
     if (!el) throw new Error('Missing control: ' + ${JSON.stringify(text)});
     el.click();
   })()`)
@@ -292,8 +292,8 @@ async function run() {
   console.log('PASS reopening mid-song restores the master position')
 
   await openSettings(admin)
-  await waitFor(admin, `document.body.innerText.includes('Logs de session')`)
-  await clickText(admin, 'Logs de session')
+  await waitFor(admin, `document.body.innerText.includes('Historique des sessions')`)
+  await clickText(admin, 'Historique des sessions')
   await waitFor(admin, `document.body.innerText.includes('Date: 2026-02-01')`)
   assert.deepEqual(await evaluate(admin, `[...document.querySelectorAll('p')].map(el => el.textContent).filter(text => text.startsWith('Date:'))`),
     ['Date: 2026-02-01', 'Date: 2026-01-01'], 'sessions with fewer than 5 songs are hidden')

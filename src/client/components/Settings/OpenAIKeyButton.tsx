@@ -1,6 +1,6 @@
+import { SettingEmoji } from './SettingEmoji'
 import { Button } from '../ui/button'
 import { useDispatch } from '@/store'
-import { IoKeyOutline } from 'react-icons/io5'
 
 export function OpenAIKeyButton() {
   const dispatch = useDispatch()
@@ -12,7 +12,7 @@ export function OpenAIKeyButton() {
       }}
       variant="outline"
     >
-      <IoKeyOutline className="mr-2" />
+      <SettingEmoji emoji="🔑" />
       Configurer clé Perplexity AI
     </Button>
   )

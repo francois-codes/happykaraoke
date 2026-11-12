@@ -1,3 +1,4 @@
+import { SettingEmoji } from './SettingEmoji'
 import { changeSong } from '@shared/endpoints/song'
 import { fetchGridFlags, setGridFlagNoteEndpoint, unflagSong } from '@shared/endpoints/gridFlags'
 import type { GridFlag } from '@shared/lib/data/gridFlags'
@@ -42,7 +43,7 @@ export function GridFlagsList(): ReactElement {
     <Modal
       open={open}
       onOpenChange={onOpenChange}
-      trigger={<Button variant="outline">Grilles à corriger</Button>}
+      trigger={<Button variant="outline"><SettingEmoji emoji="🚩" />Grilles à corriger</Button>}
       title="Grilles à corriger"
       desc="Chansons marquées avec P. Elles disparaissent dès que la grille est modifiée."
     >

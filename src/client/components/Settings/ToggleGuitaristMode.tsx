@@ -1,3 +1,4 @@
+import { SettingEmoji } from './SettingEmoji'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { useDispatch, useStore } from '@/store'
@@ -14,7 +15,8 @@ export const ToggleGuitaristMode: FC = () => {
   return (
     <div className="flex items-center space-x-2">
       <Switch id="airplane-mode" checked={guitaristMode} onClick={toggleGuitaristMode} />
-      <Label htmlFor="airplane-mode">Mode Guitariste 🎸</Label>
+      <SettingEmoji emoji="🎸" />
+      <Label htmlFor="airplane-mode">Mode Guitariste</Label>
     </div>
   )
 }
