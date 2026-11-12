@@ -5,6 +5,7 @@ import { Menu } from '@/components/Menu/Menu'
 import { SessionQueuePanel } from '@/components/Queue/SessionQueuePanel'
 import { Screen } from '@/components/Screen'
 import { SongComponent } from '@/components/SongComponents/SongComponent'
+import { StructureBar } from '@/components/SongComponents/StructureBar'
 import { ScrollProvider } from '@/contexts/scroll'
 import { useStore } from '@/store'
 import { useRef } from 'react'
@@ -24,15 +25,19 @@ export function SessionScreen() {
         <CommandMenu />
         <CoverLayer />
         {isAdmin && <GridFlagShortcut />}
-        <div
-          ref={scrollRef}
-          id="scroll-container"
-          className="w-full relative h-[calc(100vh-124px)] overflow-scroll px-4 pb-8 pt-0 md:px-8"
-        >
-          <ScrollProvider scrollRef={scrollRef}>
-            <SongComponent />
-            {isAdmin && <SessionQueuePanel />}
-          </ScrollProvider>
+        {/* Wrapper so the structure bar sits over the right edge of the scroll area without scrolling with it. */}
+        <div className="relative w-full">
+          <div
+            ref={scrollRef}
+            id="scroll-container"
+            className="w-full relative h-[calc(100vh-124px)] overflow-scroll px-4 pb-8 pt-0 md:px-8"
+          >
+            <ScrollProvider scrollRef={scrollRef}>
+              <SongComponent />
+              {isAdmin && <SessionQueuePanel />}
+            </ScrollProvider>
+          </div>
+          <StructureBar />
         </div>
       </main>
     </Screen>

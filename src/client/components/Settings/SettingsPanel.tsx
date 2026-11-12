@@ -24,6 +24,7 @@ import { ToggleDrummerMode } from './ToggleDrummerMode'
 import { ToggleGuitaristMode } from './ToggleGuitaristMode'
 import { ToggleMusicianScroll } from './ToggleMusicianScroll'
 import { ToggleScrollMaster } from './ToggleScrollMaster'
+import { ToggleStructureBar } from './ToggleStructureBar'
 
 export function SettingsPanel() {
   const theme = useDarkTheme()
@@ -92,6 +93,7 @@ export function SettingsPanel() {
             <div className="grid gap-4">
               <ToggleChords />
               <ToggleMusicianScroll />
+              <ToggleStructureBar />
               <ToggleGuitaristMode />
               <ToggleDrummerMode />
               <ToggleDarkMode {...theme} />
