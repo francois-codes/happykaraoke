@@ -3,18 +3,16 @@ import { KEYS } from '@/lib/consts'
 import { useDarkTheme } from '@/lib/useDarkTheme'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { useDispatch, useStore } from '@/store'
+import type { ReactNode } from 'react'
 import { IoSettingsOutline } from 'react-icons/io5'
 import { FlexModal } from '../Flex/FlexModal'
 import { ToggleChords } from '../Settings/ToggleChords'
 import { ToggleDarkMode } from '../Settings/ToggleDarkMode'
 import { Button } from '../ui/button'
-import { AddSongWithAIButton } from './AddSongWithAIButton'
-import { AISongPreviewModal } from './AISongPreviewModal'
-import { AISongSearchModal } from './AISongSearchModal'
+import { AddGridFromUltimateGuitar } from './AddGridFromUltimateGuitar'
 import { GridFlagsList } from './GridFlagsList'
+import { GuestRoleSwitch } from './GuestRoleSwitch'
 import { Logout } from './Logout'
-import { OpenAIKeyButton } from './OpenAIKeyButton'
-import { OpenAIKeyModal } from './OpenAIKeyModal'
 import { ScrollDiagnostics } from './ScrollDiagnostics'
 import { SessionLogs } from './SessionLogs'
 import { LivesList } from './LivesList'
@@ -23,7 +21,6 @@ import { SongsFolderSelectorButton } from './SongsFolderSelectorButton'
 import { ToggleDrummerMode } from './ToggleDrummerMode'
 import { ToggleGuitaristMode } from './ToggleGuitaristMode'
 import { ToggleMusicianScroll } from './ToggleMusicianScroll'
-import { ToggleScrollMaster } from './ToggleScrollMaster'
 import { ToggleStructureBar } from './ToggleStructureBar'
 
 export function SettingsPanel() {
@@ -33,6 +30,7 @@ export function SettingsPanel() {
     searchOpen,
     qrCodeOpen,
     isAdmin,
+    guestRole,
     aiSearchOpen,
     aiPreviewOpen,
     openAIKeyModalOpen
@@ -86,35 +84,56 @@ export function SettingsPanel() {
       </PopoverTrigger>
       <PopoverContent className="w-80 p-0">
         <div className="max-h-[min(85vh,56rem)] overflow-y-auto overscroll-y-contain p-4">
-          <div className="grid gap-8">
+          <div className="grid gap-6">
             <div className="space-y-2">
               <h4 className="font-medium leading-none">Réglages</h4>
             </div>
-            <div className="grid gap-4">
+            {!isAdmin && <GuestRoleSwitch />}
+            <MenuBlock title="Mon écran">
               <ToggleChords />
-              <ToggleMusicianScroll />
               <ToggleStructureBar />
+              {(isAdmin || guestRole === 'musicien') && <ToggleMusicianScroll />}
+              <ToggleDarkMode {...theme} />
               <ToggleGuitaristMode />
               <ToggleDrummerMode />
-              <ToggleDarkMode {...theme} />
-              {isAdmin && <ToggleScrollMaster />}
-              {isAdmin && <SongsFolderSelectorButton />}
-              {isAdmin && <OpenAIKeyButton />}
-              {isAdmin && <AddSongWithAIButton />}
-              {isAdmin && <LivesList />}
-              {isAdmin && <SessionLogs />}
-              {isAdmin && <GridFlagsList />}
-              {isAdmin && <FlexModal />}
-              {isAdmin && <ScrollDiagnostics />}
-              <Logout />
-            </div>
+            </MenuBlock>
+            {isAdmin && (
+              <MenuBlock title="Lives">
+                <LivesList />
+                <GridFlagsList />
+              </MenuBlock>
+            )}
+            {isAdmin && (
+              <MenuBlock title="Bibliothèque">
+                <AddGridFromUltimateGuitar />
+                <FlexModal />
+                <SongsFolderSelectorButton />
+              </MenuBlock>
+            )}
+            {isAdmin && (
+              <details className="group">
+                <summary className="cursor-pointer text-sm text-muted-foreground">Plus</summary>
+                <div className="mt-4 grid gap-4">
+                  <SessionLogs />
+                  <ScrollDiagnostics />
+                </div>
+              </details>
+            )}
+            <Logout />
           </div>
         </div>
         {isAdmin && <SongsFolderSelector />}
-        {isAdmin && <OpenAIKeyModal />}
-        {isAdmin && <AISongSearchModal />}
-        {isAdmin && <AISongPreviewModal />}
       </PopoverContent>
     </Popover>
+  )
+}
+
+/** A titled group of settings ("Mon écran", "Lives", "Bibliothèque"). */
+function MenuBlock({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="grid gap-4">
+      <h5 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</h5>
+      {children}
+    </section>
   )
 }

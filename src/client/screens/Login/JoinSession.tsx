@@ -1,3 +1,4 @@
+import { guestStartDisplay } from '@/lib/guestRole'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -51,6 +52,8 @@ export const JoinSession = () => {
       const { user } = await joinSession.call({ userName, adminPassword })
       window.localStorage.setItem('userId', `${user.id}`)
       const isAdmin = user.type === UserType.ADMIN
+      // Guests start with their role's display (Chanteur: lyrics only, by default).
+      if (!isAdmin) dispatch(guestStartDisplay())
       try {
         const cfg = await fetchSessionConfig.call()
         const sc = cfg.scrollControl ?? null

@@ -74,11 +74,11 @@ async function settleDialogs(win) {
     animation.effect?.getComputedTiming().endTime < 1000
   ).map(animation => animation.finished.catch(() => {})))`)
 }
-async function openSettings(win) {
-  if (!await evaluate(win, `document.body.innerText.includes('Scroll musicien')`)) {
+async function openSettings(win, marker = 'Scroll musicien') {
+  if (!await evaluate(win, `document.body.innerText.includes(${JSON.stringify(marker)})`)) {
     await key(win, 's')
   }
-  await waitFor(win, `document.body.innerText.includes('Scroll musicien')`)
+  await waitFor(win, `document.body.innerText.includes(${JSON.stringify(marker)})`)
 }
 async function clickText(win, text) {
   await settleDialogs(win)
@@ -152,6 +152,8 @@ async function run() {
     webPreferences: { partition: 'smoke-follower', backgroundThrottling: false } })
   await follower.loadURL('http://localhost:18081/join')
   await waitFor(follower, `!!document.querySelector('input[name="userName"]')`)
+  // The iPad follower plays in the band: Musicien profile (guests are Chanteur by default).
+  await evaluate(follower, `localStorage.setItem('karaoke:guestRole', 'musicien')`)
   await fill(follower, 'input[name="userName"]', 'iPad musician')
   await clickText(follower, 'Rejoindre la session')
   await waitFor(follower, `!!document.getElementById('scroll-container') && document.body.innerText.includes('Section 12')`)
@@ -292,6 +294,8 @@ async function run() {
   console.log('PASS reopening mid-song restores the master position')
 
   await openSettings(admin)
+  // The old CSV history now sits under « Plus » in the admin menu.
+  await evaluate(admin, `[...document.querySelectorAll('details')].forEach(d => { d.open = true })`)
   await waitFor(admin, `document.body.innerText.includes('Historique des sessions')`)
   await clickText(admin, 'Historique des sessions')
   await waitFor(admin, `document.body.innerText.includes('Date: 2026-02-01')`)
@@ -529,6 +533,45 @@ async function run() {
   writeFileSync(join(root, 'out/electron-smoke/live-stop.png'), (await admin.webContents.capturePage()).toPNG())
   await clickText(admin, 'Continuer')
   console.log('PASS Electron live button replaces the end-of-session button')
+
+  // New menu: blocks for the admin, Chanteur / Musicien for guests, crown in the header.
+  await openSettings(admin)
+  const adminMenu = (await evaluate(admin, `document.querySelector('[data-radix-popper-content-wrapper]').innerText`)).toLowerCase()
+  for (const label of ['Mon écran', 'Lives', 'Bibliothèque', 'Catalogue', 'Grilles à corriger', 'Mode guitariste', 'Mode batteur'])
+    assert.ok(adminMenu.includes(label.toLowerCase()), `admin menu shows ${label}`)
+  for (const label of ['Perplexity', 'Ajouter une chanson avec IA', 'Scroll master'])
+    assert.ok(!adminMenu.includes(label.toLowerCase()), `admin menu no longer shows ${label}`)
+  assert.ok(await evaluate(admin, `(() => { const r = document.querySelector('header [aria-label="Scroll master"]').parentElement.getBoundingClientRect(); return r.right <= innerWidth })()`),
+    'header buttons fit an iPad-wide window')
+  writeFileSync(join(root, 'out/electron-smoke/menu-admin.png'), (await admin.webContents.capturePage()).toPNG())
+  await key(admin, 'Escape')
+  assert.ok(await evaluate(admin, `!!document.querySelector('header #scroll-master')`), 'scroll master is in the header')
+
+  const singer = new BrowserWindow({ width: 420, height: 900, show: true,
+    webPreferences: { partition: 'smoke-singer', backgroundThrottling: false } })
+  await singer.loadURL('http://localhost:18081/join')
+  await waitFor(singer, `!!document.querySelector('input[name="userName"]')`)
+  await fill(singer, 'input[name="userName"]', 'Chanteuse')
+  await clickText(singer, 'Rejoindre la session')
+  await waitFor(singer, `(document.getElementById('song-lines')?.innerText.length ?? 0) > 20`)
+  assert.equal(await evaluate(singer, `!!document.querySelector('#song-lines .chord-font')`), false,
+    'a singer sees lyrics without chords')
+  await openSettings(singer, 'Chanteur')
+  await delay(400)
+  const singerMenu = await evaluate(singer, `document.querySelector('[data-radix-popper-content-wrapper]').innerText`)
+  assert.ok(singerMenu.includes('Chanteur') && singerMenu.includes('Musicien'), 'guests choose Chanteur / Musicien')
+  assert.ok(!singerMenu.includes('Scroll musicien'), 'a singer has no musician scroll')
+  assert.equal(await evaluate(singer, `document.getElementById('airplane-mode').getAttribute('aria-checked')`), 'false',
+    'a singer starts without chords')
+  writeFileSync(join(root, 'out/electron-smoke/menu-chanteur.png'), (await singer.webContents.capturePage()).toPNG())
+  await clickText(singer, 'Musicien')
+  await waitFor(singer, `document.body.innerText.includes('Scroll musicien')`)
+  await delay(400)
+  assert.equal(await evaluate(singer, `document.getElementById('airplane-mode').getAttribute('aria-checked')`), 'true',
+    'Musicien turns the chords on')
+  writeFileSync(join(root, 'out/electron-smoke/menu-musicien.png'), (await singer.webContents.capturePage()).toPNG())
+  singer.close()
+  console.log('PASS menu: admin blocks, crown in the header, guests Chanteur by default then Musicien')
   console.log('Electron smoke fixture:', fixture)
 }
 

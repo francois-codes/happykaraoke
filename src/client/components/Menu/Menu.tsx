@@ -8,6 +8,7 @@ import { SettingsPanel } from '../Settings/SettingsPanel'
 import { Suggestion } from '../Settings/Suggestion'
 import { Transpose } from '../Settings/Transpose'
 import { SoireeButton } from '../Soiree/SoireeButton'
+import { ScrollMasterButton } from '../Settings/ScrollMasterButton'
 
 export const Menu: FC = () => {
   const { currentSong, isAdmin } = useStore()
@@ -28,12 +29,13 @@ export const Menu: FC = () => {
           )}
         </h1>
       </div>
-      <div className="flex items-center align-center gap-1 md:gap-4 lg-gap:8">
+      <div className="flex items-center align-center gap-1 md:gap-2 lg:gap-4">
         {isAdmin && <SoireeButton />}
         {isAdmin && !!window.electron && <SessionQueueButton />}
         {isAdmin && <Transpose />}
         {!isAdmin && <Suggestion />}
         <QrCode />
+        {isAdmin && <ScrollMasterButton />}
         <SettingsPanel />
       </div>
     </header>

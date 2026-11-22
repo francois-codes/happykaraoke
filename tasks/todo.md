@@ -1,3 +1,20 @@
+# Nouveau menu (admin, chanteur, musicien) — implémenté
+
+Objectif (demande de Louis, maquette validée) : un menu rangé, sans ce qu'il n'utilise pas, et des invités chanteur / musicien.
+
+- [x] Admin : blocs « Mon écran » (accords, barre de structure, scroll musicien, mode sombre, modes guitariste et batteur), « Lives » (Lives, Grilles à corriger), « Bibliothèque » (Ajouter une grille Ultimate Guitar, Catalogue · N chansons, dossier des chansons), « Plus » replié (ancien historique CSV, diagnostics scroll), déconnexion.
+- [x] Scroll master sorti du menu : bouton 👑 dans l'en-tête (`ScrollMasterButton`, même id `scroll-master`) ; le dernier admin qui appuie prend la main.
+- [x] Invités : « Chanteur | Musicien » en haut du menu, mémorisé par appareil (`karaoke:guestRole`), Chanteur par défaut (paroles seules) ; Musicien active accords, barre de structure et scroll musicien ; chaque réglage reste modifiable. « Scroll musicien » n'apparaît qu'en Musicien.
+- [x] Emoji du menu en noir et blanc (`grayscale` dans `SettingEmoji`).
+- [x] IA / clé Perplexity supprimées (composants et endpoints `ai.ts`) ; remplacées par « Ajouter une grille (Ultimate Guitar) » qui passe par l'éditeur de grilles local (`/api/importer`, port 8777) : visible seulement si l'éditeur répond, ne remplace jamais une grille existante.
+- [x] « Stats » renommé « Catalogue · N chansons ». En-tête : espacement réduit pour tenir sur une largeur iPad.
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm run test:regression` 36/36.
+- `npm run test:electron` : toutes les étapes PASS. L'invité du test joue « iPad musician » en profil Musicien ; nouvelle étape « menu » : blocs admin, IA et Perplexity absents, couronne dans l'en-tête qui tient dans 820 px, invité Chanteur par défaut sans accords ni scroll musicien, passage en Musicien. Captures : `out/electron-smoke/menu-admin.png`, `menu-chanteur.png`, `menu-musicien.png`.
+- Non testé : l'import Ultimate Guitar de bout en bout (éditeur de grilles lancé), iPad / téléphones réels.
+
 # Journal des morceaux dans Dropbox — implémenté
 
 Objectif (demande de Louis) : l'historique des morceaux joués ne doit plus dépendre de la base SQLite rangée dans l'application (remplacée à chaque mise à jour).
