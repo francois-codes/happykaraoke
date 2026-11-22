@@ -85,11 +85,8 @@ export function SettingsPanel() {
       <PopoverContent className="w-80 p-0">
         <div className="max-h-[min(85vh,56rem)] overflow-y-auto overscroll-y-contain p-4">
           <div className="grid gap-6">
-            <div className="space-y-2">
-              <h4 className="font-medium leading-none">Réglages</h4>
-            </div>
             {!isAdmin && <GuestRoleSwitch />}
-            <MenuBlock title="Mon écran">
+            <MenuBlock title="Réglages">
               <ToggleChords />
               <ToggleStructureBar />
               {(isAdmin || guestRole === 'musicien') && <ToggleMusicianScroll />}
@@ -128,7 +125,7 @@ export function SettingsPanel() {
   )
 }
 
-/** A titled group of settings ("Mon écran", "Lives", "Bibliothèque"). */
+/** A titled group of settings ("Réglages", "Lives", "Bibliothèque"). */
 function MenuBlock({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="grid gap-4">

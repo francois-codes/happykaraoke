@@ -2,7 +2,7 @@
 
 Objectif (demande de Louis, maquette validée) : un menu rangé, sans ce qu'il n'utilise pas, et des invités chanteur / musicien.
 
-- [x] Admin : blocs « Mon écran » (accords, barre de structure, scroll musicien, mode sombre, modes guitariste et batteur), « Lives » (Lives, Grilles à corriger), « Bibliothèque » (Ajouter une grille Ultimate Guitar, Catalogue · N chansons, dossier des chansons), « Plus » replié (ancien historique CSV, diagnostics scroll), déconnexion.
+- [x] Admin : blocs « Réglages » (accords, barre de structure, scroll musicien, mode sombre, modes guitariste et batteur), « Lives » (Lives, Grilles à corriger), « Bibliothèque » (Ajouter une grille Ultimate Guitar, Catalogue · N chansons, dossier des chansons), « Plus » replié (ancien historique CSV, diagnostics scroll), déconnexion.
 - [x] Scroll master sorti du menu : bouton 👑 dans l'en-tête (`ScrollMasterButton`, même id `scroll-master`) ; le dernier admin qui appuie prend la main.
 - [x] Invités : « Chanteur | Musicien » en haut du menu, mémorisé par appareil (`karaoke:guestRole`), Chanteur par défaut (paroles seules) ; Musicien active accords, barre de structure et scroll musicien ; chaque réglage reste modifiable. « Scroll musicien » n'apparaît qu'en Musicien.
 - [x] Emoji du menu en noir et blanc (`grayscale` dans `SettingEmoji`).

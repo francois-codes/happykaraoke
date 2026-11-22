@@ -537,7 +537,7 @@ async function run() {
   // New menu: blocks for the admin, Chanteur / Musicien for guests, crown in the header.
   await openSettings(admin)
   const adminMenu = (await evaluate(admin, `document.querySelector('[data-radix-popper-content-wrapper]').innerText`)).toLowerCase()
-  for (const label of ['Mon écran', 'Lives', 'Bibliothèque', 'Catalogue', 'Grilles à corriger', 'Mode guitariste', 'Mode batteur'])
+  for (const label of ['Réglages', 'Lives', 'Bibliothèque', 'Catalogue', 'Grilles à corriger', 'Mode guitariste', 'Mode batteur'])
     assert.ok(adminMenu.includes(label.toLowerCase()), `admin menu shows ${label}`)
   for (const label of ['Perplexity', 'Ajouter une chanson avec IA', 'Scroll master'])
     assert.ok(!adminMenu.includes(label.toLowerCase()), `admin menu no longer shows ${label}`)
