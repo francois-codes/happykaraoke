@@ -1,3 +1,22 @@
+# Lives (▶ / ■, qualification, setlist WhatsApp) — implémenté
+
+Objectif (demande de Louis) : une « session » = un live, pas l'appli ouverte pour vérifier des grilles. Le live est marqué en direct (▶ / ■) ou retrouvé après coup, qualifié à la main, et seuls les lives de type « Live » comptent dans les stats officielles. Les lives sont écrits en JSON dans un dossier Dropbox, car la base SQLite de l'appli installée vit dans le bundle et est remplacée par une mise à jour (constaté : l'historique d'avril à octobre 2026 n'est plus dans la base installée).
+
+- [x] `src/shared/lib/data/soireeFormat.ts` (pur) : types, type de live (`live` / `repete` / `amis`), découpage « Artiste - Titre » sur le premier « - », texte WhatsApp (en-tête 🤖🤖 habituel + commentaires), détection `detectLives` (≥ 10 morceaux, ≥ 1 h, pause > 45 min = coupure ; testée sur le journal réel du 13 au 22/11 : retrouve exactement les 3 lives, rien d'autre).
+- [x] `src/shared/lib/data/soirees.ts` : un fichier par live dans `<parent du dossier des chansons>/HappiKaraoke lives/`, live en cours dans `.live-en-cours.json`, groupes ignorés dans `.lives-ignores.json` ; création depuis ▶/■, depuis un groupe détecté ou depuis un premier/dernier morceau choisi à la main. Aucune migration de la base.
+- [x] Endpoints `/soirees/*` (admin vérifié côté serveur) + message socket `soiree:changed` pour garder le bouton synchro entre admins.
+- [x] En-tête admin : ▶ démarre (ce qui a été lancé avant — balance, tests — ne compte pas) ; ■ rouge avec le temps écoulé (écrans larges) → titre, type, commentaires, puis setlist à décocher + « Copier pour WhatsApp ».
+- [x] Réglages → « Lives » : « À qualifier » (Qualifier / Ignorer), « + Ajouter un live » (jour 06:00 → 06:00, clic premier puis dernier morceau), liste des lives (type hors stats signalé), suppression.
+- [x] Texte WhatsApp (format choisi par Louis) : `🤖🤖 2026-11-21 · Titre - Timelapse 04h07, 46 morceaux 🤖🤖`, une ligne par morceau joué, puis `*Commentaires*` et les commentaires tels quels.
+- [x] Bouton de la file d'attente : icône liste (☰) au lieu d'un « play », pour ne pas le confondre avec ▶.
+- [x] Bouton « Terminer la session » supprimé (la session technique se ferme toujours seule après 4 h sans morceau). Le test Electron qui le cliquait vérifie maintenant son absence et le bouton ▶ / ■.
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm run test:regression` 33/33 (7 nouveaux : ▶/■, cases décochées et texte WhatsApp, live vide, découpage des noms, ids sûrs, détection, qualification / ignorer / ajout manuel / type).
+- `npm run test:electron` : toutes les étapes PASS, dont « Electron live button replaces the end-of-session button ». Capture : `out/electron-smoke/live-stop.png`.
+- Non testé : un vrai live de bout en bout dans l'appli de Louis (l'appli installée occupait le port 8081), le copier-coller dans WhatsApp, l'iPad. Après les tests Electron, faire un `npm run build` complet avant toute release.
+
 # Couleurs des voix dans les duos — implémenté
 
 Objectif (demande de Louis, maquette validée sur 70 duos réécrits) : voir qui chante quoi, en vue chanteurs comme en vue musicien / admin, sans rien décaler.

@@ -11,13 +11,13 @@ import { Button } from '../ui/button'
 import { AddSongWithAIButton } from './AddSongWithAIButton'
 import { AISongPreviewModal } from './AISongPreviewModal'
 import { AISongSearchModal } from './AISongSearchModal'
-import { CloseSession } from './CloseSession'
 import { GridFlagsList } from './GridFlagsList'
 import { Logout } from './Logout'
 import { OpenAIKeyButton } from './OpenAIKeyButton'
 import { OpenAIKeyModal } from './OpenAIKeyModal'
 import { ScrollDiagnostics } from './ScrollDiagnostics'
 import { SessionLogs } from './SessionLogs'
+import { LivesList } from './LivesList'
 import { SongsFolderSelector } from './SongsFolderSelector'
 import { SongsFolderSelectorButton } from './SongsFolderSelectorButton'
 import { ToggleDrummerMode } from './ToggleDrummerMode'
@@ -101,11 +101,11 @@ export function SettingsPanel() {
               {isAdmin && <SongsFolderSelectorButton />}
               {isAdmin && <OpenAIKeyButton />}
               {isAdmin && <AddSongWithAIButton />}
+              {isAdmin && <LivesList />}
               {isAdmin && <SessionLogs />}
               {isAdmin && <GridFlagsList />}
               {isAdmin && <FlexModal />}
               {isAdmin && <ScrollDiagnostics />}
-              {isAdmin && <CloseSession />}
               <Logout />
             </div>
           </div>

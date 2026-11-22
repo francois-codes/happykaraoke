@@ -7,6 +7,20 @@ import { fetchUser, joinSession, loginUser } from './user'
 import { generateSong, getOpenAIKey, saveSong, setOpenAIKey } from './ai'
 import { getCoverImage, setCover } from './cover'
 import { fetchGridFlags, flagSong, setGridFlagNoteEndpoint, undoFlagSong, unflagSong } from './gridFlags'
+import {
+  cancelSoireeEndpoint,
+  createLiveFromLog,
+  deleteLive,
+  fetchDayLog,
+  fetchLiveCandidates,
+  ignoreLiveCandidate,
+  fetchCurrentSoiree,
+  fetchSoiree,
+  fetchSoirees,
+  startSoireeEndpoint,
+  stopSoireeEndpoint,
+  updateSoireeEndpoint
+} from './soirees'
 
 export const endpoints = [
   loginUser,
@@ -42,5 +56,17 @@ export const endpoints = [
   undoFlagSong,
   unflagSong,
   setGridFlagNoteEndpoint,
-  fetchGridFlags
+  fetchGridFlags,
+  fetchCurrentSoiree,
+  startSoireeEndpoint,
+  stopSoireeEndpoint,
+  cancelSoireeEndpoint,
+  fetchSoirees,
+  fetchSoiree,
+  updateSoireeEndpoint,
+  fetchLiveCandidates,
+  ignoreLiveCandidate,
+  createLiveFromLog,
+  deleteLive,
+  fetchDayLog
 ]

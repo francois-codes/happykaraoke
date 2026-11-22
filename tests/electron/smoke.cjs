@@ -514,19 +514,21 @@ async function run() {
   admin.setSize(820, 1120)
   console.log('PASS Electron QR quiet zone in dark/light themes and a narrow window')
 
-  const closingSession = db.prepare('SELECT id FROM session WHERE closed = 0').get()
   await openSettings(admin)
-  await waitFor(admin, `document.body.innerText.includes('Terminer la session')`)
-  await clickText(admin, 'Terminer la session')
-  await waitFor(admin, `document.body.innerText.includes('Oui, fermer')`)
-  await clickText(admin, 'Oui, fermer')
-  await waitFor(admin, `location.pathname === '/'`)
-  assert.equal(db.prepare('SELECT id FROM session WHERE id = ?').get(closingSession.id), undefined)
-  assert.equal(db.prepare('SELECT count(*) AS n FROM session_log WHERE sessionId = ?').get(closingSession.id).n, 0)
-  assert.equal(db.prepare('SELECT count(*) AS n FROM session WHERE closed = 1').get().n, 3)
-  assert.equal(existsSync(join(fixture, 'electron-data/debug-logs')), false,
-    'closing with diagnostics disabled does not export a debug file')
-  console.log('PASS Electron close button deletes the short session and preserves older history')
+  await waitFor(admin, `document.body.innerText.includes('Lives')`)
+  assert.equal(await evaluate(admin, `document.body.innerText.includes('Terminer la session')`), false,
+    'the manual end-of-session button is gone: a session now means a live (▶/■)')
+  await key(admin, 'Escape')
+  const liveFile = join(fixture, 'HappiKaraoke lives/.live-en-cours.json')
+  await evaluate(admin, `document.querySelector('[aria-label="Démarrer le live"]').click()`)
+  await waitFor(admin, `!!document.querySelector('[aria-label="Terminer le live"]')`)
+  assert.ok(existsSync(liveFile), '▶ records the live start next to the songs folder')
+  await evaluate(admin, `document.querySelector('[aria-label="Terminer le live"]').click()`)
+  await waitFor(admin, `document.body.innerText.includes('Fin du live')`)
+  await delay(300)
+  writeFileSync(join(root, 'out/electron-smoke/live-stop.png'), (await admin.webContents.capturePage()).toPNG())
+  await clickText(admin, 'Continuer')
+  console.log('PASS Electron live button replaces the end-of-session button')
   console.log('Electron smoke fixture:', fixture)
 }
 
