@@ -138,11 +138,53 @@ test('a detected group can be qualified, ignored, or picked by hand; saved lives
   ignoreCandidate(folder, candidates[1].from)
   assert.deepEqual(await listCandidates(folder), [])
 
-  const day = await logsOfDay('2026-11-15')
+  const day = await logsOfDay(folder, '2026-11-15')
   assert.equal(day.length, 3)
   const repete = await createSoireeFromLog(folder, day[0].timestamp, day[2].timestamp, { title: 'Répète', notes: '', kind: 'repete' })
   assert.equal(repete.kind, 'repete')
   assert.deepEqual(listSoirees(folder).map((s) => [s.title, s.kind]), [['Répète', 'repete'], ['Matelots', 'live']])
   updateSoiree(folder, repete.id, { kind: 'amis' })
   assert.equal(getSoiree(folder, repete.id).kind, 'amis')
+})
+
+test('journal: every launch is kept in Dropbox, the 2-minute rule is applied when reading', async () => {
+  const { appendJournal, readJournal } = await import('../../src/shared/lib/data/journal')
+  const folder = songsFolder()
+  const lives = join(folder, '..', SOIREES_FOLDER_NAME)
+  appendJournal(lives, { timestamp: '2026-11-21T20:57:00+01:00', song: 'Johnny Hallyday - Je te promets' })
+  appendJournal(lives, { timestamp: '2026-11-21T21:01:00+01:00', song: 'Britney Spears - Overprotected' })
+  appendJournal(lives, { timestamp: '2026-11-21T21:01:40+01:00', song: 'Mike Oldfield - Moonlight Shadow' })
+  appendJournal(lives, { timestamp: '2026-11-21T21:05:00+01:00', song: 'Queen - Bohemian Rhapsody' })
+  appendJournal(lives, { timestamp: '2026-11-21T21:05:00+01:00', song: 'Queen - Bohemian Rhapsody' })
+  assert.deepEqual(
+    readJournal(lives, 2).map((l) => l.song),
+    ['Johnny Hallyday - Je te promets', 'Mike Oldfield - Moonlight Shadow', 'Queen - Bohemian Rhapsody'],
+    'Overprotected (40 s) is dropped, the duplicate is merged'
+  )
+})
+
+test('lives read the journal: the database is imported once, then later songs come from the journal only', async () => {
+  const { appendJournal } = await import('../../src/shared/lib/data/journal')
+  const folder = songsFolder()
+  const lives = join(folder, '..', SOIREES_FOLDER_NAME)
+  serie('2026-11-13T20:00:00Z', 10, 7, 'Avant - Titre')
+  assert.equal((await listCandidates(folder)).length, 1, 'songs of the database are imported into the journal')
+
+  sqlite.exec('DELETE FROM session_log;') // an app update replaces the database
+  for (let i = 0; i < 12; i++) {
+    const t = new Date(Date.parse('2026-11-20T20:00:00+01:00') + i * 6 * 60000)
+    appendJournal(lives, { timestamp: t.toISOString(), song: `Après - Titre ${i}` })
+  }
+  assert.deepEqual((await listCandidates(folder)).map((c) => c.count), [12, 10], 'nothing is lost after the update')
+})
+
+test('launching a song writes it to the Dropbox journal', async () => {
+  const { addSessionLog, setSessionConfig } = await import('@shared/lib/session')
+  const { readJournal } = await import('../../src/shared/lib/data/journal')
+  const folder = songsFolder()
+  setSessionConfig({ songsFolder: folder })
+  sqlite.exec('UPDATE session SET closed = 0 WHERE id = 1')
+  await addSessionLog('Queen - Bohemian Rhapsody')
+  const lines = readJournal(join(folder, '..', SOIREES_FOLDER_NAME), 2)
+  assert.deepEqual(lines.map((l) => l.song), ['Queen - Bohemian Rhapsody'])
 })

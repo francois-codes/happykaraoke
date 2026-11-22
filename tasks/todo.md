@@ -1,3 +1,18 @@
+# Journal des morceaux dans Dropbox — implémenté
+
+Objectif (demande de Louis) : l'historique des morceaux joués ne doit plus dépendre de la base SQLite rangée dans l'application (remplacée à chaque mise à jour).
+
+- [x] `src/shared/lib/data/journal.ts` : chaque morceau lancé est ajouté à `HappiKaraoke lives/journal/AAAA-MM_<ordinateur>.jsonl` (une ligne JSON, un fichier par mois et par Mac pour éviter les conflits Dropbox). Rien n'est jamais effacé : la règle des 2 minutes est appliquée à la lecture ; doublons fusionnés ; ligne illisible ignorée.
+- [x] `addSessionLog` écrit aussi dans le journal (sans jamais bloquer un changement de morceau si Dropbox ou le dossier manquent).
+- [x] Les lives (■, « À qualifier », ajout manuel) lisent le journal ; à la première lecture, la base actuelle est recopiée une fois dans le journal (`.import-base-faite`).
+- [x] La base SQLite garde son rôle (invités, file d'attente, ancien historique CSV) : aucune migration.
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm run test:regression` 36/36 (3 nouveaux : règle des 2 minutes et doublons, import unique puis survie à une base vidée, écriture au lancement d'un morceau).
+- `npm run test:electron` : toutes les étapes PASS ; le journal du test contient bien les morceaux lancés.
+- Non testé : deux Mac en même temps sur le même Dropbox.
+
 # Lives (▶ / ■, qualification, setlist WhatsApp) — implémenté
 
 Objectif (demande de Louis) : une « session » = un live, pas l'appli ouverte pour vérifier des grilles. Le live est marqué en direct (▶ / ■) ou retrouvé après coup, qualifié à la main, et seuls les lives de type « Live » comptent dans les stats officielles. Les lives sont écrits en JSON dans un dossier Dropbox, car la base SQLite de l'appli installée vit dans le bundle et est remplacée par une mise à jour (constaté : l'historique d'avril à octobre 2026 n'est plus dans la base installée).

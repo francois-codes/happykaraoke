@@ -181,8 +181,9 @@ export const fetchDayLog = createEndpoint<{ day: string }, LogLine[] | ErrorBody
   url: '/soirees/day',
   handler: async (req, res) => {
     const { logsOfDay } = await import('@shared/lib/data/soirees')
+    const { getSessionConfig } = await import('@shared/lib/session')
     try {
-      res.status(200).json(await logsOfDay(String(req.query.day)))
+      res.status(200).json(await logsOfDay(getSessionConfig().songsFolder, String(req.query.day)))
     } catch (e) {
       res.status(400).json({ message: e instanceof Error ? e.message : String(e) })
     }

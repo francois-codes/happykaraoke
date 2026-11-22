@@ -3,11 +3,13 @@ import { basename, dirname, join } from 'path'
 import { formatISO } from 'date-fns'
 import type { LiveCandidate, LogLine, Soiree, SoireeKind, SoireePatch, SoireeSong, SoireeSummary } from './soireeFormat'
 import { detectLives, isSoireeKind, playedSongs, splitSongName } from './soireeFormat'
+import { importIntoJournal, isJournalImported, readJournal } from './journal'
+import { config } from '@shared/config'
 
 /**
  * Lives are stored as JSON files in a folder next to the songs folder ("HappiKaraoke lives"),
  * so they live in Dropbox and survive app updates (the app's SQLite database ships inside
- * the app bundle and is replaced by an update).
+ * the app bundle and is replaced by an update). Songs are read from the Dropbox journal.
  */
 export const SOIREES_FOLDER_NAME = 'HappiKaraoke lives'
 const CURRENT_FILE = '.live-en-cours.json'
@@ -112,15 +114,22 @@ export function cancelSoiree(songsFolder: string): void {
   if (existsSync(path)) unlinkSync(path)
 }
 
-/** The whole song log of the app (the 2-minute rule already dropped songs shown briefly). */
-export async function readLog(): Promise<LogLine[]> {
+async function readDatabaseLog(): Promise<LogLine[]> {
   const { db } = await import('@shared/db')
   const { sessionLog } = await import('@shared/db/schema')
   const { asc } = await import('drizzle-orm')
   const rows = await db.select().from(sessionLog).orderBy(asc(sessionLog.id))
-  return rows
-    .map((r) => ({ timestamp: r.timestamp, song: r.song }))
-    .sort((a, b) => time(a.timestamp) - time(b.timestamp))
+  return rows.map((r) => ({ timestamp: r.timestamp, song: r.song }))
+}
+
+/**
+ * Every song launched, read from the Dropbox journal (see `journal.ts`), with the
+ * 2-minute rule applied. The first call copies the app's database into the journal.
+ */
+export async function readLog(songsFolder: string): Promise<LogLine[]> {
+  const folder = soireesFolder(songsFolder)
+  if (!isJournalImported(folder)) importIntoJournal(folder, await readDatabaseLog())
+  return readJournal(folder, config.SESSION.MIN_LOG_GAP_MINUTES)
 }
 
 function idFor(folder: string, startedAt: string): string {
@@ -153,7 +162,7 @@ export async function stopSoiree(songsFolder: string, info: NewSoiree, now: Date
   if (!startedAt) throw new Error('Aucun live en cours.')
   const from = time(startedAt)
   const to = now.getTime()
-  const lines = (await readLog()).filter((l) => time(l.timestamp) >= from && time(l.timestamp) <= to)
+  const lines = (await readLog(songsFolder)).filter((l) => time(l.timestamp) >= from && time(l.timestamp) <= to)
   cancelSoiree(songsFolder)
   if (lines.length === 0) return null
   return saveNew(songsFolder, startedAt, formatISO(now), lines, info)
@@ -170,7 +179,7 @@ function lastSongMinutes(lines: LogLine[]): number {
 export async function createSoireeFromLog(songsFolder: string, from: string, to: string, info: NewSoiree): Promise<Soiree> {
   const [a, b] = [time(from), time(to)].sort((x, y) => x - y)
   if (Number.isNaN(a) || Number.isNaN(b)) throw new Error('Début ou fin invalide.')
-  const lines = (await readLog()).filter((l) => time(l.timestamp) >= a && time(l.timestamp) <= b)
+  const lines = (await readLog(songsFolder)).filter((l) => time(l.timestamp) >= a && time(l.timestamp) <= b)
   if (lines.length === 0) throw new Error('Aucun morceau dans cet intervalle.')
   const stoppedAt = formatISO(new Date(time(lines[lines.length - 1].timestamp) + lastSongMinutes(lines) * 60000))
   return saveNew(songsFolder, lines[0].timestamp, stoppedAt, lines, info)
@@ -261,7 +270,7 @@ export async function listCandidates(songsFolder: string): Promise<LiveCandidate
   })
   const ignored = new Set(readIgnored(songsFolder))
   const current = getCurrentSoiree(songsFolder)
-  return detectLives(await readLog())
+  return detectLives(await readLog(songsFolder))
     .filter((c) => !ignored.has(c.from))
     .filter((c) => !saved.some(([a, b]) => time(c.from) <= b && time(c.to) >= a))
     .filter((c) => !current || time(c.to) < time(current))
@@ -269,9 +278,9 @@ export async function listCandidates(songsFolder: string): Promise<LiveCandidate
 }
 
 /** Songs of one day, from 06:00 to 06:00 the next morning (a live ends after midnight). */
-export async function logsOfDay(day: string): Promise<LogLine[]> {
+export async function logsOfDay(songsFolder: string, day: string): Promise<LogLine[]> {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) throw new Error('Date invalide.')
   const start = new Date(`${day}T06:00:00`).getTime()
   const end = start + 24 * 3600000
-  return (await readLog()).filter((l) => time(l.timestamp) >= start && time(l.timestamp) < end)
+  return (await readLog(songsFolder)).filter((l) => time(l.timestamp) >= start && time(l.timestamp) < end)
 }

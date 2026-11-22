@@ -234,6 +234,15 @@ export async function addSessionLog(song: string) {
     sessionId: currentSession.id
   })
 
+  // Also keep it in the Dropbox journal, which survives app updates (the database does not).
+  try {
+    const { soireesFolder } = await import('@shared/lib/data/soirees')
+    const { appendJournal } = await import('@shared/lib/data/journal')
+    appendJournal(soireesFolder(getSessionConfig().songsFolder), { timestamp, song })
+  } catch {
+    // No songs folder or Dropbox unavailable: never block a song change.
+  }
+
   return result
 }
 
