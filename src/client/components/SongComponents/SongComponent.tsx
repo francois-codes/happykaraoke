@@ -3,13 +3,14 @@ import { useSong } from '@/lib/useSong'
 import { useDispatch, useStore } from '@/store'
 import { socket } from '@/utils/socket'
 import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/song'
+import { detectVoices, parseSectionTitle, segmentLyricLine, type VoiceState } from '@shared/lib/song/voices'
 import { LineType } from '@shared/types'
 import { useMemo, useRef } from 'react'
 import { useSongKeyboardShortcuts } from '../../lib/useSongKeyboardShortcuts'
 import { useSongScroll } from '../../lib/useSongScroll'
 import { NextInQueueIndicator } from '../Queue/NextInQueueIndicator'
 import { EmptySong } from './EmptySong'
-import { SongLine } from './SongLine'
+import { SongLine, type SongLineData } from './SongLine'
 import { SongWrapper } from './SongWrapper'
 
 function stringToIndexedObjects(str: string) {
@@ -84,6 +85,30 @@ function injectChordsIntoLyrics(chordString: string, lyricsString: string) {
   return result
 }
 
+type ParsedLine = SongLineData
+
+/** Paints who sings what in duets (see src/shared/lib/song/voices.ts); other songs are returned unchanged. */
+function annotateVoices(lines: ParsedLine[], rawLines: string[], tags: string[]): ParsedLine[] {
+  const voices = detectVoices(rawLines, tags)
+  if (!voices.enabled) return lines
+  const state: VoiceState = { current: null }
+  return lines.map((line) => {
+    if (line.type === LineType.Section && typeof line.content === 'string') {
+      const sectionVoice = parseSectionTitle(line.content, voices)
+      state.current = sectionVoice.voice
+      return { ...line, sectionVoice }
+    }
+    if (line.type === LineType.Lyrics && typeof line.content === 'string') {
+      return { ...line, voiceSegments: segmentLyricLine(line.content, voices, state) }
+    }
+    if (line.type === LineType.ChordsAndLyrics && Array.isArray(line.content)) {
+      const text = line.content.filter((part): part is string => typeof part === 'string').join('')
+      return { ...line, voiceSegments: segmentLyricLine(text, voices, state) }
+    }
+    return line
+  })
+}
+
 export const SongComponent = () => {
   const { currentSong, drummerMode } = useStore()
   const dispatch = useDispatch()
@@ -118,9 +143,6 @@ export const SongComponent = () => {
     [song, reload]
   )
 
-  type ParsedLine =
-    | { type: LineType; content: string }
-    | { type: LineType.ChordsAndLyrics; content: (string | { index: number; content: string })[] }
   const parsedSongLines = useMemo((): ParsedLine[] => {
     if (!song) return []
     const result: ParsedLine[] = []
@@ -160,7 +182,7 @@ export const SongComponent = () => {
       }
     })
 
-    return result
+    return annotateVoices(result, song.lines.map((line) => line.content), song.tags)
   }, [song?.title, drummerMode, reloadKey.current])
 
   if (!song || !currentSong) return <EmptySong />

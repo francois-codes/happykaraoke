@@ -1,3 +1,4 @@
+import type { SectionVoice, VoiceSegment } from '@shared/lib/song/voices'
 import { LineType } from '@shared/types'
 import { FC } from 'react'
 import { BreakLine } from './BreakLine'
@@ -7,14 +8,21 @@ import { Lyrics } from './Lyrics'
 import { Section } from './Section'
 import { Spacer } from './Spacer'
 
-type ParsedLine =
-  | { type: LineType; content: string }
-  | { type: LineType.ChordsAndLyrics; content: (string | { index: number; content: string })[] }
+export type ChordsAndLyricsContent = (string | { index: number; content: string })[]
 
-export const SongLine: FC<ParsedLine> = ({ type, content }) => {
+export interface SongLineData {
+  type: LineType
+  content: string | ChordsAndLyricsContent
+  /** Duets only: who sings each part of the lyric line. */
+  voiceSegments?: VoiceSegment[]
+  /** Duets only: singer named in the section header. */
+  sectionVoice?: SectionVoice
+}
+
+export const SongLine: FC<SongLineData> = ({ type, content, voiceSegments, sectionVoice }) => {
   switch (type) {
     case LineType.Section:
-      return <Section content={content as string} />
+      return <Section content={content as string} sectionVoice={sectionVoice} />
 
     case LineType.Spacer:
       return <Spacer content={content as string} />
@@ -29,10 +37,10 @@ export const SongLine: FC<ParsedLine> = ({ type, content }) => {
       return <ChordLine content={content as string} />
 
     case LineType.ChordsAndLyrics:
-      return <ChordsAndLyrics content={content as (string | { index: number; content: string })[]} />
+      return <ChordsAndLyrics content={content as ChordsAndLyricsContent} voiceSegments={voiceSegments} />
 
     case LineType.Lyrics:
-      return <Lyrics content={content as string} />
+      return <Lyrics content={content as string} voiceSegments={voiceSegments} />
     default:
       return <Lyrics content={content as string} />
   }

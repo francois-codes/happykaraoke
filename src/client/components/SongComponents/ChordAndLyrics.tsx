@@ -1,6 +1,8 @@
 import { useStore } from '@/store'
+import type { VoiceSegment } from '@shared/lib/song/voices'
 import { Fragment, useCallback } from 'react'
 import { ChordLabel } from './Chord'
+import { paintVoices } from './VoiceText'
 
 function simplifyChord(content: string, guitaristMode: boolean) {
   if (!guitaristMode) return content.replace('_', ' ')
@@ -11,9 +13,11 @@ function simplifyChord(content: string, guitaristMode: boolean) {
 }
 
 export function ChordsAndLyrics({
-  content
+  content,
+  voiceSegments
 }: {
   content: (string | { index: number; content: string })[]
+  voiceSegments?: VoiceSegment[]
 }) {
   const { chordsEnabled, guitaristMode } = useStore()
 
@@ -53,12 +57,19 @@ export function ChordsAndLyrics({
     [chordLabel]
   )
 
+  // Start of each lyric piece in the line, to match the voice segments.
+  const offsets: number[] = []
+  content.reduce((offset, inner, index) => {
+    offsets[index] = offset
+    return typeof inner === 'string' ? offset + inner.length : offset
+  }, 0)
+
   return (
     <div className="block">
       <div className="chords-and-lyrics">
         {content.map((inner, index) =>
           typeof inner === 'string' ? (
-            <Fragment key={index}>{inner}</Fragment>
+            <Fragment key={index}>{paintVoices(inner, offsets[index], voiceSegments)}</Fragment>
           ) : chordsEnabled ? (
             <span className="chord-card chord-font" key={index}>
               {renderContent(sanitize(inner.content))}

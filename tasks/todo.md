@@ -1,3 +1,19 @@
+# Couleurs des voix dans les duos — implémenté
+
+Objectif (demande de Louis, maquette validée sur 70 duos réécrits) : voir qui chante quoi, en vue chanteurs comme en vue musicien / admin, sans rien décaler.
+
+- [x] `src/shared/lib/song/voices.ts` (fonctions pures) : voix trouvées dans les titres de paragraphes (`[Couplet 1 (Andrea, piano solo)]`) et les préfixes `Nom :` ; `Duo` / `Tous` / `?` réservés ; parenthèses = l'autre voix, `(Céline : …)` = voix nommée, `(Solo)`, `(Instru)`… = indication grise. Activé seulement si la grille nomme au moins 2 voix (ou 1 dans un morceau tagué `duo`).
+- [x] Faux positifs écartés en scannant les 2 012 grilles : paroles avec deux-points (« Elle m'dit : »), indications musicales en titre (`+ Drums`, `Gitarre Electrique`, `Modulation F`), solfège, majuscules criées. Restent activés : les duos et quelques vrais morceaux à plusieurs voix (Destiny's Child, Fredericks Goldman Jones, Notre-Dame de Paris, Starmania…).
+- [x] `SongComponent` annote les lignes (voix courante portée de ligne en ligne, remise à zéro à chaque titre) ; `VoiceText.tsx` peint les morceaux de texte ; `Section` affiche la puce du chanteur et l'indication.
+- [x] Couleurs uniquement (fond + `box-shadow`, pas de marge ni de padding, pas de gras) : basculer les accords ne décale aucune ligne. Paroles seules : tout le texte en couleur. Accords : paroles neutres, seuls les noms, les puces et les parenthèses en couleur.
+- [x] Doc : section « Voices in Duets » dans `SONG_FORMAT.md`.
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm run test:regression` 35/35 (9 nouveaux tests dans `voices.test.ts`).
+- Appli en dev sur un dossier de test (70 duos réécrits + quelques grilles normales) : invité navigateur sur Manhattan-Kaboul, accords affichés puis masqués, thème clair puis sombre : couleurs correctes, lignes à la même place (même décalage vertical pour toutes, aucun retour à la ligne nouveau).
+- Non testé : vrai iPad / téléphone, fenêtre Electron admin à la main.
+
 # Barre de structure à droite du morceau — implémenté
 
 Objectif (demande de Louis, maquette A validée) : savoir où on en est dans la structure, avec les couleurs des parties, et avoir un « ascenseur » qu'on n'a pas.
