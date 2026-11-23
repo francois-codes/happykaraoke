@@ -52,7 +52,7 @@ export function FlexModal() {
   return (
     <Modal
       title={`${allSongs.length} chansons dispo !`}
-      trigger={<Button variant="outline"><SettingEmoji emoji="📊" />Stats</Button>}
+      trigger={<Button variant="outline"><SettingEmoji emoji="📊" />Catalogue · {allSongs.length} chansons</Button>}
       desc="\o/"
       open={isOpen}
       modalSize="w-[60vw]"

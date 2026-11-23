@@ -1,3 +1,54 @@
+# Nouveau menu (admin, chanteur, musicien) — implémenté
+
+Objectif (demande de Louis, maquette validée) : un menu rangé, sans ce qu'il n'utilise pas, et des invités chanteur / musicien.
+
+- [x] Admin : blocs « Réglages » (accords, barre de structure, scroll musicien, mode sombre, modes guitariste et batteur), « Lives » (Lives, Grilles à corriger), « Bibliothèque » (Ajouter une grille Ultimate Guitar, Catalogue · N chansons, dossier des chansons), « Plus » replié (ancien historique CSV, diagnostics scroll), déconnexion.
+- [x] Scroll master sorti du menu : bouton 👑 dans l'en-tête (`ScrollMasterButton`, même id `scroll-master`) ; le dernier admin qui appuie prend la main.
+- [x] Invités : « Chanteur | Musicien » en haut du menu, mémorisé par appareil (`karaoke:guestRole`), Chanteur par défaut (paroles seules) ; Musicien active accords, barre de structure et scroll musicien ; chaque réglage reste modifiable. « Scroll musicien » n'apparaît qu'en Musicien.
+- [x] Emoji du menu en noir et blanc (`grayscale` dans `SettingEmoji`).
+- [x] IA / clé Perplexity supprimées (composants et endpoints `ai.ts`) ; remplacées par « Ajouter une grille (Ultimate Guitar) » qui passe par l'éditeur de grilles local (`/api/importer`, port 8777) : visible seulement si l'éditeur répond, ne remplace jamais une grille existante.
+- [x] « Stats » renommé « Catalogue · N chansons ». En-tête : espacement réduit pour tenir sur une largeur iPad.
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm run test:regression` 36/36.
+- `npm run test:electron` : toutes les étapes PASS. L'invité du test joue « iPad musician » en profil Musicien ; nouvelle étape « menu » : blocs admin, IA et Perplexity absents, couronne dans l'en-tête qui tient dans 820 px, invité Chanteur par défaut sans accords ni scroll musicien, passage en Musicien. Captures : `out/electron-smoke/menu-admin.png`, `menu-chanteur.png`, `menu-musicien.png`.
+- Non testé : l'import Ultimate Guitar de bout en bout (éditeur de grilles lancé), iPad / téléphones réels.
+
+# Journal des morceaux dans Dropbox — implémenté
+
+Objectif (demande de Louis) : l'historique des morceaux joués ne doit plus dépendre de la base SQLite rangée dans l'application (remplacée à chaque mise à jour).
+
+- [x] `src/shared/lib/data/journal.ts` : chaque morceau lancé est ajouté à `HappiKaraoke lives/journal/AAAA-MM_<ordinateur>.jsonl` (une ligne JSON, un fichier par mois et par Mac pour éviter les conflits Dropbox). Rien n'est jamais effacé : la règle des 2 minutes est appliquée à la lecture ; doublons fusionnés ; ligne illisible ignorée.
+- [x] `addSessionLog` écrit aussi dans le journal (sans jamais bloquer un changement de morceau si Dropbox ou le dossier manquent).
+- [x] Les lives (■, « À qualifier », ajout manuel) lisent le journal ; à la première lecture, la base actuelle est recopiée une fois dans le journal (`.import-base-faite`).
+- [x] La base SQLite garde son rôle (invités, file d'attente, ancien historique CSV) : aucune migration.
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm run test:regression` 36/36 (3 nouveaux : règle des 2 minutes et doublons, import unique puis survie à une base vidée, écriture au lancement d'un morceau).
+- `npm run test:electron` : toutes les étapes PASS ; le journal du test contient bien les morceaux lancés.
+- Non testé : deux Mac en même temps sur le même Dropbox.
+
+# Lives (▶ / ■, qualification, setlist WhatsApp) — implémenté
+
+Objectif (demande de Louis) : une « session » = un live, pas l'appli ouverte pour vérifier des grilles. Le live est marqué en direct (▶ / ■) ou retrouvé après coup, qualifié à la main, et seuls les lives de type « Live » comptent dans les stats officielles. Les lives sont écrits en JSON dans un dossier Dropbox, car la base SQLite de l'appli installée vit dans le bundle et est remplacée par une mise à jour (constaté : l'historique d'avril à octobre 2026 n'est plus dans la base installée).
+
+- [x] `src/shared/lib/data/soireeFormat.ts` (pur) : types, type de live (`live` / `repete` / `amis`), découpage « Artiste - Titre » sur le premier « - », texte WhatsApp (en-tête 🤖🤖 habituel + commentaires), détection `detectLives` (≥ 10 morceaux, ≥ 1 h, pause > 45 min = coupure ; testée sur le journal réel du 13 au 22/11 : retrouve exactement les 3 lives, rien d'autre).
+- [x] `src/shared/lib/data/soirees.ts` : un fichier par live dans `<parent du dossier des chansons>/HappiKaraoke lives/`, live en cours dans `.live-en-cours.json`, groupes ignorés dans `.lives-ignores.json` ; création depuis ▶/■, depuis un groupe détecté ou depuis un premier/dernier morceau choisi à la main. Aucune migration de la base.
+- [x] Endpoints `/soirees/*` (admin vérifié côté serveur) + message socket `soiree:changed` pour garder le bouton synchro entre admins.
+- [x] En-tête admin : ▶ démarre (ce qui a été lancé avant — balance, tests — ne compte pas) ; ■ rouge avec le temps écoulé (écrans larges) → titre, type, commentaires, puis setlist à décocher + « Copier pour WhatsApp ».
+- [x] Réglages → « Lives » : « À qualifier » (Qualifier / Ignorer), « + Ajouter un live » (jour 06:00 → 06:00, clic premier puis dernier morceau), liste des lives (type hors stats signalé), suppression.
+- [x] Texte WhatsApp (format choisi par Louis) : `🤖🤖 2026-11-21 · Titre - Timelapse 04h07, 46 morceaux 🤖🤖`, une ligne par morceau joué, puis `*Commentaires*` et les commentaires tels quels.
+- [x] Bouton de la file d'attente : icône liste (☰) au lieu d'un « play », pour ne pas le confondre avec ▶.
+- [x] Bouton « Terminer la session » supprimé (la session technique se ferme toujours seule après 4 h sans morceau). Le test Electron qui le cliquait vérifie maintenant son absence et le bouton ▶ / ■.
+
+## What I tested
+
+- `npm run typecheck` OK ; `npm run test:regression` 33/33 (7 nouveaux : ▶/■, cases décochées et texte WhatsApp, live vide, découpage des noms, ids sûrs, détection, qualification / ignorer / ajout manuel / type).
+- `npm run test:electron` : toutes les étapes PASS, dont « Electron live button replaces the end-of-session button ». Capture : `out/electron-smoke/live-stop.png`.
+- Non testé : un vrai live de bout en bout dans l'appli de Louis (l'appli installée occupait le port 8081), le copier-coller dans WhatsApp, l'iPad. Après les tests Electron, faire un `npm run build` complet avant toute release.
+
 # Couleurs des voix dans les duos — implémenté
 
 Objectif (demande de Louis, maquette validée sur 70 duos réécrits) : voir qui chante quoi, en vue chanteurs comme en vue musicien / admin, sans rien décaler.

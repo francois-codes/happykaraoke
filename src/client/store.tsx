@@ -1,5 +1,6 @@
 import { readDebugScrollAnchorsEnabled } from '@/lib/debugSettings'
 import { readStructureBarEnabled } from '@/lib/structureBarSettings'
+import { type GuestRole, readGuestRole } from '@/lib/guestRole'
 import { Dispatch, FC, PropsWithChildren, createContext, useContext, useReducer } from 'react'
 import type { ScrollControlSnapshot } from '@shared/lib/session'
 import type { ScrollSnapshot } from '@shared/types/scroll'
@@ -34,6 +35,8 @@ interface Store {
   cover: CoverState | null
   /** Structure bar on the right of the song (per device, persisted in localStorage). */
   structureBar: boolean
+  /** Guests only: "chanteur" (lyrics only, default) or "musicien" (per device, persisted). */
+  guestRole: GuestRole
 }
 
 const initialStore: Store = {
@@ -54,7 +57,8 @@ const initialStore: Store = {
   openAIKeyModalOpen: false,
   debugScrollAnchors: readDebugScrollAnchorsEnabled(),
   cover: null,
-  structureBar: readStructureBarEnabled()
+  structureBar: readStructureBarEnabled(),
+  guestRole: readGuestRole()
 }
 
 const StoreContext = createContext<Store>(initialStore)

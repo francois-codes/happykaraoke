@@ -1,3 +1,4 @@
+import { guestStartDisplay } from '@/lib/guestRole'
 import { useDispatch } from '@/store'
 import { resetScrollDebugSettings } from '@/lib/debugSettings'
 import { sleep } from '@/utils'
@@ -59,6 +60,8 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
           const sc = sessionCfg?.scrollControl ?? null
 
           dispatch({
+            // Guests start with their role's display (Chanteur: lyrics only, by default).
+            ...(isAdmin ? {} : guestStartDisplay()),
             isAdmin,
             currentSong: sessionCfg?.currentSong,
             scrollControl: sc,

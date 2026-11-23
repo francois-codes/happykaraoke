@@ -1,6 +1,8 @@
 export const config = {
   PORT: 8081,
   ADMIN_PASSWORD: 'Ab=G#',
+  /** Grid editor (Claude-grilles/editeur) on the host Mac: imports Ultimate Guitar links. */
+  GRID_EDITOR_URL: 'http://127.0.0.1:8777',
   VIEWPORT: {
     // iPad Air dimensions
     width: 820,
