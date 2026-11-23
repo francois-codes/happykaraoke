@@ -202,3 +202,55 @@
   line-height: 6vmin;
   padding-bottom: 1vmin;
 }
+
+/*
+ * Voices in duets (src/shared/lib/song/voices.ts). Colours, backgrounds and box-shadows only:
+ * a "Name :" tag keeps its own characters, so no line or chord ever moves.
+ * Lyrics-only (singers): every sung part takes its voice colour.
+ * Chords on (musicians): lyrics stay neutral; only name tags and answers in parentheses are coloured.
+ */
+:root {
+  --voice-v1: #12a389;
+  --voice-v2: #e0508f;
+  --voice-v3: #3d7fe0;
+  --voice-v4: #e08a1e;
+  --voice-v5: #8a5ce6;
+  --voice-v6: #6fa31e;
+  --voice-duo: hsl(var(--foreground));
+  --voice-unknown: #d4a106;
+  --voice-echo: #8a8a8a;
+}
+.dark {
+  --voice-v1: #4fd1b5;
+  --voice-v2: #f28cb8;
+  --voice-v3: #8ab4ff;
+  --voice-v4: #ffb36b;
+  --voice-v5: #c9a3ff;
+  --voice-v6: #b8e986;
+  --voice-unknown: #f2c94c;
+  --voice-echo: #a8a69e;
+}
+.voice-v1 { --voice: var(--voice-v1); }
+.voice-v2 { --voice: var(--voice-v2); }
+.voice-v3 { --voice: var(--voice-v3); }
+.voice-v4 { --voice: var(--voice-v4); }
+.voice-v5 { --voice: var(--voice-v5); }
+.voice-v6 { --voice: var(--voice-v6); }
+.voice-duo { --voice: var(--voice-duo); }
+.voice-unknown { --voice: var(--voice-unknown); }
+.voice-echo { --voice: var(--voice-echo); }
+
+#song-lines.song-lines--lyrics-only .voice-text { color: var(--voice, inherit); }
+.voice-reply { color: var(--voice, inherit); }
+.voice-reply.voice-echo,
+.voice-indication { color: var(--voice-echo); font-style: italic; }
+.voice-tag,
+.voice-chip {
+  color: var(--voice);
+  background: color-mix(in srgb, var(--voice) 22%, transparent);
+  box-shadow: 0 0 0 0.12em color-mix(in srgb, var(--voice) 22%, transparent);
+  border-radius: 0.2em;
+  font-weight: 700;
+}
+.voice-chip { font-size: 0.75em; vertical-align: 0.1em; }
+.voice-info { font-size: 0.7em; font-weight: 400; opacity: 0.7; }

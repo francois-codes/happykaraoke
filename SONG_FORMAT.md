@@ -145,6 +145,32 @@ Lines starting with `#` or `[` are treated as section headers.
 - `[Solo]` / `# Solo`
 - `[Instrumental]` / `# Instrumental`
 
+### Voices in Duets
+
+In duets the grid says who sings what; the app colours each voice (one colour per singer, white for both).
+Nothing moves: a `Name :` tag keeps its own characters, chords stay above the same syllables.
+
+```
+[Couplet 1 (Andrea, piano solo)]     one voice for the whole paragraph: name first, musical note after the comma
+[Refrain 2]                          several voices: each change is written "Name : " in the lyrics
+Hélène : Je serais perdue (Vivo per lei)
+Duo : io vivo per lei                Duo = both, Tous = everyone, ? = not known yet
+Andrea : io vivo... Hélène : per lei a name can also switch the voice mid-line
+(sous le vent)                       in parentheses: the other voice answers
+(Céline : oooooooh)                  … or the voice named inside
+(Solo)  (Instru)  (Piano)            musical indications in parentheses stay grey, never a voice
+```
+
+- Voices are found in section headers (first item in the parentheses) and in `Name :` line prefixes. A name is 1 to 3
+  capitalised words (`Garou`, `Jean-Louis`, `Diam's`, `-M-`); lyrics such as `Elle m'dit : …` or headers such as
+  `[Intro (6/8)]`, `[Solo (Guitar)]` are never voices.
+- The colours switch on when a grid names at least two voices (or one voice in a song tagged `duo`). Other songs are
+  displayed exactly as before.
+- Lyrics only (singers): each voice in its colour. Chords on (musicians): lyrics stay neutral, only name tags, singer
+  chips in section headers and answers in parentheses are coloured, so section colours remain readable.
+- Code: `src/shared/lib/song/voices.ts` (pure, tested in `tests/regression/voices.test.ts`), painted by
+  `SongComponents/VoiceText.tsx`, colours `--voice-*` in `base.css`.
+
 ### Blank Lines
 
 Empty lines create visual breaks in the song.
