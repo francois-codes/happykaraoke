@@ -154,10 +154,11 @@ Nothing moves: a `Name :` tag keeps its own characters, chords stay above the sa
 [Couplet 1 (Andrea, piano solo)]     one voice for the whole paragraph: name first, musical note after the comma
 [Refrain 2]                          several voices: each change is written "Name : " in the lyrics
 Hélène : Je serais perdue (Vivo per lei)
-Duo : io vivo per lei                Duo = both, Tous = everyone, ? = not known yet
+Duo : io vivo per lei                Duo = both, Tous (All in English grids) = everyone, ? = not known yet
 Andrea : io vivo... Hélène : per lei a name can also switch the voice mid-line
 (sous le vent)                       in parentheses: the other voice answers
 (Céline : oooooooh)                  … or the voice named inside
+(Girls : in love)                    a name that is not one of the voices (backing vocals): neutral echo
 (Solo)  (Instru)  (Piano)            musical indications in parentheses stay grey, never a voice
 ```
 
