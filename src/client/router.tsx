@@ -11,7 +11,8 @@ export const router = createBrowserRouter([
     loader: ({ request }) => {
       const url = new URL(request.url)
       if (!url.pathname.includes('join') && url.searchParams.get('join') !== null) {
-        return redirect('/join')
+        // keep the query so the QR-code marker (`?join=qr`) reaches the join screen
+        return redirect(`/join${url.search}`)
       }
       return null
     },

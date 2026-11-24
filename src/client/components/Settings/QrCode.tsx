@@ -1,4 +1,5 @@
 import { KEYS } from '@/lib/consts'
+import { QR_JOIN_MARKER } from '@/lib/qrJoin'
 import { useKeyboardShortcut } from '@/lib/useKeyboardShortcut'
 import { useDispatch, useStore } from '@/store'
 import { IoQrCodeOutline } from 'react-icons/io5'
@@ -28,7 +29,9 @@ export function QrCode() {
     [searchOpen, qrCodeOpen, aiSearchOpen, aiPreviewOpen, openAIKeyModalOpen]
   )
 
-  const linkUrl = `${hostUrl}/join`
+  const displayUrl = `${hostUrl}/join`
+  // `?join=qr` marks a QR-code arrival: the device joins as a singer even if it was an admin before
+  const linkUrl = `${hostUrl}/?join=${QR_JOIN_MARKER}`
 
   return (
     <Modal
@@ -52,7 +55,7 @@ export function QrCode() {
           />
         </div>
         <Link target="_blank" to={linkUrl}>
-          {linkUrl}
+          {displayUrl}
         </Link>
       </div>
     </Modal>

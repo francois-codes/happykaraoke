@@ -3,7 +3,9 @@ import { useDispatch } from '@/store'
 import { resetScrollDebugSettings } from '@/lib/debugSettings'
 import { sleep } from '@/utils'
 import { fetchSessionConfig, refreshSession } from '@shared/endpoints/session'
+import { releaseScrollMaster } from '@shared/endpoints/scrollControl'
 import { fetchUser } from '@shared/endpoints/user'
+import { isQrJoin } from '@/lib/qrJoin'
 import { UserType } from '@shared/types'
 import { AxiosError } from 'axios'
 import { useEffect, useState } from 'react'
@@ -51,7 +53,18 @@ export function useScreenInit({ shouldAnimateLoader = true } = {}) {
         const numberId = Number(id)
         const { user } = await fetchUser.call({ id: numberId })
 
-        if (user) {
+        if (user && user.type === UserType.ADMIN && isQrJoin()) {
+          // Arriving from the QR code always means joining as a singer: forget the admin
+          // identity this browser kept (hand scroll control back if it held it).
+          if (sessionCfg?.scrollControl?.activeScrollMasterUserId === user.id) {
+            try {
+              await releaseScrollMaster.call({ userId: user.id })
+            } catch {
+              /* best-effort */
+            }
+          }
+          window.localStorage.removeItem('userId')
+        } else if (user) {
           const isAdmin = user.type === UserType.ADMIN
           if (isAdmin) {
             await refreshSession.call()
