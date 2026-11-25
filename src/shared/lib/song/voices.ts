@@ -5,7 +5,7 @@
  * - `[Couplet 1 (Andrea, piano solo)]`: one voice for the whole paragraph, named first in the parentheses;
  *   what follows the comma is a musical indication.
  * - `Hélène : text`: switches voice until the next name or the end of the paragraph, also mid-line.
- *   `Duo :` = both, `Tous :` = everyone, `? :` = unknown.
+ *   `Duo :` = both, `Tous :` (`All :` in English grids) = everyone, `? :` = unknown.
  * - `(text)`: the other voice answers; `(Aladdin : text)` names it; `(Solo)`, `(Instru)`… are indications.
  *
  * Pure functions, no DOM: the client paints the segments, chords and layout are untouched
@@ -144,7 +144,7 @@ function escapeRegExp(text: string): string {
  */
 export function segmentLyricLine(text: string, voices: SongVoices, state: VoiceState): VoiceSegment[] {
   if (!voices.enabled) return [{ start: 0, end: text.length, kind: 'text', voice: null }]
-  const alternatives = [...voices.names, 'Duo', 'Tous', 'Both', '\\?']
+  const alternatives = [...voices.names, 'Duo', 'Tous', 'Both', 'All', '\\?']
     .map((n) => (n === '\\?' ? n : escapeRegExp(n)))
     .join('|')
   /** `Name :` followed by a space: the tag keeps exactly its own characters. */
@@ -163,8 +163,14 @@ export function segmentLyricLine(text: string, voices: SongVoices, state: VoiceS
       const inner = text.slice(i + 1, close < 0 ? text.length : close)
       flush(i)
       const named = inner.match(namePrefix)
+      // A name in the parentheses that is not one of the voices: backing vocals, « (Girls : in love) ».
+      const extra = named
+        ? null
+        : inner.match(/^\s*([^\s():[\]]+(?: [^\s():[\]]+){0,2})\s*:(?=\s|$)/)
       if (named) {
         segments.push({ start: i, end, kind: 'reply', voice: voiceClassOf(named[1], voices), name: named[1] })
+      } else if (extra && looksLikeName(extra[1])) {
+        segments.push({ start: i, end, kind: 'reply', voice: 'echo', name: extra[1] })
       } else if (isIndication(inner)) {
         segments.push({ start: i, end, kind: 'indication', voice: null })
       } else {

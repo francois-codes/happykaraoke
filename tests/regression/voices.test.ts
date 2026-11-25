@@ -61,6 +61,28 @@ test('a Name : prefix switches the voice until the next one, also mid-line, and 
   assert.equal(state.current, 'v2', 'the voice carries over to the next line')
 })
 
+test('All : (English grids) and Tous : sing together, like Duo', () => {
+  const v = detectVoices(['[Chorus 1 (Simba)]', '[Verse 2 (Zazu)]'])
+  for (const line of ["All :  Let ev'ry creature go for broke", 'Tous : on chante']) {
+    const state: VoiceState = { current: null }
+    const tag = line.slice(0, line.indexOf(':') + 1)
+    assert.deepEqual(show(line, segmentLyricLine(line, v, state)).slice(0, 1), [`tag:duo:${tag}`])
+    assert.equal(state.current, 'duo')
+  }
+  assert.deepEqual(v.names, ['Simba', 'Zazu'], 'All is never counted as a voice')
+})
+
+test('a name in parentheses that is not one of the voices (backing vocals) is an echo, not the other singer', () => {
+  const v = detectVoices(['[Intro (Jay-Z)]', '[Intro (Beyoncé)]'])
+  const line = '  (Girls : Who he think he is?) Look at what you did to me,'
+  assert.deepEqual(show(line, segmentLyricLine(line, v, { current: 'v2' })), [
+    'text:v2:  ',
+    'reply:echo:(Girls : Who he think he is?)',
+    'text:v2: Look at what you did to me,'
+  ])
+  assert.deepEqual(v.names, ['Jay-Z', 'Beyoncé'])
+})
+
 test('parentheses: the other voice, a named reply, an echo in a duo passage, or a musical indication', () => {
   const v = detectVoices(['[Couplet (Garou)]', '[Couplet (Céline)]'])
   const lineA = 'Mon étoile, je l\'ai suivie un instant (sous le vent)'
