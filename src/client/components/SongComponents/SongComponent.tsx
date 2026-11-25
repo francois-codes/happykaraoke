@@ -3,7 +3,7 @@ import { useSong } from '@/lib/useSong'
 import { useDispatch, useStore } from '@/store'
 import { socket } from '@/utils/socket'
 import { songChanged, songFileChanged, transpoChanged } from '@shared/messages/song'
-import { detectVoices, parseSectionTitle, segmentLyricLine, type VoiceState } from '@shared/lib/song/voices'
+import { detectVoices, enterSection, segmentLyricLine, type VoiceState } from '@shared/lib/song/voices'
 import { LineType } from '@shared/types'
 import { useMemo, useRef } from 'react'
 import { useSongKeyboardShortcuts } from '../../lib/useSongKeyboardShortcuts'
@@ -94,9 +94,8 @@ function annotateVoices(lines: ParsedLine[], rawLines: string[], tags: string[])
   const state: VoiceState = { current: null }
   return lines.map((line) => {
     if (line.type === LineType.Section && typeof line.content === 'string') {
-      const sectionVoice = parseSectionTitle(line.content, voices)
-      state.current = sectionVoice.voice
-      return { ...line, sectionVoice }
+      const sectionVoice = enterSection(line.content, voices, state)
+      return sectionVoice ? { ...line, sectionVoice } : line
     }
     if (line.type === LineType.Lyrics && typeof line.content === 'string') {
       return { ...line, voiceSegments: segmentLyricLine(line.content, voices, state) }

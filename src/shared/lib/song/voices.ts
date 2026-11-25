@@ -122,6 +122,18 @@ export function parseSectionTitle(title: string, voices: SongVoices): SectionVoi
   return { part: match[1] || inner, singer: items[0], voice, info: items.slice(1).join(', ') }
 }
 
+/**
+ * Applies a section line to the voice state and returns its voice. The song parser turns a blank line between a
+ * lyric line and the next chord row into an untitled section: a paragraph break inside the same part, so it keeps
+ * the current voice (no chip, no reset) until the next real header.
+ */
+export function enterSection(title: string, voices: SongVoices, state: VoiceState): SectionVoice | undefined {
+  if (title.trim() === '') return undefined
+  const sectionVoice = parseSectionTitle(title, voices)
+  state.current = sectionVoice.voice
+  return sectionVoice
+}
+
 function escapeRegExp(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }

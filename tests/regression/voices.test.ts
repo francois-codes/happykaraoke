@@ -1,7 +1,10 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
+import { Song } from '../../src/shared/lib/song/song'
+import { LineType, type SongLine } from '../../src/shared/types'
 import {
   detectVoices,
+  enterSection,
   parseSectionTitle,
   segmentLyricLine,
   type VoiceSegment,
@@ -84,4 +87,38 @@ test('lyrics that merely contain a colon never switch the feature on', () => {
 test('stage names and extra spaces after the colon are recognised', () => {
   assert.deepEqual(detectVoices(['[Couplet 1 (Vanessa)]', '[Couplet 3 (-M-)]']).names, ['Vanessa', '-M-'])
   assert.deepEqual(detectVoices(['Simba : I\'m gonna be a mighty king', 'Zazu :  Well, I\'ve never seen']).names, ['Simba', 'Zazu'])
+})
+
+interface LineParser {
+  parseLines(lines: string[]): SongLine[]
+}
+
+test('a part split by a blank line keeps its singer until the next header', () => {
+  const grid = [
+    '[Couplet 1 (Passi)]',
+    'Am            G',
+    'On choisit ni son origine',
+    '',
+    'Am            G',
+    'Fils du C.O.N.G.O',
+    '[Refrain (Calogero)]',
+    'F             C',
+    'Face à la mer'
+  ]
+  // Parser contract: a blank line between lyrics and the next chord row becomes an untitled section.
+  const lines = (new Song('test') as unknown as LineParser).parseLines(grid)
+  assert.ok(lines.some((l) => l.type === LineType.Section && l.content === ''))
+  const voices = detectVoices(grid)
+  const state: VoiceState = { current: null }
+  const sung: string[] = []
+  for (const line of lines) {
+    if (line.type === LineType.Section && typeof line.content === 'string') {
+      const section = enterSection(line.content, voices, state)
+      if (line.content === '') assert.equal(section, undefined)
+    } else if (line.type === LineType.Lyrics && typeof line.content === 'string') {
+      const segs = segmentLyricLine(line.content, voices, state)
+      sung.push(`${segs[0].voice}:${line.content}`)
+    }
+  }
+  assert.deepEqual(sung, ['v1:On choisit ni son origine', 'v1:Fils du C.O.N.G.O', 'v2:Face à la mer'])
 })
