@@ -2,13 +2,13 @@
  * Lives (called "soirées" in the code) — pure types, detection and formatting, safe for any bundle.
  * A live is recorded between ▶ and ■, or found afterwards in the song log and qualified by the admin.
  * It is saved as one JSON file per live (see `soirees.ts`), outside the app's database.
- * Only lives of kind `live` count in the official stats.
+ * Only lives of kind `live` are published on the public "Data Karaoké" site.
  */
 
 export type SoireeKind = 'live' | 'repete' | 'amis'
 
 export const SOIREE_KINDS: { value: SoireeKind; label: string }[] = [
-  { value: 'live', label: 'Live (stats officielles)' },
+  { value: 'live', label: 'Live (publié sur Data Karaoké)' },
   { value: 'repete', label: 'Répète' },
   { value: 'amis', label: 'Entre amis' }
 ]
@@ -44,12 +44,36 @@ export interface Soiree {
   songs: SoireeSong[]
 }
 
+/**
+ * Where a live stands on the Data Karaoké site:
+ * - `online`: published, unchanged since;
+ * - `outdated`: published, but edited since (the next sync republishes it);
+ * - `pending`: never published yet (the next sync publishes it);
+ * - `private`: never published (not of kind `live`, or no played song).
+ */
+export type WebStatus = 'online' | 'outdated' | 'pending' | 'private'
+
 export interface SoireeSummary {
   id: string
   title: string
   kind: SoireeKind
   startedAt: string
   playedCount: number
+  web: WebStatus
+}
+
+/** Public Data Karaoké site (a claude.ai artifact shared with anyone who has the link). */
+export const DATA_KARAOKE_URL = 'https://claude.ai/artifact/XLE5g6FyfxzzeiPaZSydNz'
+
+/**
+ * File the Data Karaoké sync writes in the lives folder after each successful publication.
+ * `lives` lists the ids of the published lives.
+ */
+export const DATA_KARAOKE_PUBLISHED_FILE = '.data-karaoke-publie.json'
+
+/** Page of one live on the site (same anchor as the site: "live-" + id with non-alphanumerics as "-"). */
+export function dataKaraokeLiveUrl(id: string): string {
+  return `${DATA_KARAOKE_URL}#live-${id.replace(/[^0-9A-Za-z]/g, '-')}`
 }
 
 export interface SoireePatch {

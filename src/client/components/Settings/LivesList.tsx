@@ -13,7 +13,9 @@ import {
   type Soiree,
   type SoireeKind,
   type SoireeSummary,
+  type WebStatus,
   clockTime,
+  dataKaraokeLiveUrl,
   kindLabel,
   splitSongName
 } from '@shared/lib/data/soireeFormat'
@@ -44,6 +46,25 @@ const when = (iso: string): string => formatDate(iso, 'dd/MM/yyyy')
 const songLabel = (song: string): string => {
   const { artist, title } = splitSongName(song)
   return artist ? `${artist} : ${title}` : title
+}
+
+/** Where the live stands on the Data Karaoké site, shown under it in the list (online: a green check after the title). */
+const WEB_LABELS: Record<Exclude<WebStatus, 'online'>, string> = {
+  outdated: '⏳ Modifié : mise à jour à la prochaine synchro',
+  pending: '⏳ Publié à la prochaine synchro',
+  private: 'Non publié'
+}
+
+/** Opens the live's page on Data Karaoké (in the browser from the Electron app), once it has been published. */
+function DataKaraokeLink({ id, web }: { id: string; web: WebStatus | undefined }): ReactElement | null {
+  if (web !== 'online' && web !== 'outdated') return null
+  return (
+    <Button asChild variant="outline" className="self-start">
+      <a href={dataKaraokeLiveUrl(id)} target="_blank" rel="noreferrer">
+        Voir sur Data Karaoké ↗
+      </a>
+    </Button>
+  )
 }
 
 interface QualifyFormProps {
@@ -228,7 +249,7 @@ export function LivesList(): ReactElement {
         view.name === 'detail'
           ? `${formatDate(view.soiree.startedAt, 'dd/MM/yyyy HH:mm')} · ${kindLabel(view.soiree.kind)}`
           : view.name === 'list'
-            ? 'Seuls les lives de type « Live » comptent dans les stats officielles.'
+            ? 'Seuls les lives de type « Live » sont publiés sur Data Karaoké, à la synchro quotidienne.'
             : undefined
       }
       modalSize="sm:max-w-[640px]"
@@ -242,6 +263,7 @@ export function LivesList(): ReactElement {
       {view.name === 'detail' && (
         <div className="flex flex-col gap-3">
           <SoireeEditor soiree={view.soiree} onSaved={(s) => setView({ name: 'detail', soiree: s })} />
+          <DataKaraokeLink id={view.soiree.id} web={lives.find((l) => l.id === view.soiree.id)?.web} />
           <Button variant="outline" className="self-start text-red-600" onClick={() => void remove(view.soiree)}>
             Supprimer ce live
           </Button>
@@ -296,11 +318,25 @@ export function LivesList(): ReactElement {
                       className="w-full text-left rounded-md px-2 py-1 hover:bg-accent"
                       onClick={() => void select(s.id)}
                     >
-                      <span className="text-sm font-medium">{s.title}</span>
+                      <span className="text-sm font-medium">
+                        {s.title}
+                        {s.web === 'online' && (
+                          <span
+                            className="ml-1 text-emerald-600 dark:text-emerald-400"
+                            title="En ligne sur Data Karaoké"
+                            aria-label="En ligne sur Data Karaoké"
+                          >
+                            ✓
+                          </span>
+                        )}
+                      </span>
                       <span className="block text-xs text-muted-foreground">
                         {formatDate(s.startedAt, 'dd/MM/yyyy HH:mm')} · {s.playedCount} morceaux
-                        {s.kind !== 'live' && ` · ${kindLabel(s.kind)} (hors stats)`}
+                        {s.kind !== 'live' && ` · ${kindLabel(s.kind)}`}
                       </span>
+                      {s.web !== 'online' && (
+                        <span className="block text-xs text-muted-foreground">{WEB_LABELS[s.web]}</span>
+                      )}
                     </button>
                   </li>
                 ))}
