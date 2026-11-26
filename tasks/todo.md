@@ -4,14 +4,14 @@ Objectif (demande de Louis) : la fenêtre Lives parle de publication sur Data Ka
 
 - [x] Libellés : « Seuls les lives de type « Live » sont publiés sur Data Karaoké », type « Live (publié sur Data Karaoké) », « (non publié) » dans la liste.
 - [x] État de publication : la synchro écrit `HappiKaraoke lives/.data-karaoke-publie.json` ({ publishedAt, hash, lives: [ids] }) ; `listSoirees` en déduit `web` = en ligne / mise à jour en attente (fichier modifié après la publication) / en attente / non publié.
-- [x] Liste : « ✓ en ligne » ou « ⏳ … » sous chaque live ; détail : bouton « Voir sur Data Karaoké » pour un live déjà en ligne.
+- [x] Liste : petit ✓ vert après le titre d’un live en ligne ; « ⏳ … » ou « Non publié » sous les autres ; détail : bouton « Voir sur Data Karaoké » pour un live déjà en ligne.
 - [x] Electron : les liens https://claude.ai/ s'ouvrent dans le navigateur (setWindowOpenHandler), le reste ne change pas.
 - [x] Synchro (hors dépôt app) : `build-site-data.mjs --mark-published` (PR #21), tâche de 6 h et skill mis à jour.
 
 ## What I tested
 
 - `npm run typecheck` OK ; `npm run test:regression` 49/49 (nouveau : en attente → en ligne → modifié depuis, répète jamais publiée, fichier d'état illisible ignoré, ancre de la page du live).
-- `npm run test:electron` : toutes les étapes PASS ; nouvelle étape « Lives window » : libellés Data Karaoké, « ✓ En ligne » / « Non publié », lien vers la page du live. Captures : `out/electron-smoke/lives-data-karaoke.png`, `lives-data-karaoke-detail.png`.
+- `npm run test:electron` : toutes les étapes PASS ; nouvelle étape « Lives window » : libellés Data Karaoké, ✓ vert après le titre, « Non publié », lien vers la page du live. Captures : `out/electron-smoke/lives-data-karaoke.png`, `lives-data-karaoke-detail.png`.
 - Fichier d'état réel écrit pour l'état actuel du site (65 lives, hash identique à la dernière publication).
 - Non testé : le clic réel sur « Voir sur Data Karaoké » (ouverture dans le navigateur via `shell.openExternal`), ni l'app installée.
 

@@ -48,9 +48,8 @@ const songLabel = (song: string): string => {
   return artist ? `${artist} : ${title}` : title
 }
 
-/** Where the live stands on the Data Karaoké site, as shown under it in the list. */
-const WEB_LABELS: Record<WebStatus, string> = {
-  online: '✓ En ligne sur Data Karaoké',
+/** Where the live stands on the Data Karaoké site, shown under it in the list (online: a green check after the title). */
+const WEB_LABELS: Record<Exclude<WebStatus, 'online'>, string> = {
   outdated: '⏳ Modifié : mise à jour à la prochaine synchro',
   pending: '⏳ Publié à la prochaine synchro',
   private: 'Non publié'
@@ -319,16 +318,25 @@ export function LivesList(): ReactElement {
                       className="w-full text-left rounded-md px-2 py-1 hover:bg-accent"
                       onClick={() => void select(s.id)}
                     >
-                      <span className="text-sm font-medium">{s.title}</span>
+                      <span className="text-sm font-medium">
+                        {s.title}
+                        {s.web === 'online' && (
+                          <span
+                            className="ml-1 text-emerald-600 dark:text-emerald-400"
+                            title="En ligne sur Data Karaoké"
+                            aria-label="En ligne sur Data Karaoké"
+                          >
+                            ✓
+                          </span>
+                        )}
+                      </span>
                       <span className="block text-xs text-muted-foreground">
                         {formatDate(s.startedAt, 'dd/MM/yyyy HH:mm')} · {s.playedCount} morceaux
                         {s.kind !== 'live' && ` · ${kindLabel(s.kind)}`}
                       </span>
-                      <span
-                        className={`block text-xs ${s.web === 'online' ? 'text-emerald-700 dark:text-emerald-400' : 'text-muted-foreground'}`}
-                      >
-                        {WEB_LABELS[s.web]}
-                      </span>
+                      {s.web !== 'online' && (
+                        <span className="block text-xs text-muted-foreground">{WEB_LABELS[s.web]}</span>
+                      )}
                     </button>
                   </li>
                 ))}

@@ -549,7 +549,8 @@ async function run() {
   const livesText = await evaluate(admin, `[...document.querySelectorAll('[role="dialog"]')].map(d => d.innerText).join('\\n')`)
   assert.ok(livesText.includes('sont publiés sur Data Karaoké'), `the Lives window talks about Data Karaoké, not official stats: ${livesText.slice(0, 300)}`)
   assert.ok(!livesText.includes('stats officielles') && !livesText.includes('hors stats'), 'no more "stats officielles" wording')
-  assert.ok(livesText.includes('✓ En ligne sur Data Karaoké'), 'a published live shows as online')
+  assert.ok(await evaluate(admin, `[...document.querySelectorAll('[role="dialog"] li button')].find(b => b.textContent.includes('Soirée publiée')).querySelector('[aria-label="En ligne sur Data Karaoké"]') !== null`),
+    'a published live has a green check after its title')
   assert.ok(livesText.includes('Non publié'), 'a rehearsal is never published')
   writeFileSync(join(root, 'out/electron-smoke/lives-data-karaoke.png'), (await admin.webContents.capturePage()).toPNG())
   await evaluate(admin, `[...document.querySelectorAll('[role="dialog"] li button')].find(b => b.textContent.includes('Soirée publiée')).click()`)
@@ -558,7 +559,7 @@ async function run() {
     'https://claude.ai/artifact/XLE5g6FyfxzzeiPaZSydNz#live-2026-11-20-2000')
   writeFileSync(join(root, 'out/electron-smoke/lives-data-karaoke-detail.png'), (await admin.webContents.capturePage()).toPNG())
   await key(admin, 'Escape')
-  console.log('PASS Lives window: Data Karaoké wording, online / not published status, link to the live page')
+  console.log('PASS Lives window: Data Karaoké wording, check for online lives, not published status, link to the live page')
 
   // New menu: blocks for the admin, Chanteur / Musicien for guests, crown in the header.
   await openSettings(admin)
