@@ -73,8 +73,9 @@ for (const file of readdirSync(livesFolder).filter((f) => /^\d{4}-\d{2}-\d{2}_\d
     return {
       k: key,
       t: s.start.slice(11, 16),
-      a: s.artist || s.song,
-      s: s.title ?? '',
+      // The catalogue holds the official spelling (current song file name); old lives keep old file names.
+      a: info?.artist || s.artist || s.song,
+      s: (info ? info.title : s.title) ?? '',
       y: info?.year ?? null,
       g: info?.genre ?? null,
       n: info?.nat ?? null,
