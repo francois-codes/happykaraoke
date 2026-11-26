@@ -13,13 +13,18 @@
  * `missing` lists the played songs that have no catalogue entry yet (to enrich, then rebuild).
  * `hash` only changes when the published content changes, so a sync job can skip no-op runs.
  *
- * Usage: node scripts/data-karaoke/build-site-data.mjs "<lives folder>" <out.json>
+ * Usage: node scripts/data-karaoke/build-site-data.mjs "<lives folder>" <out.json> [--mark-published]
+ *
+ * --mark-published: run once the publication succeeded. Also writes "<lives folder>/.data-karaoke-publie.json"
+ *   { publishedAt, hash, lives: [ids] }, which the app reads to show each live as online / to update / pending.
  */
 import { createHash } from 'node:crypto'
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, renameSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-const [livesFolder, outFile] = process.argv.slice(2)
+const args = process.argv.slice(2)
+const markPublished = args.includes('--mark-published')
+const [livesFolder, outFile] = args.filter((a) => a !== '--mark-published')
 if (!livesFolder || !outFile) {
   console.error('Usage: build-site-data.mjs "<lives folder>" <out.json>')
   process.exit(1)
@@ -100,6 +105,13 @@ lives.sort((a, b) => (a.date + a.id).localeCompare(b.date + b.id))
 
 const hash = createHash('sha256').update(JSON.stringify(lives)).digest('hex').slice(0, 16)
 writeFileSync(outFile, JSON.stringify({ version: 1, hash, lives }) + '\n', 'utf8')
+
+if (markPublished) {
+  const status = { publishedAt: new Date().toISOString(), hash, lives: lives.map((l) => l.id) }
+  const target = join(livesFolder, '.data-karaoke-publie.json')
+  writeFileSync(`${target}.tmp`, JSON.stringify(status, null, 2) + '\n', 'utf8')
+  renameSync(`${target}.tmp`, target)
+}
 
 console.log(
   JSON.stringify(
