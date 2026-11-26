@@ -1,8 +1,17 @@
-import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, unlinkSync, writeFileSync } from 'fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync, unlinkSync, writeFileSync } from 'fs'
 import { basename, dirname, join } from 'path'
 import { formatISO } from 'date-fns'
-import type { LiveCandidate, LogLine, Soiree, SoireeKind, SoireePatch, SoireeSong, SoireeSummary } from './soireeFormat'
-import { detectLives, isSoireeKind, playedSongs, splitSongName } from './soireeFormat'
+import type {
+  LiveCandidate,
+  LogLine,
+  Soiree,
+  SoireeKind,
+  SoireePatch,
+  SoireeSong,
+  SoireeSummary,
+  WebStatus
+} from './soireeFormat'
+import { DATA_KARAOKE_PUBLISHED_FILE, detectLives, isSoireeKind, playedSongs, splitSongName } from './soireeFormat'
 import { importIntoJournal, isJournalImported, readJournal } from './journal'
 import { config } from '@shared/config'
 
@@ -205,7 +214,13 @@ export function getSoiree(songsFolder: string, id: string): Soiree {
   return soiree
 }
 
-function readAll(songsFolder: string): Soiree[] {
+interface SavedSoiree {
+  soiree: Soiree
+  /** Last write of the live's file (ms). */
+  modifiedAt: number
+}
+
+function readAllWithTimes(songsFolder: string): SavedSoiree[] {
   let folder: string
   try {
     folder = soireesFolder(songsFolder)
@@ -215,14 +230,62 @@ function readAll(songsFolder: string): Soiree[] {
   if (!existsSync(folder)) return []
   return readdirSync(folder)
     .filter((f) => f.endsWith('.json') && !f.startsWith('.'))
-    .map((f) => readSoireeFile(join(folder, f)))
-    .filter((s): s is Soiree => s !== null)
+    .map((f): SavedSoiree | null => {
+      const path = join(folder, f)
+      const soiree = readSoireeFile(path)
+      if (!soiree) return null
+      try {
+        return { soiree, modifiedAt: statSync(path).mtimeMs }
+      } catch {
+        return null
+      }
+    })
+    .filter((s): s is SavedSoiree => s !== null)
 }
 
-/** All saved lives, newest first. */
+function readAll(songsFolder: string): Soiree[] {
+  return readAllWithTimes(songsFolder).map((s) => s.soiree)
+}
+
+interface PublishedLives {
+  publishedAt: number
+  ids: Set<string>
+}
+
+/** What the Data Karaoké sync last published (see DATA_KARAOKE_PUBLISHED_FILE), or null if it never ran. */
+function readPublished(songsFolder: string): PublishedLives | null {
+  try {
+    const parsed: unknown = JSON.parse(readFileSync(join(soireesFolder(songsFolder), DATA_KARAOKE_PUBLISHED_FILE), 'utf8'))
+    if (!isRecord(parsed) || typeof parsed.publishedAt !== 'string' || !Array.isArray(parsed.lives)) return null
+    const publishedAt = time(parsed.publishedAt)
+    if (Number.isNaN(publishedAt)) return null
+    return { publishedAt, ids: new Set(parsed.lives.filter((x): x is string => typeof x === 'string')) }
+  } catch {
+    return null
+  }
+}
+
+function webStatus({ soiree, modifiedAt }: SavedSoiree, published: PublishedLives | null): WebStatus {
+  if (soiree.kind !== 'live' || playedSongs(soiree).length === 0) return 'private'
+  if (!published?.ids.has(soiree.id)) return 'pending'
+  return modifiedAt > published.publishedAt ? 'outdated' : 'online'
+}
+
+/** All saved lives, newest first, with where they stand on the Data Karaoké site. */
 export function listSoirees(songsFolder: string): SoireeSummary[] {
-  return readAll(songsFolder)
-    .map((s) => ({ id: s.id, title: s.title, kind: s.kind, startedAt: s.startedAt, playedCount: playedSongs(s).length }))
+  const published = readPublished(songsFolder)
+  return readAllWithTimes(songsFolder)
+    .map((saved) => {
+      const s = saved.soiree
+      return {
+        id: s.id,
+        title: s.title,
+        kind: s.kind,
+        startedAt: s.startedAt,
+        playedCount: playedSongs(s).length,
+        web: webStatus(saved, published)
+      }
+    })
     .sort((a, b) => b.startedAt.localeCompare(a.startedAt))
 }
 

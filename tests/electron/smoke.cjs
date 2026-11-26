@@ -534,6 +534,32 @@ async function run() {
   await clickText(admin, 'Continuer')
   console.log('PASS Electron live button replaces the end-of-session button')
 
+  // Lives window: Data Karaoké wording, publication status per live, link to the live's page.
+  const livesDir = join(fixture, 'HappiKaraoke lives')
+  const savedLive = (id, title, kind) => ({ version: 1, id, title, notes: '', kind,
+    startedAt: `${id.slice(0, 10)}T20:00:00+01:00`, stoppedAt: `${id.slice(0, 10)}T23:00:00+01:00`,
+    songs: [{ start: `${id.slice(0, 10)}T20:10:00+01:00`, song: 'Queen - Bohemian Rhapsody', artist: 'Queen', title: 'Bohemian Rhapsody', played: true }] })
+  writeFileSync(join(livesDir, '2026-11-20_2000.json'), JSON.stringify(savedLive('2026-11-20_2000', 'Soirée publiée', 'live')))
+  writeFileSync(join(livesDir, '2026-11-21_2000.json'), JSON.stringify(savedLive('2026-11-21_2000', 'Répète du jeudi', 'repete')))
+  writeFileSync(join(livesDir, '.data-karaoke-publie.json'),
+    JSON.stringify({ publishedAt: new Date(Date.now() + 60000).toISOString(), hash: 'smoke', lives: ['2026-11-20_2000'] }))
+  await openSettings(admin)
+  await clickText(admin, 'Lives')
+  await waitFor(admin, `document.body.innerText.includes('Soirée publiée')`)
+  const livesText = await evaluate(admin, `[...document.querySelectorAll('[role="dialog"]')].map(d => d.innerText).join('\\n')`)
+  assert.ok(livesText.includes('sont publiés sur Data Karaoké'), `the Lives window talks about Data Karaoké, not official stats: ${livesText.slice(0, 300)}`)
+  assert.ok(!livesText.includes('stats officielles') && !livesText.includes('hors stats'), 'no more "stats officielles" wording')
+  assert.ok(livesText.includes('✓ En ligne sur Data Karaoké'), 'a published live shows as online')
+  assert.ok(livesText.includes('Non publié'), 'a rehearsal is never published')
+  writeFileSync(join(root, 'out/electron-smoke/lives-data-karaoke.png'), (await admin.webContents.capturePage()).toPNG())
+  await evaluate(admin, `[...document.querySelectorAll('[role="dialog"] li button')].find(b => b.textContent.includes('Soirée publiée')).click()`)
+  await waitFor(admin, `!!document.querySelector('[role="dialog"] a[href*="claude.ai/artifact"]')`)
+  assert.equal(await evaluate(admin, `document.querySelector('[role="dialog"] a[href*="claude.ai/artifact"]').getAttribute('href')`),
+    'https://claude.ai/artifact/XLE5g6FyfxzzeiPaZSydNz#live-2026-11-20-2000')
+  writeFileSync(join(root, 'out/electron-smoke/lives-data-karaoke-detail.png'), (await admin.webContents.capturePage()).toPNG())
+  await key(admin, 'Escape')
+  console.log('PASS Lives window: Data Karaoké wording, online / not published status, link to the live page')
+
   // New menu: blocks for the admin, Chanteur / Musicien for guests, crown in the header.
   await openSettings(admin)
   const adminMenu = (await evaluate(admin, `document.querySelector('[data-radix-popper-content-wrapper]').innerText`)).toLowerCase()

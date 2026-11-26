@@ -1,6 +1,6 @@
 import { beforeEach, test } from 'node:test'
 import assert from 'node:assert/strict'
-import { existsSync, mkdirSync, mkdtempSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, utimesSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { sqlite } from '../support/database'
@@ -18,7 +18,13 @@ import {
   stopSoiree,
   updateSoiree
 } from '../../src/shared/lib/data/soirees'
-import { detectLives, soireeToWhatsApp, splitSongName } from '../../src/shared/lib/data/soireeFormat'
+import {
+  DATA_KARAOKE_PUBLISHED_FILE,
+  dataKaraokeLiveUrl,
+  detectLives,
+  soireeToWhatsApp,
+  splitSongName
+} from '../../src/shared/lib/data/soireeFormat'
 
 const live = (title: string, notes = '') => ({ title, notes, kind: 'live' as const })
 
@@ -187,4 +193,32 @@ test('launching a song writes it to the Dropbox journal', async () => {
   await addSessionLog('Queen - Bohemian Rhapsody')
   const lines = readJournal(join(folder, '..', SOIREES_FOLDER_NAME), 2)
   assert.deepEqual(lines.map((l) => l.song), ['Queen - Bohemian Rhapsody'])
+})
+
+test('Data Karaoké status: pending until published, online after, outdated once edited; other kinds stay private', async () => {
+  const folder = songsFolder()
+  const lives = join(folder, '..', SOIREES_FOLDER_NAME)
+  log('Johnny Hallyday - Je te promets', '2026-11-21T20:57:00+01:00')
+  log('The Jayhawks - Angelyne', '2026-11-23T20:40:00+01:00')
+  startSoiree(folder, new Date('2026-11-21T20:50:00+01:00'))
+  const party = await stopSoiree(folder, live('Anniv'), new Date('2026-11-21T23:00:00+01:00'))
+  startSoiree(folder, new Date('2026-11-23T20:00:00+01:00'))
+  const rehearsal = await stopSoiree(folder, { title: 'Répète', notes: '', kind: 'repete' }, new Date('2026-11-23T22:00:00+01:00'))
+  assert.ok(party && rehearsal)
+  const status = (): Record<string, string> => Object.fromEntries(listSoirees(folder).map((s) => [s.title, s.web]))
+
+  assert.deepEqual(status(), { Anniv: 'pending', Répète: 'private' }, 'no sync yet')
+
+  const publishedAt = new Date(Date.now() + 60_000)
+  writeFileSync(join(lives, DATA_KARAOKE_PUBLISHED_FILE), JSON.stringify({ publishedAt: publishedAt.toISOString(), lives: [party.id] }))
+  assert.deepEqual(status(), { Anniv: 'online', Répète: 'private' })
+
+  updateSoiree(folder, party.id, { notes: 'Super soirée' })
+  const later = new Date(publishedAt.getTime() + 60_000)
+  utimesSync(join(lives, `${party.id}.json`), later, later)
+  assert.deepEqual(status(), { Anniv: 'outdated', Répète: 'private' }, 'edited after the publication')
+
+  writeFileSync(join(lives, DATA_KARAOKE_PUBLISHED_FILE), '{ broken')
+  assert.equal(status().Anniv, 'pending', 'an unreadable status file is ignored')
+  assert.equal(dataKaraokeLiveUrl('2026-11-25_2229'), 'https://claude.ai/artifact/XLE5g6FyfxzzeiPaZSydNz#live-2026-11-25-2229')
 })

@@ -21,6 +21,15 @@ function createWindow() {
     mainWindow.show()
   })
 
+  // Links to the public Data Karaoké site open in the user's browser; every other link keeps Electron's default.
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    if (url.startsWith('https://claude.ai/')) {
+      void shell.openExternal(url)
+      return { action: 'deny' }
+    }
+    return { action: 'allow' }
+  })
+
   // Check session validity when window gains focus (coming back from background)
   mainWindow.on('focus', async () => {
     try {
